@@ -332,13 +332,7 @@ return [
                     'route'  => 'admin.projeto.index',
                     'icon'    => 'fas fa-fw fa-file',
                     'icon_color' => 'white',
-                ],
-                [
-                    'text' => 'Plataformas',
-                    'route'  => 'admin.plataforma.index',
-                    'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'white',
-                ],
+                ],                
                 [
                     'text' => 'Áreas',
                     'route'  => 'admin.areaconhecimento.index',

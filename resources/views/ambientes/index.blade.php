@@ -20,13 +20,19 @@
             </div>
             <div class="modal-body form-horizontal">
             <form id="myform" name="myform" class="form-horizontal" role="form"> 
-                <ul id="saveform_errList"></ul>
-
-                
+                <div class="card">
+                <ul id="saveform_errList"></ul> 
+                <div class="card-body">    
+                <fieldset>       
+                <div class="row">   
                 <div class="form-group mb-3">
                     <label for="">Nome</label>
                     <input type="text" class="nome_ambiente form-control">
                 </div>
+                </div>
+                </fieldset>
+            </div>
+            </div>
             </div>
             </form>
             <div class="modal-footer">
@@ -52,13 +58,20 @@
             </div>
             <div class="modal-body form-horizontal">
             <form id="myform" name="myform" class="form-horizontal" role="form">
+                <div class="card">
                 <ul id="updateform_errList"></ul>
-
+                <div class="card-body">
+                <fieldset>       
+                <div class="row">  
                 <input type="hidden" id="edit_ambiente_id">
                 <div class="form-group mb-3">
                     <label for="">Nome</label>
                     <input type="text" id="edit_nome_ambiente" class="nome_ambiente form-control">
                 </div>
+                </div>
+                </fieldset>
+            </div>
+            </div>        
             </div>
             </form>
             <div class="modal-footer">
