@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>APP</h1>
-@stop
-
 @section('content')
    <!-- início AddAppModal -->
 <div class="modal fade" id="AddAppModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -216,8 +212,8 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="col-12">
-                {{$apps->links("pagination::bootstrap-4")}}
+            <div class="d-flex hover justify-content-center">
+                {{$apps->links()}}
                 <button type="button" class="fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()"></button>
             </div>
         </div>

@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>Hosts</h1>
-@stop
-
 @section('content')
     <!--inicio AddHostModal -->
 <div class="modal fade" id="AddHostModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -150,8 +146,8 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="col-12">
-                {{$hosts->links("pagination::bootstrap-4")}}
+            <div class="d-flex hover justify-content-center">
+                {{$hosts->links()}}
                 <button type="button" class="fas fa-arrow-left" style="background: transparent;border: none;" onclick="history.back()"></button>
             </div>
         </div>

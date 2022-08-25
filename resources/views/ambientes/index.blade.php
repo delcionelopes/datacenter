@@ -2,9 +2,6 @@
 
 @section('title', 'Ambientes')
 
-@section('content_header')
-    <h1>Ambientes</h1>
-@stop
 
 @section('content')
    <!--AddAmbienteModal-->
@@ -19,22 +16,14 @@
                 </button>                
             </div>
             <div class="modal-body form-horizontal">
-            <form id="myform" name="myform" class="form-horizontal" role="form"> 
-                <div class="card">
-                <ul id="saveform_errList"></ul> 
-                <div class="card-body">    
-                <fieldset>       
-                <div class="row">   
+            <form id="myform" name="myform" class="form-horizontal" role="form">                 
+                <ul id="saveform_errList"></ul>                   
                 <div class="form-group mb-3">
                     <label for="">Nome</label>
                     <input type="text" class="nome_ambiente form-control">
-                </div>
-                </div>
-                </fieldset>
-            </div>
-            </div>
-            </div>
+                </div>                
             </form>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                 <button type="button" class="btn btn-primary add_ambiente">Salvar</button>
@@ -57,23 +46,15 @@
                 </button>                
             </div>
             <div class="modal-body form-horizontal">
-            <form id="myform" name="myform" class="form-horizontal" role="form">
-                <div class="card">
-                <ul id="updateform_errList"></ul>
-                <div class="card-body">
-                <fieldset>       
-                <div class="row">  
+            <form id="myform" name="myform" class="form-horizontal" role="form">                
+                <ul id="updateform_errList"></ul>               
                 <input type="hidden" id="edit_ambiente_id">
                 <div class="form-group mb-3">
                     <label for="">Nome</label>
                     <input type="text" id="edit_nome_ambiente" class="nome_ambiente form-control">
-                </div>
-                </div>
-                </fieldset>
-            </div>
-            </div>        
-            </div>
+                </div>         
             </form>
+            </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                 <button type="button" class="btn btn-primary update_ambiente">Atualizar</button>
@@ -84,7 +65,7 @@
 
 <!--index-->
 
-<div class="container py-5"> 
+<div class="container py-5">   
     <div id="success_message"></div>    
     <div class="row">   
 
@@ -145,8 +126,8 @@
                             @endforelse                                                    
                         </tbody>
                     </table> 
-                    <div class="col-12">
-                    {{$ambientes->links("pagination::bootstrap-4")}}
+                    <div class="d-flex hover justify-content-center">
+                    {{$ambientes->links()}}
                     </div>  
             </div>
         

@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>Plataforma</h1>
-@stop
-
 @section('content')
     <!--AddPlataformaModal-->
 
@@ -122,8 +118,8 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="col-12">                    
-                  {{$plataformas->links("pagination::bootstrap-4")}}                       
+            <div class="d-flex hover justify-content-center">                    
+                  {{$plataformas->links()}}                       
             </div>
         </div>
     </div>

@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>HOME</h1>
-@stop
-
 @section('content')
     <!--inicio AddRedeModal -->
 <div class="modal fade" id="AddRedeModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -184,8 +180,8 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="col-12">
-                {{$redes->links("pagination::bootstrap-4")}}
+            <div class="d-flex hover justify-content-center">
+                {{$redes->links()}}
             </div>
         </div>
     </div>

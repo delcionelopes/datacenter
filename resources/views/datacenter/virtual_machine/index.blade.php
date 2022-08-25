@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>Virtual Machines</h1>
-@stop
-
 @section('content')
    <!--Inicio AddVirtualMachineModal-->
 <div class="modal fade" id="AddVirtualMachineModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -349,8 +345,8 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="col-12">
-                {{$virtualmachines->links("pagination::bootstrap-4")}}
+            <div class="d-flex hover justify-content-center">
+                {{$virtualmachines->links()}}
                 <button type="button" class="fas fa-arrow-left" style="background: transparent;border: none;" onclick="history.back()"></button>
             </div>            
         </div>

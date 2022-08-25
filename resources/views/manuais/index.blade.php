@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>Manuais</h1>
-@stop
-
 @section('content')
    <!--AddManualForm-->
  <div class="modal fade" id="AddManualForm" tabindex="-1" role="dialog" aria-labelledby="titleModaLabel" aria-hidden="true">
@@ -200,7 +196,9 @@
                     @endforelse 
                 </tbody>
             </table>
-            {{$manuais->links("pagination::bootstrap-4")}}
+            <div class="d-flex hover justify-content-center">
+            {{$manuais->links()}}
+            </div>
         </div>
     </div>
 </div>

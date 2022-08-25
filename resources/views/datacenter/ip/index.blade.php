@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>IP</h1>
-@stop
-
 @section('content')
    <!--Inicion AddIPModal-->
 <div class="modal fade" id="AddIPModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -138,8 +134,8 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="col-12">
-                {{$cadastroIps->links("pagination::bootstrap-4")}}
+            <div class="d-flex hover justify-content-center">
+                {{$cadastroIps->links()}}
                 <button type="button" class="fas fa-arrow-left" style="background: transparent;border: none;" onclick="history.back()"></button>
             </div>
         </div>

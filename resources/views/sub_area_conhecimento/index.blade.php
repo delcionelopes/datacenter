@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>Sub-área do Conhecimento</h1>
-@stop
-
 @section('content')
     <!--AddSub_Area_Conhecimento-->
 <div class="modal fade" id="AddSub_Area_Conhecimento" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -140,7 +136,9 @@
                     @endforelse
                 </tbody>
             </table>
-            {{$sub_areas_conhecimento->links("pagination::bootstrap-4")}}
+            <div class="d-flex hover justify-content-center">
+            {{$sub_areas_conhecimento->links()}}
+            </div>
         </div>
     </div>
 </div>

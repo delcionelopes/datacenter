@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>VLAN</h1>
-@stop
-
 @section('content')
   <!--AddVlanModal-->
 
@@ -180,8 +176,8 @@
                             @endforelse                                                    
                         </tbody>
                     </table> 
-                    <div class="col-12">
-                    {{$vlans->links("pagination::bootstrap-4")}}
+                    <div class="d-flex hover justify-content-center">
+                    {{$vlans->links()}}
                     </div>  
             </div>
         

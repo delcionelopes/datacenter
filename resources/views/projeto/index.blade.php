@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>Projetos</h1>
-@stop
-
 @section('content')
     <!--AddProjetoModal-->
 
@@ -124,8 +120,8 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="col-12">
-                {{$projetos->links("pagination::bootstrap-4")}}
+            <div class="d-flex hover justify-content-center">
+                {{$projetos->links()}}
             </div>
         </div>
     </div>

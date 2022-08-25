@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>Bases</h1>
-@stop
-
 @section('content')
     <!--inicio AddBaseModal -->
 <div class="modal fade" id="AddBaseModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -262,8 +258,8 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="col-12">
-                {{$bases->links("pagination::bootstrap-4")}}
+            <div class="d-flex hover justify-content-center">
+                {{$bases->links()}}
                 <button type="button" class="fas fa-arrow-left" style="background: transparent;border: none;" onclick="history.back()"></button>
             </div>            
         </div>

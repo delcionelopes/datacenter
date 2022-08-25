@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>Cluster</h1>
-@stop
-
 @section('content')
     <!--AddClusterModal-->
 
@@ -217,8 +213,8 @@
                             @endforelse                                                    
                         </tbody>
                     </table> 
-                    <div class="col-12">
-                    {{$clusters->links("pagination::bootstrap-4")}}
+                    <div class="d-flex hover justify-content-center">
+                    {{$clusters->links()}}
                     </div>  
             </div>
         

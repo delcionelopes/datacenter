@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>Órgãos</h1>
-@stop
-
 @section('content')
     <!---AddOrgaoModal-->
 
@@ -141,8 +137,8 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="col-12">
-                {{$orgaos->links("pagination::bootstrap-4")}}
+            <div class="d-flex hover justify-content-center">
+                {{$orgaos->links()}}
             </div>
         </div>
     </div>

@@ -2,10 +2,6 @@
 
 @section('title', 'Datacenter')
 
-@section('content_header')
-    <h1>Área de Conhecimento</h1>
-@stop
-
 @section('content')
     <!--AddArea_ConhecimentoModal-->
 
@@ -121,7 +117,9 @@
                     @endforelse
                 </tbody>
             </table>
-            {{$areas_conhecimento->links("pagination::bootstrap-4")}}
+            <div class="d-flex hover justify-content-center">
+            {{$areas_conhecimento->links()}}
+            </div>
         </div>
     </div>
 </div>
