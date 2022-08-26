@@ -70,9 +70,7 @@
 <!--Fim EditIPModal-->
 <!--index-->
 <div class="container py-5">
-    <div id="success_message"></div>
-    <div class="row">
-        <div class="card-body">
+    <div id="success_message"></div>   
             <section class="border p-4 mb-4 d-flex align-items-left">
                 <form action="{{route('datacenter.ip.index',['id'=>$id])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
@@ -137,15 +135,13 @@
             <div class="d-flex hover justify-content-center">
                 {{$cadastroIps->links()}}
                 <button type="button" class="fas fa-arrow-left" style="background: transparent;border: none;" onclick="history.back()"></button>
-            </div>
-        </div>
-    </div>
+            </div>  
 </div>
 <!--Fim Index-->
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
 @stop
 
 @section('js')

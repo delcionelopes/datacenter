@@ -106,13 +106,8 @@
 <!--index-->
 
 <div class="container py-5"> 
-    <div id="success_message"></div>    
-    <div class="row">   
-
-    <div class="card-body">
-
-    <section class="border p-4 mb-4 d-flex align-items-left">
-    
+    <div id="success_message"></div> 
+    <section class="border p-4 mb-4 d-flex align-items-left">    
     <form action="{{route('datacenter.vlan.index')}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
@@ -179,17 +174,14 @@
                     <div class="d-flex hover justify-content-center">
                     {{$vlans->links()}}
                     </div>  
-            </div>
-        
-        </div>   
-    </div>        
+            </div>          
     
 </div> 
 <!--End Index-->
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
 @stop
 
 @section('js')

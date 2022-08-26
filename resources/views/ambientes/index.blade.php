@@ -67,9 +67,6 @@
 
 <div class="container py-5">   
     <div id="success_message"></div>    
-    <div class="row">   
-
-    <div class="card-body">
 
     <section class="border p-4 mb-4 d-flex align-items-left">
     
@@ -129,9 +126,7 @@
                     <div class="d-flex hover justify-content-center">
                     {{$ambientes->links()}}
                     </div>  
-            </div>
-        
-        </div>   
+   
     </div>        
     
 </div> 
@@ -139,7 +134,7 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
 @stop
 
 @section('js')

@@ -237,14 +237,15 @@ class ManualController extends Controller
 
     public function downloadFile($id){                      
         
+        dd('cheguei aqui!');
         $uploadmanual = Upload::find($id);                
-        $downloadPath = public_path('/storage/'.$uploadmanual->path_arquivo);                
-
+        $downloadPath = public_path('/storage/'.$uploadmanual->path_arquivo);  
+        
         $headers = [
             'HTTP/1.1 200 OK',
             'Pragma: public',
             'Content-Type: application/pdf'
-        ];                   
+        ];                  
         return response()->download($downloadPath,$uploadmanual->nome_arquivo,$headers);    
     }
 

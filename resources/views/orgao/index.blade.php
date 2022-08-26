@@ -81,8 +81,6 @@
 
 <div class="container py-5">
     <div id="success-message"></div>
-    <div class="row">
-        <div class="card-body">
             <section class="border p-4 mb-4 d-flex align-items-left">
                 <form action="{{route('admin.orgao.index')}}" class="form-search" method="GET">
                     <div class="col-sm-12">
@@ -139,8 +137,6 @@
             </table>
             <div class="d-flex hover justify-content-center">
                 {{$orgaos->links()}}
-            </div>
-        </div>
     </div>
 </div>
 
@@ -148,7 +144,7 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="/css/admin_custom.css">
+    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
 @stop
 
 @section('js')
