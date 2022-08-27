@@ -28,12 +28,12 @@ class ManualController extends Controller
     public function index(Request $request)
     {        
         if(is_null($request->pesquisa)){
-            $manuais = $this->manual->orderByDesc('id')->paginate(10);
+            $manuais = $this->manual->orderByDesc('id')->paginate(6);
         }else{
             $query = Manual::with('area_conhecimento')
             ->where('descricao','LIKE','%'.strtoupper($request->pesquisa.'%'));            
 
-            $manuais = $query->orderByDesc('id')->paginate(10);            
+            $manuais = $query->orderByDesc('id')->paginate(6);            
         }       
 
         $areas_conhecimento = Area_Conhecimento::all();

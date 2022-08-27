@@ -23,13 +23,13 @@ class RedeController extends Controller
     public function index(Request $request,$id)
     {        
         if(is_null($request->pesquisa)){
-            $redes = $this->rede->query()->where('vlan_id','=',$id)->orderByDesc('id')->paginate(5);
+            $redes = $this->rede->query()->where('vlan_id','=',$id)->orderByDesc('id')->paginate(6);
         }else{
             $query = $this->rede->query()
                    ->where('vlan_id','=',$id)
                    ->where('nome_rede','LIKE','%'.strtoupper($request->pesquisa).'%')
                    ->orderByDesc('id');            
-            $redes = $query->paginate(5);                        
+            $redes = $query->paginate(6);                        
         }                    
         $vlan = Vlan::find($id);
         return view('datacenter.rede.index',[

@@ -29,12 +29,12 @@ class AppController extends Controller
     public function index(Request $request, $id)
     {
         if(is_null($request->pesquisa)){
-            $apps = $this->app->query()->where('base_id','=',$id)->orderByDesc('id')->paginate(5);
+            $apps = $this->app->query()->where('base_id','=',$id)->orderByDesc('id')->paginate(6);
         }else{
             $query = $this->app->query()
                           ->where('base_id','=',$id)
                           ->where('nome_app','LIKE','%'.strtoupper($request->pesquisa).'%');
-            $apps = $query->orderByDesc('id')->paginate(5);
+            $apps = $query->orderByDesc('id')->paginate(6);
         }
         
         $bd = $this->base->find($id);

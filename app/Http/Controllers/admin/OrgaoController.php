@@ -20,11 +20,11 @@ class OrgaoController extends Controller
     public function index(Request $request)
     {        
         if(is_null($request->pesquisanome)){
-            $orgaos = $this->orgao->orderByDesc('id')->paginate(10);
+            $orgaos = $this->orgao->orderByDesc('id')->paginate(6);
         }else{            
             $query = $this->orgao->query()
             ->where('nome','LIKE','%'.strtoupper($request->pesquisanome).'%');            
-            $orgaos = $query->orderByDesc('id')->paginate(10);
+            $orgaos = $query->orderByDesc('id')->paginate(6);
             
         }
         return view('orgao.index',compact('orgaos'));

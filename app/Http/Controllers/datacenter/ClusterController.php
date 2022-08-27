@@ -23,13 +23,15 @@ class ClusterController extends Controller
     public function index(Request $request)
     {
         if(is_null($request->pesquisa)){
-            $clusters = $this->cluster->orderByDesc('id')->paginate(5);
+            $clusters = $this->cluster->orderByDesc('id')->paginate(6);
         }else{
             $query = $this->cluster->query()
             ->where('nome_cluster','LIKE','%'.strtoupper($request->pesquisa).'%');
-            $clusters = $query->orderByDesc('id')->paginate(5);
+            $clusters = $query->orderByDesc('id')->paginate(6);
         }        
-        return view('datacenter.cluster.index',compact('clusters'));
+        return view('datacenter.cluster.index',[
+            'clusters' => $clusters,
+        ]);
     }
 
     
@@ -54,7 +56,7 @@ class ClusterController extends Controller
         if($validator->fails()){
             return response()->json([
                 'status' => 400,
-                'errors' => $validator->errors()->getMessage(),
+                'errors' => $validator->errors()->getMessages(),
             ]);
         }else{       
             $timestamps = $this->cluster->timestamps;
@@ -109,7 +111,7 @@ class ClusterController extends Controller
         if($validator->fails()){
             return response()->json([
                 'status' => 400,
-                'errors' => $validator->errors()->getMessage(),
+                'errors' => $validator->errors()->getMessages(),
             ]);
         }else{
             $timestamps = $this->cluster->timestamps;

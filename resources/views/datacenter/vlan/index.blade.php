@@ -141,7 +141,7 @@
                                 <td>
                                     @if($vlan->redes()->count())
                                     <form action="{{route('datacenter.rede.index',['id' => $vlan->id])}}" method="get">
-                                        <button type="submit" data-id="{{$vlan->id}}" class="list_rede_btn fas fa-gears" style="background: transparent;border:none;color:green;"> {{$vlan->redes()->count()}}</button>
+                                        <button type="submit" data-id="{{$vlan->id}}" class="list_rede_btn fas fa-network-wired" style="background: transparent;border:none;color:green;"> {{$vlan->redes()->count()}}</button>
                                     </form>
                                     @else
                                         <button type="button" data-id="{{$vlan->id}}" class="nova_rede_btn fas fa-folder" style="background: transparent;border:none;color:orange;"></button>

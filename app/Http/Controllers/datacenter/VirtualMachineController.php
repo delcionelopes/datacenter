@@ -29,13 +29,13 @@ class VirtualMachineController extends Controller
     public function index(Request $request,$id)
     {      
         if(is_null($request->pesquisa)){                    
-            $virtualmachines = $this->virtualmachine->query()->where('cluster_id','=',$id)->orderByDesc('id')->paginate(5);        
+            $virtualmachines = $this->virtualmachine->query()->where('cluster_id','=',$id)->orderByDesc('id')->paginate(6);        
         }else{            
             if($request->pesquisa){
             $query = $this->virtualmachine->query()
                    ->where('nome_vm','LIKE','%'.strtoupper($request->pesquisa).'%')
                    ->where('cluster_id','=',$id);
-            $virtualmachines = $query->orderByDesc('id')->paginate(5);
+            $virtualmachines = $query->orderByDesc('id')->paginate(6);
             }else{                
                 $vlan = $this->vlan->whereId($request->vlanid)->first();                
                 $virtualmachines = $vlan->virtual_machines()->paginate(5); 

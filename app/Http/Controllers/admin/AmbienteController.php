@@ -19,12 +19,12 @@ class AmbienteController extends Controller
     public function index(Request $request)    
     {                         
         if(is_null($request->nome)){
-            $ambientes = $this->ambiente->orderByDesc('id')->paginate(10);
+            $ambientes = $this->ambiente->orderByDesc('id')->paginate(6);
         }else{                                                
             $query = $this->ambiente->query()
                      ->where('nome_ambiente','LIKE','%'.strtoupper($request->nome).'%');                     
             
-            $ambientes = $query->orderByDesc('id')->paginate(10);            
+            $ambientes = $query->orderByDesc('id')->paginate(6);            
             
         }                           
         return view('ambientes.index',[

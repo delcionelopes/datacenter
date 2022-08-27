@@ -166,7 +166,7 @@
                                     <div class="btn-group">                                        
                                         @if($cluster->hosts->count())
                                         <form action="{{route('datacenter.host.index',['id' => $cluster->id])}}" method="get">
-                                        <button type="submit" data-id="{{$cluster->id}}" class="list_host_btn fas fa-gears" style="background: transparent;border:none;color: green;">  {{$cluster->hosts->count()}}</button>
+                                        <button type="submit" data-id="{{$cluster->id}}" class="list_host_btn fas fa-server" style="background: transparent;border:none;color: green;"> {{$cluster->hosts->count()}}</button>
                                         </form>
                                         @else
                                         <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>
@@ -177,7 +177,7 @@
                                     <div class="btn-group">                                        
                                         @if($cluster->virtual_machines->count())
                                         <form action="{{route('datacenter.vm.index',['id' => $cluster->id])}}" method="get">
-                                        <button type="submit" data-id="{{$cluster->id}}" class="list_vm_btn fas fa-network-wired" style="background: transparent;border:none;color: green;">  {{$cluster->virtual_machines->count()}}</button>
+                                        <button type="submit" data-id="{{$cluster->id}}" class="list_vm_btn fas fa-network-wired" style="background: transparent;border:none;color: green;"> {{$cluster->virtual_machines->count()}}</button>
                                         </form>
                                         @else
                                         <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>

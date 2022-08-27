@@ -145,8 +145,10 @@
                 </tbody>
             </table>
             <div class="d-flex hover justify-content-center">
-                {{$hosts->links()}}
-                <button type="button" class="fas fa-arrow-left" style="background: transparent;border: none;" onclick="history.back()"></button>
+                {{$hosts->links()}}               
+            </div>
+            <div>
+                <button type="button" class="fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()"></button>
             </div>
         
 </div>

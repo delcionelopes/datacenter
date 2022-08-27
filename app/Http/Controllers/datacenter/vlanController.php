@@ -22,11 +22,11 @@ class vlanController extends Controller
     public function index(Request $request)
     {
         if(is_null($request->pesquisa)){
-            $vlans = $this->vlan->orderByDesc('id')->paginate(5);
+            $vlans = $this->vlan->orderByDesc('id')->paginate(6);
         }else{
             $query = $this->vlan->query()
                    ->where('nome_vlan','LIKE','%'.strtoupper($request->pesquisa).'%');
-            $vlans = $query->orderByDesc('id')->paginate(5);
+            $vlans = $query->orderByDesc('id')->paginate(6);
         }
         return view('datacenter.vlan.index',[
             'vlans' => $vlans,

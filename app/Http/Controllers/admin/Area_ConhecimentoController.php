@@ -19,11 +19,11 @@ class Area_ConhecimentoController extends Controller
     public function index(Request $request)
     {
         if(is_null($request->nomepesquisa)){
-            $areas_conhecimento = $this->area_conhecimento->orderByDesc('id')->paginate(10);
+            $areas_conhecimento = $this->area_conhecimento->orderByDesc('id')->paginate(6);
         }else{            
             $query = $this->area_conhecimento->query()
             ->where('descricao','LIKE','%'.strtoupper($request->nomepesquisa).'%');
-            $areas_conhecimento = $query->orderByDesc('id')->paginate(10);
+            $areas_conhecimento = $query->orderByDesc('id')->paginate(6);
         }
         return view('area_conhecimento.index',compact('areas_conhecimento'));
     }

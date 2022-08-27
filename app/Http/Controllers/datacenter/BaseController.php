@@ -25,12 +25,12 @@ class BaseController extends Controller
     public function index(Request $request,$id)
     {
         if(is_null($request->pesquisa)){
-            $bases = $this->base->query()->where('virtual_machine_id','=',$id)->orderByDesc('id')->paginate(5);
+            $bases = $this->base->query()->where('virtual_machine_id','=',$id)->orderByDesc('id')->paginate(6);
         }else{
             $query = $this->base->query()
                           ->where('virtual_machine_id','=',$id)
                           ->where('nome_base','LIKE','%'.strtoupper($request->pesquisa).'%');
-            $bases = $query->orderByDesc('id')->paginate(5);              
+            $bases = $query->orderByDesc('id')->paginate(6);              
         }        
         $vm = VirtualMachine::find($id);
         $projetos = Projeto::all();

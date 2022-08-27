@@ -22,13 +22,13 @@ class CadastroIpController extends Controller
             $cadastroIps = $this->cadastroIp->query()
                                              ->where('rede_id','=',$id)
                                              ->orderByDesc('id')
-                                             ->paginate(10);
+                                             ->paginate(6);
         }else{
             $query = $this->cadastroIp->query()
                                       ->where('rede_id','=',$id) 
                                       ->where('ip','LIKE',$request->pesquisa);
             $cadastroIps = $query->orderByDesc('id')
-                                 ->paginate(10);
+                                 ->paginate(6);
         }      
         $vlan_id = Rede::find($id)->vlan_id;    
         return view('datacenter.ip.index',[

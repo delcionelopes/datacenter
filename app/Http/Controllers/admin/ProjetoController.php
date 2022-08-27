@@ -21,11 +21,11 @@ class ProjetoController extends Controller
     public function index(Request $request)
     {
         if(is_null($request->pesquisanome)){
-            $projetos = $this->projeto->orderByDesc('id')->paginate(10);
+            $projetos = $this->projeto->orderByDesc('id')->paginate(6);
         }else{
             $query = $this->projeto->query()
             ->where('nome_projeto','LIKE','%'.strtoupper($request->pesquisanome.'%'));
-            $projetos = $query->orderByDesc('id')->paginate(10);
+            $projetos = $query->orderByDesc('id')->paginate(6);
         }
         return view('projeto.index',compact('projetos'));
     }

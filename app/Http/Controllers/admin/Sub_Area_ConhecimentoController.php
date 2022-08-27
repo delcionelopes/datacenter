@@ -20,11 +20,11 @@ class Sub_Area_ConhecimentoController extends Controller
     public function index(Request $request)
     {
         if(is_null($request->nomepesquisa)){
-            $sub_areas_conhecimento = $this->sub_area_conhecimento->orderByDesc('id')->paginate(10);
+            $sub_areas_conhecimento = $this->sub_area_conhecimento->orderByDesc('id')->paginate(6);
         }else{
             $query = Sub_Area_Conhecimento::with('area_conhecimento')
             ->where('descricao','LIKE','%'.strtoupper($request->nomepesquisa).'%');
-            $sub_areas_conhecimento = $query->orderByDesc('id')->paginate(10);
+            $sub_areas_conhecimento = $query->orderByDesc('id')->paginate(6);
         }
             $areas_conhecimento = Area_Conhecimento::all();
             

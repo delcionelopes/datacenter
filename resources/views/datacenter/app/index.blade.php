@@ -182,9 +182,9 @@
                         <td>{{$app->nome_app}}</td>
                         <td>{{$app->dominio}}</td>
                         @if($app->https)
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>
                         @else
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>
                         @endif
                         @if(is_null($app->created_at))
                         <td></td>
@@ -211,7 +211,9 @@
                 </tbody>
             </table>
             <div class="d-flex hover justify-content-center">
-                {{$apps->links()}}
+                {{$apps->links()}}                
+            </div>
+            <div>
                 <button type="button" class="fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()"></button>
             </div>
         

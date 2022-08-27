@@ -20,12 +20,12 @@ class HostController extends Controller
     public function index(Request $request,$id)
     {             
         if(is_null($request->pesquisa)){            
-            $hosts = $this->host->query()->where('cluster_id','=',$id)->orderByDesc('id')->paginate(5);
+            $hosts = $this->host->query()->where('cluster_id','=',$id)->orderByDesc('id')->paginate(6);
         }else{            
             $query = $this->host->query()
                      ->where('cluster_id','=',$id)
                      ->where('datacenter','LIKE','%'.strtoupper($request->pesquisa).'%');
-            $hosts = $query->orderByDesc('id')->paginate(5);            
+            $hosts = $query->orderByDesc('id')->paginate(6);            
         }                    
         $cluster = Cluster::find($id);            
 

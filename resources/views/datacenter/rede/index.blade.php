@@ -147,7 +147,7 @@
                             <div class="btn-group">
                                 @if($rede->cadastro_ips->count())
                                 <form action="{{route('datacenter.ip.index',['id' => $rede->id])}}" method="get">
-                                    <button type="submit" data-id="{{$rede->id}}" class="list_ip_btn fas fa-gears" style="background: transparent;border: none;color:green;"> {{$rede->cadastro_ips->count()}}</button>
+                                    <button type="submit" data-id="{{$rede->id}}" class="list_ip_btn fas fa-network-wired" style="background: transparent;border: none;color:green;"> {{$rede->cadastro_ips->count()}}</button>
                                 </form>
                                 @else
                                 <button type="button" data-id="{{$rede->id}}" data-nomerede="{{$rede->nome_rede}}" class="novo_ip_btn fas fa-folder" style="background: transparent;border: none;color: orange;"></button>

@@ -104,7 +104,7 @@
                         <td>{{$ip->ip}}</td>
                         <td><a href="{{route('datacenter.rede.index',['id' => $vlan_id])}}">{{$ip->rede->nome_rede}}</a></td>
                         @if($ip->status=="OCUPADO")
-                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="LIVRE" class="status_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>
+                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>
                         @else
                         <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="OCUPADO" class="status_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>
                         @endif                                                
@@ -133,9 +133,11 @@
                 </tbody>
             </table>
             <div class="d-flex hover justify-content-center">
-                {{$cadastroIps->links()}}
-                <button type="button" class="fas fa-arrow-left" style="background: transparent;border: none;" onclick="history.back()"></button>
+                {{$cadastroIps->links()}}                
             </div>  
+            <div>
+                <button type="button" class="fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()"></button>
+            </div>
 </div>
 <!--Fim Index-->
 @stop

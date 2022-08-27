@@ -344,9 +344,11 @@
                 </tbody>
             </table>
             <div class="d-flex hover justify-content-center">
-                {{$virtualmachines->links()}}
-                <button type="button" class="fas fa-arrow-left" style="background: transparent;border: none;" onclick="history.back()"></button>
+                {{$virtualmachines->links()}}               
             </div>          
+            <div>
+                <button type="button" class="fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()"></button>
+            </div>
 </div>
 <!--Fim Index-->
 @stop

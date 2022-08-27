@@ -20,11 +20,11 @@ class PlataformaController extends Controller
     public function index(Request $request)
     {
         if(is_null($request->pesquisanome)){
-            $plataformas = $this->plataforma->orderByDesc('id')->paginate(10);            
+            $plataformas = $this->plataforma->orderByDesc('id')->paginate(6);            
         }else{
             $query = $this->plataforma->query()
             ->where('nome_plataforma','LIKE','%'.strtoupper($request->pesquisanome.'%'));
-            $plataformas = $query->orderByDesc('id')->paginate(10);
+            $plataformas = $query->orderByDesc('id')->paginate(6);
         }
         return view('plataforma.index',compact('plataformas'));
     }

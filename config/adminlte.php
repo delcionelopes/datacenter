@@ -167,12 +167,12 @@ return [
     |
     */
 
-    'classes_auth_card' => 'card-outline card-primary',
+    'classes_auth_card' => 'card-outline card-success',
     'classes_auth_header' => '',
     'classes_auth_body' => '',
     'classes_auth_footer' => '',
     'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_btn' => 'btn-flat btn-success',
 
     /*
     |--------------------------------------------------------------------------
@@ -192,7 +192,7 @@ return [
     'classes_content_wrapper' => '',
     'classes_content_header' => '',
     'classes_content' => '',
-    'classes_sidebar' => 'sidebar-dark-primary elevation-4',
+    'classes_sidebar' => 'sidebar-light elevation-4',
     'classes_sidebar_nav' => '',
     'classes_topnav' => 'navbar-white navbar-light',
     'classes_topnav_nav' => 'navbar-expand',
@@ -253,7 +253,7 @@ return [
     */
 
     'use_route_url' => false,
-    'dashboard_url' => 'home',
+    'dashboard_url' => '/',
     'logout_url' => 'logout',
     'login_url' => 'login',
     'register_url' => 'register',
@@ -313,43 +313,43 @@ return [
                     'text' => 'Órgãos',
                     'route'  => 'admin.orgao.index',
                     'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'white',
+                    'icon_color' => 'gray',
                 ],
                 [
                     'text' => 'Ambientes',
                     'route'  => 'admin.ambiente.index',
                     'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'white',
+                    'icon_color' => 'gray',
                 ],
                 [
                     'text' => 'Plataformas',
                     'route'  => 'admin.plataforma.index',
                     'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'white',
+                    'icon_color' => 'gray',
                 ],
                 [
                     'text' => 'Projetos',
                     'route'  => 'admin.projeto.index',
                     'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'white',
+                    'icon_color' => 'gray',
                 ],                
                 [
                     'text' => 'Áreas',
                     'route'  => 'admin.areaconhecimento.index',
                     'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'white',
+                    'icon_color' => 'gray',
                 ],
                 [
                     'text' => 'Sub-Áreas',
                     'route'  => 'admin.subareaconhecimento.index',
                     'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'white',
+                    'icon_color' => 'gray',
                 ],
                 [
                     'text' => 'Manuais',
                     'route'  => 'admin.manual.index',
                     'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'white',
+                    'icon_color' => 'gray',
                 ],                
             ],
         ],
@@ -404,36 +404,36 @@ return [
 
     'plugins' => [
         'Datatables' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/jquery.dataTables.min.js',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/js/dataTables.bootstrap4.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdn.datatables.net/1.10.19/css/dataTables.bootstrap4.min.css',
                 ],
             ],
         ],
         'Select2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/js/select2.min.js',
                 ],
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/select2/4.0.3/css/select2.css',
                 ],
             ],
@@ -459,20 +459,20 @@ return [
             ],
         ],
         'Pace' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'css',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/themes/blue/pace-theme-center-radar.min.css',
                 ],
                 [
                     'type' => 'js',
-                    'asset' => false,
+                    'asset' => true,
                     'location' => '//cdnjs.cloudflare.com/ajax/libs/pace/1.0.2/pace.min.js',
                 ],
             ],
-        ],
+        ],       
     ],
 
     /*
@@ -490,13 +490,13 @@ return [
 
     'iframe' => [
         'default_tab' => [
-            'url' => null,
-            'title' => null,
+            'url' => 'datacenter/index-cluster',
+            'title' => 'Clusters/Hosts/VM/BD/APP',
         ],
         'buttons' => [
-            'close' => true,
-            'close_all' => true,
-            'close_all_other' => true,
+            'close' => false,
+            'close_all' => false,
+            'close_all_other' => false,
             'scroll_left' => true,
             'scroll_right' => true,
             'fullscreen' => true,

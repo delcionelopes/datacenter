@@ -1,9 +1,9 @@
-@extends('adminlte::page')
+@extends('adminlte::page',['iFrameEnabled' => true])
 
 @section('title', 'Datacenter')
 
 @section('content_header')
-    <h1>HOME</h1>
+    <h1>OLÁ!</h1>
 @stop
 
 @section('content')
