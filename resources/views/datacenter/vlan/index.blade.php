@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('content')
+@section('body')
   <!--AddVlanModal-->
 
 <div class="modal fade" id="AddVlanModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -178,10 +178,6 @@
     
 </div> 
 <!--End Index-->
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
 @stop
 
 @section('js')

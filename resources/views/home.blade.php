@@ -11,9 +11,10 @@
 @stop
 
 @section('css')
-    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
+    <link rel="stylesheet" href="/css/admin_custom.css">
 @stop
 
 @section('js')
     <script> console.log('Hi!'); </script>
 @stop
+

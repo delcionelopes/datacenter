@@ -2,8 +2,8 @@
 
 @section('title', 'Datacenter')
 
-@section('content')
-   <!--Inicion AddIPModal-->
+@section('body')
+   <!--Inicio AddIPModal-->
 <div class="modal fade" id="AddIPModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -140,10 +140,6 @@
             </div>
 </div>
 <!--Fim Index-->
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
 @stop
 
 @section('js')

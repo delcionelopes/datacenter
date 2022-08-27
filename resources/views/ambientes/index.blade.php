@@ -3,7 +3,7 @@
 @section('title', 'Ambientes')
 
 
-@section('content')
+@section('body')
    <!--AddAmbienteModal-->
 
 <div class="modal fade" id="AddAmbienteModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -133,11 +133,8 @@
 <!--End Index-->
 @stop
 
-@section('css')
-    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
-@stop
-
 @section('js')
+
 <script type="text/javascript">
 
     $(document).ready(function(){         

@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('content')
+@section('body')
     <!--inicio AddRedeModal -->
 <div class="modal fade" id="AddRedeModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -183,10 +183,6 @@
             </div>      
 </div>
 <!--End Index -->
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
 @stop
 
 @section('js')

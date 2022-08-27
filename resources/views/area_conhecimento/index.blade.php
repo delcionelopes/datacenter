@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('content')
+@section('body')
     <!--AddArea_ConhecimentoModal-->
 
 <div class="modal fade" id="AddArea_ConhecimentoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -121,10 +121,6 @@
     </div>
 </div>
 <!--fim Index-->
-@stop
-
-@section('css')
-    <link rel="stylesheet" href="vendor/adminlte/dist/css/adminlte.min.css">
 @stop
 
 @section('js')
