@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
    <!--Inicio AddVirtualMachineModal-->
 <div class="modal fade" id="AddVirtualMachineModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -271,27 +271,24 @@
                     </div>
             </form>    
             </section>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>                        
-                        <th>VM</th>
-                        <th>IP</th>
-                        <th>CPU</th>
-                        <th>MEMÓRIA</th>
-                        <th>DISCO(s)</th>
-                        <th>VLAN(s)</th>
-                        <th>BASE(s)</th>
-                        <th>ORGÃO</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th> 
-                        <th>AÇÕES</th>                       
+                        <th scope="col">VM</th>
+                        <th scope="col">IP</th>
+                        <th scope="col">CPU</th>
+                        <th scope="col">MEMÓRIA</th>
+                        <th scope="col">DISCO(s)</th>
+                        <th scope="col">VLAN(s)</th>
+                        <th scope="col">BASE(s)</th>                                         
+                        <th scope="col">AÇÕES</th>                       
                     </tr>                    
                 </thead>
                 <tbody id="lista_VM">
                 <tr id="novo" style="display:none;"></tr>
                     @forelse($virtualmachines as $vm)
                     <tr id="vm{{$vm->id}}">                        
-                        <td>{{$vm->nome_vm}}</td>
+                        <th scope="row">{{$vm->nome_vm}}</th>
                         <td>{{$vm->ip}}</td>
                         <td>{{$vm->cpu}}</td>
                         <td>{{$vm->memoria}}</td>
@@ -318,18 +315,7 @@
                                     <button type="button" data-id="{{$vm->id}}" data-nome_vm="{{$vm->nome_vm}}" class="nova_base_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button> 
                                 @endif                             
                             </div>
-                        </td>
-                        <td></td>
-                        @if(is_null($vm->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($vm->created_at))}}</td>
-                        @endif
-                        @if(is_null($vm->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($vm->updated_at))}}</td>
-                        @endif
+                        </td>                       
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-id="{{$vm->id}}" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>
@@ -568,22 +554,12 @@
                         $('editform').trigger('reset');
                         $('#EditVirtualMachineModal').modal('hide');
     
-                        //atualizando a tr da table html
-                        var datacriacao = new Date(response.virtualmachine.created_at);
-                            datacriacao = datacriacao.toLocaleString("pt-BR");
-                        if(datacriacao=='31/12/1969 21:00:00'){
-                            datacriacao = "";
-                        }
-                        var dataatualizacao = new Date(response.virtualmachine.updated_at);
-                            dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
-                        if(dataatualizacao=='31/12/1969 21:00:00'){
-                            dataatualizacao = "";
-                        }                    
+                        //atualizando a tr da table html                                     
     
                         var linha1 = "";                        
                             linha2 = "";
                             linha1 = '<tr id="vm'+response.virtualmachine.id+'">\
-                            <td>'+response.virtualmachine.nome_vm+'</td>\
+                            <th scope="row">'+response.virtualmachine.nome_vm+'</th>\
                             <td>'+response.virtualmachine.ip+'</td>\
                             <td>'+response.virtualmachine.cpu+'</td>\
                             <td>'+response.virtualmachine.memoria+'</td>\
@@ -611,9 +587,6 @@
                                 </div>\
                             </td>\
                             <td>'+response.virtualmachine.ambiente.nome_ambiente+'</td>\
-                            <td>'+response.virtualmachine.orgao.nome+'</td>\
-                            <td>'+datacriacao+'</td>\
-                            <td>'+dataatualizacao+'</td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.virtualmachine.id+'" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>\
@@ -691,19 +664,14 @@
                         $('$success_message').text(response.message);
                         $('#addform').trigger('reset');
                         $('#AddVirtualMachineModal').modal('hide');
-                        //inclui uma linha nova na tabela html
-                        var datacriacao = new Date(response.virtualmachine.created_at);
-                            datacriacao = datacriacao.toLocaleString("pt-BR");
-                        if(datacriacao=='31/12/1969 21:00:00'){
-                            datacriacao = "";
-                        }                                      
+                        //inclui uma linha nova na tabela html                                                          
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";                        
                         var linha2 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
                             linha1 = '<tr id="vm'+response.virtualmachine.id+'">\
-                            <td>'+response.virtualmachine.nome_vm+'</td>\
+                            <th scope="row">'+response.virtualmachine.nome_vm+'</th>\
                             <td>'+response.virtualmachine.ip+'</td>\
                             <td>'+response.virtualmachine.cpu+'</td>\
                             <td>'+response.virtualmachine.memoria+'</td>\
@@ -731,9 +699,6 @@
                                 </div>\
                             </td>\
                             <td>'+response.virtualmachine.ambiente.nome_ambiente+'</td>\
-                            <td>'+response.virtualmachine.orgao.nome+'</td>\
-                            <td>'+datacriacao+'</td>\
-                            <td></td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.virtualmachine.id+'" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>\

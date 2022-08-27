@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
    <!--AddManualForm-->
  <div class="modal fade" id="AddManualForm" tabindex="-1" role="dialog" aria-labelledby="titleModaLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -141,22 +141,20 @@
                     </div>
                 </form>
             </section>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>MANUAIS</th>
-                        <th>AREAS REF</th>
-                        <th>ARQUIVO</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th>
-                        <th>AÇÕES</th>
+                        <th scope="col">MANUAIS</th>
+                        <th scope="col">AREAS REF</th>
+                        <th scope="col">ARQUIVO</th>                        
+                        <th scope="col">AÇÕES</th>
                     </tr>
                 </thead>
                 <tbody id="lista_manual">  
                 <tr id="novo" style="display:none;"></tr>                  
                     @forelse($manuais as $manual)
                     <tr id="man{{$manual->id}}">                       
-                        <td>{{$manual->descricao}}</td>
+                        <th scope="row">{{$manual->descricao}}</th>
                         <td>{{$manual->area_conhecimento->descricao}}</td>
                         <td id="uploads{{$manual->id}}">
                         <label id="files{{$manual->id}}">Files: {{$manual->uploads->count()}} </label><button type="button" id="upload_files_btn" data-manualid="{{$manual->id}}" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>    
@@ -169,17 +167,7 @@
                             <br>
                             @endforeach
                         @endif    
-                        </td>
-                        @if(is_null($manual->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($manual->created_at))}}</td>
-                        @endif
-                        @if(is_null($manual->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($manual->updated_at))}}</td>
-                        @endif
+                        </td>                       
                         <td>
                             <div class="btn-group">
                                 <button data-id="{{$manual->id}}" class="edit_manual_btn fas fa-edit" style="background: transparent;border: none;"></button>
@@ -343,24 +331,12 @@
     
                         $('#editmyform').trigger('reset');
                         $('#EditManualForm').modal('hide');
-    
-                        //atualizando a tr da tabela html
-                        var datacriacao = new Date(response.manual.created_at);
-                            datacriacao = datacriacao.toLocaleString("pt-BR");
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }
-                            var dataatualizacao = new Date(response.manual.updated_at);
-                                dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
-                            if(dataatualizacao=="31/12/1969 21:00:00"){
-                                dataatualizacao = "";                            
-                            }
+                            //atualizando a tr da tabela html
+                       
                         var linha = '<tr id="man'+response.manual.id+'">\
-                                    <td>'+response.manual.descricao+'</td>\
+                                    <th scope="row">'+response.manual.descricao+'</th>\
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td id="uploads'+response.manual.id+'"></td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td>'+dataatualizacao+'</td>\
                                     <td>\
                                     <div class="btn-group">\
                                     <button type="button" data-id="'+response.manual.id+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
@@ -424,22 +400,15 @@
                         $('#myform').trigger('reset');
                         $('#AddManualForm').modal('hide');
     
-                        //atualizando a tr da tabela html
-                        var datacriacao = new Date(response.manual.created_at);
-                            datacriacao = datacriacao.toLocaleString("pt-BR");
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }                        
+                        //atualizando a tr da tabela html                                   
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
                             linha1 = '<tr id="man'+response.manual.id+'">\
-                                    <td>'+response.manual.descricao+'</td>\
+                                    <th scope="row">'+response.manual.descricao+'</th>\
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td id="uploads'+response.manual.id+'"></td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td></td>\
                                     <td>\
                                     <div class="btn-group">\
                                     <button type="button" data-id="'+response.manual.id+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none;"></button>\
@@ -624,7 +593,7 @@
     
     ///fim tratamento dos uploads e downloads
     
-    });//fim do escopo geral
+    //fim do escopo geral
     
     </script>
 @stop

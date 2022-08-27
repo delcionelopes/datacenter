@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
    <!--Inicio AddIPModal-->
 <div class="modal fade" id="AddIPModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -86,38 +86,26 @@
                     </div>
                 </form>
             </section>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>                        
-                        <th>IP</th>
-                        <th>REDE</th>
-                        <th>STATUS</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th> 
-                        <th>AÇÕES</th>                       
+                        <th scope="col">IP</th>
+                        <th scope="col">REDE</th>
+                        <th scope="col">STATUS</th>                    
+                        <th scope="col">AÇÕES</th>                       
                     </tr>                    
                 </thead>
                 <tbody id="lista_ips">
                     <tr id="novo" style="display: none;"></tr>    
                     @forelse($cadastroIps as $ip)
                     <tr id="ip{{$ip->id}}">                        
-                        <td>{{$ip->ip}}</td>
+                        <th scope="row">{{$ip->ip}}</th>
                         <td><a href="{{route('datacenter.rede.index',['id' => $vlan_id])}}">{{$ip->rede->nome_rede}}</a></td>
                         @if($ip->status=="OCUPADO")
                         <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>
                         @else
                         <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="OCUPADO" class="status_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>
-                        @endif                                                
-                        @if(is_null($ip->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($ip->created_at))}}</td>
-                        @endif
-                        @if(is_null($ip->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($ip->updated_at))}}</td>
-                        @endif
+                        @endif                       
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-id="{{$ip->id}}" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none;"></button>
@@ -273,16 +261,7 @@
                         $('#EditIPModal').modal('hide');
     
                         //atualizando a tr da table html
-                        var datacriacao = new Date(response.cadastroIp.created_at);
-                            datacriacao = datacriacao.toLocaleString("pt-BR");
-                        if(datacriacao=='31/12/1969 21:00:00'){
-                            datacriacao = "";
-                        }
-                        var dataatualizacao = new Date(response.cadastroIp.updated_at);
-                            dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
-                        if(dataatualizacao=='31/12/1969 21:00:00'){
-                            dataatualizacao = "";                    
-                        }                    
+                      
                         var linha0 = "";
                         var linha1 = "";
                         var linha2 = "";
@@ -295,11 +274,9 @@
                             linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="LIVRE" class="status_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>';
                             }else{
                             linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="OCUPADO" class="status_btn fas fa-checked" style="background: transparent; color: green; border: none;"></button></td>';
-                            }                        
-                            //<td>'+response.cadastroIp.status+'</td>\
-                            linha4 = '<td>'+datacriacao+'</td>\
-                            <td>'+dataatualizacao+'</td>\
-                            <td>\
+                            }                       
+                           
+                            linha4 = '<td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.cadastroIp.id+'" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none;"></button>\
                                     <button type="button" data-id="'+response.cadastroIp.id+'" data-enderecoip="'+response.cadastroIp.ip+'" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none;"></button>\
@@ -360,11 +337,7 @@
                         $('#AddIPModal').modal('hide');
     
                         //adiciona a linha na tabela html
-                        var datacriacao = new Date(response.cadastroIp.created_at);
-                            datacriacao = datacriacao.toLocaleString("pt-BR");
-                        if(datacriacao=='31/12/1969 21:00:00'){
-                            datacriacao = "";
-                        }                     
+                                        
                         var linhaalfa = "";
                         var linha0 = "";
                         var linha1 = "";
@@ -373,17 +346,14 @@
                         var linha4 = "";
                             linhaalfa = '<tr id="novo" style="display: none;"></tr>';
                             linha1 = '<tr id="ip'+response.cadastroIp.id+'">\
-                            <td>'+response.cadastroIp.ip+'</td>\
+                            <th scope="row">'+response.cadastroIp.ip+'</th>\
                             <td>'+'<a href="'+meulink+'">'+response.rede.nome_rede+'</a></td>';
                             if(response.cadastroIp.status=="OCUPADO"){
                             linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="LIVRE" class="status_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>';
                             }else{
                             linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="OCUPADO" class="status_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>';
-                            }                        
-                            //<td>'+response.cadastroIp.status+'</td>\
-                            linha4 = '<td>'+datacriacao+'</td>\
-                            <td></td>\
-                            <td>\
+                            }                            
+                            linha4 = '<td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.cadastroIp.id+'" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none;"></button>\
                                     <button type="button" data-id="'+response.cadastroIp.id+'" data-enderecoip="'+response.cadastroIp.ip+'" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none;"></button>\

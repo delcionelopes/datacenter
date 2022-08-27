@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
     <!--AddProjetoModal-->
 
 <div class="modal fade" id="AddProjetoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -80,12 +80,10 @@
                     </div>                    
                 </form>                                
             </section>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>PROJETOS</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th>
+                        <th>PROJETOS</th>                       
                         <TH>AÇÕES</TH>
                     </tr>
                 </thead>
@@ -93,17 +91,7 @@
                 <tr id="novo" style="display:none;"></tr>
                     @forelse($projetos as $projeto)
                     <tr id="projeto{{$projeto->id}}">
-                        <td>{{$projeto->nome_projeto}}</td>
-                        @if(is_null($projeto->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($projeto->created_at))}}</td>
-                        @endif
-                        @if(is_null($projeto->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($projeto->updated_at))}}</td>
-                        @endif
+                        <th scope="row">{{$projeto->nome_projeto}}</th>                       
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-id="{{$projeto->id}}" class="edit_projeto fas fa-edit" style="background: transparent;border: none;"></button>
@@ -241,25 +229,11 @@
                             $('.update_projeto').text("Atualizado");
     
                             $('#myform').trigger('reset');
-                            $('#EditProjetoModal').modal('hide');
-    
-                            var datacriacao = new Date(response.projeto.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }else{
-                                datacriacao = datacriacao;
-                            }
-                            var dataatualizacao = new Date(response.projeto.updated_at).toLocaleString();
-                            if(dataatualizacao=="31/12/1969 21:00:00"){
-                                dataatualizacao = "";                            
-                            }else{
-                                dataatualizacao = dataatualizacao;
-                            }
+                            $('#EditProjetoModal').modal('hide');    
+                          
     
                             var linha = '<tr id="projeto'+response.projeto.id+'">\
-                                    <td>'+response.projeto.nome_projeto+'</td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td>'+dataatualizacao+'</td>\
+                                    <th scope="row">'+response.projeto.nome_projeto+'</th>\
                                     <td><div class="btn-group">\
                                     <button type="button" data-id="'+response.projeto.id+'" class="edit_projeto fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.projeto.id+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="delete_projeto_btn fas fa-trash" style="background:transparent;border:none"></button>\
@@ -325,21 +299,13 @@
                             $('#myform').trigger('reset');
                             $('#AddProjetoModal').modal('hide');
     
-                        //adiciona a linha na tabela html
-                        var datacriacao = new Date(response.projeto.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }else{
-                                datacriacao = datacriacao;
-                            }                        
+                        //adiciona a linha na tabela html                       
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>'; 
                             linha1 = '<tr id="projeto'+response.projeto.id+'">\
-                                    <td>'+response.projeto.nome_projeto+'</td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td></td>\
+                                    <th scope="row">'+response.projeto.nome_projeto+'</th>\
                                     <td><div class="btn-group">\
                                     <button type="button" data-id="'+response.projeto.id+'" class="edit_projeto fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.projeto.id+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="delete_projeto_btn fas fa-trash" style="background:transparent;border:none"></button>\

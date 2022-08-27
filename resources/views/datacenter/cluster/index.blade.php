@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
     <!--AddClusterModal-->
 
 <div class="modal fade" id="AddClusterModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -144,24 +144,22 @@
   
     </section>    
             
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>                                
-                                <th>CLUSTERS</th>
-                                <th>HOSTS</th>
-                                <th>VM</th>
-                                <th>TOTAL DE MEMÓRIA</th>
-                                <th>TOTAL DE PROCESSADOR</th>
-                                <th>CRIADO EM</th>
-                                <th>MODIFICADO EM</th>
-                                <th>AÇÕES</th>
+                                <th scope="col">CLUSTERS</th>
+                                <th scope="col">HOSTS</th>
+                                <th scope="col">VM</th>
+                                <th scope="col">TOTAL DE MEMÓRIA</th>
+                                <th scope="col">TOTAL DE PROCESSADOR</th>                              
+                                <th scope="col">AÇÕES</th>
                             </tr>
                         </thead>
                         <tbody id="lista_clusters">  
                         <tr id="novo" style="display:none;"></tr>
                         @forelse($clusters as $cluster)   
                             <tr id="cluster{{$cluster->id}}">                                
-                                <td>{{$cluster->nome_cluster}}</td>
+                                <th scope="row">{{$cluster->nome_cluster}}</th>
                                 <td>
                                     <div class="btn-group">                                        
                                         @if($cluster->hosts->count())
@@ -185,17 +183,7 @@
                                     </div>
                                 </td>
                                 <td>{{$cluster->total_memoria}}</td>
-                                <td>{{$cluster->total_processador}}</td>
-                                @if(is_null($cluster->created_at))
-                                <td></td>
-                                @else
-                                <td>{{date('d/m/Y H:i:s', strtotime($cluster->created_at))}}</td>
-                                @endif
-                                @if(is_null($cluster->updated_at))
-                                <td></td>
-                                @else
-                                <td>{{date('d/m/Y H:i:s', strtotime($cluster->updated_at))}}</td>
-                                @endif
+                                <td>{{$cluster->total_processador}}</td>                               
                                 <td>                                    
                                         <div class="btn-group">                                           
                                             <button type="button" data-id="{{$cluster->id}}" class="edit_cluster fas fa-edit" style="background:transparent;border:none;"></button>
@@ -405,20 +393,15 @@
                         $('#success_message').text(response.message);                                        
     
                         $('#myform').trigger('reset');                    
-                        $('#AddClusterModal').modal('hide');                    
+                        $('#AddClusterModal').modal('hide');                   
                         
-                        var datacriacao = new Date(response.cluster.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }else{
-                                datacriacao = datacriacao;
-                            }                        
+                                         
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
                             linha1 = '<tr id="cluster'+response.cluster.id+'">\
-                                    <td>'+response.cluster.nome_cluster+'</td>\
+                                    <th scope="row">'+response.cluster.nome_cluster+'</th>\
                                     <td>\
                                         <div class="btn-group">\
                                             <button type="button" data-id="'+response.cluster.id+'" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
@@ -426,8 +409,6 @@
                                     </td>\
                                     <td>'+response.cluster.total_memoria+'</td>\
                                     <td>'+response.cluster.total_processador+'</td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td></td>\
                                     <td>\
                                             <div class="btn-group">\
                                                 <button type="button" data-id="'+response.cluster.id+'" class="edit_cluster fas fa-edit" style="background:transparent;border:none;"></button>\

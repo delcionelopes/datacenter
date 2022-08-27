@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
     <!--inicio AddBaseModal -->
 <div class="modal fade" id="AddBaseModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -202,23 +202,21 @@
                     </div>
             </form>    
             </section>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>                        
-                        <th>BASE(s)</th>
-                        <th>IP</th>
-                        <th>Dono</th>
-                        <th>APP(s)</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th> 
-                        <th>AÇÕES</th>                       
+                        <th scope="col">BASE(s)</th>
+                        <th scope="col">IP</th>
+                        <th scope="col">Dono</th>
+                        <th scope="col">APP(s)</th>                        
+                        <th scope="col">AÇÕES</th>                       
                     </tr>                    
                 </thead>
                 <tbody id="lista_bases">
                     <tr id="novo" style="display:none;"></tr>
                     @forelse($bases as $base)
                     <tr id="base{{$base->id}}">                        
-                        <td>{{$base->nome_base}}</td>
+                        <th scope="row">{{$base->nome_base}}</th>
                         <td>{{$base->ip}}</td>
                         <td>{{$base->dono}}</td>
                         <td>
@@ -232,16 +230,6 @@
                         @endif
                         </div>
                         </td>                        
-                        @if(is_null($base->created_at))
-                        <td></td>
-                        @else                                    
-                        <td>{{date('d/m/Y H:i:s', strtotime($base->created_at))}}</td>
-                        @endif
-                        @if(is_null($base->updated_at))
-                        <td></td>
-                        @else                            
-                        <td>{{date('d/m/Y H:i:s', strtotime($base->updated_at))}}</td>
-                        @endif
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-id="{{$base->id}}" class="edit_base_btn fas fa-edit" style="background: transparent;border: none;"></button>
@@ -416,25 +404,13 @@
                         $("#editform").trigger('reset');
                         $("#EditBaseModal").modal('hide');
     
-                        //atualizando a tr da table html
-                        var datacriacao = new Date(response.base.created_at);
-                        datacriacao = datacriacao.toLocaleString("pt-BR");
-                        if(datacriacao=="31/12/1969 21:00:00"){
-                            datacriacao = "";
-                        }           
-                        var dataatualizacao = new Date(response.base.updated_at);
-                        dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
-                        if(dataatualizacao == "21/12/1969 21:00:00"){
-                            dataatualizacao = "";  
-                        }    
+                        //atualizando a tr da table html                      
                         var tupla = "";                 
                         tupla = '<tr id="base'+response.base.id+'">\
-                            <td>'+response.base.nome_base+'</td>\
+                            <th scope="row">'+response.base.nome_base+'</th>\
                             <td>'+response.base.ip+'</td>\
                             <td>'+response.base.dono+'</td>\
                             <td>App</td>\
-                            <td>'+datacriacao+'</td>\
-                            <td>'+dataatualizacao+'</td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.base.id+'" class="edit_base_btn fas fa-edit" style="background: transparent;border: none;"></button>\
@@ -503,24 +479,17 @@
                         $('#addform').trigger('reset');
                         $('#AddBaseModal').modal('hide');
     
-                        //inserindo a tr na table html
-                        var datacriacao = new Date(response.base.created_at);
-                        datacriacao = datacriacao.toLocaleString("pt-BR");
-                        if(datacriacao=="31/12/1969 21:00:00"){
-                            datacriacao = "";
-                        }                
+                        //inserindo a tr na table html                             
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
                        
                         linha0 = '<tr id="novo" style="display:none;"></tr>';
                         linha1 = '<tr id="base'+response.base.id+'">\
-                            <td>'+response.base.nome_base+'</td>\
+                            <th scope="row">'+response.base.nome_base+'</th>\
                             <td>'+response.base.ip+'</td>\
                             <td>'+response.base.dono+'</td>\
                             <td>App</td>\
-                            <td>'+datacriacao+'</td>\
-                            <td></td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.base.id+'" class="edit_base_btn fas fa-edit" style="background: transparent;border: none;"></button>\

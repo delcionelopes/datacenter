@@ -3,7 +3,7 @@
 @section('title', 'Ambientes')
 
 
-@section('body')
+@section('content')
    <!--AddAmbienteModal-->
 
 <div class="modal fade" id="AddAmbienteModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -85,30 +85,18 @@
   
     </section>    
             
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>                                
-                                <th>AMBIENTES</th>
-                                <th>CRIADO EM</th>
-                                <th>MODIFICADO EM</th>
-                                <th>AÇÕES</th>
+                                <th scope="col">AMBIENTES</th>                    
+                                <th scope="col">AÇÕES</th>
                             </tr>
                         </thead>
                         <tbody id="lista_ambiente">
                         <tr id="novo" style="display:none;"></tr>
                         @forelse($ambientes as $ambiente)   
                             <tr id="ambiente{{$ambiente->id}}">                                
-                                <td>{{$ambiente->nome_ambiente}}</td>
-                                @if(is_null($ambiente->created_at))
-                                <td></td>
-                                @else
-                                <td>{{date('d/m/Y H:i:s', strtotime($ambiente->created_at))}}</td>
-                                @endif
-                                @if(is_null($ambiente->updated_at))
-                                <td></td>
-                                @else
-                                <td>{{date('d/m/Y H:i:s', strtotime($ambiente->updated_at))}}</td>
-                                @endif
+                                <th scope="row">{{$ambiente->nome_ambiente}}</th>                                
                                 <td>                                    
                                         <div class="btn-group">                                           
                                             <button type="button" data-id="{{$ambiente->id}}" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>
@@ -262,20 +250,10 @@
                         $('#myform').trigger('reset');
                         $('#editAmbienteModal').modal('hide');                  
                         
-                        //atualizando a linha na tabela html
-                        var datacriacao = new Date(response.ambiente.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }
-                            var dataatualizacao = new Date(response.ambiente.updated_at).toLocaleString();
-                            if(dataatualizacao=="31/12/1969 21:00:00"){
-                                dataatualizacao = "";                            
-                            }
+                        //atualizando a linha na tabela html                      
     
                             var linha = '<tr id="ambiente'+response.ambiente.id+'">\
-                                    <td>'+response.ambiente.nome_ambiente+'</td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td>'+dataatualizacao+'</td>\
+                                    <th scope="row">'+response.ambiente.nome_ambiente+'</th>\
                                     <td><div class="btn-group">\
                                     <button type="button" data-id="'+response.ambiente.id+'" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.ambiente.id+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none"></button>\
@@ -337,20 +315,14 @@
                         $('#myform').trigger('reset');                    
                         $('#AddAmbienteModal').modal('hide');
     
-                        //adiciona a linha na tabela html
-                        var datacriacao = new Date(response.ambiente.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }
+                        //adiciona a linha na tabela html                      
                             
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
                             linha1 = '<tr id="ambiente'+response.ambiente.id+'">\
-                                    <td>'+response.ambiente.nome_ambiente+'</td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td></td>\
+                                    <th scope="row">'+response.ambiente.nome_ambiente+'</th>\
                                     <td><div class="btn-group">\
                                     <button type="button" data-id="'+response.ambiente.id+'" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.ambiente.id+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none"></button>\

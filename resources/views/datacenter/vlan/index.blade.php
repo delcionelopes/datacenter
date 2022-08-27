@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
   <!--AddVlanModal-->
 
 <div class="modal fade" id="AddVlanModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -123,21 +123,19 @@
   
     </section>    
             
-                    <table class="table table-bordered table-striped table-hover">
+                    <table class="table table-bordered table-hover">
                         <thead>
                             <tr>                                
-                                <th>VLAN</th>
-                                <th>REDES</th>
-                                <th>CRIADO EM</th>
-                                <th>MODIFICADO EM</th>
-                                <th>AÇÕES</th>
+                                <th scope="col">VLAN</th>
+                                <th scope="col">REDES</th>                             
+                                <th scope="col">AÇÕES</th>
                             </tr>
                         </thead>
                         <tbody id="lista_vlan">  
                         <tr id="novo" style="display:none;"></tr>
                         @forelse($vlans as $vlan)   
                             <tr id="vlan{{$vlan->id}}">                                
-                                <td>{{$vlan->nome_vlan}}</td>
+                                <th scope="row">{{$vlan->nome_vlan}}</th>
                                 <td>
                                     @if($vlan->redes()->count())
                                     <form action="{{route('datacenter.rede.index',['id' => $vlan->id])}}" method="get">
@@ -146,17 +144,7 @@
                                     @else
                                         <button type="button" data-id="{{$vlan->id}}" class="nova_rede_btn fas fa-folder" style="background: transparent;border:none;color:orange;"></button>
                                     @endif    
-                                </td>
-                                @if(is_null($vlan->created_at))
-                                <td></td>
-                                @else
-                                <td>{{date('d/m/Y H:i:s', strtotime($vlan->created_at))}}</td>
-                                @endif
-                                @if(is_null($vlan->updated_at))
-                                <td></td>
-                                @else
-                                <td>{{date('d/m/Y H:i:s', strtotime($vlan->updated_at))}}</td>
-                                @endif
+                                </td>                               
                                 <td>                                    
                                         <div class="btn-group">                                           
                                             <button type="button" data-id="{{$vlan->id}}" class="edit_vlan fas fa-edit" style="background:transparent;border:none"></button>
@@ -309,20 +297,10 @@
                         $('#EditVlanModal').modal('hide');                  
                         
                         //atualizando a linha na tabela html
-                        var datacriacao = new Date(response.vlan.created_at).toLocaleString("pt-BR");
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }
-                            var dataatualizacao = new Date(response.vlan.updated_at).toLocaleString("pt-BR");
-                            if(dataatualizacao=="31/12/1969 21:00:00"){
-                                dataatualizacao = "";                            
-                            }
-    
+                            
                             var linha = '<tr id="vlan'+response.vlan.id+'">\
-                                    <td>'+response.vlan.nome_vlan+'</td>\
+                                    <th scope="row">'+response.vlan.nome_vlan+'</th>\
                                     <td></td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td>'+dataatualizacao+'</td>\
                                     <td><div class="btn-group">\
                                     <button type="button" data-id="'+response.vlan.id+'" class="edit_vlan fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" class="delete_vlan_btn fas fa-trash" style="background:transparent;border:none"></button>\
@@ -385,18 +363,13 @@
                         $('#AddVlanModal').modal('hide');
     
                         //adiciona a linha na tabela html
-                        var datacriacao = new Date(response.vlan.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }                        
+                        
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
                             linha1 = '<tr id="ambiente'+response.vlan.id+'">\
-                                    <td>'+response.vlan.nome_vlan+'</td>\
-                                    <td></td>\
-                                    <td>'+datacriacao+'</td>\
+                                    <th scope="row">'+response.vlan.nome_vlan+'</th>\
                                     <td></td>\
                                     <td><div class="btn-group">\
                                     <button type="button" data-id="'+response.vlan.id+'" class="edit_vlan fas fa-edit" style="background:transparent;border:none"></button>\

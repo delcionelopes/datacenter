@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
     <!--inicio AddRedeModal -->
 <div class="modal fade" id="AddRedeModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -126,22 +126,20 @@
                     </div>
                 </form>
             </section>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>REDE</th>
-                        <th>VLAN</th>
-                        <th>CAD IPs</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th> 
-                        <th>AÇÕES</th>                       
+                        <th scope="col">REDE</th>
+                        <th scope="col">VLAN</th>
+                        <th scope="col">CAD IPs</th>                       
+                        <th scope="col">AÇÕES</th>                       
                     </tr>                    
                 </thead>
                 <tbody id="lista_redes">
                 <tr id="novo" style="display:none;"></tr>
                     @forelse($redes as $rede)
                     <tr id="rede{{$rede->id}}">
-                        <td>{{$rede->nome_rede}}</td>
+                        <th scope="row">{{$rede->nome_rede}}</th>
                         <td><a href="{{route('datacenter.vlan.index')}}">{{$vlan->nome_vlan}}</a></td>
                         <td>
                             <div class="btn-group">
@@ -153,17 +151,7 @@
                                 <button type="button" data-id="{{$rede->id}}" data-nomerede="{{$rede->nome_rede}}" class="novo_ip_btn fas fa-folder" style="background: transparent;border: none;color: orange;"></button>
                                 @endif
                             </div>
-                        </td>                        
-                        @if(is_null($rede->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($rede->created_at))}}</td>
-                        @endif
-                        @if(is_null($rede->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($rede->updated_at))}}</td>
-                        @endif
+                        </td>                       
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-id="{{$rede->id}}" class="edit_rede fas fa-edit" style="background: transparent;border: none;"></button>
@@ -310,22 +298,12 @@
                         $('editform').trigger('reset');
                         $('#EditRedeModal').modal('hide');
     
-                        //atualizando a tr da table html
-                        var datacriacao = new Date(response.rede.created_at).toLocaleString("pt-BR");
-                        if(datacriacao=='31/12/1969 21:00:00'){
-                            datacriacao = "";
-                        }
-                        var dataatualizacao = new Date(response.rede.updated_at).toLocaleString("pt-BR");
-                        if(dataatualizacao=='31/12/1969 21:00:00'){
-                            dataatualizacao = "";
-                        }
+                        //atualizando a tr da table html                        
     
                         var linha = '<tr id="rede'+response.rede.id+'">\
-                            <td>'+response.rede.nome_rede+'</td>\
+                            <th scope="row">'+response.rede.nome_rede+'</th>\
                             <td>'+response.vlan.nome_vlan+'</td>\
                             <td>BTN</td>\
-                            <td>'+datacriacao+'</td>\
-                            <td>'+dataatualizacao+'</td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.rede.id+'" class="edit_rede fas fa-edit" style="background: transparent;border: none;"></button>\
@@ -385,24 +363,15 @@
                         $('#addform').trigger('reset');
                         $('#AddRedeModal').modal('hide');                    
                         //adiciona a linha na tabela html
-                        var datacriacao = new Date(response.rede.created_at).toLocaleString('pt-BR');
-                        if(datacriacao=='31/12/1969 21:00:00'){
-                            datacriacao = "";
-                        }
-                        var dataatualizacao = new Date(response.rede.updated_at).toLocaleString('pt-BR');
-                        if(dataatualizacao=='31/12/1969 21:00:00'){
-                            dataatualizacao="";
-                        }
+                      
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
                             linha1 = '<tr id="rede'+response.rede.id+'">\
-                            <td>'+response.rede.nome_rede+'</td>\
+                            <th scope="row">'+response.rede.nome_rede+'</th>\
                             <td>'+response.vlan.nome_vlan+'</td>\
                             <td>BTN</td>\
-                            <td>'+datacriacao+'</td>\
-                            <td>'+dataatualizacao+'</td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.rede.id+'" class="edit_rede fas fa-edit" style="background: transparent;border: none;"></button>\

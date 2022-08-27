@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
    <!-- início AddAppModal -->
 <div class="modal fade" id="AddAppModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -164,38 +164,26 @@
                     </div>
                 </form>
             </section>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>APP</th>
-                        <th>DOMÍNIO</th>
-                        <th>HTTPS</th>                        
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th>
-                        <th>AÇÕES</th>
+                        <th scope="col">APP</th>
+                        <th scope="col">DOMÍNIO</th>
+                        <th scope="col">HTTPS</th>                       
+                        <th scope="col">AÇÕES</th>
                     </tr>
                 </thead>
                 <tbody id="lista_app">
                     <tr id="novo" style="display: none;"></tr>
                     @forelse($apps as $app)
                     <tr id="app{{$app->id}}">
-                        <td>{{$app->nome_app}}</td>
+                        <th scope="row">{{$app->nome_app}}</th>
                         <td>{{$app->dominio}}</td>
                         @if($app->https)
                         <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>
                         @else
                         <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>
-                        @endif
-                        @if(is_null($app->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($app->created_at))}}</td>
-                        @endif
-                        @if(is_null($app->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($app->updated_at))}}</td>
-                        @endif
+                        @endif                       
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-id="{{$app->id}}" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>
@@ -428,34 +416,23 @@
                         $('#success_message').text(response.message);
                         $(this).text('Atualizado');
                         $('#editform').trigger('reset');
-                        $('#EditAppModal').modal('hide'); 
+                        $('#EditAppModal').modal('hide');
     
-                        var datacriacao = new Date(response.app.created_at);
-                        datacriacao = datacriacao.toLocaleString("pt-BR");
-                        if(datacriacao=="31/12/1969 21:00:00"){
-                            datacriacao = "";
-                        }           
-                        var dataatualizacao = new Date(response.app.updated_at);
-                        dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
-                        if(dataatualizacao == "21/12/1969 21:00:00"){
-                            dataatualizacao = "";  
-                        }    
+                       
                         var tupla = ""; 
                         var linha1 = "";                    
                         var linha2 = "";
                         var linha3 = "";
                         var linha4 = "";
                         linha1 = '<tr id="app'+response.app.id+'">\
-                            <td>'+response.app.nome_app+'</td>\
+                            <th scope="row">'+response.app.nome_app+'</th>\
                             <td>'+response.app.dominio+'</td>';
                             if(response.app.https){
                                linha2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>';
                             }else{
                                linha3 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>';
                             }
-                            linha4 = '<td>'+datacriacao+'</td>\
-                            <td>'+dataatualizacao+'</td>\
-                            <td>\
+                            linha4 = '<td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.app.id+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
                                     <button type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\
@@ -551,16 +528,14 @@
                        
                         linha0 = '<tr id="novo" style="display:none;"></tr>';
                         linha1 = '<tr id="app'+response.app.id+'">\
-                            <td>'+response.app.nome_app+'</td>\
+                            <th scope="row">'+response.app.nome_app+'</th>\
                             <td>'+response.app.dominio+'</td>';
                             if(response.app.https){
                             linha2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>';
                              }else{
                             linha3 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>';
                             }
-                            linha4 = '<td>'+datacriacao+'</td>\
-                            <td></td>\
-                            <td>\
+                            linha4 = '<td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.app.id+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
                                     <button type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\

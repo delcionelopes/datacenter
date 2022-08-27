@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
     <!--AddPlataformaModal-->
 
 <div class="modal fade" id="AddPlataformaModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -78,30 +78,18 @@
                     </div>
                 </form>                
             </section>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>PLATAFORMAS</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th>
-                        <th>AÇÕES</th>
+                        <th scope="col">PLATAFORMAS</th>                     
+                        <th scope="col">AÇÕES</th>
                     </tr>
                 </thead>
                 <tbody id="lista_plataforma">
                 <tr id="novo" style="display:none;"></tr>
                     @forelse($plataformas as $plataforma)
                     <tr id="plataforma{{$plataforma->id}}">
-                        <td>{{$plataforma->nome_plataforma}}</td>
-                        @if(is_null($plataforma->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($plataforma->created_at))}}</td>
-                        @endif
-                        @if(is_null($plataforma->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($plataforma->updated_at))}}</td>
-                        @endif
+                        <th scope="row">{{$plataforma->nome_plataforma}}</th>                        
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-id="{{$plataforma->id}}" class="edit_plataforma fas fa-edit" style="background: transparent; border: none;"></button>
@@ -249,23 +237,9 @@
                             $('#myform').trigger('reset');
                             $('#EditPlataformaModal').modal('hide');
     
-                            var datacriacao = new Date(response.plataforma.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }else{
-                                datacriacao = datacriacao;
-                            }
-                            var dataatualizacao = new Date(response.plataforma.updated_at).toLocaleString();
-                            if(dataatualizacao=="31/12/1969 21:00:00"){
-                                dataatualizacao = "";                            
-                            }else{
-                                dataatualizacao = dataatualizacao;
-                            }
-    
+                              
                             var linha = '<tr id="plataforma'+response.plataforma.id+'">\
-                                    <td>'+response.plataforma.nome_plataforma+'</td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td>'+dataatualizacao+'</td>\
+                                    <th scope="row">'+response.plataforma.nome_plataforma+'</th>\
                                     <td><div class="btn-group">\
                                     <button type="button" data-id="'+response.plataforma.id+'" class="edit_plataforma fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.plataforma.id+'" data-nomeplataforma="'+response.plataforma.nome_plataforma+'" class="delete_plataforma_btn fas fa-trash" style="background:transparent;border:none"></button>\
@@ -330,22 +304,14 @@
                             $('#myform').trigger('reset');
                             $('#AddPlataformaModal').modal('hide');
     
-                            //adiciona a linha na tabela html
-                            
-                            var datacriacao = new Date(response.plataforma.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }else{
-                                datacriacao = datacriacao;
-                            }                       
+                            //adiciona a linha na tabela html                            
+                                             
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
                             linha1 = '<tr id="plataforma'+response.plataforma.id+'">\
-                                    <td>'+response.plataforma.nome_plataforma+'</td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td></td>\
+                                    <th scope="row">'+response.plataforma.nome_plataforma+'</th>\
                                     <td><div class="btn-group">\
                                     <button type="button" data-id="'+response.plataforma.id+'" class="edit_plataforma fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.plataforma.id+'" data-nomeplataforma="'+response.plataforma.nome_plataforma+'" class="delete_plataforma_btn fas fa-trash" style="background:transparent;border:none"></button>\

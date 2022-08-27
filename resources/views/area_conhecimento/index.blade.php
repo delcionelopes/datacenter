@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
     <!--AddArea_ConhecimentoModal-->
 
 <div class="modal fade" id="AddArea_ConhecimentoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -77,30 +77,18 @@
                     </div>
                 </form>
             </section>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>ÁREAS DE CONHECIMENTO</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th>
-                        <th>AÇÕES</th>
+                        <th scope="col">ÁREAS DE CONHECIMENTO</th>                    
+                        <th scope="col">AÇÕES</th>
                     </tr>
                 </thead>
                 <tbody id="lista_area_conhecimento">
                     <tr id="novo" style="display:none;"></tr>
                     @forelse($areas_conhecimento as $area_conhecimento)
                     <tr id="area{{$area_conhecimento->id}}">
-                        <td>{{$area_conhecimento->descricao}}</td>
-                        @if(is_null($area_conhecimento->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($area_conhecimento->created_at))}}</td>
-                        @endif
-                        @if(is_null($area_conhecimento->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($area_conhecimento->updated_at))}}</td>
-                        @endif
+                        <th scope="row">{{$area_conhecimento->descricao}}</th>                        
                         <td>
                             <div class="btn-group">
                                 <button data-id="{{$area_conhecimento->id}}" class="edit_area_conhecimento fas fa-edit" style="background: transparent;border: none;"></button>
@@ -238,23 +226,9 @@
     
                             $('#myform').trigger('reset');
                             $('#EditArea_ConhecimentoModal').modal('hide');
-                            //atualizando a tr da tabela html
-                            var datacriacao = new Date(response.area_conhecimento.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }else{
-                                datacriacao = datacriacao;
-                            }
-                            var dataatualizacao = new Date(response.area_conhecimento.updated_at).toLocaleString();
-                            if(dataatualizacao=="31/12/1969 21:00:00"){
-                                dataatualizacao = "";                            
-                            }else{
-                                dataatualizacao = dataatualizacao;
-                            }
+                            //atualizando a tr da tabela html                            
                             var linha = '<tr id="area'+response.area_conhecimento.id+'">\
-                                    <td>'+response.area_conhecimento.descricao+'</td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td>'+dataatualizacao+'</td>\
+                                    <th scope="row">'+response.area_conhecimento.descricao+'</th>\
                                     <td><div class="btn-group">\
                                     <button type="button" data-id="'+response.area_conhecimento.id+'" class="edit_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.area_conhecimento.id+'" data-descricao="'+response.area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
@@ -326,9 +300,7 @@
                             var linha1 = "";
                                 linha0 = '<tr id="novo" style="display:none;"></tr>';
                                 linha1 = '<tr id="area'+response.area_conhecimento.id+'">\
-                                    <td>'+response.area_conhecimento.descricao+'</td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td></td>\
+                                    <th scope="row">'+response.area_conhecimento.descricao+'</th>\
                                     <td><div class="btn-group">\
                                     <button type="button" data-id="'+response.area_conhecimento.id+'" class="edit_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.area_conhecimento.id+'" data-descricao="'+response.area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\

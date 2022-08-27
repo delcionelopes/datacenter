@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
     <!---AddOrgaoModal-->
 
 <div class="modal fade" id="AddOrgaoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -95,32 +95,20 @@
                     </div>
                 </form>                
             </section>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>ÓRGÃOS</th>
-                        <th>TELEFONE</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th>
-                        <th>AÇÕES</th>
+                        <th scope="col">ÓRGÃOS</th>
+                        <th scope="col">TELEFONE</th>                     
+                        <th scope="col">AÇÕES</th>
                     </tr>
                 </thead>
                 <tbody id="lista_orgao">
                 <tr id="novo" style="display:none;"></tr>
                     @forelse($orgaos as $orgao)
                     <tr id="orgao{{$orgao->id}}">
-                        <td>{{$orgao->nome}}</td>
-                        <td>{{$orgao->telefone}}</td>
-                        @if(is_null($orgao->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($orgao->created_at))}}</td>
-                        @endif
-                        @if(is_null($orgao->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($orgao->updated_at))}}</td>
-                        @endif
+                        <th scope="row">{{$orgao->nome}}</th>
+                        <td>{{$orgao->telefone}}</td>                        
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-id="{{$orgao->id}}" class="edit_orgao fas fa-edit" style="background:transparent;border:none;"></button>
@@ -274,23 +262,10 @@
                             $('#EditOrgaoModal').modal('hide');
     
                             //atualizando a linha na tabela html
-                            var datacriacao = new Date(response.orgao.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }else{
-                                datacriacao = datacriacao;
-                            }
-                            var dataatualizacao = new Date(response.orgao.updated_at).toLocaleString();
-                            if(dataatualizacao=="31/12/1969 21:00:00"){
-                                dataatualizacao = "";                            
-                            }else{
-                                dataatualizacao = dataatualizacao;
-                            }
+                           
                             var linha = '<tr id="orgao'+response.orgao.id+'">\
-                                         <td>'+response.orgao.nome+'</td>\
+                                         <th scope="row">'+response.orgao.nome+'</th>\
                                          <td>'+response.orgao.telefone+'</td>\
-                                         <td>'+datacriacao+'</td>\
-                                         <td>'+dataatualizacao+'</td>\
                                          <td>\
                                              <div class="btn-group">\
                                                  <button type="button" data-id="'+response.orgao.id+'" class="edit_orgao fas fa-edit" style="background:transparent;border:none;"></button>\
@@ -357,22 +332,14 @@
                             $('#myform').trigger('reset');
                             $('#AddOrgaoModal').modal('hide');
     
-                            //adiciona a linha na tabela html
-                            var datacriacao = new Date(response.orgao.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }else{
-                                datacriacao = datacriacao;
-                            }                        
+                            //adiciona a linha na tabela html                            
                             var tupla = "";
                             var linha0 = "";
                             var linha1 = "";
                                 linha0 = '<tr id="novo" style="display:none;"></tr>'; 
                                 linha1 = '<tr id="orgao'+response.orgao.id+'">\
-                                         <td>'+response.orgao.nome+'</td>\
+                                         <th scope="row">'+response.orgao.nome+'</th>\
                                          <td>'+response.orgao.telefone+'</td>\
-                                         <td>'+datacriacao+'</td>\
-                                         <td></td>\
                                          <td>\
                                              <div class="btn-group">\
                                                  <button type="button" data-id="'+response.orgao.id+'" class="edit_orgao fas fa-edit" style="background:transparent;border:none;"></button>\

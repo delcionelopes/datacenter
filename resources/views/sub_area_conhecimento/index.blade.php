@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
     <!--AddSub_Area_Conhecimento-->
 <div class="modal fade" id="AddSub_Area_Conhecimento" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -94,13 +94,11 @@
                     </div>
                 </form>
             </section>
-            <table class="table table-bordered table-striped table-hover">
+            <table class="table table-bordered table-hover">
                 <thead>
                     <tr>
-                        <th>SUB-AREAS DE CONHECIMENTO</th>
-                        <th>AREAS REF</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th>
+                        <th scope="col">SUB-AREAS DE CONHECIMENTO</th>
+                        <th scope="col">AREAS REF</th>                   
                         <th>AÇÕES</th>
                     </tr>
                 </thead>
@@ -108,18 +106,8 @@
                 <tr id="novo" style="display:none;"></tr>
                     @forelse($sub_areas_conhecimento as $sub)
                     <tr id="sub{{$sub->id}}">
-                        <td>{{$sub->descricao}}</td>
-                        <td>{{$sub->area_conhecimento->descricao}}</td>
-                        @if(is_null($sub->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($sub->created_at))}}</td>
-                        @endif
-                        @if(is_null($sub->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($sub->updated_at))}}</td>
-                        @endif
+                        <th scope="row">{{$sub->descricao}}</th>
+                        <td>{{$sub->area_conhecimento->descricao}}</td>                       
                         <td>
                             <div class="btn-group">
                                 <button data-id="{{$sub->id}}" class="edit_sub_area_conhecimento fas fa-edit" style="background: transparent;border: none;"></button>
@@ -287,23 +275,10 @@
                             $('#EditSub_Area_Conhecimento').modal('hide');
     
                             //atualizando a tr da tabela html
-                            var datacriacao = new Date(response.sub_area_conhecimento.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }else{
-                                datacriacao = datacriacao;
-                            }
-                            var dataatualizacao = new Date(response.sub_area_conhecimento.updated_at).toLocaleString();
-                            if(dataatualizacao=="31/12/1969 21:00:00"){
-                                dataatualizacao = "";                            
-                            }else{
-                                dataatualizacao = dataatualizacao;
-                            }
+                           
                             var linha = '<tr id="sub'+response.sub_area_conhecimento.id+'">\
-                                    <td>'+response.sub_area_conhecimento.descricao+'</td>\
+                                    <th scope="row">'+response.sub_area_conhecimento.descricao+'</th>\
                                     <td>'+response.area_conhecimento.descricao+'</td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td>'+dataatualizacao+'</td>\
                                     <td>\
                                     <div class="btn-group">\
                                     <button type="button" data-id="'+response.sub_area_conhecimento.id+'" class="edit_sub_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
@@ -368,22 +343,15 @@
                             $('#myform').trigger('reset');
                             $('#AddSub_Area_Conhecimento').modal('hide');
     
-                            //inserindo a nova tr no corpo da table html                        
-                            var datacriacao = new Date(response.sub_area_conhecimento.created_at).toLocaleString();
-                            if(datacriacao=="31/12/1969 21:00:00"){
-                                datacriacao = "";                            
-                            }else{
-                                datacriacao = datacriacao;
-                            }                        
+                            //inserindo a nova tr no corpo da table html                       
+                            
                             var tupla = "";
                             var linha0 = "";
                             var linha1 = "";
                                 linha0 = '<tr id="novo" style="display:none;"></tr>';
                                 linha1 = '<tr id="sub'+response.sub_area_conhecimento.id+'">\
-                                    <td>'+response.sub_area_conhecimento.descricao+'</td>\
+                                    <th scope="row">'+response.sub_area_conhecimento.descricao+'</th>\
                                     <td>'+response.area_conhecimento.descricao+'</td>\
-                                    <td>'+datacriacao+'</td>\
-                                    <td></td>\
                                     <td>\
                                     <div class="btn-group">\
                                     <button type="button" data-id="'+response.sub_area_conhecimento.id+'" class="edit_sub_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\

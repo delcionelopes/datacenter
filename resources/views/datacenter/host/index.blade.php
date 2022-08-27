@@ -2,7 +2,7 @@
 
 @section('title', 'Datacenter')
 
-@section('body')
+@section('content')
     <!--inicio AddHostModal -->
 <div class="modal fade" id="AddHostModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -105,31 +105,19 @@
             <table class="table table-bordered table-striped table-hover">
                 <thead>
                     <tr>
-                        <th>HOSTS</th>
-                        <th>IP</th>
-                        <th>CLUSTER</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th> 
-                        <th>AÇÕES</th>                       
+                        <th scope="col">HOSTS</th>
+                        <th scope="col">IP</th>
+                        <th scope="col">CLUSTER</th>                       
+                        <th scope="col">AÇÕES</th>                       
                     </tr>                    
                 </thead>
                 <tbody id="lista_hosts">
                 <tr id="novo" style="display:none;"></tr>
                     @forelse($hosts as $host)
                     <tr id="host{{$host->id}}">
-                        <td>{{$host->datacenter}}</td>
+                        <th scope="row">{{$host->datacenter}}</th>
                         <td>{{$host->ip}}</td>
-                        <td><a href="{{route('datacenter.cluster.index')}}">{{$host->cluster}}</a></td>
-                        @if(is_null($host->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($host->created_at))}}</td>
-                        @endif
-                        @if(is_null($host->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($host->updated_at))}}</td>
-                        @endif
+                        <td><a href="{{route('datacenter.cluster.index')}}">{{$host->cluster}}</a></td>                       
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-id="{{$host->id}}" class="edit_host fas fa-edit" style="background: transparent;border: none;"></button>
@@ -283,22 +271,12 @@
                         $('editform').trigger('reset');
                         $('#EditHostModal').modal('hide');
     
-                        //atualizando a tr da table html
-                        var datacriacao = new Date(response.host.created_at).toLocaleString();
-                        if(datacriacao=='31/12/1969 21:00:00'){
-                            datacriacao = "";
-                        }
-                        var dataatualizacao = new Date(response.host.updated_at).toLocaleString();
-                        if(dataatualizacao=='31/12/1969 21:00:00'){
-                            dataatualizacao = "";
-                        }
+                        //atualizando a tr da table html                       
     
                         var linha = '<tr id="host'+response.host.id+'">\
-                            <td>'+response.host.datacenter+'</td>\
+                            <th scope="row">'+response.host.datacenter+'</th>\
                             <td>'+response.host.ip+'</td>\
                             <td>'+response.host.cluster+'</td>\
-                            <td>'+datacriacao+'</td>\
-                            <td>'+dataatualizacao+'</td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.host.id+'" class="edit_host fas fa-edit" style="background: transparent;border: none;"></button>\
@@ -360,20 +338,15 @@
                         $('#AddHostModal').modal('hide');
     
                         //adiciona a linha na tabela html
-                        var datacriacao = new Date(response.host.created_at).toLocaleString();
-                        if(datacriacao=='31/12/1969 21:00:00'){
-                            datacriacao = "";
-                        }                    
+                                       
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
                             linha1 = '<tr id="host'+response.host.id+'">\
-                            <td>'+response.host.datacenter+'</td>\
+                            <th scope="row">'+response.host.datacenter+'</th>\
                             <td>'+response.host.ip+'</td>\
                             <td>'+response.host.cluster+'</td>\
-                            <td>'+datacriacao+'</td>\
-                            <td></td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.host.id+'" class="edit_host fas fa-edit" style="background: transparent;border: none;"></button>\
