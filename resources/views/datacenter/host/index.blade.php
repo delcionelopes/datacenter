@@ -102,8 +102,8 @@
                     </div>
                 </form>
             </section>
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
+            <table class="table table-hover">
+                <thead class="sidebar-dark-primary" style="color: white">
                     <tr>
                         <th scope="col">HOSTS</th>
                         <th scope="col">IP</th>
@@ -143,10 +143,15 @@
 <!--End Index -->
 @stop
 
+@section('css')
+    <!--<link rel="stylesheet" href="/css/admin_custom.css">  -->
+@stop
+
 @section('js')
+
 <script type="text/javascript">
 
-    $(document).ready(function(){
+$(document).ready(function(){
         //inicio delete host
         $(document).on('click','.delete_host_btn',function(e){
             e.preventDefault();
@@ -366,6 +371,6 @@
         //Fim adição de host
     });
     
-    </script>
+</script>
 @stop
 

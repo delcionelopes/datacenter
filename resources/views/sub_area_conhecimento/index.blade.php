@@ -94,8 +94,8 @@
                     </div>
                 </form>
             </section>
-            <table class="table table-bordered table-hover">
-                <thead>
+            <table class="table table-hover">
+                <thead class="sidebar-dark-primary" style="color: white">
                     <tr>
                         <th scope="col">SUB-AREAS DE CONHECIMENTO</th>
                         <th scope="col">AREAS REF</th>                   
@@ -127,6 +127,10 @@
     </div>
 </div>
 <!--fim index-->
+@stop
+
+@section('css')
+    <!--<link rel="stylesheet" href="/css/admin_custom.css">  -->
 @stop
 
 @section('js')

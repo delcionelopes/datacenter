@@ -202,8 +202,8 @@
                     </div>
             </form>    
             </section>
-            <table class="table table-bordered table-hover">
-                <thead>
+            <table class="table table-hover">
+                <thead class="sidebar-dark-primary" style="color: white">
                     <tr>                        
                         <th scope="col">BASE(s)</th>
                         <th scope="col">IP</th>
@@ -255,10 +255,15 @@
 <!--Fim Index-->
 @stop
 
+@section('css')
+    <!--<link rel="stylesheet" href="/css/admin_custom.css">  -->
+@stop
 
 @section('js')
+
 <script type="text/javascript">
-    $(document).ready(function(){
+
+$(document).ready(function(){
     
         //inicio delete base
         $(document).on('click','.delete_base_btn',function(e){

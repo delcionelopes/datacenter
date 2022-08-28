@@ -78,8 +78,8 @@
                     </div>
                 </form>                
             </section>
-            <table class="table table-bordered table-hover">
-                <thead>
+            <table class="table table-hover">
+                <thead class="sidebar-dark-primary" style="color: white">
                     <tr>
                         <th scope="col">PLATAFORMAS</th>                     
                         <th scope="col">AÇÕES</th>
@@ -110,6 +110,10 @@
 </div>
 
 <!--fim index-->
+@stop
+
+@section('css')
+    <!--<link rel="stylesheet" href="/css/admin_custom.css">  -->
 @stop
 
 @section('js')
