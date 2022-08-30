@@ -51,18 +51,13 @@ class Area_ConhecimentoController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ]);
         }else{    
-            $timestamps = $this->area_conhecimento->timestamps;        
-            $this->area_conhecimento->timestamps = false;
             $data = [
-                'descricao' => strtoupper($request->input('descricao')),              
-                'created_at' => now(),
-                'updated_at' => null,
+                'descricao' => strtoupper($request->input('descricao')),                             
             ];            
-            $area_conhecimento = $this->area_conhecimento->create($data);
-            $this->area_conhecimento->timestamps = true;
-            $area_C = Area_Conhecimento::find($area_conhecimento->id);
+            $area_conhecimento = $this->area_conhecimento->create($data);   
+            
             return response()->json([
-                'area_conhecimento' => $area_C,
+                'area_conhecimento' => $area_conhecimento,
                 'status' => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -101,15 +96,11 @@ class Area_ConhecimentoController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->area_conhecimento->timestamps;        
-            $this->area_conhecimento->timestamps = false;
+        }else{            
             $area_conhecimento = $this->area_conhecimento->find($id);
             if($area_conhecimento){
-                $area_conhecimento->descricao = strtoupper($request->input('descricao'));
-                $area_conhecimento->updated_at = now();
-                $area_conhecimento->update();
-                $this->area_conhecimento->timestamps = true;
+                $area_conhecimento->descricao = strtoupper($request->input('descricao'));               
+                $area_conhecimento->update();                
                 $area_C = Area_Conhecimento::find($id);
                 return response()->json([
                     'area_conhecimento' => $area_C,

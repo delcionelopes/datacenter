@@ -51,19 +51,13 @@ class AmbienteController extends Controller
                 'status'  => 400,
                 'errors'  => $validator->errors()->getMessages(),
             ]);
-        } else {     
-            $timestamps = $this->ambiente->timestamps;
-            $this->ambiente->timestamps=false;       
+        } else {                 
             $data = [
-                'nome_ambiente' => strtoupper($request->input('nome_ambiente')),
-                'created_at' => now(),
-                'updated_at' => null,
+                'nome_ambiente' => strtoupper($request->input('nome_ambiente')),              
             ];            
-            $ambiente = $this->ambiente->create($data);
-            $this->ambiente->timestamps=true;
-            $a = Ambiente::find($ambiente->id);           
+            $ambiente = $this->ambiente->create($data);                     
             return response()->json([                
-                'ambiente' => $a,
+                'ambiente' => $ambiente,
                 'status'  => 200,
                 'message' => 'Ambiente adicionado com sucesso!',
             ]); 

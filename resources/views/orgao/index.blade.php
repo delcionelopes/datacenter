@@ -143,32 +143,20 @@
     //inicio delete orgao    
         $(document).on('click','.delete_orgao_btn',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
-            var nomeorgao = $(this).data("nomeorgao");
-            swal({
-                title:"Processo de exclusão!",
-                text: "Você vai excluir "+nomeorgao+". Deseja prosseguir?",
-                icon:"warning",
-                buttons:true,
-                dangerMode:true,
-              
-                }).then(willDelete=>{
-                if (willDelete) {
-                $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-    
+            var nomedoorgao = ($(this).data("nomeorgao")).trim();
+            var resposta = confirm("Deseja excluir "+nomedoorgao+"?")
+                if (resposta==true) {     
                 $.ajax({
                     url:'delete-orgao/'+id,
                     assync:true,
                     type:'POST',                
                     dataType: 'json',
                     data:{
-                        "id":id,
-                        "_method":'DELETE',
+                        'id':id,
+                        '_method':'DELETE',
+                        '_token':CSRF_TOKEN,
                     },
                     success:function(response){
                         if(response.status==200){                           
@@ -179,9 +167,7 @@
                         }
                     }
                 });
-            }    
-        
-        });
+            }
         }); //fim delete orgao
     
     //início exibição edit orgao
@@ -209,8 +195,10 @@
                     assync: true,
                     success:function(response){
                         if(response.status==200){
-                            $('.nome_orgao').val(response.orgao.nome);
-                            $('.telefone').val(response.orgao.telefone);
+                            var vnomedoorgao = (response.orgao.nome).trim();
+                            $('.nome_orgao').val(vnomedoorgao);
+                            var vtelefone = (response.orgao.telefone).trim();
+                            $('.telefone').val(vtelefone);
                             $('#edit_orgao_id').val(response.orgao.id);
                         }
                     }
@@ -221,7 +209,7 @@
     //inicio da atualização do orgão
     $(document).on('click','.update_orgao',function(e){
         e.preventDefault();
-    
+        var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         $(this).text("Atualizando...");
     
         var id = $('#edit_orgao_id').val();
@@ -229,14 +217,9 @@
         var data = {
             'nome' : $('#edit_nome_orgao').val(),
             'telefone' : $('#edit_telefone').val(),
-        } 
-    
-        $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-    
+            '_method':'PUT',
+            '_token':CSRF_TOKEN,
+        }    
                 $.ajax({
                     type:'POST',
                     data: data,
@@ -303,18 +286,13 @@
     //início da adição de órgão
     $(document).on('click','.add_orgao',function(e){     
         e.preventDefault();
-    
+        var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var data = {
             'nome' : $('.nome_orgao').val(),
             'telefone' : $('.telefone').val(),
-        }
-    
-        $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-            
+            '_method':'PUT',
+            '_token':CSRF_TOKEN,
+        }            
                 $.ajax({                
                     url: 'adiciona-orgao',                                                                            
                     type: 'POST',

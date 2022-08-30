@@ -532,8 +532,8 @@ return [
             'close' => false,
             'close_all' => false,
             'close_all_other' => false,
-            'scroll_left' => false,
-            'scroll_right' => false,
+            'scroll_left' => true,
+            'scroll_right' => true,
             'fullscreen' => true,
         ],
         'options' => [

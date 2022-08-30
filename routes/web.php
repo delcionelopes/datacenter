@@ -45,15 +45,15 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('index-ambientes',[AmbienteController::class,'index'])->name('ambiente.index');
         Route::delete('delete-ambiente/{id}',[AmbienteController::class,'destroy']);
         Route::get('edit-ambiente/{id}',[AmbienteController::class,'edit']);
-        Route::post('update-ambiente/{id}',[AmbienteController::class,'update']);
-        Route::post('adiciona-ambiente',[AmbienteController::class,'store']);
+        Route::put('update-ambiente/{id}',[AmbienteController::class,'update']);
+        Route::put('adiciona-ambiente',[AmbienteController::class,'store']);
     
         //Rotas para a view index de orgao    
         Route::get('index-orgao',[OrgaoController::class,'index'])->name('orgao.index');
         Route::delete('delete-orgao/{id}',[OrgaoController::class,'destroy']);
         Route::get('edit-orgao/{id}',[OrgaoController::class,'edit']);
-        Route::post('update-orgao/{id}',[OrgaoController::class,'update']);
-        Route::post('adiciona-orgao',[OrgaoController::class,'store']);
+        Route::put('update-orgao/{id}',[OrgaoController::class,'update']);
+        Route::put('adiciona-orgao',[OrgaoController::class,'store']);
     
         //Rotas para a view index de plataforma    
         Route::get('index-plataforma',[PlataformaController::class,'index'])->name('plataforma.index');
@@ -73,8 +73,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('index-areaconhecimento',[Area_ConhecimentoController::class,'index'])->name('areaconhecimento.index');
         Route::delete('delete-areaconhecimento/{id}',[Area_ConhecimentoController::class,'destroy']);
         Route::get('edit-areaconhecimento/{id}',[Area_ConhecimentoController::class,'edit']);
-        Route::post('update-areaconhecimento/{id}',[Area_ConhecimentoController::class,'update']);
-        Route::post('adiciona-areaconhecimento',[Area_ConhecimentoController::class,'store']);    
+        Route::put('update-areaconhecimento/{id}',[Area_ConhecimentoController::class,'update']);
+        Route::put('adiciona-areaconhecimento',[Area_ConhecimentoController::class,'store']);    
     
         //Rotas para a view index de sub_area_conhecimento
         Route::get('index-subareaconhecimento',[Sub_Area_ConhecimentoController::class,'index'])->name('subareaconhecimento.index');
@@ -87,15 +87,15 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('index-manual',[ManualController::class,'index'])->name('manual.index');
         Route::delete('delete-manual/{id}',[ManualController::class,'destroy']);
         Route::get('edit-manual/{id}',[ManualController::class,'edit']);
-        Route::post('update-manual/{id}',[ManualController::class,'update']);
-        Route::post('adiciona-manual',[ManualController::class,'store']);    
+        Route::put('update-manual/{id}',[ManualController::class,'update']);
+        Route::put('adiciona-manual',[ManualController::class,'store']);    
 
         //Rotas para a uploads
         Route::get('index-file/{id}',[ManualController::class,'indexFile'])->name('index.file');
         Route::get('edit-uploadfile/{id}',[ManualController::class,'editFileUpload']);        
         Route::put('upload-file/{id}',[ManualController::class,'upload']);
         Route::delete('delete-file/{id}',[ManualController::class,'destroyFile']);
-        Route::get('download-file/{id}',[ManualController::class,'downloadFile']);                
+        Route::get('download-file/{id}',[ManualController::class,'downloadFile'])->name('download.file');                
         });        
 
 

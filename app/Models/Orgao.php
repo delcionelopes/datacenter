@@ -7,13 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Orgao extends Model
 {      
-    protected $table = 'orgao';
-    public $timestamps = FALSE;
+    protected $table = 'orgao';   
     protected $fillable = [
         'nome',
-        'telefone',
-        'created_at',
-        'updated_at',
+        'telefone',     
     ];
 
     public function virtualmachine()

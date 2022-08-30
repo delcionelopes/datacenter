@@ -7,13 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Area_Conhecimento;
 use App\Models\Manual;
 use App\Models\Upload;
-//use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Validator;
-//use Illuminate\Support\Facades\Storage;
-//use Facade\FlareClient\Stacktrace\File;
-//use Symfony\Component\HttpFoundation\File\UploadedFile;
-//use PDF;
-//use PharIo\Manifest\Url;
 
 class ManualController extends Controller
 {
@@ -69,25 +63,20 @@ class ManualController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{         
-            $timestamps = $this->manual->timestamps;
-            $this->manual->timestamps = false;              
+        }else{                            
             $data = [
                 'area_conhecimento_id' => $request->input('area_conhecimento_id'),
                 'data_criacao' => now(),
                 'descricao' => strtoupper($request->input('descricao')),
                 'objetivo' => strtoupper($request->input('objetivo')),
                 'manual' => strtoupper($request->input('manual')),                
-                //'usuario' => auth()->user->name,                
-                'created_at' => now(),
-                'updated_at' => null,
+                'usuario' => auth()->user->name,               
             ];
-            $manual = $this->manual->create($data);  
-            $this->manual->timestamps = true;
-            $m = Manual::find($manual->id);                                                  
-            $area = Area_Conhecimento::find($m->area_conhecimento_id);                    
+            $manual = $this->manual->create($data);          
+                                                       
+            $area = Area_Conhecimento::find($manual->area_conhecimento_id);                    
             return response()->json([
-                'manual' => $m,
+                'manual' => $manual,
                 'area_conhecimento' => $area,
                 'status' => 200,
                 'message' => 'Registro cadastrado com sucesso!',
@@ -132,9 +121,7 @@ class ManualController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamp = $this->manual->timestamps;
-            $this->manual->timestamps = false;
+        }else{        
             $manual = $this->manual->find($id);                        
             if($manual){
                 $manual->area_conhecimento_id = $request->input('area_conhecimento_id');
@@ -142,8 +129,7 @@ class ManualController extends Controller
                 $manual->data_atualizacao = now();
                 $manual->objetivo = strtoupper($request->input('objetivo'));
                 $manual->manual = strtoupper($request->input('manual'));
-                //$manual->usuario = auth()->user->name;                
-                $manual->updated_at = now();
+                $manual->usuario = auth()->user->name;               
                 $manual->update();                
                 $ma = Manual::find($id);                
                 $area = Area_Conhecimento::find($ma->area_conhecimento_id);
@@ -216,9 +202,7 @@ class ManualController extends Controller
                 $data[$x]['manual_id'] = $id;
                 $data[$x]['nome_arquivo'] = $fileName;
                 $data[$x]['path_arquivo'] = $filePath;
-                $data[$x]['data_atual'] = now();
-                $data[$x]['created_at'] = now();
-                $data[$x]['updated_at'] = null;                          
+                $data[$x]['data_atual'] = now();                                     
             }    
         }        
          $arquivo = Upload::insert($data);            
@@ -235,17 +219,16 @@ class ManualController extends Controller
          ]);                   
     }
 
-    public function downloadFile($id){                      
-        
-        dd('cheguei aqui!');
+    public function downloadFile($id){        
+       
         $uploadmanual = Upload::find($id);                
-        $downloadPath = public_path('/storage/'.$uploadmanual->path_arquivo);  
-        
+        $downloadPath = public_path('storage/'.$uploadmanual->path_arquivo);       
         $headers = [
             'HTTP/1.1 200 OK',
-            'Pragma: public',
-            'Content-Type: application/pdf'
-        ];                  
+            'Pragma' => 'public',
+            'Content-Type' => 'application/pdf'         
+        ];  
+                   
         return response()->download($downloadPath,$uploadmanual->nome_arquivo,$headers);    
     }
 
@@ -253,7 +236,7 @@ class ManualController extends Controller
     {
         $uploadmanual = Upload::find($id);        
         $manualid = $uploadmanual->manual_id;
-        $uploadPath = public_path('/storage/'.$uploadmanual->path_arquivo);
+        $uploadPath = public_path('storage/'.$uploadmanual->path_arquivo);
         $uploadmanual->delete();
         //deleta o arquivo na pasta   
         if(file_exists($uploadPath)){

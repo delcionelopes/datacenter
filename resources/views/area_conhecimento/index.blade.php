@@ -123,40 +123,28 @@
         //inicio delete area_conhecimento
         $(document).on('click','.delete_area_conhecimento_btn',function(e){
             e.preventDefault();
-    
-            var id = $(this).data("id");
-            var descricao = $(this).data("descricao");
-    
-            swal({
-                title:"Exclusão!",
-                text:"Deseja excluir "+descricao+"?",
-                icon:"warning",
-                buttons:true,
-                dangerMode:true,
-            }).then(willDelete=>{
-                if(willDelete){
-                    $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-                $.ajax({
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var id = $(this).data("id");           
+            var nomedaarea = ($(this).data("descricao")).trim();
+            var resposta = confirm("Deseja excluir "+nomedaarea+"?");                
+                if(resposta==true){
+                    $.ajax({
                     url:'delete-areaconhecimento/'+id,
                     type:'POST',
                     dataType:'json',
                     data:{
-                        "id":id,
-                        "_method":'DELETE',
+                        'id':id,
+                        '_method':'DELETE',
+                        '_token':CSRF_TOKEN,
                     },
                     success:function(response){
                         //remove a tr correspondente da tabela html
                         $("#area"+id).remove();
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);         
-                    }
+                    }              
                 });
-                }
-            });
+            }
         });//fim delete area_conhecimento
     
         //Exibe EditArea_ConhecimentoModal
@@ -172,7 +160,7 @@
     
             $.ajaxSetup({
                     headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                     }
                 });
     
@@ -182,7 +170,8 @@
                     url:'edit-areaconhecimento/'+id,
                     success:function(response){
                         if(response.status==200){
-                            $('.descricao').val(response.area_conhecimento.descricao);
+                            var descricaoarea = (response.area_conhecimento.descricao).trim();
+                            $('.descricao').val(descricaoarea);
                             $('#edit_area_conhecimento_id').val(response.area_conhecimento.id);
                         }
                     }
@@ -194,15 +183,13 @@
         $(document).on('click','.update_area_conhecimento',function(e){
             e.preventDefault();
             $(this).text("Atualizando...");
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $('#edit_area_conhecimento_id').val();
             var data = {
                 'descricao' : $('#edit_descricao').val(),
-            }
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }           
                 $.ajax({
                     type:'POST',
                     data:data,
@@ -262,17 +249,13 @@
         //inicio do envio do novo registro para o Area_ConhecimentoController
         $(document).on('click','.add_area_conhecimento',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var data = {
                 'descricao' : $('.descricao').val(),
-            }
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-                $.ajax({
+                '_method':'PUT',
+                '_token':CSRF_TOKEN
+            }   
+            $.ajax({
                     type:'POST',
                     url:'adiciona-areaconhecimento',
                     data:data,

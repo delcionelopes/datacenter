@@ -195,6 +195,7 @@
 @stop
 
 @section('js')
+
 <script type="text/javascript">
 
     //inicio do escopo geral
@@ -203,28 +204,19 @@
         //inicio delete registro
         $(document).on('click','.delete_manual_btn',function(e){
             e.preventDefault();
-            var id = $(this).data("id");
-            var descricao = $(this).data("descricao");        
-            swal({
-                title: "Exclusão!",
-                text: "Deseja excluir "+descricao+"?",
-                icon:"warning",
-                buttons:true,
-                dangerMode:true,
-            }).then(willDelete=>{
-                if(willDelete){
-                    $.ajaxSetup({
-                        headers:{
-                            'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                        }
-                    });
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var id = $(this).data("id");  
+            var nomemanual = ($(this).data("descricao")).trim();
+            var resposta = confirm("Deseja excluir "+nomemanual+"?");             
+                if(resposta==true){                   
                     $.ajax({
                         url:'delete-manual/'+id,                    
                         type: 'POST',
                         dataType:'json',
                         data:{
-                            "id":id,
-                            "_method":'DELETE',
+                            'id':id,
+                            '_method':'DELETE',
+                            '_token':CSRF_TOKEN
                         },
                         success:function(response){
                             if(response.status==200){
@@ -235,8 +227,7 @@
                             }
                         }
                     });
-                }        
-            });    
+                }           
         });//fim delete registro
         //inicio exibe EditManualForm
         $('#EditManualForm').on('shown.bs.modal',function(){
@@ -250,7 +241,7 @@
     
             $.ajaxSetup({
                         headers:{
-                            'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                            'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                         }
                     });
     
@@ -260,7 +251,8 @@
                 url:'edit-manual/'+id,
                 success:function(response){
                     if(response.status==200){
-                        $('.descricao').val(response.manual.descricao);
+                        var descricaomanual = (response.manual.descricao).trim();
+                        $('.descricao').val(descricaomanual);
                         //seta a area de conhecimento no select html
                         var opcao = response.area_conhecimento.id;
                         $('#area_id option')
@@ -268,8 +260,10 @@
                         .filter('[value='+opcao+']')
                         .attr('selected',true);
                         //fim seta area_conhecimento
-                        $('.objetivo').text(response.manual.objetivo);
-                        $('.manual').text(response.manual.manual);
+                        var objetivomanual = (response.manual.objetivo).trim();
+                        $('.objetivo').text(objetivomanual);
+                        var manualmanual = (response.manual.manual).trim();
+                        $('.manual').text(manualmanual);
                         $('#edit_manual_id').val(response.manual.id);                          
                         $('#fileupload').attr('data-manualid',response.manual.id);
                     }
@@ -290,7 +284,7 @@
         //inicio da atualização do registro
         $(document).on('click','.update_manual',function(e){
             e.preventDefault();                
-    
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $(this).text("Atualizando...");
             
             var opt = $('#area_id').val();        
@@ -300,14 +294,10 @@
                 'descricao' : $('#edit_descricao').val(),
                 'objetivo' : $('#edit_objetivo').text(),
                 'manual' : $('#edit_manual').text(),
-            }                 
-    
-            $.ajaxSetup({
-                        headers:{
-                            'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                        }
-                    });
-    
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }     
+   
             $.ajax({
                 type:'POST',
                 data:data,
@@ -368,20 +358,16 @@
         //inicio do envio do novo registro para o controller
         $(document).on('click','.add_manual_btn',function(e){
             e.preventDefault();       
-                  
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');      
             var dataAdd = {
                 'area_conhecimento_id' : $('#area_id').val(),
                 'descricao' : $('.descricao').val(),
                 'objetivo' : $('.objetivo').val(),
                 'manual' : $('.manual').val(),
-                //'arquivo' : $(':file').val('content'),
-            }
-    
-            $.ajaxSetup({
-                        headers:{
-                            'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                        }
-                    });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN
+            }   
+           
     
             $.ajax({
                 type:'POST',
@@ -435,30 +421,19 @@
     
     $(document).on('click','.delete_file_btn',function(e){                                                   
         e.preventDefault();
-    
+        var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var id = $(this).data("id");        
-        var filename = $(this).data("filename");  
-    
-        swal({
-                title: filename,
-                text: "Deseja excluir?",
-                icon:"warning",
-                buttons:true,
-                dangerMode:true,
-            }).then(willDelete=>{
-                if(willDelete){
-                    $.ajaxSetup({
-                        headers:{
-                            'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                        }
-                    });
+        var vfilename = ($(this).data("filename")).trim();
+        var resposta = confirm("Deseja excluir o arquivo "+vfilename+"?");          
+                if(resposta==true){                    
                     $.ajax({
                         url:'delete-file/'+id,                    
                         type: 'POST',
                         dataType:'json',
                         data:{
-                            "id":id,
-                            "_method":'DELETE',
+                            'id':id,
+                            '_method':'DELETE',
+                            '_token':CSRF_TOKEN,
                         },
                         success:function(response){
                             if(response.status==200){                            
@@ -469,47 +444,41 @@
                                 $('#up'+id).remove();                            
                             }
                         }
-                    });
-                }else{
-                    swal(filename,"O seu registro não foi deletado!","error");
-                }        
-        });   
-    }); 
-           
+                    });  
+                }
+    });           
         
     
-        $(document).on('click','.download_file_btn',function(e){                                                                       
+       $(document).on('click','.download_file_btn',function(e){                                                                       
             e.preventDefault();
     
             var id = $(this).data("id");                                              
-            var filename = $(this).data("filename");       
-            
-           $.ajax({
-               type: 'GET',
-               url: 'download-file/'+id,
-               cache: false,  
-               data: '',                                           
-               xhrFields: {
-               responseType: 'blob'
-              },
-              success: function(response){   
-                console.log(response);
+            var filename = $(this).data("filename").trim();                     
+       
+            $.ajaxSetup({
+                        headers:{
+                            'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                        }
+                    });                              
+        
+            $.ajax({
+                type: 'GET',
+                url: 'download-file/'+id,
+                cache: false,  
+                data: '',                                           
+                xhrFields: {
+                responseType: 'blob'
+                },
+                success: function(response){  
                      var blob = new Blob([response]);
-                          
-                     var link = document.createElement('a');
-                         link.href = URL.createObjectURL(blob);
-                         link.download = filename;
-                         link.click();                           
-                    },            
-                    
-                    error: function(blob){
-                    console.log(blob);
-                }
+                        var aLink = document.createElement('a');
+                        aLink.href = window.URL.createObjectURL(blob);
+                        aLink.download = filename;
+                        aLink.click();                            
+                    } 
             }); 
-        }); 
-    
-        });         
-    
+    });               
+   
     
         //inicio exibição do form uploadPDFModal       
         $(document).on('click','#upload_files_btn',function(e){
@@ -521,7 +490,7 @@
             $('#uploadPDFModal').modal('show');                        
             $.ajaxSetup({
                         headers:{
-                            'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                            'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                         }
                     });                
             $.ajax({
@@ -539,7 +508,7 @@
     
         $(document).on('change','#arquivo',function(){  
           //e.preventDefault();
-          var CSRF_TOKEN = document.querySelector('meta[name="_token"]').getAttribute("content");      
+          var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");      
           var formData = new FormData();
           var id = $('#arquivo').data("manualid");            
           let TotalFiles = $('#arquivo')[0].files.length;                        
@@ -553,13 +522,8 @@
           formData.append('TotalFiles',TotalFiles);      
           formData.append('_token',CSRF_TOKEN);
           formData.append('_enctype','multipart/form-data');      
-          formData.append('_method','put');
-          
-          $.ajaxSetup({
-                        headers:{
-                            'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                        }
-                    });                
+          formData.append('_method','put');         
+                     
       $.ajax({                              
             url:'upload-file/'+id,  
             type: 'post',              
@@ -593,6 +557,8 @@
        }
       
       });  
+
+    });
     
     
     ///fim tratamento dos uploads e downloads

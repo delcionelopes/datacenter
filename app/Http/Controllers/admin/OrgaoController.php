@@ -54,20 +54,14 @@ class OrgaoController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{  
-            $timestamps = $this->orgao->timestamps;
-            $this->orgao->timestamps = false;
+        }else{             
             $data = [
                 'nome' =>strtoupper($request->input('nome')),
-                'telefone' =>$request->input('telefone'), 
-                'created_at' => now(),
-                'updated_at' => null,          
+                'telefone' =>$request->input('telefone'),                     
             ];            
-            $orgao = $this->orgao->create($data);                        
-            $this->orgao->timestamps = true;
-            $o = Orgao::find($orgao->id);
+            $orgao = $this->orgao->create($data);                      
             return response()->json([
-                'orgao'  => $o,
+                'orgao'  => $orgao,
                 'status' => 200,
                 'message' => 'Órgão cadastrado com sucesso!',
             ]);
@@ -106,16 +100,14 @@ class OrgaoController extends Controller
                 'status'  => 400,
                 'errors'  => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->orgao->timestamps;
-            $this->orgao->timestamps = false;
+        }else{          
             $orgao = $this->orgao->find($id);            
             if($orgao){
                 $orgao->nome = strtoupper($request->input('nome'));
                 $orgao->telefone = $request->input('telefone');
-                $orgao->updated_at = now();
+                
                 $orgao->update();
-                $this->orgao->timestamps = true;
+               
                 $o = Orgao::find($id);
 
                 return response()->json([
@@ -134,7 +126,7 @@ class OrgaoController extends Controller
 
     public function destroy($id)
     {
-        $orgao = Orgao::find($id);
+        $orgao = $this->orgao->find($id);
         $orgao->delete();
 
         return response()->json([

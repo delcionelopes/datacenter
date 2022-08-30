@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Manual extends Model
 {    
-    protected $table = 'manuais';
-    public $timestamps = FALSE;
+    protected $table = 'manuais';    
     protected $fillable =
     [        
         'data_criacao',
@@ -16,9 +15,7 @@ class Manual extends Model
         'objetivo',
         'manual',
         'area_conhecimento_id',
-        'usuario',        
-        'created_at',
-        'updated_at',
+        'usuario',   
     ];
 
     public function area_conhecimento()
@@ -28,6 +25,6 @@ class Manual extends Model
 
     public function uploads()
     {
-        return $this->hasMany(Upload::class,'manual_id');
+        return $this->hasMany(Upload::class);
     }
 }

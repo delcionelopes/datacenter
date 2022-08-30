@@ -128,37 +128,23 @@
 
 <script type="text/javascript">
 
-$(document).ready(function(){      
-        
+$(document).ready(function(){        
     
         $(document).on('click','.delete_ambiente_btn',function(e){   ///inicio delete ambiente
-            e.preventDefault();
-    
-            var id = $(this).data("id");
-            var nomeambiente = $(this).data("nomeambiente");
-    
-            swal({
-                title:nomeambiente,
-                text: "Deseja excluir?",
-                icon:"warning",
-                buttons:true,
-                dangerMode:true,
-            })                       
-            .then(willDelete=>{
-                if(willDelete){
-                $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-                
+            e.preventDefault();           
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
+            var id = $(this).data("id");            
+            var nomedoambiente = ($(this).data("nomeambiente")).trim();
+            var resposta = confirm("Deseja excluir "+nomedoambiente+"?");
+            if(resposta==true){                
                 $.ajax({
                     url: 'delete-ambiente/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data:{
-                        "id": id,
-                        "_method": 'DELETE',
+                        'id': id,
+                        '_method': 'DELETE',                    
+                        '_token':CSRF_TOKEN,
                     },
                     success:function(response){
                         if(response.status==200){                        
@@ -169,9 +155,7 @@ $(document).ready(function(){
                         }
                     }
                 });            
-            } 
-        });
-    
+            }    
         });  ///fim delete ambiente
         //início da exibição do form EditAmbientModal de ambiente                
         $('#editAmbienteModal').on('shown.bs.modal',function(){
@@ -186,7 +170,7 @@ $(document).ready(function(){
     
             $.ajaxSetup({
                     headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                     }
                 });
     
@@ -196,8 +180,9 @@ $(document).ready(function(){
                 dataType: 'json',                                    
                 url: 'edit-ambiente/'+id,                                
                 success: function(response){           
-                    if(response.status==200){            
-                        $('.nome_ambiente').val(response.ambiente.nome_ambiente);
+                    if(response.status==200){   
+                        var nomeambiente = (response.ambiente.nome_ambiente).trim();                        
+                        $('.nome_ambiente').val(nomeambiente);
                         $('#edit_ambiente_id').val(response.ambiente.id);                                                                                                       
                     }      
                 }
@@ -207,21 +192,17 @@ $(document).ready(function(){
     
         $(document).on('click','.update_ambiente',function(e){ //inicio da atualização de registro
             e.preventDefault();
-    
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $(this).text("Atualizando...");
     
             var id = $('#edit_ambiente_id').val();        
     
             var data = {
                 'nome_ambiente' : $('#edit_nome_ambiente').val(),
-            }        
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-    
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }
+            
             $.ajax({     
                 type: 'POST',                          
                 data: data,
@@ -288,16 +269,13 @@ $(document).ready(function(){
     
         $(document).on('click','.add_ambiente',function(e){ //início da adição de Registro
             e.preventDefault();
-    
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
             var data = {
-                'nome_ambiente': $('.nome_ambiente').val(),
-            }        
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
+                'nome_ambiente': $('.nome_ambiente').val(),               
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            } 
+            
             $.ajax({
                 type: 'POST',
                 url: 'adiciona-ambiente',

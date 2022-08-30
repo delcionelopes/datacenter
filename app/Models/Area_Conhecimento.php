@@ -6,13 +6,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Area_Conhecimento extends Model
 {    
-    protected $table = 'area_conhecimento';
-    public $timestamps = FALSE;
+    protected $table = 'area_conhecimento'; 
     protected $fillable = 
     [
-        'descricao',
-        'created_at',
-        'updated_at',
+        'descricao',   
     ];
 
     public function sub_area_conhecimento()

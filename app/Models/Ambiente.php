@@ -8,12 +8,9 @@ use Illuminate\Database\Eloquent\Model;
 class Ambiente extends Model
 {
     //use HasFactory;    
-    public $timestamps = FALSE;
     protected $table = 'ambientes';
     protected $fillable = [
-        'nome_ambiente',
-        'created_at',
-        'updated_at',
+        'nome_ambiente',      
     ];    
     
     
