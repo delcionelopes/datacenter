@@ -155,30 +155,19 @@ $(document).ready(function(){
         //inicio delete host
         $(document).on('click','.delete_host_btn',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
-            var nomedatacenter = $(this).data("nomedatacenter");
-    
-            swal({
-                title:nomedatacenter,
-                text: "Deseja excluir?",
-                icon: "warning",
-                buttons:true,
-                dangerMode:true,
-            }).then(willDelete=>{            
-                if(willDelete){                   
-                    $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                    });                
+            var nomedatacenter = ($(this).data("nomedatacenter")).trim();
+            var resposta = confirm("Deseja excluir "+nomedatacenter+"?")                     
+                if(resposta==true){                               
                     $.ajax({
                         url:'/datacenter/delete-host/'+id,
                         type:'POST',                    
                         dataType:'json',
                         data:{
-                            "id":id,
-                            "_method":'DELETE',                                                                         
+                            'id':id,
+                            '_method':'DELETE',
+                            '_token':CSRF_TOKEN,
                         },
                         success:function(response){
                             if(response.status==200){
@@ -189,8 +178,7 @@ $(document).ready(function(){
                             }
                         }
                     });
-                }
-            });
+                }         
         });
         //fim delete host
         //Inicio Exibe EditHostModal
@@ -207,7 +195,7 @@ $(document).ready(function(){
     
             $.ajaxSetup({
                 headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
@@ -215,11 +203,15 @@ $(document).ready(function(){
                 dataType:'json',
                 url:'/datacenter/edit-host/'+id,
                 success:function(response){
-                    if(response.status==200){                  
-                        $('#edit_datacenter').val(response.host.datacenter);
-                        $('#edit_ip').val(response.host.ip);
-                        $('#edit_cluster').val(response.host.cluster);
-                        $('#obs_host').val(response.host.obs_host);    
+                    if(response.status==200){        
+                        var vdatacenter = (response.host.datacenter).trim();
+                        $('#edit_datacenter').val(vdatacenter);
+                        var vip = (response.host.ip).trim();
+                        $('#edit_ip').val(vip);
+                        var vcluster = (response.host.cluster).trim();
+                        $('#edit_cluster').val(vcluster);
+                        var vobshost = (response.host.obs_host).trim();
+                        $('#obs_host').val(vobshost);    
                         $('#edit_host_id').val(response.host.id);
                         $('#edit_cluster_id').val(response.host.cluster_id);
                     }
@@ -231,23 +223,21 @@ $(document).ready(function(){
         //inicio da atualização do host
         $(document).on('click','.update_host',function(e){
             e.preventDefault();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             $(this).text("Atualizando...");
     
             var id = $('#edit_host_id').val();
     
             var data = {
-                'datacenter': $('#edit_datacenter').val(),
-                'ip': $('#edit_ip').val(),
-                'cluster': $('#edit_cluster').val(),
-                'obs_host': $('#obs_host').val(),
+                'datacenter': ($('#edit_datacenter').val()).trim(),
+                'ip': ($('#edit_ip').val()).trim(),
+                'cluster': ($('#edit_cluster').val()).trim(),
+                'obs_host': ($('#obs_host').val()).trim(),
                 'cluster_id':$('#edit_cluster_id').val(),
-            }
-    
-            $.ajaxSetup({
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }   
+            
             $.ajax({
                 type:'POST',
                 data:data,
@@ -309,19 +299,17 @@ $(document).ready(function(){
         //fim exibe form de adição de host
         //inicio da adição de host
         $(document).on('click','.add_host',function(e){
-            e.preventDefault();        
+            e.preventDefault();  
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");      
             var data = {
-                'datacenter': $('.datacenter').val(),
-                'ip': $('.ip').val(),
-                'cluster': $('.cluster').val(),
-                'obs_host': $('.obs_host').val(),
+                'datacenter': ($('.datacenter').val()).trim(),
+                'ip': ($('.ip').val()).trim(),
+                'cluster': ($('.cluster').val()).trim(),
+                'obs_host': ($('.obs_host').val()).trim(),
                 'cluster_id': $('#add_cluster_id').val(),
-            }
-            $.ajaxSetup({
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }           
             $.ajax({
                 url:'/datacenter/adiciona-host',
                 type:'POST',

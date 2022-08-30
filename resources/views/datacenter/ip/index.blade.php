@@ -142,30 +142,19 @@ $(document).ready(function(){
         //inicio delete ip
         $(document).on('click','.delete_ip_btn',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
-            var enderecoip = $(this).data("enderecoip");
-    
-            swal({
-                title:enderecoip,
-                text: "Deseja excluir?",
-                icon: "warning",
-                buttons:true,
-                dangerMode:true,
-            }).then(willDelete=>{            
-                if(willDelete){                   
-                    $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                    });                
+            var enderecoip = ($(this).data("enderecoip")).trim();
+            var resposta = confirm("Deseja excluir "+enderecoip+"?");
+                if(resposta==true){                                                    
                     $.ajax({
                         url:'/datacenter/delete-ip/'+id,
                         type:'POST',                    
                         dataType:'json',
                         data:{
-                            "id":id,
-                            "_method":'DELETE',                                                                         
+                            'id':id,
+                            '_method':'DELETE',
+                            '_token':CSRF_TOKEN,
                         },
                         success:function(response){
                             if(response.status==200){
@@ -177,7 +166,6 @@ $(document).ready(function(){
                         }
                     });
                 }
-            });
         });
         //fim delete ip
         //Inicio Exibe EditIPModal
@@ -194,7 +182,7 @@ $(document).ready(function(){
     
             $.ajaxSetup({
                 headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
@@ -208,8 +196,10 @@ $(document).ready(function(){
                         }else{
                             var corstatus = 'style="color:green;"';                        
                         }
-                        $('#edit_status').replaceWith('<label id="edit_status" class="status"'+corstatus+'>'+response.cadastroIp.status+'</label>');              
-                        $('#edit_ip').val(response.cadastroIp.ip);                                        
+                        var vstatus = (response.cadastroIp.status).trim();
+                        $('#edit_status').replaceWith('<label id="edit_status" class="status"'+corstatus+'>'+vstatus+'</label>');   
+                        var vip = (response.cadastroIp.ip).trim();
+                        $('#edit_ip').val(vip);                                        
                         $('#edit_rede_id').val(response.cadastroIp.rede_id);
                         $('#edit_ip_id').val(response.cadastroIp.id);
                     }
@@ -221,6 +211,7 @@ $(document).ready(function(){
         //inicio da atualização do ip
         $(document).on('click','.update_ip',function(e){
             e.preventDefault();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             $(this).text("Atualizando...");
     
             var id = $('#edit_ip_id').val();
@@ -228,15 +219,12 @@ $(document).ready(function(){
             var meulink = "{{route('datacenter.rede.index',['id' => $vlan_id])}}";
     
             var data = {            
-                'ip': $('#edit_ip').val(),            
+                'ip': ($('#edit_ip').val()).trim(),            
                 'rede_id':$('#edit_rede_id').val(),
-            }
-    
-            $.ajaxSetup({
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }    
+            
             $.ajax({
                 type:'POST',
                 data:data,
@@ -279,7 +267,7 @@ $(document).ready(function(){
                             linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="LIVRE" class="status_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>';
                             }else{
                             linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="OCUPADO" class="status_btn fas fa-checked" style="background: transparent; color: green; border: none;"></button></td>';
-                            }                       
+                            }                    
                            
                             linha4 = '<td>\
                                 <div class="btn-group">\
@@ -308,19 +296,17 @@ $(document).ready(function(){
         });
         //fim exibe form de adição de ip
         //inicio da adição de ip
-        $(document).on('click','.add_ip',function(e){
+        $(document).on('click','.add_ip',function(e){            
             e.preventDefault();        
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var meulink = "{{route('datacenter.rede.index',['id' => $vlan_id])}}";
             var data = {            
-                'ip': $('.ip').val(),
+                'ip': ($('.ip').val()).trim(),
                 'status': "LIVRE",            
                 'rede_id': $('#add_rede_id').val(),
-            }
-            $.ajaxSetup({
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }           
             $.ajax({
                 url:'/datacenter/adiciona-ip',
                 type:'POST',
@@ -378,17 +364,15 @@ $(document).ready(function(){
         //inicio muda o status do ip
         $(document).on('click','.status_btn',function(e){
             e.preventDefault();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
-            var vstatus = $(this).data("status");        
+            var vstatus = ($(this).data("status")).trim();        
             var data = {
                 'pstatus': vstatus,
-            }
-    
-            $.ajaxSetup({            
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }   
+           
             $.ajax({
                 type:'POST',
                 dataType:'json',

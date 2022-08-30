@@ -59,15 +59,15 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('index-plataforma',[PlataformaController::class,'index'])->name('plataforma.index');
         Route::delete('delete-plataforma/{id}',[PlataformaController::class,'destroy']);
         Route::get('edit-plataforma/{id}',[PlataformaController::class,'edit']);
-        Route::post('update-plataforma/{id}',[PlataformaController::class,'update']);
-        Route::post('adiciona-plataforma',[PlataformaController::class,'store']);    
+        Route::put('update-plataforma/{id}',[PlataformaController::class,'update']);
+        Route::put('adiciona-plataforma',[PlataformaController::class,'store']);    
     
         //Rotas para a view index de projeto    
         Route::get('index-projeto',[ProjetoController::class,'index'])->name('projeto.index');
         Route::delete('delete-projeto/{id}',[ProjetoController::class,'destroy']);
         Route::get('edit-projeto/{id}',[ProjetoController::class,'edit']);
-        Route::post('update-projeto/{id}',[ProjetoController::class,'update']);
-        Route::post('adiciona-projeto',[ProjetoController::class,'store']);    
+        Route::put('update-projeto/{id}',[ProjetoController::class,'update']);
+        Route::put('adiciona-projeto',[ProjetoController::class,'store']);    
 
         //Rotas para a view index de area_conhecimento
         Route::get('index-areaconhecimento',[Area_ConhecimentoController::class,'index'])->name('areaconhecimento.index');
@@ -80,8 +80,8 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('index-subareaconhecimento',[Sub_Area_ConhecimentoController::class,'index'])->name('subareaconhecimento.index');
         Route::delete('delete-subareaconhecimento/{id}',[Sub_Area_ConhecimentoController::class,'destroy']);
         Route::get('edit-subareaconhecimento/{id}',[Sub_Area_ConhecimentoController::class,'edit']);
-        Route::post('update-subareaconhecimento/{id}',[Sub_Area_ConhecimentoController::class,'update']);
-        Route::post('adiciona-subareaconhecimento',[Sub_Area_ConhecimentoController::class,'store']);            
+        Route::put('update-subareaconhecimento/{id}',[Sub_Area_ConhecimentoController::class,'update']);
+        Route::put('adiciona-subareaconhecimento',[Sub_Area_ConhecimentoController::class,'store']);            
 
         //Rotas para a view index de manuais
         Route::get('index-manual',[ManualController::class,'index'])->name('manual.index');
@@ -106,16 +106,16 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('index-cluster',[ClusterController::class,'index'])->name('cluster.index');
         Route::delete('delete-cluster/{id}',[ClusterController::class,'destroy']);
         Route::get('edit-cluster/{id}',[ClusterController::class,'edit']);
-        Route::post('update-cluster/{id}',[ClusterController::class,'update']);
-        Route::post('adiciona-cluster',[ClusterController::class,'store']);    
-        Route::post('adiciona-hostcluster',[ClusterController::class,'storehost']);
+        Route::put('update-cluster/{id}',[ClusterController::class,'update']);
+        Route::put('adiciona-cluster',[ClusterController::class,'store']);    
+        Route::put('adiciona-hostcluster',[ClusterController::class,'storehost']);
 
         //Rotas para a view index de hosts
         Route::get('index-host/{id}',[HostController::class,'index'])->name('host.index');
         Route::delete('delete-host/{id}',[HostController::class,'destroy']);
         Route::get('edit-host/{id}',[HostController::class,'edit']);
-        Route::post('update-host/{id}',[HostController::class,'update']);
-        Route::post('adiciona-host',[HostController::class,'store']);
+        Route::put('update-host/{id}',[HostController::class,'update']);
+        Route::put('adiciona-host',[HostController::class,'store']);
 
         //Rotas para a view index de vlan
         Route::get('index-vlan',[vlanController::class,'index'])->name('vlan.index');
@@ -137,9 +137,9 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('index-ip/{id}',[CadastroIpController::class,'index'])->name('ip.index');
         Route::delete('delete-ip/{id}',[CadastroIpController::class,'destroy']);
         Route::get('edit-ip/{id}',[CadastroIpController::class,'edit']);
-        Route::post('update-ip/{id}',[CadastroIpController::class,'update']);
-        Route::post('adiciona-ip',[CadastroIpController::class,'store']);
-        Route::post('status-ip/{id}',[CadastroIpController::class,'status']);
+        Route::put('update-ip/{id}',[CadastroIpController::class,'update']);
+        Route::put('adiciona-ip',[CadastroIpController::class,'store']);
+        Route::put('status-ip/{id}',[CadastroIpController::class,'status']);
 
          //Rotas para a view index de VirtualMachine
          Route::get('index-vm/{id}',[VirtualMachineController::class,'index'])->name('vm.index');
@@ -154,9 +154,9 @@ Route::group(['middleware'=>['auth']],function(){
          Route::get('index-base/{id}',[BaseController::class,'index'])->name('base.index');
          Route::delete('delete-base/{id}',[BaseController::class,'destroy']);
          Route::get('edit-base/{id}',[BaseController::class,'edit']);
-         Route::post('update-base/{id}',[BaseController::class,'update']);
-         Route::post('adiciona-base',[BaseController::class,'store']);         
-         Route::post('armazena-app',[BaseController::class,'storeApp']);
+         Route::put('update-base/{id}',[BaseController::class,'update']);
+         Route::put('adiciona-base',[BaseController::class,'store']);         
+         Route::put('armazena-app',[BaseController::class,'storeApp']);
 
         //Rotas para a view index de App
          Route::get('index-app/{id}',[AppController::class,'index'])->name('app.index');
@@ -164,7 +164,7 @@ Route::group(['middleware'=>['auth']],function(){
          Route::get('edit-app/{id}',[AppController::class,'edit']);
          Route::put('update-app/{id}',[AppController::class,'update']);
          Route::put('adiciona-app',[AppController::class,'store']);
-         Route::post('https-app/{id}',[AppController::class,'httpsApp']);
+         Route::put('https-app/{id}',[AppController::class,'httpsApp']);
         });        
         
     

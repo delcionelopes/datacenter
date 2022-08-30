@@ -142,30 +142,19 @@
         //inicio delete registro
         $(document).on('click','.delete_area_conhecimento_btn',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
-            var descricao = $(this).data("descricao");
-    
-            swal({
-                title:"Exclusão!",
-                text:"Deseja exluir "+descricao+"?",
-                icon:"warning",
-                buttons:true,
-                dangerMode:true,
-            }).then(willDelete=>{
-                if(willDelete){
-                    $.ajaxSetup({
-                        headers:{
-                            'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                        }
-                    });
+            var descricao = ($(this).data("descricao")).trim();
+            var resposta = confirm("Deseja excluir "+descricao+"?");
+                if(resposta == true){
                     $.ajax({
                         url:'delete-subareaconhecimento/'+id,
                         type:'POST',
                         dataType:'json',
                         data:{
-                            "id":id,
-                            "_method":'DELETE',
+                            'id':id,
+                            '_method':'DELETE',
+                            '_token':CSRF_TOKEN,
                         },
                         success:function(response){
                             if(response.status==200){
@@ -176,8 +165,7 @@
                             }
                         }                
                     });
-                }
-            });
+                }            
         });
         //fim delete registro
     
@@ -195,7 +183,7 @@
     
             $.ajaxSetup({
                     headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                     }
                 });
     
@@ -205,7 +193,8 @@
                     url:'edit-subareaconhecimento/'+id,                                
                     success:function(response){
                         if(response.status==200){
-                            $('.descricao').val(response.sub_area_conhecimento.descricao);
+                            var vdescricao = (response.sub_area_conhecimento.descricao).trim();
+                            $('.descricao').val(vdescricao);
                             //seta a opção certa no select html
                             var opcao = response.area_conhecimento.id;                        
                             $('#area_id option')
@@ -235,22 +224,17 @@
         //inicio da atualização do registro
         $(document).on('click','.update_sub_area_conhecimento',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $(this).text("Atualizando...");                                                                                               
             
             var opt = $('#area_id').val(); 
             var id = $('#edit_sub_area_conhecimento_id').val();
             var data = {
                 'area_conhecimento_id' : opt,
-                'descricao' : $('#edit_descricao').val(),
-            }
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-    
+                'descricao' : ($('#edit_descricao').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }           
                 $.ajax({
                     type:'POST',
                     data:data,
@@ -316,16 +300,13 @@
         //início do envio do novo registro para o Sub_Area_ConhecimentoController
         $(document).on('click','.add_sub_area_conhecimento',function(e){
             e.preventDefault();               
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var data = {
                 'area_conhecimento_id' : $('#area_id').val(),
-                'descricao' : $('.descricao').val(),
+                'descricao' : ($('.descricao').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
             }
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-            });
                 $.ajax({
                     type:'POST',
                     url:'adiciona-subareaconhecimento',

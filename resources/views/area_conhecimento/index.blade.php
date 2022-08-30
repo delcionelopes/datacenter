@@ -186,7 +186,7 @@
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $('#edit_area_conhecimento_id').val();
             var data = {
-                'descricao' : $('#edit_descricao').val(),
+                'descricao' : ($('#edit_descricao').val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }           
@@ -251,7 +251,7 @@
             e.preventDefault();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var data = {
-                'descricao' : $('.descricao').val(),
+                'descricao' : ($('.descricao').val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN
             }   

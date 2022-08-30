@@ -8,13 +8,10 @@ use Illuminate\Database\Eloquent\Model;
 class Projeto extends Model
 {
     //use HasFactory;    
-    protected $table = 'projetos';
-    public $timestamps = FALSE;  
+    protected $table = 'projetos'; 
     protected $fillable =
     [
-        'nome_projeto',
-        'created_at',
-        'updated_at',
+        'nome_projeto',     
     ];
 
     public function bases()

@@ -123,30 +123,19 @@
         //inicio delete plataforma
         $(document).on('click','.delete_plataforma_btn',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
-            var nomeplataforma = $(this).data("nomeplataforma");
-            swal({
-                title:"Processo de exclusão!",
-                text: "Você vai excluir "+nomeplataforma+". Deseja prosseguir?",
-                icon:"warning",
-                buttons:true,
-                dangerMode:true,
-            }).then(willDelete=>{
-                if(willDelete){
-                $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-                
+            var nomeplataforma = ($(this).data("nomeplataforma")).trim();
+            var resposta = confirm("Deseja excluir "+nomeplataforma+"?");
+                if(resposta==true){                
                 $.ajax({
                     url:'delete-plataforma/'+id,
                     type:'POST',
                     dataType:'json',
                     data:{
-                        "id":id,
-                        "_method":'DELETE',
+                        'id':id,
+                        '_method':'DELETE',
+                        '_token':CSRF_TOKEN,
                     },
                     success:function(response){
                         if(response.status==200){                        
@@ -157,9 +146,7 @@
                         }
                     }
                 });
-            }
-        });
-    
+            }    
         });//fim delete plataforma
     
         //inicio exibição edit plataforma
@@ -176,7 +163,7 @@
     
             $.ajaxSetup({
                     headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                     }
                 });
     
@@ -186,7 +173,8 @@
                     url: 'edit-plataforma/'+id,
                     success:function(response){
                         if(response.status==200){
-                            $('.nome_plataforma').val(response.plataforma.nome_plataforma);
+                            var vnomeplataforma = (response.plataforma.nome_plataforma).trim();
+                            $('.nome_plataforma').val(vnomeplataforma);
                             $('#edit_plataforma_id').val(response.plataforma.id);
                         }
                     }
@@ -198,21 +186,16 @@
     
         $(document).on('click','.update_plataforma',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $(this).text("Atualizando...");
     
             var id = $('#edit_plataforma_id').val();
     
             var data = {
-                'nome_plataforma' : $('#edit_nome_plataforma').val(),
-            }
-            
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-    
+                'nome_plataforma' : ($('#edit_nome_plataforma').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }    
                 $.ajax({
                     type:'POST',
                     data: data,
@@ -277,17 +260,13 @@
     
         $(document).on('click','.add_plataforma',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var data = {
-                'nome_plataforma' : $('.nome_plataforma').val(),
+                'nome_plataforma' : ($('.nome_plataforma').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
             }        
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-    
+        
                 $.ajax({
                     type:'POST',
                     url:'adiciona-plataforma',

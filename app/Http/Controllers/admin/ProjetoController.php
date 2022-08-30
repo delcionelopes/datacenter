@@ -51,19 +51,13 @@ class ProjetoController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{   
-            $timestamps = $this->projeto->timestamps;
-            $this->projeto->timestamps = false;
+        }else{              
             $data = [
-                'nome_projeto' => strtoupper($request->input('nome_projeto')),              
-                'created_at' => now(),
-                'updated_at' => null,
+                'nome_projeto' => strtoupper($request->input('nome_projeto')),             
             ];            
-            $projeto = $this->projeto->create($data);                        
-            $this->projeto->timestamps = false;
-            $p = Projeto::find($projeto->id);
+            $projeto = $this->projeto->create($data);          
             return response()->json([
-                'projeto' => $p,
+                'projeto' => $projeto,
                 'status' => 200,
                 'message' => 'Projeto adicionado com sucesso!',
             ]);
@@ -100,15 +94,11 @@ class ProjetoController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->projeto->timestamps;
-            $this->projeto->timestamps = false;
+        }else{           
             $projeto = Projeto::find($id);
             if($projeto){     
-                $projeto->nome_projeto = strtoupper($request->input('nome_projeto'));
-                $projeto->updated_at = now();
-                $projeto->update();
-                $this->projeto->timestamps = true;
+                $projeto->nome_projeto = strtoupper($request->input('nome_projeto'));            
+                $projeto->update();    
                 $proj = Projeto::find($id);
                 return response()->json([
                     'projeto'  => $proj,

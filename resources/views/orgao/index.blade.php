@@ -184,7 +184,7 @@
     
         $.ajaxSetup({
                     headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                     }
                 });
     
@@ -215,8 +215,8 @@
         var id = $('#edit_orgao_id').val();
         
         var data = {
-            'nome' : $('#edit_nome_orgao').val(),
-            'telefone' : $('#edit_telefone').val(),
+            'nome' : ($('#edit_nome_orgao').val()).trim(),
+            'telefone' : ($('#edit_telefone').val()).trim(),
             '_method':'PUT',
             '_token':CSRF_TOKEN,
         }    
@@ -288,8 +288,8 @@
         e.preventDefault();
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var data = {
-            'nome' : $('.nome_orgao').val(),
-            'telefone' : $('.telefone').val(),
+            'nome' : ($('.nome_orgao').val()).trim(),
+            'telefone' : ($('.telefone').val()).trim(),
             '_method':'PUT',
             '_token':CSRF_TOKEN,
         }            

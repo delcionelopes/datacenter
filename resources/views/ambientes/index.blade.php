@@ -198,7 +198,7 @@ $(document).ready(function(){
             var id = $('#edit_ambiente_id').val();        
     
             var data = {
-                'nome_ambiente' : $('#edit_nome_ambiente').val(),
+                'nome_ambiente' : ($('#edit_nome_ambiente').val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }
@@ -271,7 +271,7 @@ $(document).ready(function(){
             e.preventDefault();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
             var data = {
-                'nome_ambiente': $('.nome_ambiente').val(),               
+                'nome_ambiente': ($('.nome_ambiente').val()).trim(),               
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             } 

@@ -50,19 +50,13 @@ class PlataformaController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{        
-            $timestamps = $this->plataforma->timestamps;
-            $this->plataforma->timestamps = false;    
+        }else{                    
             $data = [
-                'nome_plataforma' => strtoupper($request->input('nome_plataforma')),              
-                'created_at' => now(),
-                'updated_at' => null,
+                'nome_plataforma' => strtoupper($request->input('nome_plataforma')),                           
             ];            
-            $plataforma = $this->plataforma->create($data);                        
-            $this->plataforma->timestamps = true;
-            $p = Plataforma::find($plataforma->id);
+            $plataforma = $this->plataforma->create($data);
             return response()->json([
-                'plataforma' => $p,
+                'plataforma' => $plataforma,
                 'status'  => 200,
                 'message' => 'Plataforma cadastrada com sucesso!',
             ]);
@@ -100,15 +94,12 @@ class PlataformaController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->plataforma->timestamps;
-            $this->plataforma->timestamps = false;
+        }else{            
             $plataforma = $this->plataforma->find($id);
             if($plataforma){
-                $plataforma->nome_plataforma = strtoupper($request->input('nome_plataforma'));
-                $plataforma->updated_at = now();
+                $plataforma->nome_plataforma = strtoupper($request->input('nome_plataforma'));             
                 $plataforma->update();
-                $this->plataforma->timestamps = true;
+                
                 $p = Plataforma::find($id);
 
                 return response()->json([

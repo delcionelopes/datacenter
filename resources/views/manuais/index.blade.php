@@ -291,9 +291,9 @@
             var id = $('#edit_manual_id').val();        
             var data = {
                 'area_conhecimento_id' : opt,
-                'descricao' : $('#edit_descricao').val(),
-                'objetivo' : $('#edit_objetivo').text(),
-                'manual' : $('#edit_manual').text(),
+                'descricao' : ($('#edit_descricao').val()).trim(),
+                'objetivo' : ($('#edit_objetivo').text()).trim(),
+                'manual' : ($('#edit_manual').text()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }     
@@ -361,9 +361,9 @@
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');      
             var dataAdd = {
                 'area_conhecimento_id' : $('#area_id').val(),
-                'descricao' : $('.descricao').val(),
-                'objetivo' : $('.objetivo').val(),
-                'manual' : $('.manual').val(),
+                'descricao' : ($('.descricao').val()).trim(),
+                'objetivo' : ($('.objetivo').val()).trim(),
+                'manual' : ($('.manual').val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN
             }   

@@ -268,30 +268,19 @@ $(document).ready(function(){
         //inicio delete base
         $(document).on('click','.delete_base_btn',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
-            var nomebase = $(this).data("nomebase");
-    
-            swal({
-                title: nomebase,
-                text: "Deseja excluir?",
-                icon: "warning",
-                buttons: true,
-                dangerMode: true,
-            }).then(willDelete=>{
-                if(willDelete){
-                    $.ajaxSetup({
-                        headers:{
-                            'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                        }
-                    });
+            var nomebase = ($(this).data("nomebase")).trim();
+            var resposta = confirm("Deseja excluir "+nomebase+"?");
+                if(resposta==true){                    
                     $.ajax({
                         url: '/datacenter/delete-base/'+id,
                         type: 'POST',
                         dataType: 'json',
                         data:{
-                            "id":id,
-                            "_method":'DELETE',
+                            'id':id,
+                            '_method':'DELETE',
+                            '_token':CSRF_TOKEN,
                         },
                         success:function(response){
                             if(response.status==200){
@@ -302,8 +291,7 @@ $(document).ready(function(){
                             }
                         }
                     });
-                }
-            });
+                }          
         });
         //fim delete base
     
@@ -320,7 +308,7 @@ $(document).ready(function(){
     
             $.ajaxSetup({
                 headers:{
-                    'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                    'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
@@ -336,11 +324,16 @@ $(document).ready(function(){
                         .filter('[value='+opcao+']')
                         .attr('selected',true);
                         //fim seta projeto
-                        $('#edit_nome_vm').html('<Label id="edit_nome_vm" style="font-style:italic;">'+response.vm.nome_vm+'</Label>');
-                        $('#nome_base').val(response.base.nome_base);
-                        $('#ip').val(response.base.ip);
-                        $('#dono').val(response.base.dono);
-                        $('#encoding').val(response.base.encoding);
+                        var vnomevm = (response.vm.nome_vm).trim();
+                        $('#edit_nome_vm').html('<Label id="edit_nome_vm" style="font-style:italic;">'+vnomevm+'</Label>');
+                        var vnomebase = (response.base.nome_base).trim();
+                        $('#nome_base').val(vnomebase);
+                        var vip = (response.base.ip).trim();
+                        $('#ip').val(vip);
+                        var vbasedono = (response.base.dono).trim();
+                        $('#dono').val(vbasedono);
+                        var vencoding = (response.base.encoding).trim();
+                        $('#encoding').val(vencoding);
                         $('#edit_vm_id').val(response.base.virtual_machine_id);
                         $('#edit_base_id').val(response.base.id);
                     }
@@ -361,25 +354,21 @@ $(document).ready(function(){
         //inicio da atualização do registro
         $(document).on('click','.update_base_btn',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             $(this).text('Atualizando...');
     
             var optprojeto = $('#projeto_id').val();
             var id = $('#edit_base_id').val();
             var data = {
                 'projeto_id': optprojeto,
-                'virtual_machine_id': $('#edit_vm_id').val(),
-                'nome_base': $('.edit_nome_base').val(),
-                'ip': $('.edit_ip').val(),
-                'dono': $('.edit_dono').val(),
-                'encoding': $('.edit_encoding').val(),
-            }
-    
-            $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                'virtual_machine_id': ($('#edit_vm_id').val()).trim(),
+                'nome_base': ($('.edit_nome_base').val()).trim(),
+                'ip': ($('.edit_ip').val()).trim(),
+                'dono': ($('.edit_dono').val()).trim(),
+                'encoding': ($('.edit_encoding').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }            
     
             $.ajax({
                 type: 'POST',
@@ -436,7 +425,7 @@ $(document).ready(function(){
         });
         $(document).on('click','.AddBase_btn',function(e){
             e.preventDefault();
-            var labelHtml = $(this).data("nome_vm");
+            var labelHtml = ($(this).data("nome_vm")).trim();
             $('#addform').trigger('reset');
             $('#AddBaseModal').modal('show');
             $('#add_vm_id').val($(this).data("id"));
@@ -447,21 +436,18 @@ $(document).ready(function(){
         //inicio do envio do novo registro
         $(document).on('click','.add_base_btn',function(e){
             e.preventDefault();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var optprojeto = $('#projeto_id').val();        
             var data = {
                 'projeto_id': optprojeto,
-                'virtual_machine_id': $('#add_vm_id').val(),
-                'nome_base': $('.nome_base').val(),
-                'ip': $('.ip').val(),
-                'dono': $('.dono').val(),
-                'encoding': $('.encoding').val(),
-            }
-    
-            $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                'virtual_machine_id': ($('#add_vm_id').val()).trim(),
+                'nome_base': ($('.nome_base').val()).trim(),
+                'ip': ($('.ip').val()).trim(),
+                'dono': ($('.dono').val()).trim(),
+                'encoding': ($('.encoding').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }    
     
             $.ajax({
                 type: 'POST',
@@ -572,13 +558,7 @@ $(document).ready(function(){
                 'dominio': $('.add_dominio').val(),
                 'https': add_https,     
                 '_token': CSRF_TOKEN,       
-            };
-            
-            $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+            };           
     
             $.ajax({
                 type: 'POST',

@@ -58,21 +58,15 @@ class ClusterController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{       
-            $timestamps = $this->cluster->timestamps;
-            $this->cluster->timestamps = false;     
+        }else{                 
             $data = [
                 'nome_cluster'      => strtoupper($request->input('nome_cluster')),
                 'total_memoria'     => $request->input('total_memoria'),
                 'total_processador' => $request->input('total_processador'),              
-                'created_at' => now(),
-                'updated_at' => null,
             ];            
-            $cluster = $this->cluster->create($data);                                                            
-            $this->cluster->timestamps = true;
-            $c = Cluster::find($cluster->id);
+            $cluster = $this->cluster->create($data);            
             return response()->json([
-                'cluster' => $c,
+                'cluster' => $cluster,
                 'status' => 200,
                 'message' => 'Resgistro gravado com sucesso!',
             ]);
@@ -113,19 +107,15 @@ class ClusterController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->cluster->timestamps;
-            $this->cluster->timestamps = false;
+        }else{           
             $cluster = $this->cluster->find($id);
             if($cluster){
                         $data = [
                             'nome_cluster'      => strtoupper($request->input('nome_cluster')),
                             'total_memoria'     => $request->input('total_memoria'),
-                            'total_processador' => $request->input('total_processador'),
-                            'updated_at' => now(),
+                            'total_processador' => $request->input('total_processador'),                         
                         ];
-            $cluster = $this->cluster->update($data);
-            $this->cluster->timestamps = true;
+            $cluster = $this->cluster->update($data);           
             $c = Cluster::find($id);
             return response()->json([
                 'cluster' => $c,

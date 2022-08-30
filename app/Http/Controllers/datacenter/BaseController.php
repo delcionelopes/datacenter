@@ -75,24 +75,18 @@ class BaseController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{           
-            $timestamps = $this->base->timestamps;
-            $this->base->timestamps = false;            
+        }else{                
             $data = [
                 'virtual_machine_id' => $request->input('virtual_machine_id'),
                 'projetos_id'         => $request->input('projeto_id'),
                 'nome_base'          => strtoupper($request->input('nome_base')),
                 'ip'                 => $request->input('ip'),
                 'dono'               => strtoupper($request->input('dono')),
-                'encoding'           => strtoupper($request->input('encoding')),
-                'created_at' => now(),
-                'updated_at' => null,
+                'encoding'           => strtoupper($request->input('encoding')),         
             ];
-            $base = $this->base->create($data);
-            $this->base->timestamps = true;
-            $b = Base::find($base->id);
+            $base = $this->base->create($data);         
             return response()->json([
-                'base'    => $b,
+                'base'    => $base,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -141,8 +135,6 @@ class BaseController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ]);
         }else{
-            $timestamps = $this->base->timestamps;
-            $this->base->timestamps = false;    
             $base = $this->base->find($id);            
             if($base){            
             $data = [
@@ -151,11 +143,9 @@ class BaseController extends Controller
                 'nome_base'          => strtoupper($request->input('nome_base')),
                 'ip'                 => $request->input('ip'),
                 'dono'               => strtoupper($request->input('dono')),
-                'encoding'           => strtoupper($request->input('encoding')),
-                'updated_at'         => now(),
+                'encoding'           => strtoupper($request->input('encoding')),               
             ];
-            $base->update($data);
-            $this->base->timestamps = true;
+            $base->update($data);          
             $b = Base::find($id);
             return response()->json([
                 'base'    => $b,

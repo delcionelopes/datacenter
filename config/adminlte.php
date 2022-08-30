@@ -529,9 +529,9 @@ return [
             'title' => 'Clusters/Hosts/VM/BD/APP',
         ],
         'buttons' => [
-            'close' => false,
-            'close_all' => false,
-            'close_all_other' => false,
+            'close' => true,
+            'close_all' => true,
+            'close_all_other' => true,
             'scroll_left' => true,
             'scroll_right' => true,
             'fullscreen' => true,

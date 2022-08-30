@@ -55,23 +55,17 @@ class CadastroIpController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{   
-            $timestamps = $this->cadastroIp->timestamps;
-            $this->cadastroIp->timestamps = false;         
+        }else{                
             $data = [
                 'rede_id' => $request->input('rede_id'),
                 'ip' => $request->input('ip'),
-                'status' => strtoupper($request->input('status')),                
-                'created_at' => now(),
-                'updated_at' => null,
+                'status' => strtoupper($request->input('status')),               
             ];
-            $cadastroIp = $this->cadastroIp->create($data);
-            $this->cadastroIp->timestamps = true;
-            $c = Cadastro_ip::find($cadastroIp->id);            
+            $cadastroIp = $this->cadastroIp->create($data);                      
             $rede = $cadastroIp->rede;
             return response()->json([
                 'rede' => $rede,
-                'cadastroIp' => $c,
+                'cadastroIp' => $cadastroIp,
                 'status' => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -105,9 +99,7 @@ class CadastroIpController extends Controller
                  'status' => 400,
                  'errors' => $validator->errors()->getMessages(),
              ]);
-         }else{        
-             $timestamps = $this->cadastroIp->timestamps;
-             $this->cadastroIp->timestamps = false;    
+         }else{                     
              $cadastroIp = $this->cadastroIp->find($id);
              if($cadastroIp){
                 $data = [
@@ -115,8 +107,7 @@ class CadastroIpController extends Controller
                     'ip' => $request->input('ip'), 
                     'updated_at' => now(),                               
                 ];
-                $cadastroIp->update($data);
-                $this->cadastroIp->timestamps = true;
+                $cadastroIp->update($data);               
                 $c = Cadastro_ip::find($id);
                 $rede = $c->rede;
                 return response()->json([

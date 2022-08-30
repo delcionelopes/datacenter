@@ -62,23 +62,17 @@ class HostController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{   
-            $timestamps = $this->host->timestamps;
-            $this->host->timestamps = false;         
+        }else{                 
             $data = [
                 'cluster_id' => $request->input('cluster_id'),
                 'obs_host'   => strtoupper($request->input('obs_host')),
                 'ip'         => $request->input('ip'),
                 'datacenter' => strtoupper($request->input('datacenter')),
-                'cluster'    => strtoupper($request->input('cluster')),              
-                'created_at' => now(),
-                'updated_at' => null,
+                'cluster'    => strtoupper($request->input('cluster')),            
             ];
-            $host = $this->host->create($data);                        
-            $this->host->timestamps = true;
-            $h = Host::find($host->id);
+            $host = $this->host->create($data);          
             return response()->json([
-                'host'    => $h,
+                'host'    => $host,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -118,9 +112,7 @@ class HostController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->host->timestamps;
-            $this->host->timestamps = false;
+        }else{           
             $host = $this->host->find($id);            
             if($host){
                 $data = [
@@ -128,11 +120,9 @@ class HostController extends Controller
                     'obs_host'   => strtoupper($request->input('obs_host')),
                     'ip'         => $request->input('ip'),
                     'datacenter' => strtoupper($request->input('datacenter')),
-                    'cluster'    => strtoupper($request->input('cluster')),
-                    'updated_at' => now(),
+                    'cluster'    => strtoupper($request->input('cluster')),                   
                 ];
-                $host->update($data);
-                $this->host->timestamps = true;      
+                $host->update($data);               
                 $h = Host::find($id);                          
                 return response()->json([
                     'host'    => $h,

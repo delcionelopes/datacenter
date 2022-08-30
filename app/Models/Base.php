@@ -7,16 +7,13 @@ use Illuminate\Database\Eloquent\Model;
 class Base extends Model
 {
     protected $table = "bases";
-    public $timestamps = FALSE;
     protected $fillable = [
         'nome_base',
         'ip',
         'dono',
         'encoding',
         'virtual_machine_id',
-        'projetos_id',
-        'created_at',
-        'updated_at',
+        'projetos_id',  
     ];
 
     public function virtualmachine(){

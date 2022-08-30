@@ -53,21 +53,15 @@ class Sub_Area_ConhecimentoController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{              
-            $timestamps = $this->sub_area_conhecimento->timestamps;
-            $this->sub_area_conhecimento->timestamps = false;
+        }else{                         
             $data = [
                 'area_conhecimento_id' => $request->input('area_conhecimento_id'),
-                'descricao' => strtoupper($request->input('descricao')),
-                'created_at' => now(),
-                'updated_at' => null,
+                'descricao' => strtoupper($request->input('descricao')),             
             ];            
-            $sub_area_conhecimento = $this->sub_area_conhecimento->create($data);                        
-            $this->sub_area_conhecimento->timestamps = true;
-            $s = Sub_Area_Conhecimento::find($sub_area_conhecimento->id);
+            $sub_area_conhecimento = $this->sub_area_conhecimento->create($data);           
             $area = Area_Conhecimento::find($sub_area_conhecimento->area_conhecimento_id);
             return response()->json([
-                'sub_area_conhecimento' => $s,            
+                'sub_area_conhecimento' => $sub_area_conhecimento,            
                 'area_conhecimento' => $area,
                 'status' => 200,
                 'message' => 'Registro cadastrado com sucesso!',
@@ -107,16 +101,13 @@ class Sub_Area_ConhecimentoController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->sub_area_conhecimento->timestamps;
-            $this->sub_area_conhecimento->timestamps = false;
+        }else{           
             $sub_area_conhecimento = $this->sub_area_conhecimento->find($id);            
             if($sub_area_conhecimento){
                 $sub_area_conhecimento->area_conhecimento_id = $request->input('area_conhecimento_id');
                 $sub_area_conhecimento->descricao = strtoupper($request->input('descricao'));
                 $sub_area_conhecimento->updated_at = now();
-                $sub_area_conhecimento->update();
-                $this->sub_area_conhecimento->timestamps = true;
+                $sub_area_conhecimento->update();               
                 $sub = Sub_Area_Conhecimento::find($id);
                 $area = Area_Conhecimento::find($sub->area_conhecimento_id);
                 return response()->json([

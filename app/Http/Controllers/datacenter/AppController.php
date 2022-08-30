@@ -90,24 +90,18 @@ class AppController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->app->timestamps;
-            $this->app->timestamps = false;
+        }else{          
             $data = [
                 'base_id'    => $request->input('bases_id'),
                 'projeto_id' => $request->input('projetos_id'),
                 'orgao_id'    => $request->input('orgao_id'),
                 'nome_app'    => strtoupper($request->input('nome_app')),
                 'dominio'     => strtolower($request->input('dominio')),
-                'https'       => $request->input('https'),
-                'created_at'  => now(),
-                'updated_at'  => null,
+                'https'       => $request->input('https'),              
             ];
-            $app = $this->app->create($data);
-            $this->app->timestamps = true;
-            $a = App::find($app->id);
+            $app = $this->app->create($data);          
             return response()->json([
-                'app'     => $a,
+                'app'     => $app,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -175,9 +169,7 @@ class AppController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->app->timestamps;
-            $this->app->timestamps = false;
+        }else{           
             $app = $this->app->find($id);
             if($app){
                 $data = [
@@ -186,11 +178,9 @@ class AppController extends Controller
                     'orgao_id'    => $request->input('orgao_id'),
                     'nome_app'    => strtoupper($request->input('nome_app')),
                     'dominio'     => strtolower($request->input('dominio')),
-                    'https'       => $request->input('https'),
-                    'updated_at'  => now(),                   
+                    'https'       => $request->input('https'),                                    
                 ];
-                $app->update($data);
-                $this->app->timestamps = true;
+                $app->update($data);          
                 $a = App::find($id);
                 return response()->json([
                     'app'     => $a,

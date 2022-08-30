@@ -7,14 +7,11 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cluster extends Model
 {    
-    protected $table = "cluster";
-    public $timestamps = FALSE;
+    protected $table = "cluster";   
     protected $fillable = [
         'nome_cluster',
         'total_memoria',
-        'total_processador',
-        'created_at',
-        'updated_at',
+        'total_processador',      
     ];
 
     public function hosts(){

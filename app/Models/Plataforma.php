@@ -7,13 +7,10 @@ use Illuminate\Database\Eloquent\Model;
 
 class Plataforma extends Model
 {
-    //use HasFactory;    
-    public $timestamps = FALSE;
+    //use HasFactory;      
     protected $table = 'plataformas';
 
     protected $fillable = [
-      'nome_plataforma',  
-      'created_at',
-      'updated_at',
+      'nome_plataforma',     
     ];
 }

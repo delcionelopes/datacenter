@@ -220,32 +220,19 @@ $(document).ready(function(){
     
         $(document).on('click','.delete_cluster_btn',function(e){   ///inicio delete cluster
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
-            var nomecluster = $(this).data("nomecluster");
-    
-            swal({
-                title:nomecluster,
-                text: "Deseja excluir?",
-                icon:"warning",
-                buttons:true,
-                dangerMode:true,
-            })                       
-            .then(willDelete=>{
-                if(willDelete){
-                $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-                
+            var nomecluster = ($(this).data("nomecluster")).trim();
+            var resposta = confirm("Deseja excluir "+nomecluster+"?");
+                if(resposta==true){                
                 $.ajax({
                     url: 'delete-cluster/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data:{
-                        "id": id,
-                        "_method": 'DELETE',
+                        'id': id,
+                        '_method': 'DELETE',
+                        '_token':CSRF_TOKEN,
                     },
                     success:function(response){
                         if(response.status==200){                        
@@ -256,9 +243,7 @@ $(document).ready(function(){
                         }
                     }
                 });            
-            } 
-        });
-    
+            }    
         });  ///fim delete cluster
         $('#EditClusterModal').on('shown.bs.modal',function(){
             $('#edit_nome_cluster').focus();
@@ -272,7 +257,7 @@ $(document).ready(function(){
     
             $.ajaxSetup({
                     headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                     }
                 });
     
@@ -282,10 +267,13 @@ $(document).ready(function(){
                 dataType: 'json',                                    
                 url: 'edit-cluster/'+id,                                
                 success: function(response){           
-                    if(response.status==200){            
-                        $('.nome_cluster').val(response.cluster.nome_cluster);
-                        $('.total_memoria').val(response.cluster.total_memoria);
-                        $('.total_processador').val(response.cluster.total_processador);
+                    if(response.status==200){    
+                        var vnomecluster = (response.cluster.nome_cluster).trim();
+                        $('.nome_cluster').val(vnomecluster);
+                        var vtotalmemoria = (response.cluster.total_memoria).trim();
+                        $('.total_memoria').val(vtotalmemoria);
+                        var vtotalprocessador = (response.cluster.total_processador).trim();
+                        $('.total_processador').val(vtotalprocessador);
                         $('#edit_cluster_id').val(response.cluster.id);                                                                                                       
                     }      
                 }
@@ -295,23 +283,19 @@ $(document).ready(function(){
     
         $(document).on('click','.update_cluster',function(e){ //inicio da atualização de registro
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             $(this).text("Atualizando...");
     
             var id = $('#edit_cluster_id').val();        
     
             var data = {
-                'nome_cluster' : $('#edit_nome_cluster').val(),
-                'total_memoria': $('#edit_total_memoria').val(),
-                'total_processador': $('#edit_total_processador').val(),
-            }        
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-    
+                'nome_cluster' : ($('#edit_nome_cluster').val()).trim(),
+                'total_memoria': ($('#edit_total_memoria').val()).trim(),
+                'total_processador': ($('#edit_total_processador').val()).trim(),
+                '_method':'PUT';
+                '_token':CSRF_TOKEN,
+            }    
+           
             $.ajax({     
                 type: 'POST',                          
                 data: data,
@@ -368,18 +352,14 @@ $(document).ready(function(){
     
         $(document).on('click','.add_cluster',function(e){ //início da adição de Registro
             e.preventDefault();
-            
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var data = {
-                'nome_cluster': $('.nome_cluster').val(),
-                'total_memoria': $('.total_memoria').val(),
-                'total_processador': $('.total_processador').val(),
-            }                               
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
+                'nome_cluster': ($('.nome_cluster').val()).trim(),
+                'total_memoria': ($('.total_memoria').val()).trim(),
+                'total_processador': ($('.total_processador').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }           
             $.ajax({            
                 url: 'adiciona-cluster',
                 type: 'POST',
@@ -442,7 +422,7 @@ $(document).ready(function(){
             e.preventDefault();        
             $('#addform').trigger('reset');
             $('#AddHostModal').modal('show');                                       
-            $('.cluster').val($(this).data("nomecluster"));
+            $('.cluster').val(($(this).data("nomecluster")).trim());
             $('#add_cluster_id').val($(this).data("id"));
         });
         //Fim Novo Host do cluster caso não possua nenhum
@@ -450,12 +430,15 @@ $(document).ready(function(){
         ///Inicio Adiciona Novo Host do Cluster
         $(document).on('click','.add_host',function(e){                
             e.preventDefault();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var data = {
-                'datacenter': $('.datacenter').val(),
-                'ip': $('.ip').val(),
-                'cluster': $('.cluster').val(),
-                'obs_host': $('.obs_host').val(),
+                'datacenter': ($('.datacenter').val()).trim(),
+                'ip': ($('.ip').val()).trim(),
+                'cluster': ($('.cluster').val()).trim(),
+                'obs_host': ($('.obs_host').val()).trim(),
                 'cluster_id': $('#add_cluster_id').val(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
             }                
     
             $.ajaxSetup({

@@ -125,29 +125,19 @@
         //inicio delete projeto
         $(document).on('click','.delete_projeto_btn',function(e){
             e.preventDefault();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
-            var nomeprojeto = $(this).data("nomeprojeto");
-            swal({
-                title:"Processo de exclusão!",
-                text: "Você vai excluir "+nomeprojeto+". Deseja prosseguir?",
-                icon:"warning",
-                buttons:true,
-                dangerModal:true,
-            }).then(willDelete=>{
-                if(willDelete){
-                    $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-    
+            var nomeprojeto = ($(this).data("nomeprojeto")).trim();
+            var resposta = confirm("Deseja excluir "+nomeprojeto+"?");
+                if(resposta==true){    
                 $.ajax({
                     url:'delete-projeto/'+id,
                     type:'POST',
                     dataType:'json',
                     data:{
-                        "id":id,
-                        "_method":'DELETE',
+                        'id':id,
+                        '_method':'DELETE',
+                        '_token':CSRF_TOKEN,
                     },
                     success:function(response){
                         if(response.status==200){
@@ -158,8 +148,7 @@
                         }
                     }
                 });
-            }
-        });
+            }    
         });//fim delete projeto
     
         //início exibição edit projeto
@@ -168,15 +157,14 @@
         });
     
         $(document).on('click','.edit_projeto',function(e){
-            e.preventDefault();
-            
+            e.preventDefault();            
             var id = $(this).data("id");             
             $('#myform').trigger('reset');
             $('#EditProjetoModal').modal('show');
     
             $.ajaxSetup({
                     headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                     }
                 });
     
@@ -185,8 +173,9 @@
                     dataType:'json',
                     url:'edit-projeto/'+id,
                     success:function(response){
-                        if(response.status==200){                        
-                            $('.nome_projeto').val(response.projeto.nome_projeto);
+                        if(response.status==200){  
+                            var vnomeprojeto = (response.projeto.nome_projeto).trim();
+                            $('.nome_projeto').val(vnomeprojeto);
                             $('#edit_projeto_id').val(response.projeto.id);
                         }
                     }
@@ -196,18 +185,13 @@
         //inicio da atualização do projeto
         $(document).on('click','.update_projeto',function(e){
             $(this).text("Atualizando...");
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $('#edit_projeto_id').val();
             var data = {
-                'nome_projeto' : $('#edit_nome_projeto').val(),
-            }
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-    
+                'nome_projeto' : ($('#edit_nome_projeto').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }            
                 $.ajax({
                     type:'POST',
                     data:data,
@@ -272,17 +256,12 @@
         //inicio da adição de projeto
         $(document).on('click','.add_projeto',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var data = {
-                'nome_projeto' : $('.nome_projeto').val(),
-            }
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-    
+                'nome_projeto' : ($('.nome_projeto').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }    
                 $.ajax({
                     type:'POST',
                     url:'adiciona-projeto',

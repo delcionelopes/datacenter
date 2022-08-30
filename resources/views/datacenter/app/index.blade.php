@@ -221,31 +221,19 @@
     //início exclui app
     $(document).on('click','.delete_app_btn',function(e){
         e.preventDefault();
-    
+        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
         var id = $(this).data("id");
-        var nomeapp = $(this).data("nomeapp");
-    
-        swal({
-            title: nomeapp,
-            text: "Deseja excluir?",
-            icon: "warning",
-            buttons: true,
-            dangerMode: true,
-        }).then(willDelete=>{
-            if(willDelete){
-                $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }                
-                });
-    
+        var nomeapp = ($(this).data("nomeapp")).trim();
+        var resposta = confirm("Deseja excluir "+nomeapp+"?");
+            if(resposta==true){                
                 $.ajax({
                     url: '/datacenter/delete-app/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data: {
-                        "id":id,
-                        "_method": 'DELETE',
+                        'id':id,
+                        '_method': 'DELETE',
+                        '_token':CSRF_TOKEN,
                     },
                     success:function(response){
                         if(response.status==200){
@@ -256,8 +244,7 @@
                         }
                     }
                 });
-            }
-        })
+            }        
     });
     ///fim delete app
     
@@ -274,7 +261,7 @@
     
         $.ajaxSetup({
             headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
             }
         });
         $.ajax({
@@ -285,8 +272,10 @@
                 if(response.status==200){ 
                     $('#edit_app_id').val(id);               
                     //seta a base
-                    $('#edit_nome_base').html('<label id="edit_nome_base" style="font-style: italic;">'+response.base.nome_base+'</label>');
-                    $('#edit_nome_vm').html('<label id="edit_nome_vm" style="font-style: italic;">'+response.vm.nome_vm+'</label>');
+                    var vnomebase = (response.base.nome_base).trim();
+                    $('#edit_nome_base').html('<label id="edit_nome_base" style="font-style: italic;">'+vnomebase+'</label>');
+                    var vnomevm = (response.vm.nome_vm).trim();
+                    $('#edit_nome_vm').html('<label id="edit_nome_vm" style="font-style: italic;">'+vnomevm+'</label>');
                     var opcaobase = response.base.id;
                     $('#edit_selbase_id option')
                     .removeAttr('selected')
@@ -307,8 +296,10 @@
                     .filter('[value='+opcaoprojeto+']')
                     .attr('selected',true);
                     //fim seta o projeto
-                    $('#edit_nome_app').val(response.app.nome_app);
-                    $("#edit_dominio").val(response.app.dominio);                               
+                    var vnomeapp = (response.app.nome_app).trim();
+                    $('#edit_nome_app').val(vnomeapp);
+                    var vdominio = (response.app.dominio).trim();
+                    $("#edit_dominio").val(vdominio);                               
                     if(response.app.https){
                         $("#edit_https").attr('checked',true);                
                     }else{
@@ -367,7 +358,7 @@
         $(document).on('click','.update_app_btn',function(e){
             e.preventDefault();
             $(this).text('Atualizando...');
-            var CSRF_TOKEN = document.querySelector('meta[name="_token"]').getAttribute("content");
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $('#edit_app_id').val();
             var upd_projeto_id = $('#edit_selprojeto_id').val();
             var upd_orgao_id = $('#edit_selorgao_id').val();
@@ -381,19 +372,12 @@
                 'orgao_id': upd_orgao_id,
                 'projetos_id': upd_projeto_id,
                 'bases_id': upd_base_id,
-                'nome_app': $('.edit_nome_app').val(),
-                'dominio': $('.edit_dominio').val(),
+                'nome_app': ($('.edit_nome_app').val()).trim(),
+                'dominio': ($('.edit_dominio').val()).trim(),
                 'https': edit_https,
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
-            }        
-            
-            $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':$('meta[nome="_token"]').attr('content')
-                }
-            });
-    
+            }    
             $.ajax({
                 type: 'POST',
                 data: data,
@@ -456,8 +440,8 @@
         });
         $(document).on('click','.AddApp_btn',function(e){
             e.preventDefault();
-            var labelHtml = $(this).data("nome_base");
-            var labelHtmlVm = $('#vmnome').val(); 
+            var labelHtml = ($(this).data("nome_base")).trim();
+            var labelHtmlVm = ($('#vmnome').val()).trim(); 
             $('#addform').trigger('reset');
             $('#AddAppModal').modal('show');
             $('#add_base_id').val($(this).data("id"));
@@ -470,7 +454,7 @@
             e.preventDefault();
     
             $(this).text('Salvando...');
-            var CSRF_TOKEN = document.querySelector('meta[name="_token"]').getAttribute("content");
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var ins_projeto_id = $('#add_selprojeto_id').val();
             var ins_orgao_id = $('#add_selorgao_id').val();
             var ins_base_id = $('#add_selbase_id').val();
@@ -488,13 +472,7 @@
                 'https': add_https,     
                 '_method':'PUT',
                 '_token': CSRF_TOKEN,       
-            };
-            console.log(data);
-            $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':$('meta[nome="_token"]').attr('content')
-                }
-            });
+            };            
     
             $.ajax({
                 type: 'POST',
@@ -517,12 +495,7 @@
                         $('#addform').trigger('reset');
                         $('#AddAppModal').modal('hide');
     
-                        //inserindo a tr na table html
-                        var datacriacao = new Date(response.app.created_at);
-                        datacriacao = datacriacao.toLocaleString("pt-BR");
-                        if(datacriacao=="31/12/1969 21:00:00"){
-                            datacriacao = "";
-                        }                
+                        //inserindo a tr na table html                       
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
@@ -559,6 +532,7 @@
         //inicio muda o https na lista index
         $(document).on('click','.https_btn',function(e){
             e.preventDefault();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");        
             var vhttps = false;
             if($(this).data("https")=="1"){
@@ -568,15 +542,9 @@
             }
             var data = {
                 'https': vhttps,
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
             }
-    
-            console.log(data);
-    
-            $.ajaxSetup({            
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
             $.ajax({
                 type:'POST',
                 dataType:'json',
