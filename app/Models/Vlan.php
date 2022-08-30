@@ -6,12 +6,9 @@ use Illuminate\Database\Eloquent\Model;
 
 class Vlan extends Model
 {    
-    protected $table = 'vlan';
-    public $timestamps = FALSE;
+    protected $table = 'vlan';   
     protected $fillable = [
-        'nome_vlan',
-        'created_at',
-        'updated_at',
+        'nome_vlan',       
     ];
 
     public function virtual_machines(){

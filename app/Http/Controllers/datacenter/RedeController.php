@@ -66,23 +66,17 @@ class RedeController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{      
-            $timestamps = $this->rede->timestamps;
-            $this->rede->timestamps = false;      
+        }else{                 
             $data = [
                 'nome_rede' => strtoupper($request->input('nome_rede')),
                 'mascara'   => $request->input('mascara'),
                 'tipo_rede' => strtoupper($request->input('tipo_rede')),
-                'vlan_id'   => $request->input('vlan_id'),              
-                'created_at' => now(),
-                'updated_at' => null,
+                'vlan_id'   => $request->input('vlan_id'),            
             ];
-            $rede = $this->rede->create($data);                        
-            $this->rede->timestamps = true;
-            $r = Rede::find($rede->id);
+            $rede = $this->rede->create($data);           
             $vl = $rede->vlan;            
             return response()->json([
-                'rede' => $r,
+                'rede' => $rede,
                 'vlan' => $vl,
                 'status' => 200,
                 'message' => 'Registro criado com sucesso!',
@@ -126,9 +120,7 @@ class RedeController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->rede->timestamps;
-            $this->rede->timestamps = false;
+        }else{           
             $rede = $this->rede->find($id);            
             $vl = $rede->vlan;
             if($rede){
@@ -136,11 +128,9 @@ class RedeController extends Controller
                     'nome_rede' => strtoupper($request->input('nome_rede')),
                     'mascara'   => $request->input('mascara'),
                     'tipo_rede' => strtoupper($request->input('tipo_rede')),
-                    'vlan_id'   => $request->input('vlan_id'),
-                    'updated_at' => now(),
+                    'vlan_id'   => $request->input('vlan_id'),                   
                 ];
-                $rede->update($data);
-                $this->rede->timestamps = true;
+                $rede->update($data);              
                 $r = Rede::find($id);
                 return response()->json([
                     'rede' => $r,

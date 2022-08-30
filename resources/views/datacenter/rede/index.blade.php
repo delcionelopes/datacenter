@@ -185,30 +185,19 @@ $(document).ready(function(){
         //inicio delete rede
         $(document).on('click','.delete_rede_btn',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
-            var nomerede = $(this).data("nomerede");
-    
-            swal({
-                title:nomerede,
-                text: "Deseja excluir?",
-                icon: "warning",
-                buttons:true,
-                dangerMode:true,
-            }).then(willDelete=>{            
-                if(willDelete){                   
-                    $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                    });                
+            var nomerede = ($(this).data("nomerede")).trim();
+            var resposta = confirm("Deseja excluir "+nomerede+"?");
+                if(resposta==true){                                                    
                     $.ajax({
                         url:'/datacenter/delete-rede/'+id,
                         type:'POST',                    
                         dataType:'json',
                         data:{
-                            "id":id,
-                            "_method":'DELETE',                                                                         
+                            'id':id,
+                            '_method':'DELETE',                                                                         
+                            '_token':CSRF_TOKEN,
                         },
                         success:function(response){
                             if(response.status==200){
@@ -219,8 +208,7 @@ $(document).ready(function(){
                             }
                         }
                     });
-                }
-            });
+                }            
         });
         //fim delete rede
         //Inicio Exibe EditRedeModal
@@ -237,7 +225,7 @@ $(document).ready(function(){
     
             $.ajaxSetup({
                 headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
@@ -245,10 +233,13 @@ $(document).ready(function(){
                 dataType:'json',
                 url:'/datacenter/edit-rede/'+id,
                 success:function(response){
-                    if(response.status==200){                  
-                        $('#edit_nome_rede').val(response.rede.nome_rede);
-                        $('#edit_mascara').val(response.rede.mascara);
-                        $('#edit_tipo_rede').val(response.rede.tipo_rede);                    
+                    if(response.status==200){    
+                        var vnomerede = (response.rede.nome_rede).trim();
+                        $('#edit_nome_rede').val(vnomerede);
+                        var vmascara = (response.rede.mascara).trim();
+                        $('#edit_mascara').val(vmascara);
+                        var vtiporede = (response.rede.tipo_rede).trim();
+                        $('#edit_tipo_rede').val(vtiporede);                    
                         $('#edit_rede_id').val(response.rede.id);
                         $('#edit_vlan_id').val(response.rede.vlan_id);
                     }
@@ -260,22 +251,20 @@ $(document).ready(function(){
         //inicio da atualização da rede
         $(document).on('click','.update_rede',function(e){
             e.preventDefault();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             $(this).text("Atualizando...");
     
             var id = $('#edit_rede_id').val();
     
             var data = {
-                'nome_rede': $('#edit_nome_rede').val(),
-                'mascara': $('#edit_mascara').val(),
-                'tipo_rede': $('#edit_tipo_rede').val(),            
+                'nome_rede': ($('#edit_nome_rede').val()).trim(),
+                'mascara': ($('#edit_mascara').val()).trim(),
+                'tipo_rede': ($('#edit_tipo_rede').val()).trim(), 
                 'vlan_id':$('#edit_vlan_id').val(),
-            }
-    
-            $.ajaxSetup({
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }   
+           
             $.ajax({
                 type:'POST',
                 data:data,
@@ -337,18 +326,16 @@ $(document).ready(function(){
         //fim exibe form de adição da rede
         //inicio da adição da rede
         $(document).on('click','.add_rede',function(e){
-            e.preventDefault();        
+            e.preventDefault(); 
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");       
             var data = {
-                'nome_rede': $('.nome_rede').val(),            
-                'mascara': $('.mascara').val(),
-                'tipo_rede': $('.tipo_rede').val(),
+                'nome_rede': ($('.nome_rede').val()).trim(),
+                'mascara': ($('.mascara').val()).trim(),
+                'tipo_rede': ($('.tipo_rede').val()).trim(),
                 'vlan_id': $('#add_vlan_id').val(),
-            }
-            $.ajaxSetup({
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }           
             $.ajax({
                 url:'/datacenter/adiciona-rede',
                 type:'POST',
@@ -408,17 +395,15 @@ $(document).ready(function(){
         //fim exibe form de adição de ip
         //inicio da adição de ip
         $(document).on('click','.add_ip',function(e){
-            e.preventDefault();        
+            e.preventDefault();    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");    
             var data = {            
                 'ip': $('.ip').val(),
                 'status': $('.status').val(),            
                 'rede_id': $('#add_rede_id').val(),
-            }
-            $.ajaxSetup({
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }            
             $.ajax({
                 url:'/datacenter/adiciona-redeip',
                 type:'POST',

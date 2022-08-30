@@ -6,15 +6,12 @@ use Illuminate\Database\Eloquent\Model;
 
 class Rede extends Model
 {    
-    protected $table = 'rede';
-    public $timestamps = FALSE;
+    protected $table = 'rede';    
     protected $fillable = [
         'nome_rede',
         'mascara',
         'tipo_rede',
-        'vlan_id',        
-        'created_at',
-        'updated_at',
+        'vlan_id',     
     ];
 
     public function vlan(){

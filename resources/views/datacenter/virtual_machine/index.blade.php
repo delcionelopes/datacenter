@@ -352,30 +352,19 @@ $(document).ready(function(){
         //inicio delete vm
         $(document).on('click','.delete_vm_btn',function(e){
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");       
-            var nomevm = $(this).data("vm");
-    
-            swal({
-                title:nomevm,
-                text: "Deseja excluir?",
-                icon: "warning",
-                buttons:true,
-                dangerMode:true,
-            }).then(willDelete=>{            
-                if(willDelete){                   
-                    $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                    });                
+            var nomevm = ($(this).data("vm")).trim();
+            var resposta = confirm("Deseja excluir "+nomevm+"?");
+                if(resposta==true){                               
                     $.ajax({
                         url:'/datacenter/delete-vm/'+id,
                         type:'POST',                    
                         dataType:'json',
                         data:{
-                            "id":id,
-                            "_method":'DELETE',                                                                         
+                            'id':id,
+                            '_method':'DELETE',
+                            '_token':CSRF_TOKEN,
                         },
                         success:function(response){
                             if(response.status==200){
@@ -386,8 +375,7 @@ $(document).ready(function(){
                             }
                         }
                     });
-                }
-            });
+                }        
         });
         //fim delete vm
         //Inicio Exibe EditVirtualMachineModal
@@ -404,7 +392,7 @@ $(document).ready(function(){
     
             $.ajaxSetup({
                 headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                 }
             });
             $.ajax({
@@ -448,15 +436,24 @@ $(document).ready(function(){
                         .filter('[value='+opcaoambiente+']')
                         .attr('selected',true);                      
                         //fim seta projeto
-                        $('.nome_vm').val(response.virtualmachine.nome_vm);
-                        $('.cpu').val(response.virtualmachine.cpu);                    
-                        $('.memoria').val(response.virtualmachine.memoria);
-                        $('.disco').val(response.virtualmachine.disco);
-                        $('.ip').val(response.virtualmachine.ip);
-                        $('.resource_pool').val(response.virtualmachine.resource_pool);
-                        $('.sistema_operacional').val(response.virtualmachine.sistema_operacional);
-                        $('.gatway').val(response.virtualmachine.gatway);
-                        $('#nome_cluster').val(response.virtualmachine.cluster);
+                        var vnomevm = (response.virtualmachine.nome_vm).trim();
+                        $('.nome_vm').val(vnomevm);
+                        var vcpu = (response.virtualmachine.cpu).trim();
+                        $('.cpu').val(vcpu);     
+                        var vmemoria = (response.virtualmachine.memoria).trim();
+                        $('.memoria').val(vmemoria);
+                        var vdisco = (response.virtualmachine.disco).trim();
+                        $('.disco').val(vdisco);
+                        var vip = (response.virtualmachine.ip).trim();
+                        $('.ip').val(vip);
+                        var vresourcepool = (response.virtualmachine.resource_pool).trim();
+                        $('.resource_pool').val(vresourcepool);
+                        var vsistemaoperacional = (response.virtualmachine.sistema_operacional).trim();
+                        $('.sistema_operacional').val(vsistemaoperacional);
+                        var vgatway = (response.virtualmachine.gatway).trim();
+                        $('.gatway').val(vgatway);
+                        var vnomecluster = (response.virtualmachine.cluster).trim();
+                        $('#nome_cluster').val(vnomecluster);
                         //Atribuindo as vlan relacionadas aos checkboxes
                         $("input[name='vlans[]'").attr('checked',false); //desmarca todos
                         //apenas as vlans relacionadas
@@ -495,6 +492,7 @@ $(document).ready(function(){
         //inicio da atualização da VirtualMachine
         $(document).on('click','.update_virtualmachine',function(e){
             e.preventDefault();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             $(this).text("Atualizando...");        
     
             var id = $('#edit_vm_id').val();
@@ -514,23 +512,20 @@ $(document).ready(function(){
                 'orgao_id' : opt_orgao,
                 'ambiente_id' : opt_ambiente,
                 'cluster_id' : cluster_id,
-                'nome_vm': $('#nome_vm').val(),            
-                'cpu': $('#cpu').val(),
-                'memoria' : $('#memoria').val(),
-                'disco' : $('#disco').val(),
-                'ip' : $('#ip').val(),
-                'resource_pool' : $('#resource_pool').val(),
-                'cluster' : $('#nome_cluster').val(),
-                'gatway' : $('#gatway').val(),  
-                'sistema_operacional' : $('#sistema_operacional').val(),                      
+                'nome_vm': ($('#nome_vm').val()).trim(),            
+                'cpu': ($('#cpu').val()).trim(),
+                'memoria' : ($('#memoria').val()).trim(),
+                'disco' : ($('#disco').val()).trim(),
+                'ip' : ($('#ip').val()).trim(),
+                'resource_pool' : ($('#resource_pool').val()).trim(),
+                'cluster' : ($('#nome_cluster').val()).trim(),
+                'gatway' : ($('#gatway').val()).trim(),  
+                'sistema_operacional' : ($('#sistema_operacional').val()).trim(),                      
                 'vlans': vlans, //Array
-            }                       
-    
-            $.ajaxSetup({
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }   
+            
             $.ajax({
                 type:'POST',
                 data:data,
@@ -578,9 +573,9 @@ $(document).ready(function(){
                                         $('#dropdown'+response.virtualmachine.id).html("");
                                         $.each(response.vlans,function(key,vl){   
                                             var ref = response.virtualmachine.cluster_id;
-                                                strref = String(ref);
+                                            var strref = String(ref);
                                             var num = vl.id;
-                                                strnum = String(num);                                                                                                       
+                                            var strnum = String(num);                                                                                                       
                                             var meulink = ""; 
                                                 meulink = "{{route('datacenter.vm.index_vlanXvm',[':id',':vlid'])}}";
                                                 meulink = meulink.replace(':id',strref);
@@ -620,7 +615,7 @@ $(document).ready(function(){
         //Início da adição da VirtualMachine
         $(document).on('click','.add_virtualmachine',function(e){
             e.preventDefault();      
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var vlans = new Array;
             $("input[name='vlans[]']:checked").each(function(){
                 vlans.push($(this).val());
@@ -631,23 +626,20 @@ $(document).ready(function(){
                 'projeto_id': $('.projeto_id').val(),
                 'orgao_id': $('.orgao_id').val(),
                 'ambiente_id': $('.ambiente_id').val(),
-                'nome_vm': $('.nome_vm').val(),
-                'cpu': $('.cpu').val(),
-                'memoria': $('.memoria').val(),
-                'disco': $('.disco').val(),
-                'ip': $('.ip').val(),
-                'resource_pool': $('.resource_pool').val(),
-                'cluster': $('#nome_cluster').val(),
-                'sistema_operacional': $('.sistema_operacional').val(),
-                'gatway': $('.gatway').val(),            
+                'nome_vm': ($('.nome_vm').val()).trim(),
+                'cpu': ($('.cpu').val()).trim(),
+                'memoria': ($('.memoria').val()).trim(),
+                'disco': ($('.disco').val()).trim(),
+                'ip': ($('.ip').val()).trim(),
+                'resource_pool': ($('.resource_pool').val()).trim(),
+                'cluster': ($('#nome_cluster').val()).trim(),
+                'sistema_operacional': ($('.sistema_operacional').val()).trim(),
+                'gatway': ($('.gatway').val()).trim(),            
                 'vlans': vlans,
-            }
-    
-            $.ajaxSetup({
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }    
+           
             $.ajax({
                 url:'/datacenter/adiciona-vm/',
                 type:'POST',
@@ -690,9 +682,9 @@ $(document).ready(function(){
                                         $('#dropdown'+response.virtualmachine.id).html("");
                                         $.each(response.vlans,function(key,vl){                                                                                                                     
                                             var ref = response.virtualmachine.cluster_id;
-                                                strref = String(ref);
+                                            var strref = String(ref);
                                             var num = vl.id;
-                                                strnum = String(num);                                                                                                       
+                                            var strnum = String(num);                                                                                                       
                                             var meulink = ""; 
                                                 meulink = "{{route('datacenter.vm.index_vlanXvm',[':id',':vlid'])}}";
                                                 meulink = meulink.replace(':id',strref);
@@ -745,7 +737,7 @@ $(document).ready(function(){
         $(document).on('click','.nova_base_btn',function(e){
             e.preventDefault();
     
-            var labelHtml = $(this).data("nome_vm");
+            var labelHtml = ($(this).data("nome_vm")).trim();
     
             $('#addbaseform').trigger('reset');
             $('#AddBaseModal').modal('show');
@@ -757,22 +749,20 @@ $(document).ready(function(){
         //Inicio adiciona nova base
         $(document).on('click','.add_base_btn',function(e){
             e.preventDefault();   
-            
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var baseoptprojeto = $('#baseprojeto_id').val();
                   
             var data = {
-                'nome_base': $('.nome_base').val(),
+                'nome_base': ($('.nome_base').val()).trim(),
                 'projeto_id': baseoptprojeto,
-                'ip': $('.baseip').val(),
-                'dono': $('.dono').val(),
+                'ip': ($('.baseip').val()).trim(),
+                'dono': ($('.dono').val()).trim(),
                 'virtual_machine_id': $('#add_vm_id').val(),
-                'encoding': $('.encoding').val(),
+                'encoding': ($('.encoding').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
             }
-            $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+           
             $.ajax({            
                 url: '/datacenter/adiciona-basededados',
                 type: 'POST',

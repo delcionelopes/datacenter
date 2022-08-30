@@ -6,8 +6,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class VirtualMachine extends Model
 {
-    protected $table = 'virtual_machine';
-    public $timestamps = FALSE;
+    protected $table = 'virtual_machine';    
     protected $fillable = [
         'nome_vm',
         'cpu',
@@ -22,8 +21,6 @@ class VirtualMachine extends Model
         'cluster_id',
         'projeto_id',
         'cluster',     
-        'created_at',
-        'updated_at',
     ];
     public function cluster(){
         return $this->belongsTo(Cluster::class,'cluster_id');

@@ -51,19 +51,13 @@ class vlanController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->vlan->timestamps;
-            $this->vlan->timestamps=false;
+        }else{           
             $data = [
-                'nome_vlan' => strtoupper($request->input('nome_vlan')),
-                'created_at' =>now(),
-                'updated_at' => null,
+                'nome_vlan' => strtoupper($request->input('nome_vlan')),                
             ];
-            $vlan = $this->vlan->create($data);
-            $this->vlan->timestamps=true;
-            $v = Vlan::find($vlan->id);
+            $vlan = $this->vlan->create($data);          
             return response()->json([
-                'vlan' => $v,
+                'vlan' => $vlan,
                 'status' => 200, 
                 'message' => 'Registro criado com sucesso!',
             ]);
@@ -97,17 +91,13 @@ class vlanController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->vlan->timestamps;
-            $this->vlan->timestamps = false;
+        }else{           
             $vlan = $this->vlan->find($id);            
             if($vlan){
                         $data = [
-                            'nome_vlan' => strtoupper($request->input('nome_vlan')),
-                            'updated_at' => now(),
+                            'nome_vlan' => strtoupper($request->input('nome_vlan')),                            
                         ];
-                        $vlan->update($data);
-                        $this->vlan->timestamps = true;
+                        $vlan->update($data);                      
                         $v = Vlan::find($id);
                         return response()->json([
                             'vlan' => $v,
@@ -154,24 +144,18 @@ class vlanController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->rede->timestamps;
-            $this->rede->timestamps = false;
+        }else{           
             $data = [                
                 'nome_rede' => strtoupper($request->input('nome_rede')),
                 'mascara'   => $request->input('mascara'),
                 'tipo_rede' => strtoupper($request->input('tipo_rede')),
-                'vlan_id'   => $request->input('vlan_id'),
-                'created_at' => now(),
-                'updated_at' => null,
+                'vlan_id'   => $request->input('vlan_id'),               
             ];            
-            $rede = $this->rede->create($data);            
-            $this->rede->timestamps = true;
-            $r = Rede::find($rede->id);
+            $rede = $this->rede->create($data);          
             $vlan = $rede->vlan;
             return response()->json([
                 'vlan'  => $vlan,
-                'rede'  => $r,
+                'rede'  => $rede,
                 'status' => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);

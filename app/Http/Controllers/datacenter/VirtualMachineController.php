@@ -105,8 +105,6 @@ class VirtualMachineController extends Controller
                 'errors'  => $validator->errors()->getMessages(),
             ]);
         }else{            
-            $timestamps = $this->virtualmachine->timestamps;
-            $this->virtualmachine->timestamps = false;
             $data = [
                 'nome_vm' => strtoupper($request->input('nome_vm')),
                 'cpu'     => $request->input('cpu'),
@@ -120,17 +118,16 @@ class VirtualMachineController extends Controller
                 'orgao_id'    => $request->input('orgao_id'),
                 'cluster_id'  => $request->input('cluster_id'),
                 'projeto_id'  => $request->input('projeto_id'),
-                'cluster'     => $request->input('cluster'),
-                'created_at' => now(),
-                'updated_at' => null,
+                'cluster'     => $request->input('cluster'),               
             ];
-            $virtualmachine = $this->virtualmachine->create($data);                        
-            $this->virtualmachine->timestamps = true;
+            $virtualmachine = $this->virtualmachine->create($data);                       
+           
             $virtualmachine->vlans()->sync($request->input('vlans'));  //sincronização do relacionamento vlan n:n
+
             $vl = $virtualmachine->vlans;
-            $v = VirtualMachine::find($virtualmachine->id);
+            
             return response()->json([
-                'virtualmachine' => $v,
+                'virtualmachine' => $virtualmachine,
                 'vlans' => $vl,
                 'status' =>200,
                 'message' => 'O registro foi criado com sucesso!',
@@ -203,9 +200,7 @@ class VirtualMachineController extends Controller
                 'status'  => 400,
                 'errors'  => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->virtualmachine->timestamps;
-            $this->virtualmachine->timestamps = false;
+        }else{           
             $virtualmachine = $this->virtualmachine->find($id);
             $v = $virtualmachine;
             if($virtualmachine){
@@ -222,11 +217,9 @@ class VirtualMachineController extends Controller
                 'orgao_id'    => $request->input('orgao_id'),
                 'cluster_id'  => $request->input('cluster_id'),
                 'projeto_id'  => $request->input('projeto_id'),                
-                'cluster' => $request->input('cluster'),
-                'updated_at' => now(),
+                'cluster' => $request->input('cluster'),                
             ];
-            $virtualmachine->update($data);            
-            $this->virtualmachine->timestamps = true;
+            $virtualmachine->update($data);           
             $v = VirtualMachine::find($id);
             $v->vlans()->sync($request->input('vlans'));  //sincronização do relacionamento vlan n:n
             $vl = $v->vlans;
@@ -297,24 +290,18 @@ class VirtualMachineController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->base->timestamps;
-            $this->base->timestamps = false;
+        }else{           
             $data = [
                 'virtual_machine_id' => $request->input('virtual_machine_id'),
                 'projetos_id'         => $request->input('projeto_id'),
                 'nome_base'          => strtoupper($request->input('nome_base')),
                 'ip'                 => $request->input('ip'),
                 'dono'               => strtoupper($request->input('dono')),
-                'encoding'           => strtoupper($request->input('encoding')),
-                'created_at'         => now(),
-                'updated_at'         => null,
+                'encoding'           => strtoupper($request->input('encoding')),               
             ];
-            $base = $this->base->create($data);            
-            $this->base->timestamps = true;
-            $b = Base::find($base->id);
+            $base = $this->base->create($data);           
             return response()->json([
-                'base'    => $b,                
+                'base'    => $base,                
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);

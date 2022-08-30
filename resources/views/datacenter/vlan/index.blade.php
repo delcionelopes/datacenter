@@ -181,32 +181,19 @@ $(document).ready(function(){
     
         $(document).on('click','.delete_vlan_btn',function(e){   ///inicio delete vlan
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
-            var nomevlan = $(this).data("nomevlan");
-    
-            swal({
-                title:nomevlan,
-                text: "Deseja excluir?",
-                icon:"warning",
-                buttons:true,
-                dangerMode:true,
-            })                       
-            .then(willDelete=>{
-                if(willDelete){
-                $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-                
+            var nomevlan = ($(this).data("nomevlan")).trim();
+            var resposta = confirm("Deseja excluir "+nomevlan+"?");
+                if(resposta==true){                
                 $.ajax({
                     url: 'delete-vlan/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data:{
-                        "id": id,
-                        "_method": 'DELETE',
+                        'id': id,
+                        '_method': 'DELETE',
+                        '_token':CSRF_TOKEN,
                     },
                     success:function(response){
                         if(response.status==200){                        
@@ -217,9 +204,7 @@ $(document).ready(function(){
                         }
                     }
                 });            
-            } 
-        });
-    
+            }         
         });  ///fim delete vlan
         //início da exibição do form EditVlanModal
         $('#EditVlanModal').on('shown.bs.modal',function(){
@@ -234,7 +219,7 @@ $(document).ready(function(){
     
             $.ajaxSetup({
                     headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
                     }
                 });
     
@@ -245,7 +230,7 @@ $(document).ready(function(){
                 url: 'edit-vlan/'+id,                                
                 success: function(response){           
                     if(response.status==200){            
-                        $('#edit_nome_vlan').val(response.vlan.nome_vlan);
+                        $('#edit_nome_vlan').val((response.vlan.nome_vlan).trim());
                         $('#edit_vlan_id').val(response.vlan.id);                                                                                                       
                     }      
                 }
@@ -255,21 +240,17 @@ $(document).ready(function(){
     
         $(document).on('click','.update_vlan',function(e){ //inicio da atualização de registro
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $(this).text("Atualizando...");
     
             var id = $('#edit_vlan_id').val();        
     
             var data = {
-                'nome_vlan' : $('#edit_nome_vlan').val(),
-            }        
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
-    
+                'nome_vlan' : ($('#edit_nome_vlan').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }
+
             $.ajax({     
                 type: 'POST',                          
                 data: data,
@@ -337,16 +318,13 @@ $(document).ready(function(){
     
         $(document).on('click','.add_vlan',function(e){ //início da adição de Registro
             e.preventDefault();
-    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');     
             var data = {
-                'nome_vlan': $('.nome_vlan').val(),
-            }        
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
+                'nome_vlan': ($('.nome_vlan').val()).trim(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }    
+          
             $.ajax({
                 type: 'POST',
                 url: 'adiciona-vlan',
@@ -407,18 +385,16 @@ $(document).ready(function(){
         //Fim exibe nova rede do VLAN caso não possua nenhuma
         //Inicio adiciona nova rede no vlan
         $(document).on('click','.add_rede',function(e){
-            e.preventDefault();        
+            e.preventDefault(); 
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');      
             var data = {
-                'nome_rede': $('.nome_rede').val(),
-                'mascara': $('.mascara').val(),
-                'tipo_rede': $('.tipo_rede').val(),
+                'nome_rede': ($('.nome_rede').val()).trim(),
+                'mascara': ($('.mascara').val()).trim(),
+                'tipo_rede': ($('.tipo_rede').val()).trim(),
                 'vlan_id': $('#add_vlan_id').val(),
-            }
-            $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }          
             $.ajax({
                 url: 'adiciona-vlanrede',
                 type: 'POST',

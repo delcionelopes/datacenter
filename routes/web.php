@@ -121,17 +121,17 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('index-vlan',[vlanController::class,'index'])->name('vlan.index');
         Route::delete('delete-vlan/{id}',[vlanController::class,'destroy']);
         Route::get('edit-vlan/{id}',[vlanController::class,'edit']);
-        Route::post('update-vlan/{id}',[vlanController::class,'update']);
-        Route::post('adiciona-vlan',[vlanController::class,'store']);    
-        Route::post('adiciona-vlanrede',[vlanController::class,'storerede']);        
+        Route::put('update-vlan/{id}',[vlanController::class,'update']);
+        Route::put('adiciona-vlan',[vlanController::class,'store']);    
+        Route::put('adiciona-vlanrede',[vlanController::class,'storerede']);        
 
         //Rotas para a view index de rede
         Route::get('index-rede/{id}',[RedeController::class,'index'])->name('rede.index');
         Route::delete('delete-rede/{id}',[RedeController::class,'destroy']);
         Route::get('edit-rede/{id}',[RedeController::class,'edit']);
-        Route::post('update-rede/{id}',[RedeController::class,'update']);
-        Route::post('adiciona-rede',[RedeController::class,'store']);
-        Route::post('adiciona-redeip',[RedeController::class,'storeip']);
+        Route::put('update-rede/{id}',[RedeController::class,'update']);
+        Route::put('adiciona-rede',[RedeController::class,'store']);
+        Route::put('adiciona-redeip',[RedeController::class,'storeip']);
 
         //Rotas para a view index de cadastro_ip
         Route::get('index-ip/{id}',[CadastroIpController::class,'index'])->name('ip.index');
@@ -145,10 +145,10 @@ Route::group(['middleware'=>['auth']],function(){
          Route::get('index-vm/{id}',[VirtualMachineController::class,'index'])->name('vm.index');
          Route::delete('delete-vm/{id}',[VirtualMachineController::class,'destroy']);
          Route::get('edit-vm/{id}',[VirtualMachineController::class,'edit']);
-         Route::post('update-vm/{id}',[VirtualMachineController::class,'update']);
-         Route::post('adiciona-vm',[VirtualMachineController::class,'store']);
+         Route::put('update-vm/{id}',[VirtualMachineController::class,'update']);
+         Route::put('adiciona-vm',[VirtualMachineController::class,'store']);
          Route::get('vlan-vm/{id}/{vlid}',[VirtualMachineController::class,'VlanXVm'])->name('vm.index_vlanXvm');
-         Route::post('adiciona-basededados',[VirtualMachineController::class,'storeBase']);
+         Route::put('adiciona-basededados',[VirtualMachineController::class,'storeBase']);
 
          //Rotas para a view index de Bases
          Route::get('index-base/{id}',[BaseController::class,'index'])->name('base.index');
