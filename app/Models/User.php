@@ -21,6 +21,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'moderador',
+        'inativo',
+        'avatar',        
+        'orgao_id',  
+        'cpf',
+        'matricula',
     ];
 
     /**
@@ -31,7 +37,7 @@ class User extends Authenticatable
     protected $hidden = [
         'password',
         'remember_token',
-    ];
+    ];   
 
     /**
      * The attributes that should be cast.

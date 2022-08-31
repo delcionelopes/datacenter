@@ -542,7 +542,7 @@ $(document).ready(function(){
             e.preventDefault();
            
             $(this).text('Salvando...');
-            var CSRF_TOKEN = document.querySelector('meta[name="_token"]').getAttribute("content");
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var ins_projeto_id = $('#add_selprojeto_id').val();
             var ins_orgao_id = $('#add_selorgao_id').val();
             var ins_base_id = $('#add_selbase_id').val();

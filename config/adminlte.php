@@ -299,7 +299,7 @@ return [
         // Sidebar items:        
         [
             'text'        => 'Segurança',
-            'url'         => 'admin/pages',
+            'route'         => 'admin.user.index',
             'icon'        => 'far fa-fw fa-user',
             'icon_color' => 'blue',            
         ],

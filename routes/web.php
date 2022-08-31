@@ -7,6 +7,7 @@ use App\Http\Controllers\admin\OrgaoController;
 use App\Http\Controllers\admin\PlataformaController;
 use App\Http\Controllers\admin\ProjetoController;
 use App\Http\Controllers\Admin\Sub_Area_ConhecimentoController;
+use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\datacenter\AppController;
 use App\Http\Controllers\datacenter\BaseController;
 use App\Http\Controllers\datacenter\CadastroIpController;
@@ -95,7 +96,17 @@ Route::group(['middleware'=>['auth']],function(){
         Route::get('edit-uploadfile/{id}',[ManualController::class,'editFileUpload']);        
         Route::put('upload-file/{id}',[ManualController::class,'upload']);
         Route::delete('delete-file/{id}',[ManualController::class,'destroyFile']);
-        Route::get('download-file/{id}',[ManualController::class,'downloadFile'])->name('download.file');                
+        Route::get('download-file/{id}',[ManualController::class,'downloadFile'])->name('download.file');     
+        
+        ///Rotas para administração do usuário   
+        Route::get('index-user', [UserController::class,'index'])->name('user.index');
+        Route::put('store-user',[UserController::class,'store']);
+        Route::get('edit-user/{id}',[UserController::class,'edit']);
+        Route::put('update-user/{id}',[UserController::class,'update']);
+        Route::delete('delete-user/{id}',[UserController::class,'destroy']);
+        Route::put('moderador-user/{id}', [UserController::class,'moderadorUsuario']);
+        Route::put('inativo-user/{id}', [UserController::class,'inativoUsuario']);   
+
         });        
 
 

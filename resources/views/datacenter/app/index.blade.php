@@ -221,7 +221,7 @@
     //início exclui app
     $(document).on('click','.delete_app_btn',function(e){
         e.preventDefault();
-        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+        var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var id = $(this).data("id");
         var nomeapp = ($(this).data("nomeapp")).trim();
         var resposta = confirm("Deseja excluir "+nomeapp+"?");
@@ -358,7 +358,7 @@
         $(document).on('click','.update_app_btn',function(e){
             e.preventDefault();
             $(this).text('Atualizando...');
-            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $('#edit_app_id').val();
             var upd_projeto_id = $('#edit_selprojeto_id').val();
             var upd_orgao_id = $('#edit_selorgao_id').val();
@@ -454,7 +454,7 @@
             e.preventDefault();
     
             $(this).text('Salvando...');
-            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var ins_projeto_id = $('#add_selprojeto_id').val();
             var ins_orgao_id = $('#add_selorgao_id').val();
             var ins_base_id = $('#add_selbase_id').val();
@@ -532,7 +532,7 @@
         //inicio muda o https na lista index
         $(document).on('click','.https_btn',function(e){
             e.preventDefault();
-            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");        
             var vhttps = false;
             if($(this).data("https")=="1"){

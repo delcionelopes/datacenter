@@ -220,7 +220,7 @@ $(document).ready(function(){
     
         $(document).on('click','.delete_cluster_btn',function(e){   ///inicio delete cluster
             e.preventDefault();
-            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
             var nomecluster = ($(this).data("nomecluster")).trim();
             var resposta = confirm("Deseja excluir "+nomecluster+"?");
@@ -283,7 +283,7 @@ $(document).ready(function(){
     
         $(document).on('click','.update_cluster',function(e){ //inicio da atualização de registro
             e.preventDefault();
-            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $(this).text("Atualizando...");
     
             var id = $('#edit_cluster_id').val();        
@@ -292,7 +292,7 @@ $(document).ready(function(){
                 'nome_cluster' : ($('#edit_nome_cluster').val()).trim(),
                 'total_memoria': ($('#edit_total_memoria').val()).trim(),
                 'total_processador': ($('#edit_total_processador').val()).trim(),
-                '_method':'PUT';
+                '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }    
            
@@ -352,7 +352,7 @@ $(document).ready(function(){
     
         $(document).on('click','.add_cluster',function(e){ //início da adição de Registro
             e.preventDefault();
-            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var data = {
                 'nome_cluster': ($('.nome_cluster').val()).trim(),
                 'total_memoria': ($('.total_memoria').val()).trim(),
@@ -430,7 +430,7 @@ $(document).ready(function(){
         ///Inicio Adiciona Novo Host do Cluster
         $(document).on('click','.add_host',function(e){                
             e.preventDefault();
-            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var data = {
                 'datacenter': ($('.datacenter').val()).trim(),
                 'ip': ($('.ip').val()).trim(),
@@ -439,13 +439,8 @@ $(document).ready(function(){
                 'cluster_id': $('#add_cluster_id').val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
-            }                
-    
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                    }
-                });
+            }   
+           
             $.ajax({            
                 url: 'adiciona-hostcluster',
                 type: 'POST',

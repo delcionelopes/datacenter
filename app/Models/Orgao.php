@@ -22,7 +22,7 @@ class Orgao extends Model
     public function apps()
     {
         return $this->hasMany(App::class);
-    }
+    }   
 
 
 }
