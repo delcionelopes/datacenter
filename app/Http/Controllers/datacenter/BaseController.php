@@ -164,10 +164,36 @@ class BaseController extends Controller
     public function destroy($id)
     {
         $base = $this->base->find($id);
-        $base->delete();
+        $vms = $base->virtualmachine;
+        $projetos = $base->projeto;
+        $apps = $base->apps;
+        if(($vms)||($projetos)||($apps)){
+            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+                if($vms){
+                    $base->virtualmachine()->detach($vms);
+                }
+                if($projetos){
+                    $base->projeto()->detach($projetos);
+                }
+                if($apps){
+                    $base->apps()->detach($apps);
+                }
+                $status = 200;
+                $message = $base->nome_base.' excluído com sucesso!'; 
+                $base->delete();
+            }else{
+                $status = 400;
+                $message = $base->nome_base.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';
+            }
+        }else{
+            $status = 200;
+            $message = $base->nome_base.' excluído com sucesso!'; 
+            $base->delete();
+        }
+        
         return response()->json([
-            'status'  => 200,
-            'message' => 'Registro excluído com sucesso!',
+            'status'  => $status,
+            'message' => $message,
         ]);
     }
 

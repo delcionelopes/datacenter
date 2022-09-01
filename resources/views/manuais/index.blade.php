@@ -222,7 +222,12 @@
                             if(response.status==200){
                                 //remove tr correspondente na tabela html
                                 $('#man'+id).remove();
+                                $('#success_message').html("");
                                 $('#success_message').addClass('alert alert-success');
+                                $('#success_message').text(response.message);         
+                            }else{
+                                $('#success_message').html("");
+                                $('#success_message').addClass('alert alert-danger');
                                 $('#success_message').text(response.message);         
                             }
                         }

@@ -416,9 +416,9 @@
                             <th scope="row">'+response.app.nome_app+'</th>\
                             <td>'+response.app.dominio+'</td>';
                             if(response.app.https){
-                               linha2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>';
+                               linha2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
                             }else{
-                               linha3 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>';
+                               linha3 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
                             }
                             linha4 = '<td>\
                                 <div class="btn-group">\
@@ -508,9 +508,9 @@
                             <th scope="row">'+response.app.nome_app+'</th>\
                             <td>'+response.app.dominio+'</td>';
                             if(response.app.https){
-                            linha2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>';
+                            linha2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
                              }else{
-                            linha3 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>';
+                            linha3 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
                             }
                             linha4 = '<td>\
                                 <div class="btn-group">\
@@ -555,9 +555,9 @@
                         var limita1 = "";
                         var limita2 = "";
                         if(response.app.https){
-                            limita1 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>';
+                            limita1 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
                         }else{
-                            limita2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>';
+                            limita2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
                         }
                         var celula = limita1+limita2;
                         $('#st_https'+id).replaceWith(celula);

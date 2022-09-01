@@ -22,7 +22,7 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(Request $request)
-    {
+    {        
         if(is_null($request->pesquisa)){
             $users = $this->user->orderByDesc('id')->paginate(5);
         }else{
@@ -87,7 +87,7 @@ class UserController extends Controller
         $file = $request->file('imagem');                           
         $fileName =  $file->getClientOriginalName();
         $filePath = 'avatar/'.$fileName;
-        $storagePath = public_path().'/storage/avatar/';
+        $storagePath = public_path('/storage/avatar/');
         $file->move($storagePath,$fileName);
         }
         $data = [
@@ -176,7 +176,7 @@ class UserController extends Controller
         if($request->hasFile('imagem')){
         //exclui o arquivo de avatar anterior se houver
           if($user->avatar){
-            $antigoPath = public_path('storage/'.$user->avatar);
+            $antigoPath = public_path('/storage/'.$user->avatar);
             if(file_exists($antigoPath)){
             unlink($antigoPath);
             }
@@ -185,7 +185,7 @@ class UserController extends Controller
         $file = $request->file('imagem');                           
         $fileName =  $user->id.'_'.$file->getClientOriginalName();
         $filePath = 'avatar/'.$fileName;
-        $storagePath = public_path().'storage/avatar/';
+        $storagePath = public_path('/storage/avatar/');
         $file->move($storagePath,$fileName);
         }        
         $data['name'] = strtoupper($request->input('name'));

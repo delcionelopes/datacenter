@@ -149,8 +149,14 @@ $(document).ready(function(){
                     success:function(response){
                         if(response.status==200){                        
                             //remove linha correspondente da tabela html
-                            $("#ambiente"+id).remove();                            
+                            $("#ambiente"+id).remove();
+                            $('#success_message').html("");
                             $('#success_message').addClass('alert alert-success');
+                            $('#success_message').text(response.message);         
+                        }else{
+                            //Não pôde excluir por causa dos relacionamentos
+                            $('#success_message').html("");
+                            $('#success_message').addClass('alert alert-danger');
                             $('#success_message').text(response.message);         
                         }
                     }

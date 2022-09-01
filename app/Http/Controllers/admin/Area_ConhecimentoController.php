@@ -120,10 +120,32 @@ class Area_ConhecimentoController extends Controller
     public function destroy($id)
     {
         $area_conhecimento = $this->area_conhecimento->find($id);
-        $area_conhecimento->delete();
+        $sub_area = $area_conhecimento->sub_area_conhecimento;
+        $manuais = $area_conhecimento->manual;
+        if(($sub_area)||($manuais)){
+            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+                if($sub_area){
+                    $area_conhecimento->sub_area_conhecimento()->detach($sub_area);
+                }
+                if($manuais){
+                    $area_conhecimento->manual()->detach($manuais);
+                }
+                $status = 200;
+                $message = $area_conhecimento->descricao.' excluído com sucesso!';
+                $area_conhecimento->delete();
+            }else{
+                $status = 400;
+                $message = $area_conhecimento->descricao.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';
+            }
+        }else{            
+            $status = 200;
+            $message = $area_conhecimento->descricao.' excluído com sucesso!';
+            $area_conhecimento->delete();
+        }
+        
         return response()->json([
-            'status' => 200,
-            'message' => 'Registro excluído com sucesso!',
+            'status' => $status,
+            'message' => $message,
         ]);
     }
 }

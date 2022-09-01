@@ -117,11 +117,35 @@ class ProjetoController extends Controller
     public function destroy($id)
     {
         $projeto = $this->projeto->find($id);
-        $projeto->delete();
-
+        $bases = $projeto->bases;
+        $vms = $projeto->virtual_machines;
+        $apps = $projeto->apps;
+        if(($bases)||($vms)||($apps)){
+            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+                if($bases){
+                    $projeto->bases()->detach($bases);
+                }
+                if($vms){
+                    $projeto->virtual_machines()->detach($vms);
+                }
+                if($apps){
+                    $projeto->apps()->detach($apps);
+                }
+                $status = 200;
+                $message = $projeto->nome_projeto.' excluído com sucesso!';
+                $projeto->delete();
+            }else{
+                $status = 400;
+                $message = $projeto->nome_projeto.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';
+            }
+        }else{
+            $status = 200;
+            $message = $projeto->nome_projeto.' excluído com sucesso!';
+            $projeto->delete();
+        }
         return response()->json([
-            'status' => 200,
-            'message' => 'Projeto excluído com sucesso!',
+            'status' => $status,
+            'message' => $message,
         ]);
     }
 }

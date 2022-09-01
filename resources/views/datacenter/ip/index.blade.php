@@ -104,7 +104,7 @@
                         @if($ip->status=="OCUPADO")
                         <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>
                         @else
-                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="OCUPADO" class="status_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>
+                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>
                         @endif                       
                         <td>
                             <div class="btn-group">
@@ -264,9 +264,9 @@ $(document).ready(function(){
                             <td>'+response.cadastroIp.ip+'</td>\
                             <td>'+'<a href="'+meulink+'">'+response.rede.nome_rede+'</a></td>';
                             if(response.cadastroIp.status=="OCUPADO"){
-                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="LIVRE" class="status_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>';
+                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
                             }else{
-                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="OCUPADO" class="status_btn fas fa-checked" style="background: transparent; color: green; border: none;"></button></td>';
+                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
                             }                    
                            
                             linha4 = '<td>\
@@ -340,9 +340,9 @@ $(document).ready(function(){
                             <th scope="row">'+response.cadastroIp.ip+'</th>\
                             <td>'+'<a href="'+meulink+'">'+response.rede.nome_rede+'</a></td>';
                             if(response.cadastroIp.status=="OCUPADO"){
-                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="LIVRE" class="status_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>';
+                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
                             }else{
-                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="OCUPADO" class="status_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>';
+                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
                             }                            
                             linha4 = '<td>\
                                 <div class="btn-group">\
@@ -383,9 +383,9 @@ $(document).ready(function(){
                         var limita1 = "";
                         var limita2 = "";
                         if(response.ip.status=="OCUPADO"){
-                            limita1 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-status="LIVRE" class="status_btn fas fa-close" style="background: transparent; color: red; border: none;"></button></td>';
+                            limita1 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
                         }else{
-                            limita2 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-status="OCUPADO" class="status_btn fas fa-check" style="background: transparent; color: green; border: none;"></button></td>';
+                            limita2 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
                         }
                         var celula = limita1+limita2;
                         $('#stipid'+id).replaceWith(celula);

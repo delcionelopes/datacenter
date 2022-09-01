@@ -138,10 +138,18 @@
                         '_token':CSRF_TOKEN,
                     },
                     success:function(response){
+                        if(response.status==200){
                         //remove a tr correspondente da tabela html
                         $("#area"+id).remove();
+                        $('#success_message').html("");
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);         
+                        }else{
+                        //Não pôde ser excluído
+                        $('#success_message').html("");
+                        $('#success_message').addClass('alert alert-danger');
+                        $('#success_message').text(response.message);         
+                        }
                     }              
                 });
             }

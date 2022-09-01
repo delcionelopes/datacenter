@@ -143,6 +143,8 @@
 </div>
 <!--Fim EditTemaModal-->
 <!--Início Index-->
+@auth
+@if((auth()->user()->moderador)&&(!(auth()->user()->inativo))))
 <div class="container py-5">
     <div id="success_message"></div>   
             <section class="border p-4 mb-4 d-flex align-items-left">
@@ -205,6 +207,10 @@
             </div>            
       
 </div>
+@else 
+  <h1><b class="center">VOCÊ NÃO É ADMINISTRADOR!</b></h1>
+@endif
+@endauth
 <!--Fim Index-->
 @stop
 

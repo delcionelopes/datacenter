@@ -93,15 +93,13 @@ class AmbienteController extends Controller
                 'status'   => 400,
                 'errors'   => $validator->errors()->getMessages(), 
             ]);
-        }else{            
-            $timestamps = $this->ambiente->timestamps;
-            $this->ambiente->timestamps=false;       
-            $ambiente = Ambiente::find($id);                                               
+        }else{           
+           
+            $ambiente = $this->ambiente->find($id);                                               
             if($ambiente){
-                     $ambiente->nome_ambiente = strtoupper($request->input('nome_ambiente'));
-                     $ambiente->updated_at = now();
+                     $ambiente->nome_ambiente = strtoupper($request->input('nome_ambiente'));                     
                      $ambiente->update(); 
-                     $this->ambiente->timestamps = true;
+                   
                      $a = Ambiente::find($id);                      
                      
                      return response()->json([             
@@ -122,12 +120,27 @@ class AmbienteController extends Controller
  
     public function destroy($id)
     {             
-        $ambiente = Ambiente::find($id);
-        $ambiente->delete();
+        $ambiente = $this->ambiente->find($id);
+        $vm = $ambiente->virtual_machine;        
+        if($vm){
+            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){                
+                $ambiente->virtual_machine()->detach($vm);                
+                $status = 200;
+                $message = $ambiente->nome_ambiente.' excluído com sucesso!';                
+                $ambiente->delete();
+            }else{
+                $status = 400;
+                $message = $ambiente->nome_ambiente.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';
+            }
+        }else{
+            $status = 200;
+            $message = $ambiente->nome_ambiente.' excluído com sucesso!';
+            $ambiente->delete();        
+        }
 
         return response()->json([
-            'status'  => 200,
-            'message' => 'Ambiente excluído com sucesso!',
+            'status'  => $status,
+            'message' => $message,
         ]);
     }
 }

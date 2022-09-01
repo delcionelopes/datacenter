@@ -127,11 +127,37 @@ class OrgaoController extends Controller
     public function destroy($id)
     {
         $orgao = $this->orgao->find($id);
-        $orgao->delete();
+
+        $vms = $orgao->virtualmachine;
+        $apps = $orgao->apps;
+        $users = $orgao->users;
+        if(($vms)||($apps)||($users)){
+            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+                if($vms){
+                    $orgao->virtualmachine()->detach($vms);
+                }
+                if($apps){
+                    $orgao->apps()->detach($apps);
+                }
+                if($users){
+                    $orgao->users()->detach($users);
+                }                
+                $status = 200;
+                $message = $orgao->nome.' excluído com sucesso!';
+                $orgao->delete();
+            }else{
+                $status = 400;
+                $message = $orgao->nome.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';
+            }
+        }else{
+            $status = 200;
+            $message = $orgao->nome.' excluído com sucesso!';
+            $orgao->delete();
+        }
 
         return response()->json([
-            'status'  =>  200,
-            'message' => 'Órgão excluído com sucesso!',
+            'status'  =>  $status,
+            'message' => $message,
         ]);
     }
 }

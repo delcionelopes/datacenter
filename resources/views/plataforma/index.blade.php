@@ -141,6 +141,7 @@
                         if(response.status==200){                        
                             //remove a linha correspondente da tabela html
                             $("#plataforma"+id).remove();
+                            
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);         
                         }

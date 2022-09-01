@@ -158,10 +158,25 @@ class ManualController extends Controller
     public function destroy($id)
     {
         $manual = $this->manual->find($id);
+        $uploads = $manual->uploads;
+        if($uploads){
+            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+                $manual->uploads()->detach($uploads);
+                $status = 200;
+                $message = $manual->descricao.' excluído com sucesso!';
+                $manual->delete();
+            }else{
+                $status = 400;
+                $message = $manual->descricao.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';                
+            }
+        }else{        
+        $status = 200;
+        $message = $manual->descricao.' excluído com sucesso!';
         $manual->delete();
+        }
         return response()->json([
-            'status' => 200,
-            'message' => 'Registro excluído com sucesso!',
+            'status' => $status,
+            'message' => $message,
         ]);
     }
 
@@ -196,7 +211,7 @@ class ManualController extends Controller
                 $file = $request->file('arquivo'.$x);                           
                 $fileName =  $file->getClientOriginalName();
                 $filePath = 'downloads/'.$fileName;
-                $storagePath = public_path().'/storage/downloads/';
+                $storagePath = public_path('/storage/downloads/');
                 $file->move($storagePath,$fileName);    
                 
                 $data[$x]['manual_id'] = $id;

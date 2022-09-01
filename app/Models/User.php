@@ -29,6 +29,11 @@ class User extends Authenticatable
         'matricula',
     ];
 
+    public function orgao()
+    {
+        return $this->belongsTo(Orgao::class);
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

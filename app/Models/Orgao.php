@@ -24,5 +24,10 @@ class Orgao extends Model
         return $this->hasMany(App::class);
     }   
 
+    public function users()
+    {
+        return $this->hasMany(User::class);
+    }
+
 
 }

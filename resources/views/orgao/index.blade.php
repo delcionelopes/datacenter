@@ -162,7 +162,13 @@
                         if(response.status==200){                           
                             //remove a linha correspondente da tabela html
                             $("#orgao"+id).remove();
+                            $('#success_message').html("");
                             $('#success_message').addClass('alert alert-success');
+                            $('#success_message').text(response.message);
+                        }else{
+                            //O registro não pôde ser excluído
+                            $('#success_message').html("");
+                            $('#success_message').addClass('alert alert-danger');
                             $('#success_message').text(response.message);
                         }
                     }
