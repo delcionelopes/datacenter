@@ -82,6 +82,101 @@
 </div>
 <!--Fim AddHostModal -->
 
+<!--Inicio AddVirtualMachineModal-->
+<div class="modal fade" id="AddVirtualMachineModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header navbar-dark bg-primary">
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Virtual Machine</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form id="vm_addform" name="vm_addform" class="form-horizontal" role="form">
+                    <input type="hidden" id="vm_add_cluster_id">
+                    <ul id="vm_saveform_errList"></ul>                    
+                    <div class="form-group mb-3">
+                        <label for="">Projeto</label>
+                        <select name="vm_projeto_id" id="vm_projeto_id" class="custom-select">
+                            @foreach($projetos as $projeto)
+                            <option value="{{$projeto->id}}">{{$projeto->nome_projeto}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Cluster:</label>
+                        <label for="" id="vm_nome_cluster" style="font-style:italic;"></label>
+                    </div>             
+                    <div class="form-group mb-3">
+                        <label for="">Orgão</label>
+                        <select name="vm_orgao_id" id="vm_orgao_id" class="custom-select">
+                            @foreach($orgaos as $orgao)                            
+                                <option value="{{$orgao->id}}">{{$orgao->nome}}</option>
+                            @endforeach                                
+                        </select>
+                    </div>       
+                    <div class="form-group mb-3">
+                        <label for="">Ambiente</label>
+                        <select name="vm_ambiente_id" id="vm_ambiente_id" class="custom-select">
+                            @foreach($ambientes as $ambiente)
+                            <option value="{{$ambiente->id}}">{{$ambiente->nome_ambiente}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Nome da VM</label>
+                        <input type="text" class="vm_nome_vm form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">CPU</label>
+                        <input type="text" class="vm_cpu form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Memória</label>
+                        <input type="text" class="vm_memoria form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Disco</label>
+                        <input type="text" class="vm_disco form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">IP</label>
+                        <input type="text" class="vm_ip form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Resource Pool</label>
+                        <input type="text" class="vm_resource_pool form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Sistema Operacional</label>
+                        <input type="text" class="vm_sistema_operacional form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Gatway</label>
+                        <input type="text" class="vm_gatway form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">VLANs</label>
+                        <div class="form-group mb3">
+                            @foreach($vlans as $vlan)
+                            <label>
+                                <input type="checkbox" name="vlans[]" value="{{$vlan->id}}">{{$vlan->nome_vlan}}
+                            </label>
+                            @endforeach
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary add_virtualmachine">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Fim AddVirtualMachineModal-->
+
 <!--EditClusterModal-->
 
 <div class="modal fade" id="EditClusterModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
@@ -237,7 +332,8 @@ $(document).ready(function(){
                     success:function(response){
                         if(response.status==200){                        
                             //remove linha correspondente da tabela html
-                            $("#cluster"+id).remove();                                                    
+                            $("#cluster"+id).remove();        
+                            $('#success_message').html("");
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);         
                         }
@@ -392,6 +488,11 @@ $(document).ready(function(){
                                             <button type="button" data-id="'+response.cluster.id+'" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
                                         </div>\
                                     </td>\
+                                    <td>\
+                                    <div class="btn-group">\
+                                        <button type="button" data-id="'+response.cluster.id+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
+                                    </div>\
+                                </td>\
                                     <td>'+response.cluster.total_memoria+'</td>\
                                     <td>'+response.cluster.total_processador+'</td>\
                                     <td>\
@@ -468,7 +569,78 @@ $(document).ready(function(){
                 }
             });
         });    
-        //Fim Adiciona Novo Host do Cluster
+        //Fim Adiciona Novo Host do Cluster   novo_vm_btn
+
+        ///Inicio Nova VM do cluster caso não possua nenhuma
+        $('#AddVirtualMachineModal').on('shown.bs.modal',function(){
+            $('.vm_nome_vm').focus();
+        });
+        $(document).on('click','.novo_vm_btn',function(e){
+            e.preventDefault();
+            $('#vm_addform').trigger('reset');
+            $('#AddVirtualMachineModal').modal('show');
+            $('#vm_add_cluster_id').val($(this).data("id"));
+        });
+        ///Fim Nova VM do cluster caso não possua nenhuma
+//Início da adição da VirtualMachine
+$(document).on('click','.add_virtualmachine',function(e){
+            e.preventDefault();      
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var vlans = new Array;
+            $("input[name='vlans[]']:checked").each(function(){
+                vlans.push($(this).val());
+            });    
+    
+            var data = {
+                'cluster_id': $('#vm_add_cluster_id').val(),
+                'projeto_id': $('.vm_projeto_id').val(),
+                'orgao_id': $('.vm_orgao_id').val(),
+                'ambiente_id': $('.vm_ambiente_id').val(),
+                'nome_vm': ($('.vm_nome_vm').val()).trim(),
+                'cpu': ($('.vm_cpu').val()).trim(),
+                'memoria': ($('.vm_memoria').val()).trim(),
+                'disco': ($('.vm_disco').val()).trim(),
+                'ip': ($('.vm_ip').val()).trim(),
+                'resource_pool': ($('.vm_resource_pool').val()).trim(),
+                'cluster': ($('#vm_nome_cluster').val()).trim(),
+                'sistema_operacional': ($('.vm_sistema_operacional').val()).trim(),
+                'gatway': ($('.vm_gatway').val()).trim(),            
+                'vlans': vlans,
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }    
+           
+            $.ajax({
+                url:'/datacenter/adiciona-vm/',
+                type:'POST',
+                dataType: 'json',
+                data: data,
+                success: function(response){
+                    if(response.status==400){
+                        //erros
+                        $('#vm_saveform_errList').html("");
+                        $('#vm_saveform_errList').addClass('alert alert-danger');
+                        $.each(response.errors,function(key, err_values){
+                            $('#vm_saveform_errList').append('<li>'+err_values+'</li>');
+                        });
+                        $(this).text("Adicionado!");
+                    }else{
+                        //sucesso na operação
+                        $('#vm_saveform_errList').html("");
+                        $('#success_message').html("");
+                        $('#success_message').addClass("alert alert-success");
+                        $('$success_message').text(response.message);
+                        $('#vm_addform').trigger('reset');
+                        $('#AddVirtualMachineModal').modal('hide');
+                        
+                        location.reload();
+    
+                    }
+                }
+    
+            });
+        });
+        //Fim da adição da VirtualMachine 
         
     }); ///Fim do escopo do script
     

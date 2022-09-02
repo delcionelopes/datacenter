@@ -4,9 +4,13 @@ namespace App\Http\Controllers\datacenter;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Ambiente;
 use App\Models\Cluster;
 use Illuminate\Support\Facades\Validator;
 use App\models\Host;
+use App\Models\Orgao;
+use App\Models\Projeto;
+use App\Models\Vlan;
 
 class ClusterController extends Controller
 {
@@ -28,9 +32,17 @@ class ClusterController extends Controller
             $query = $this->cluster->query()
             ->where('nome_cluster','LIKE','%'.strtoupper($request->pesquisa).'%');
             $clusters = $query->orderByDesc('id')->paginate(6);
-        }        
+        }    
+        $projetos = Projeto::all(); //todos os projetos        
+        $orgaos = Orgao::all(); //todos os orgãos
+        $ambientes = Ambiente::all(); //todos os ambientes
+        $vlans = Vlan::all();  //todas as vlans    
         return view('datacenter.cluster.index',[
             'clusters' => $clusters,
+            'vlans'           => $vlans,
+            'projetos'        => $projetos,            
+            'orgaos'          => $orgaos,
+            'ambientes'       => $ambientes,
         ]);
     }
 
