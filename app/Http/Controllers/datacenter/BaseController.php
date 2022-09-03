@@ -167,15 +167,15 @@ class BaseController extends Controller
         $vms = $base->virtualmachine;
         $projetos = $base->projeto;
         $apps = $base->apps;
-        if(($vms)||($projetos)||($apps)){
+        if(($base->virtualmachine()->count())||($base->projeto()->count())||($base->apps()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
-                if($vms){
+                if($base->virtualmachine()->count()){
                     $base->virtualmachine()->detach($vms);
                 }
-                if($projetos){
+                if($base->projeto()->count()){
                     $base->projeto()->detach($projetos);
                 }
-                if($apps){
+                if($base->apps()->count()){
                     $base->apps()->detach($apps);
                 }
                 $status = 200;

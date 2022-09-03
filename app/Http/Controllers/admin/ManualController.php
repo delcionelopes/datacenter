@@ -159,7 +159,7 @@ class ManualController extends Controller
     {
         $manual = $this->manual->find($id);
         $uploads = $manual->uploads;
-        if($uploads){
+        if($manual->uploads()->count()){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
                 $manual->uploads()->detach($uploads);
                 $status = 200;

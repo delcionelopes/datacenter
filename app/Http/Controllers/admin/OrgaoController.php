@@ -131,15 +131,15 @@ class OrgaoController extends Controller
         $vms = $orgao->virtualmachine;
         $apps = $orgao->apps;
         $users = $orgao->users;
-        if(($vms)||($apps)||($users)){
+        if(($orgao->virtualmachine()->count())||($orgao->apps()->count())||($orgao->users()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
-                if($vms){
+                if($orgao->virtualmachine()->count()){
                     $orgao->virtualmachine()->detach($vms);
                 }
-                if($apps){
+                if($orgao->apps()->count()){
                     $orgao->apps()->detach($apps);
                 }
-                if($users){
+                if($orgao->users()->count()){
                     $orgao->users()->detach($users);
                 }                
                 $status = 200;

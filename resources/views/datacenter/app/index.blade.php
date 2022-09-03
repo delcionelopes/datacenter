@@ -239,6 +239,7 @@
                         if(response.status==200){
                             //remove a tr da table html
                             $('#app'+id).remove();
+                            $('success_message').innerHtml = "";
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
                         }
@@ -386,20 +387,22 @@
                 success:function(response){
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').innerHtml = "";
                         $('#updateform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#updateform_errList').append('<li>'+err_values+'</li>');
                         });
                         $(this).value("Atualizado");
                     }else if(response.status==404){
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').innerHtml = "";
+                        $('#success_message').innerHtml = "";
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $(this).text('Atualizado');
                     }else{
                         //atualizando a tr da table html
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').innerHtml = "";
+                        $('#success_message').innerHtml = "";
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
                         $(this).text('Atualizado');
@@ -482,13 +485,14 @@
                 success:function(response){
                     //erros
                     if(response.status==400){
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').innerHtml = "";
                         $('#saveform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });
                     }else{
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').innerHtml = "";
+                        $('#success_message').innerHtml = "";
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
     

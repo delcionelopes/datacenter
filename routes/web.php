@@ -19,20 +19,6 @@ use App\Http\Controllers\datacenter\vlanController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
-/*
-|--------------------------------------------------------------------------
-| Web Routes
-|--------------------------------------------------------------------------
-|
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider within a group which
-| contains the "web" middleware group. Now create something great!
-|
-*/
-/* Route::get('/', function () {
-    return view('welcome');
-}); */
-
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
@@ -120,6 +106,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::put('update-cluster/{id}',[ClusterController::class,'update']);
         Route::put('adiciona-cluster',[ClusterController::class,'store']);    
         Route::put('adiciona-hostcluster',[ClusterController::class,'storehost']);
+        Route::put('cluster-adiciona-vm',[ClusterController::class,'storeVM']);
 
         //Rotas para a view index de hosts
         Route::get('index-host/{id}',[HostController::class,'index'])->name('host.index');

@@ -119,23 +119,23 @@ class AmbienteController extends Controller
 
  
     public function destroy($id)
-    {             
+    {        
         $ambiente = $this->ambiente->find($id);
-        $vm = $ambiente->virtual_machine;        
-        if($vm){
+        $vm = $ambiente->virtual_machine;  
+        if($ambiente->virtual_machine()->count()){          
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){                
                 $ambiente->virtual_machine()->detach($vm);                
                 $status = 200;
                 $message = $ambiente->nome_ambiente.' excluído com sucesso!';                
-                $ambiente->delete();
+                $ambiente->delete($id);
             }else{
                 $status = 400;
                 $message = $ambiente->nome_ambiente.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';
             }
         }else{
             $status = 200;
-            $message = $ambiente->nome_ambiente.' excluído com sucesso!';
-            $ambiente->delete();        
+            $message = $ambiente->nome_ambiente.' excluído com sucesso!';            
+            $ambiente->delete($id);        
         }
 
         return response()->json([

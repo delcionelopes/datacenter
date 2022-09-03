@@ -204,7 +204,7 @@ class AppController extends Controller
      */
     public function destroy($id)
     {
-        $app = $this->app->find($id);
+        $app = $this->app->find($id);        
         $app->delete();
         return response()->json([
             'status'  => 200,

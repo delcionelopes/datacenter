@@ -122,12 +122,12 @@ class Area_ConhecimentoController extends Controller
         $area_conhecimento = $this->area_conhecimento->find($id);
         $sub_area = $area_conhecimento->sub_area_conhecimento;
         $manuais = $area_conhecimento->manual;
-        if(($sub_area)||($manuais)){
+        if(($area_conhecimento->sub_area_conhecimento()->count())||($area_conhecimento->manual()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
-                if($sub_area){
+                if($area_conhecimento->sub_area_conhecimento()->count()){
                     $area_conhecimento->sub_area_conhecimento()->detach($sub_area);
                 }
-                if($manuais){
+                if($area_conhecimento->manual()->count()){
                     $area_conhecimento->manual()->detach($manuais);
                 }
                 $status = 200;

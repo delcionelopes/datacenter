@@ -120,15 +120,15 @@ class ProjetoController extends Controller
         $bases = $projeto->bases;
         $vms = $projeto->virtual_machines;
         $apps = $projeto->apps;
-        if(($bases)||($vms)||($apps)){
+        if(($projeto->bases()->count())||($projeto->virtual_machines()->count())||($projeto->apps()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
-                if($bases){
+                if($projeto->bases()->count()){
                     $projeto->bases()->detach($bases);
                 }
-                if($vms){
+                if($projeto->virtual_machines()->count()){
                     $projeto->virtual_machines()->detach($vms);
                 }
-                if($apps){
+                if($projeto->apps()->count()){
                     $projeto->apps()->detach($apps);
                 }
                 $status = 200;

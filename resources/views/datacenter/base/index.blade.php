@@ -286,7 +286,12 @@ $(document).ready(function(){
                             if(response.status==200){
                                 //remove a linha da table html
                                 $('#base'+id).remove();
+                                $('#success_message').innerHtml = "";
                                 $('#success_message').addClass('alert alert-success');
+                                $('#success_message').text(response.message);
+                            }else{
+                                $('#success_message').innerHtml = "";
+                                $('#success_message').addClass('alert alert-danger');
                                 $('#success_message').text(response.message);
                             }
                         }
@@ -378,19 +383,21 @@ $(document).ready(function(){
                 success:function(response){
                     if(response.status==400){
                         //erros                  
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').innerHtml = "";
                         $('#updateform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#updateform_errList').append('<li>'+err_values+'</li>');
                         });
                         $(this).text('Atualizado');                    
                     }else if(response.status==404){                    
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').innerHtml = "";
+                        $('#success_message').innerHtml = "";
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $(this).text('Atualizado');                    
                     }else{                    
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').innerHtml = "";
+                        $('#success_message').innerHtml = "";
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
                         $(this).text('Atualizado');
@@ -457,13 +464,14 @@ $(document).ready(function(){
                 success:function(response){
                     if(response.status==400){
                         //erros
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').innerHtml = "";
                         $('#saveform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });                    
                     }else{
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').innerHtml = "";
+                        $('#success_message').innerHtml = "";
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
     
@@ -568,13 +576,14 @@ $(document).ready(function(){
                 success:function(response){
                     //erros
                     if(response.status==400){
-                        $('#saveform_errListApp').html("");
+                        $('#saveform_errListApp').innerHtml = "";
                         $('#saveform_errListApp').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveform_errListApp').append('<li>'+err_values+'</li>');
                         });
                     }else{
-                        $('#saveform_errListApp').html("");
+                        $('#saveform_errListApp').innerHtml = "";
+                        $('#success_message').innerHtml = "";
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
     

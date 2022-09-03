@@ -104,8 +104,7 @@ class CadastroIpController extends Controller
              if($cadastroIp){
                 $data = [
                     'rede_id' => $request->input('rede_id'),
-                    'ip' => $request->input('ip'), 
-                    'updated_at' => now(),                               
+                    'ip' => $request->input('ip'),                                          
                 ];
                 $cadastroIp->update($data);               
                 $c = Cadastro_ip::find($id);

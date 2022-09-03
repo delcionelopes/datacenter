@@ -160,6 +160,7 @@ $(document).ready(function(){
                             if(response.status==200){
                                 //remove a linha tr da table html
                                 $('#ip'+id).remove();
+                                $('#success_message').html("");
                                 $('#success_message').addClass('alert alert-success');
                                 $('#success_message').text(response.message);
                             }
