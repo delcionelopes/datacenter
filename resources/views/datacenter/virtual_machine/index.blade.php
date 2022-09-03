@@ -369,8 +369,11 @@ $(document).ready(function(){
                         success:function(response){
                             if(response.status==200){
                                 //remove a linha tr da table html
-                                $('#vm'+id).remove();
+                                $('#vm'+id).remove();                                
                                 $('#success_message').addClass('alert alert-success');
+                                $('#success_message').text(response.message);
+                            }else{                                
+                                $('#success_message').addClass('alert alert-danger');
                                 $('#success_message').text(response.message);
                             }
                         }
@@ -541,12 +544,12 @@ $(document).ready(function(){
                         });
                         $(this).text("Atualizado");
                     }else if(response.status==404){
-                        $("#updateform_errList").html("");
+                        $("#updateform_errList").html("");                        
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $(this).text("Atualizado");
                     }else{
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').html("");                        
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
                         $(this).text("Atualizado");
@@ -656,7 +659,7 @@ $(document).ready(function(){
                         $(this).text("Adicionado!");
                     }else{
                         //sucesso na operação
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').html("");                        
                         $('#success_message').addClass("alert alert-success");
                         $('$success_message').text(response.message);
                         $('#addform').trigger('reset');
@@ -776,7 +779,7 @@ $(document).ready(function(){
                             $('#saveformbase_errList').append('<li>'+err_values+'</li>');
                         });
                     }else{
-                        $('#saveformbase_errList').html("");
+                        $('#saveformbase_errList').html("");                        
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);                                        
     

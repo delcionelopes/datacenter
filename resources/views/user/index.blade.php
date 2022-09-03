@@ -144,7 +144,7 @@
 <!--Fim EditTemaModal-->
 <!--Início Index-->
 @auth
-@if((auth()->user()->moderador)&&(!(auth()->user()->inativo))))
+@if((auth()->user()->moderador)&&(!(auth()->user()->inativo)))
 <div class="container py-5">
     <div id="success_message"></div>   
             <section class="border p-4 mb-4 d-flex align-items-left">
@@ -208,7 +208,7 @@
       
 </div>
 @else 
-  <h1><b class="center">VOCÊ NÃO É ADMINISTRADOR!</b></h1>
+  <h1><b class="title">VOCÊ NÃO É ADMINISTRADOR!</b></h1>
 @endif
 @endauth
 <!--Fim Index-->
@@ -245,8 +245,7 @@ $(document).ready(function(){
                 success:function(response){
                     if(response.status==200){
                         //remove a linha correspondente
-                        $("#user"+id).remove();
-                        $('#success_message').innerHtml = "";
+                        $("#user"+id).remove();                        
                         $('#success_message').addClass("alert alert-success");
                         $('#success_message').text(response.message);
                     }
@@ -350,7 +349,7 @@ $('#EditUserModal').on('shown.bs.modal',function(){
             success:function(response){
                 if(response.status==400){
                     //erros
-                    $('#updateform_errList').innerHtml = "";
+                    $('#updateform_errList').html("");
                     $('#updateform_errList').addClass('alert alert-danger');
                     $.each(response.errors,function(key,err_values){
                         $('#updateform_errList').append('<li>'+err_values+'</li>');
@@ -358,15 +357,13 @@ $('#EditUserModal').on('shown.bs.modal',function(){
                     $(this).text("Atualizado");
                 }else if(response.status==404){
                     //Não localizado
-                    $('#updateform_errList').innerHtml = "";
-                    $('#success_message').innerHtml = "";
+                    $('#updateform_errList').html("");                    
                     $('#success_message').addClass('alert alert-warning');
                     $('#success_message').text(response.message);
                     $(this).text("Atualizado");
                 }else{
                     //Êxito na operação
-                    $('#updateform_errList').innerHtml = "";
-                    $('#success_message').innerHtml = "";
+                    $('#updateform_errList').html("");                    
                     $('#success_message').addClass('alert alert-success');
                     $('#success_message').text(response.message);
                     $(this).text("Atualizado");
@@ -470,7 +467,7 @@ $('#EditUserModal').on('shown.bs.modal',function(){
             success:function(response){
                 if(response.status==400){
                     //erros
-                    $('#saveform_errList').innerHtml = "";
+                    $('#saveform_errList').html("");
                     $('#saveform_errList').addClass('alert alert-danger');
                     $.each(response.errors,function(key,err_values){
                         $('#saveform_errList').append('<li>'+err_values+'</li>');
@@ -478,8 +475,7 @@ $('#EditUserModal').on('shown.bs.modal',function(){
                     $(this).text("Ok");                    
                 }else{
                     //sucesso
-                    $('#saveform_errList').innerHtml = "";
-                    $('#success_message').innerHtml = "";
+                    $('#saveform_errList').html("");                    
                     $('#success_message').addClass('alert alert-success');
                     $('#success_message').text(response.message);
                     $(this).text("Ok");                    

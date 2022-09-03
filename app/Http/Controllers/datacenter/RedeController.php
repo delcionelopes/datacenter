@@ -151,10 +151,27 @@ class RedeController extends Controller
     public function destroy($id)
     {
         $rede = $this->rede->find($id);
-        $rede->delete();
+        $ips = $rede->cadastro_ips;
+        if($rede->cadastro_ips()->count()){
+            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+                $rede->cadastro_ips()->detach($ips);
+                $status = 200;
+                $message = $rede->nome_rede.' foi excluído com sucesso!';
+                $rede->delete();
+            }else{
+                $status = 400;
+                $message = $rede->nome_rede.' não pôde ser excluído. Pois há outros registros que dependem dele. Contacte um administrador!';
+            }
+        }else{
+            $status = 200;
+            $message = $rede->nome_rede.' foi excluído com sucesso!';
+            $rede->delete();
+        }
+      
+     
         return response()->json([
-            'status' => 200,
-            'message' => 'Registro excluído com sucesso!',
+            'status' => $status,
+            'message' => $message,
         ]);
     }
 

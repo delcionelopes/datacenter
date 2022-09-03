@@ -127,7 +127,7 @@ class AmbienteController extends Controller
                 $ambiente->virtual_machine()->detach($vm);                
                 $status = 200;
                 $message = $ambiente->nome_ambiente.' excluído com sucesso!';                
-                $ambiente->delete($id);
+                $ambiente->delete();
             }else{
                 $status = 400;
                 $message = $ambiente->nome_ambiente.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';
@@ -135,7 +135,7 @@ class AmbienteController extends Controller
         }else{
             $status = 200;
             $message = $ambiente->nome_ambiente.' excluído com sucesso!';            
-            $ambiente->delete($id);        
+            $ambiente->delete();        
         }
 
         return response()->json([

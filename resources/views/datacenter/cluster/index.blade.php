@@ -332,12 +332,10 @@ $(document).ready(function(){
                     success:function(response){
                         if(response.status==200){                        
                             //remove linha correspondente da tabela html
-                            $("#cluster"+id).remove();        
-                            $('#success_message').innerHtml("");
+                            $("#cluster"+id).remove();                            
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);         
-                        }else{
-                            $('#success_message').innerHtml("");
+                        }else{                            
                             $('#success_message').addClass('alert alert-danger');
                             $('#success_message').text(response.message);         
                         }
@@ -404,7 +402,7 @@ $(document).ready(function(){
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').innerHtml = "";
+                        $('#updateform_errList').html("");
                         $('#updateform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#updateform_errList').append('<li>'+err_values+'</li>');
@@ -413,15 +411,13 @@ $(document).ready(function(){
                         $('.update_cluster').text("Atualizado");
     
                     } else if(response.status==404){
-                        $('#updateform_errList').innerHtml "";
-                        $('#success_message').innerHtml = "";
+                        $('#updateform_errList').html("");                        
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $('.update_cluster').text("Atualizado");
     
                     } else {
-                        $('#updateform_errList').innerHtml = "";
-                        $('#success_message').innerHtml = "";
+                        $('#updateform_errList').html("");                        
                         $('#success_message').addClass("alert alert-success");
                         $('#success_message').text(response.message);
                         $('.update_cluster').text("Atualizado");                    
@@ -469,14 +465,13 @@ $(document).ready(function(){
                 data: data,                  
                 success: function(response){
                     if(response.status==400){
-                        $('#saveform_errList').innerHtml = "";
+                        $('#saveform_errList').html("");
                         $('#saveform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });
                     } else {
-                        $('#saveform_errList').innerHtml = "";
-                        $('#success_message').innerHtml = "";
+                        $('#saveform_errList').html("");                        
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);                                        
     
@@ -556,14 +551,13 @@ $(document).ready(function(){
                 data: data,                  
                 success: function(response){
                     if(response.status==400){
-                        $('#saveformHost_errList').innerHtml = "";
+                        $('#saveformHost_errList').html("");
                         $('#saveformHost_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveformHost_errList').append('<li>'+err_values+'</li>');
                         });
                     } else {
-                        $('#saveformHost_errList').innerHtml = "";
-                        $('#success_message').innerHtml = "";
+                        $('#saveformHost_errList').html("");                        
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);                                        
     
@@ -577,7 +571,31 @@ $(document).ready(function(){
                 }
             });
         });    
-        //Fim Adiciona Novo Host do Cluster   
+        //Fim Adiciona Novo Host do Cluster  
+        
+        //inicio reconfigura o option selected do select html
+        $('select[name="vm_projeto_id"]').on('change',function(){
+            var optprojeto = this.value;
+            $('#vm_projeto_id option')
+            .removeAttr('selected')
+            .filter('[value='+optprojeto+']')
+            .attr('selected',true);
+        });
+        $('select[name="vm_orgao_id"]').on('change',function(){
+            var optorgao = this.value;
+            $('#vm_orgao_id option')
+            .removeAttr('selected')
+            .filter('[value='+optorgao+']')
+            .attr('selected',true);
+        });
+        $('select[name="vm_ambiente_id"]').on('change',function(){
+            var optambiente = this.value;
+            $('#vm_ambiente_id option')
+            .removeAttr('selected')
+            .filter('[value='+optambiente+']')
+            .attr('selected',true);
+        });    
+        //fim reconfigura o option selected do select html
 
         ///Inicio Nova VM do cluster caso não possua nenhuma
         $('#AddVirtualMachineModal').on('shown.bs.modal',function(){
@@ -629,7 +647,7 @@ $(document).on('click','.add_virtualmachine',function(e){
                 success: function(response){
                     if(response.status==400){
                         //erros
-                        $('#vm_saveform_errList').innerHtml = "";
+                        $('#vm_saveform_errList').html("");
                         $('#vm_saveform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
                             $('#vm_saveform_errList').append('<li>'+err_values+'</li>');
@@ -637,8 +655,7 @@ $(document).on('click','.add_virtualmachine',function(e){
                         $(this).text("Adicionado!");
                     }else{
                         //sucesso na operação
-                        $('#vm_saveform_errList').innerHtml  = "";
-                        $('#success_message').innerHtml = "";
+                        $('#vm_saveform_errList').html("");                        
                         $('#success_message').addClass("alert alert-success");
                         $('$success_message').text(response.message);
                         $('#vm_addform').trigger('reset');

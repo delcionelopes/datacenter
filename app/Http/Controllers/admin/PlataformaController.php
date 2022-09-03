@@ -121,7 +121,6 @@ class PlataformaController extends Controller
     {
         $plataforma = $this->plataforma->find($id);
         $plataforma->delete();
-
         return response()->json([
             'status' => 200,
             'message' => 'Plataforma excluída com sucesso!',

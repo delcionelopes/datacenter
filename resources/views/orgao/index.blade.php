@@ -161,13 +161,11 @@
                     success:function(response){
                         if(response.status==200){                           
                             //remove a linha correspondente da tabela html
-                            $("#orgao"+id).remove();
-                            $('#success_message').innerHtml = "";
+                            $("#orgao"+id).remove();                           
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
                         }else{
-                            //O registro não pôde ser excluído
-                            $('#success_message').innerHtml = "";
+                            //O registro não pôde ser excluído                           
                             $('#success_message').addClass('alert alert-danger');
                             $('#success_message').text(response.message);
                         }
@@ -235,21 +233,19 @@
                     success:function(response){
                         if(response.status==400){
                             //erros
-                            $('#updateform_errList').innerHtml = "";
+                            $('#updateform_errList').html("");
                             $('#updateform_errList').addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
                                 $('#updateform_errList').append('<li>'+err_values+'</li>');
                             });
                             $('.update_orgao').text("Atualizado");
                         }else if(response.status==404){
-                            $('#updateform_errList').innerHtml = "";
-                            $('#success_message').innerHtml = "";
+                            $('#updateform_errList').html("");                            
                             $('#success_message').addClass('alert alert-warning');
                             $('#success_message').text(response.message);
                             $('.update_orgao').text("Atualizado");
                         }else{  
-                            $('#updateform_errList').innerHtml = "";
-                            $('#success_message').innerHtml = "";
+                            $('#updateform_errList').html("");                            
                             $('#sucess_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
                             $('.update_orgao').text("Atualizado");
@@ -309,14 +305,13 @@
                     cache: false, 
                     success: function(response){
                         if(response.status==400){
-                            $('#saveform_errList').innerHtml = "";
+                            $('#saveform_errList').html("");
                             $('#saveform_errList').addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
                                 $('#saveform_errList').append('<li>'+err_values+'</li>');                            
                             });
                         }else{
-                            $('#saveform_errList').innerHtml = "";
-                            $('#success_message').innerHtml = "";
+                            $('#saveform_errList').html("");                            
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
     

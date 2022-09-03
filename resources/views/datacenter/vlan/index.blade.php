@@ -201,6 +201,9 @@ $(document).ready(function(){
                             $("#vlan"+id).remove();                            
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);         
+                        }else{                            
+                            $('#success_message').addClass('alert alert-danger');
+                            $('#success_message').text(response.message);         
                         }
                     }
                 });            
@@ -268,13 +271,13 @@ $(document).ready(function(){
                         $('.update_vlan').text("Atualizado");
     
                     } else if(response.status==404){
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').html("");                        
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $('.update_vlan').text("Atualizado");
     
                     } else {
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').html("");                        
                         $('#success_message').addClass("alert alert-success");
                         $('#success_message').text(response.message);
                         $('.update_vlan').text("Atualizado");                    
@@ -282,17 +285,7 @@ $(document).ready(function(){
                         $('#editform').trigger('reset');
                         $('#EditVlanModal').modal('hide');                  
                         
-                        //atualizando a linha na tabela html
-                            
-                            var linha = '<tr id="vlan'+response.vlan.id+'">\
-                                    <th scope="row">'+response.vlan.nome_vlan+'</th>\
-                                    <td></td>\
-                                    <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.vlan.id+'" class="edit_vlan fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" class="delete_vlan_btn fas fa-trash" style="background:transparent;border:none"></button>\
-                                    </div></td>\
-                                    </tr>';                             
-                        $("#vlan"+id).replaceWith(linha);                                                                                
+                        location.reload();
     
                     }
                 }
@@ -338,7 +331,7 @@ $(document).ready(function(){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });
                     } else {
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').html("");                        
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);                                        
     
@@ -353,7 +346,9 @@ $(document).ready(function(){
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
                             linha1 = '<tr id="ambiente'+response.vlan.id+'">\
                                     <th scope="row">'+response.vlan.nome_vlan+'</th>\
-                                    <td></td>\
+                                    <td>\
+                                    <button type="button" data-id="'+response.vlan.id+'" class="nova_rede_btn fas fa-folder" style="background: transparent;border:none;color:orange;"></button>\
+                                    </td>\
                                     <td><div class="btn-group">\
                                     <button type="button" data-id="'+response.vlan.id+'" class="edit_vlan fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" class="delete_vlan_btn fas fa-trash" style="background:transparent;border:none"></button>\
@@ -408,7 +403,7 @@ $(document).ready(function(){
                             $('#saveformrede_errList').append('<li>'+err_values+'</li>');
                         });
                     }else{
-                        $('#saveformrede_errList').html("");
+                        $('#saveformrede_errList').html("");                        
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);                                        
     

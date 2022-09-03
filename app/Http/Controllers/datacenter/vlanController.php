@@ -117,10 +117,32 @@ class vlanController extends Controller
     public function destroy($id)
     {
         $vlan = $this->vlan->find($id);
-        $vlan->delete();
+        $vms = $vlan->virtual_machines;
+        $redes = $vlan->redes;
+        if(($vlan->virtual_machines()->count())||($vlan->redes()->count())){
+            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+                if($vlan->virtual_machines()->count()){
+                    $vlan->virtual_machines()->detach($vms);
+                }
+                if($vlan->redes()->count()){
+                    $vlan->redes()->detach($redes);
+                }
+                $status = 200;
+                $message = $vlan->nome_vlan.' foi excluído com sucesso!';
+                $vlan->delete();
+            }else{
+                $status = 400;
+                $message = $vlan->nome_vlan.' não pôde ser escluído, pois há outros registros que dependem dele. Contacte um administrador.';
+            }
+        }else{
+            $status = 200;
+            $message = $vlan->nome_vlan.' foi excluído com sucesso!';
+            $vlan->delete();
+        }
+        
         return response()->json([
-            'status' => 200,
-            'message' => 'Registro excluído com sucesso!',
+            'status' => $status,
+            'message' => $message,
         ]);
     }
 

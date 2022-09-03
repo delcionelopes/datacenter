@@ -243,11 +243,31 @@ class VirtualMachineController extends Controller
     {
         $virtualmachine = $this->virtualmachine->find($id);
         $vl = $virtualmachine->vlans; //todos as vlans relacionadas
-        $virtualmachine->vlans()->detach($vl); //exclui o relacionamento
-        $virtualmachine->delete();
+        $bases = $virtualmachine->bases;
+        if(($virtualmachine->vlans()->count())||($virtualmachine->bases()->count())){
+            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+                if($virtualmachine->vlans()->count){
+                    $virtualmachine->vlans()->detach($vl); //exclui o relacionamento
+                }
+                if($virtualmachine->bases()->count()){
+                    $virtualmachine->bases()->detach($bases);
+                }
+                $status = 200;
+                $message = $virtualmachine->nome_vm.' foi excluído com sucesso!';
+                $virtualmachine->delete();
+            }else{
+                $status = 400;
+                $message = $virtualmachine->nome_vm.' não pôde ser excluído, pois há outros registros que dependem dele. Contacte um administrador.';
+            }
+        }else{
+            $status = 200;
+            $message = $virtualmachine->nome_vm.' foi excluído com sucesso!';
+            $virtualmachine->delete();
+        }       
+   
         return response()->json([
-            'status' => 200,
-            'message' => 'O registro foi excluído com sucesso!',
+            'status' => $status,
+            'message' => $message,
         ]);
     } 
     

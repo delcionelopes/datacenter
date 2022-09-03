@@ -163,18 +163,10 @@ class BaseController extends Controller
 
     public function destroy($id)
     {
-        $base = $this->base->find($id);
-        $vms = $base->virtualmachine;
-        $projetos = $base->projeto;
+        $base = $this->base->find($id);        
         $apps = $base->apps;
-        if(($base->virtualmachine()->count())||($base->projeto()->count())||($base->apps()->count())){
-            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
-                if($base->virtualmachine()->count()){
-                    $base->virtualmachine()->detach($vms);
-                }
-                if($base->projeto()->count()){
-                    $base->projeto()->detach($projetos);
-                }
+        if(($base->apps()->count())){
+            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){             
                 if($base->apps()->count()){
                     $base->apps()->detach($apps);
                 }

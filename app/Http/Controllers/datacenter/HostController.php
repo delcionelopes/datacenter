@@ -140,7 +140,7 @@ class HostController extends Controller
 
     public function destroy($id)
     {             
-        $host = $this->host->find($id);                
+        $host = $this->host->find($id); 
         $host->delete();        
         return response()->json([
             'status'  => 200,

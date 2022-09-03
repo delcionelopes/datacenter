@@ -159,8 +159,7 @@ $(document).ready(function(){
                         success:function(response){
                             if(response.status==200){
                                 //remove a linha tr da table html
-                                $('#ip'+id).remove();
-                                $('#success_message').html("");
+                                $('#ip'+id).remove();                                                              
                                 $('#success_message').addClass('alert alert-success');
                                 $('#success_message').text(response.message);
                             }
@@ -241,12 +240,12 @@ $(document).ready(function(){
                         });
                         $(this).text("Atualizado");
                     }else if(response.status==404){
-                        $("#updateform_errList").html("");
+                        $("#updateform_errList").html("");                        
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $(this).text("Atualizado");
                     }else{
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').html("");                        
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
                         $(this).text("Atualizado");
@@ -321,7 +320,7 @@ $(document).ready(function(){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });                    
                     }else{
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').html("");                        
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
     
