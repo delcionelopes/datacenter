@@ -63,7 +63,8 @@
 </div>
 
 <!--index-->
-
+@auth
+@if(!(auth()->user()->inativo))
 <div class="container py-5">   
     <div id="success_message"></div>    
 
@@ -117,6 +118,10 @@
     </div>        
     
 </div> 
+@else 
+  <i class="fas fa-lock"></i><b class="title"> USUÁRIO INATIVO OU NÃO LIBERADO! CONTACTE O ADMINISTRADOR.</b>
+@endif
+@endauth
 <!--End Index-->
 @stop
 

@@ -248,6 +248,8 @@
 </div>
 <!--Fim EditVMModal-->
 <!--index-->
+@auth
+@if(!(auth()->user()->inativo))
 <div class="container py-5">
     <div id="success_message"></div> 
    
@@ -337,6 +339,10 @@
                 <button type="button" class="fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()"></button>
             </div>
 </div>
+@else 
+<i class="fas fa-lock"></i><b class="title"> USUÁRIO INATIVO OU NÃO LIBERADO! CONTACTE O ADMINISTRADOR.</b>
+@endif
+@endauth
 <!--Fim Index-->
 @stop
 

@@ -34,6 +34,42 @@
                 </span>
             @enderror
         </div>
+        
+        {{-- CPF field --}}
+        <div class="input-group mb-3">
+            <input type="cpf" name="cpf" class="form-control @error('cpf') is-invalid @enderror"
+                value="{{ old('cpf') }}" placeholder="CPF">
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-check"></span>
+                </div>
+            </div>
+
+            @error('cpf')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
+
+         {{-- MATRICULA field --}}
+         <div class="input-group mb-3">
+            <input type="matricula" name="matricula" class="form-control @error('matricula') is-invalid @enderror"
+                value="{{ old('matricula') }}" placeholder="Matrícula">
+
+            <div class="input-group-append">
+                <div class="input-group-text">
+                    <span class="fas fa-file"></span>
+                </div>
+            </div>
+
+            @error('matricula')
+                <span class="invalid-feedback" role="alert">
+                    <strong>{{ $message }}</strong>
+                </span>
+            @enderror
+        </div>
 
         {{-- Email field --}}
         <div class="input-group mb-3">

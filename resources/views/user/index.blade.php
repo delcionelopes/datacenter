@@ -179,14 +179,14 @@
                         <td>{{$user->id}}</td>
                         <td>{{$user->name}}</td>
                         @if($user->moderador)
-                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="0" class="moderador_user fas fa-check" style="background: transparent; color: green; border: none;"></button></td>
+                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="0" class="moderador_user fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>
                         @else
-                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="1" class="moderador_user fas fa-close" style="background: transparent; color: red; border: none;"></button></td>
+                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="1" class="moderador_user fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>
                         @endif
                         @if($user->inativo)
-                        <td id="inativo{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-inativo="false" class="inativo_user fas fa-close" style="background: transparent; color: red; border: none;"></button></td>
+                        <td id="inativo{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-inativo="false" class="inativo_user fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>
                         @else
-                        <td id="inativo{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-inativo="true" class="inativo_user fas fa-check" style="background: transparent; color: green; border: none;"></button></td>
+                        <td id="inativo{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-inativo="true" class="inativo_user fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>
                         @endif                       
                         <td>
                             <div class="btn-group">
@@ -208,7 +208,7 @@
       
 </div>
 @else 
-  <h1><b class="title">VOCÊ NÃO É ADMINISTRADOR!</b></h1>
+  <i class="fas fa-lock"></i> <b class="title"> VOCÊ NÃO É UM ADMINISTRADOR!</b>
 @endif
 @endauth
 <!--Fim Index-->
@@ -387,14 +387,14 @@ $('#EditUserModal').on('shown.bs.modal',function(){
                         limita2 = '<td id="moderador'+response.user.id+'"><button type="button"\
                                    data-id="'+response.user.id+'" \
                                    data-moderador="0" \
-                                   class="moderador_user fas fa-check"\
+                                   class="moderador_user fas fa-lock"\
                                    style="background: transparent; color: green; border: none;">\
                                    </button></td>';
                         }else{
                         limita3 = '<td id="moderador'+response.user.id+'"><button type="button" \
                                    data-id="'+response.user.id+'" \
                                    data-moderador="1" \
-                                   class="moderador_user fas fa-close" \
+                                   class="moderador_user fas fa-lock-open" \
                                    style="background: transparent; color: red; border: none;">\
                                    </button></td>';
                         }
@@ -402,14 +402,14 @@ $('#EditUserModal').on('shown.bs.modal',function(){
                         limita4 = '<td id="inativo'+response.user.id+'"><button type="button" \
                                   data-id="'+response.user.id+'" \
                                   data-inativo="false" \
-                                  class="inativo_user fas fa-close" \
+                                  class="inativo_user fas fa-lock" \
                                   style="background: transparent; color: red; border: none;">\
                                   </button></td>';
                         }else{
                         limita5 = '<td id="inativo'+response.user.id+'"><button type="button" \
                                    data-id="'+response.user.id+'" \
                                    data-inativo="true" \
-                                   class="inativo_user fas fa-check" \
+                                   class="inativo_user fas fa-lock-open" \
                                    style="background: transparent; color: green; border: none;">\
                                    </button></td>';
                         }
@@ -503,14 +503,14 @@ $('#EditUserModal').on('shown.bs.modal',function(){
                         limita2 = '<td id="moderador'+response.user.id+'"><button type="button"\
                                    data-id="'+response.user.id+'" \
                                    data-moderador="0" \
-                                   class="moderador_user fas fa-check"\
+                                   class="moderador_user fas fa-lock"\
                                    style="background: transparent; color: green; border: none;">\
                                    </button></td>';
                         }else{
                         limita3 = '<td id="moderador'+response.user.id+'"><button type="button" \
                                    data-id="'+response.user.id+'" \
                                    data-moderador="1" \
-                                   class="moderador_user fas fa-close" \
+                                   class="moderador_user fas fa-lock-open" \
                                    style="background: transparent; color: red; border: none;">\
                                    </button></td>';
                         }
@@ -518,14 +518,14 @@ $('#EditUserModal').on('shown.bs.modal',function(){
                         limita4 = '<td id="inativo'+response.user.id+'"><button type="button" \
                                   data-id="'+response.user.id+'" \
                                   data-inativo="false" \
-                                  class="inativo_user fas fa-close" \
+                                  class="inativo_user fas fa-lock" \
                                   style="background: transparent; color: red; border: none;">\
                                   </button></td>';
                         }else{
                         limita5 = '<td id="inativo'+response.user.id+'"><button type="button" \
                                    data-id="'+response.user.id+'" \
                                    data-inativo="true" \
-                                   class="inativo_user fas fa-check" \
+                                   class="inativo_user fas fa-lock-open" \
                                    style="background: transparent; color: green; border: none;">\
                                    </button></td>';
                         }
@@ -575,14 +575,14 @@ $(document).on('click','.moderador_user',function(e){
                         limita1 = '<td id="moderador'+response.user.id+'"><button type="button"\
                                    data-id="'+response.user.id+'" \
                                    data-moderador="0" \
-                                   class="moderador_user fas fa-check"\
+                                   class="moderador_user fas fa-lock\
                                    style="background: transparent; color: green; border: none;">\
                                    </button></td>';
                                 }else{
                         limita2 = '<td id="moderador'+response.user.id+'"><button type="button" \
                                    data-id="'+response.user.id+'" \
                                    data-moderador="1" \
-                                   class="moderador_user fas fa-close" \
+                                   class="moderador_user fas fa-lock-open" \
                                    style="background: transparent; color: red; border: none;">\
                                    </button></td>';
                                 }
@@ -617,14 +617,14 @@ $(document).on('click','.moderador_user',function(e){
                         limita1 = '<td id="inativo'+response.user.id+'"><button type="button" \
                                   data-id="'+response.user.id+'" \
                                   data-inativo="false" \
-                                  class="inativo_user fas fa-close" \
+                                  class="inativo_user fas fa-lock" \
                                   style="background: transparent; color: red; border: none;">\
                                   </button></td>';
                         }else{
                         limita1 = '<td id="inativo'+response.user.id+'"><button type="button" \
                                    data-id="'+response.user.id+'" \
                                    data-inativo="true" \
-                                   class="inativo_user fas fa-check" \
+                                   class="inativo_user fas fa-lock-open" \
                                    style="background: transparent; color: green; border: none;">\
                                    </button></td>';
                         }
