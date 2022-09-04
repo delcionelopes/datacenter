@@ -238,7 +238,8 @@
                     success:function(response){
                         if(response.status==200){
                             //remove a tr da table html
-                            $('#app'+id).remove();                            
+                            $('#app'+id).remove();
+                            $('#success_message').html('<div id="success_message"></div>');
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
                         }
@@ -258,6 +259,7 @@
         var id = $(this).data("id");
         $('#editform').trigger('reset');
         $('#EditAppModal').modal('show');    
+        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -386,20 +388,22 @@
                 success:function(response){
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
                         $('#updateform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#updateform_errList').append('<li>'+err_values+'</li>');
                         });
                         $(this).value("Atualizado");
                     }else if(response.status==404){
-                        $('#updateform_errList').html("");                        
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');  
+                        $('#success_message').html('<div id="success_message"></div>');                      
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $(this).text('Atualizado');
                     }else{
                         //atualizando a tr da table html
-                        $('#updateform_errList').html("");                        
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');         
+                        $('#success_message').html('<div id="success_message"></div>');               
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
                         $(this).text('Atualizado');
@@ -447,6 +451,7 @@
             $('#add_base_id').val($(this).data("id"));
             $('#add_nome_base').html('<Label id="add_nome_base" style="font-style:italic;">'+labelHtml+'</Label>');
             $('#add_nome_vm').html('<Label id="add_nome_vm" style="font-style:italic;">'+labelHtmlVm+'</Label>');
+            $('#saveform_errList').html('<ul id="saveform_errList"></ul>'); 
         });
         //fim exibição do form AddAppModal
         //inicio do envio novo registro
@@ -482,13 +487,14 @@
                 success:function(response){
                     //erros
                     if(response.status==400){
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
                         $('#saveform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });
                     }else{
-                        $('#saveform_errList').html("");                        
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');     
+                        $('#success_message').html('<div id="success_message"></div>');                   
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
     

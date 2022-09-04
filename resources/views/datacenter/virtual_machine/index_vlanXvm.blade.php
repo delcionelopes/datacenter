@@ -369,10 +369,12 @@ $(document).ready(function(){
                         success:function(response){
                             if(response.status==200){
                                 //remove a linha tr da table html
-                                $('#vm'+id).remove();                                
+                                $('#vm'+id).remove();
+                                $('#success_message').html('<div id="success_message"></div>');
                                 $('#success_message').addClass('alert alert-success');
                                 $('#success_message').text(response.message);
-                            }else{                                
+                            }else{
+                                $('#success_message').html('<div id="success_message"></div>');
                                 $('#success_message').addClass('alert alert-danger');
                                 $('#success_message').text(response.message);
                             }
@@ -392,6 +394,7 @@ $(document).ready(function(){
             var id = $(this).data("id");        
             $('#editform').trigger('reset');
             $('#EditVirtualMachineModal').modal('show');
+            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
     
             $.ajaxSetup({
                 headers:{
@@ -537,19 +540,21 @@ $(document).ready(function(){
                 success:function(response){
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
                         $('#updateform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
                             $('#updateform_errList').append('<li>'+err_values+'</li>');
                         });
                         $(this).text("Atualizado");
                     }else if(response.status==404){
-                        $("#updateform_errList").html("");                        
+                        $("#updateform_errList").html('<ul id="updateform_errList"></ul>');        
+                        $('#success_message').html('<div id="success_message"></div>');                
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $(this).text("Atualizado");
                     }else{
-                        $('#updateform_errList').html("");                        
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');        
+                        $('#success_message').html('<div id="success_message"></div>');                
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
                         $(this).text("Atualizado");
@@ -613,6 +618,7 @@ $(document).ready(function(){
             $('#addform').trigger('reset');
             $('#AddVirtualMachineModal').modal('show');
             $('#add_cluster_id').val($(this).data("id"));
+            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
         });
         //fim exibe form de adição da VirtualMachine
         //Início da adição da VirtualMachine
@@ -651,7 +657,7 @@ $(document).ready(function(){
                 success: function(response){
                     if(response.status==400){
                         //erros
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
                         $('#saveform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
@@ -659,7 +665,8 @@ $(document).ready(function(){
                         $(this).text("Adicionado!");
                     }else{
                         //sucesso na operação
-                        $('#saveform_errList').html("");                        
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
+                        $('#success_message').html('<div id="success_message"></div>');                    
                         $('#success_message').addClass("alert alert-success");
                         $('$success_message').text(response.message);
                         $('#addform').trigger('reset');
@@ -746,6 +753,7 @@ $(document).ready(function(){
             $('#AddBaseModal').modal('show');
             $('#add_vm_id').val($(this).data("id"));
             $('#label_nome_vm').html('<Label id="label_nome_vm" style="font-style:italic;">'+labelHtml+'</Label>');
+            $('#saveformbase_errList').html('<ul id="saveformbase_errList"></ul>');
     
         });
         //Fim exibe nova base de dados caso não possua nenhuma
@@ -773,13 +781,14 @@ $(document).ready(function(){
                 data:data,
                 success:function(response){
                     if(response.status==400){
-                        $('#saveformbase_errList').html("");
+                        $('#saveformbase_errList').html('<ul id="saveformbase_errList"></ul>');
                         $('#saveformbase_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveformbase_errList').append('<li>'+err_values+'</li>');
                         });
                     }else{
-                        $('#saveformbase_errList').html("");                        
+                        $('#saveformbase_errList').html('<ul id="saveformbase_errList"></ul>');    
+                        $('#success_message').html('<div id="success_message"></div>');                  
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);                                        
     

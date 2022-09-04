@@ -103,7 +103,7 @@
             </div>
             <div class="modal-body form-horizontal">
                 <form id="uploadmyform" name="uploadmyform" class="form-horizontal" role="form" enctype="multipart/form-data">
-                    <ul id="updateform_errList"></ul>                    
+                    <ul id="uploadform_errList"></ul>                    
                    <!--arquivo pdf-->
                    <div class="form-group mb-3">                                                
                        <label for="">Arquivo PDF</label>                        
@@ -221,10 +221,12 @@
                         success:function(response){
                             if(response.status==200){
                                 //remove tr correspondente na tabela html
-                                $('#man'+id).remove();                              
+                                $('#man'+id).remove();   
+                                $('#success_message').html('<div id="success_message"></div>');
                                 $('#success_message').addClass('alert alert-success');
                                 $('#success_message').text(response.message);         
-                            }else{                           
+                            }else{            
+                                $('#success_message').html('<div id="success_message"></div>');               
                                 $('#success_message').addClass('alert alert-danger');
                                 $('#success_message').text(response.message);         
                             }
@@ -241,6 +243,7 @@
             var id = $(this).data("id");
             $('#editmyform').trigger('reset');
             $('#EditManualForm').modal('show');
+            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');    
     
             $.ajaxSetup({
                         headers:{
@@ -309,19 +312,21 @@
                 success:function(response){            
                     if(response.status==400){
                     //erros
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
                         $('#updateform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
                         $('#updateform_errList').append('<li>'+err_values+'</li>');
                         });  
                         $('.update_manual').text("Atualizado");
                     }else if(response.status==404){
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
+                        $('#success_message').html('<div id="success_message"></div>');
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $('.update_manual').text("Atualizado");
                     }else{
-                        $('#updateform_errList').html("");                        
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');          
+                        $('#success_message').html('<div id="success_message"></div>');            
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
                         $('.update_manual').text("Atualizado");
@@ -356,6 +361,7 @@
             e.preventDefault();
             $('#myform').trigger('reset');
             $('#AddManualForm').modal('show');
+            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
         });//fim exibição do form AddManualForm
     
         //inicio do envio do novo registro para o controller
@@ -380,13 +386,14 @@
                 success:function(response){
                     if(response.status==400){
                         //erros
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
                         $('#saveform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });                    
                     }else{                    
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
+                        $('#success_message').html('<div id="success_message"></div>');
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
     
@@ -490,7 +497,8 @@
             var id = $(this).data("manualid");        
     
             $('#uploadmyform').trigger('reset');
-            $('#uploadPDFModal').modal('show');                        
+            $('#uploadPDFModal').modal('show');       
+            $('#uploadform_errList').html('<ul id="uploadform_errList"></ul>');                  
             $.ajaxSetup({
                         headers:{
                             'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
@@ -538,7 +546,8 @@
             async:true,                                                                                   
             success: function(response){                              
                   if(response.status==200){     
-                      $('#updateform_errList').html("");                      
+                      $('#uploadform_errList').html('<ul id="uploadform_errList"></ul>');    
+                      $('#success_message').html('<div id="success_message"></div>');                  
                       $('#success_message').addClass('alert alert-success');
                       $('#success_message').text(response.message);           
                       $('#uploadmyform').trigger('reset');

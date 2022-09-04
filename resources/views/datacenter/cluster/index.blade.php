@@ -332,12 +332,14 @@ $(document).ready(function(){
                     success:function(response){
                         if(response.status==200){                        
                             //remove linha correspondente da tabela html
-                            $("#cluster"+id).remove();                            
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);         
-                        }else{                            
+                            $("#cluster"+id).remove();        
+                            $('#success_message').html('<div id="success_message"></div>');
+                            $('#success_message').addClass('alert alert-success');                            
+                            $('#success_message').text(response.message);                             
+                        }else{                    
+                            $('#success_message').html('<div id="success_message"></div>');
                             $('#success_message').addClass('alert alert-danger');
-                            $('#success_message').text(response.message);         
+                            $('#success_message').text(response.message);                           
                         }
                     }
                 });            
@@ -351,7 +353,8 @@ $(document).ready(function(){
             
             var id = $(this).data("id");                                   
             $('#myform').trigger('reset');
-            $('#EditClusterModal').modal('show');                
+            $('#EditClusterModal').modal('show');    
+            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');             
     
             $.ajaxSetup({
                     headers:{
@@ -402,7 +405,7 @@ $(document).ready(function(){
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
                         $('#updateform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#updateform_errList').append('<li>'+err_values+'</li>');
@@ -411,13 +414,15 @@ $(document).ready(function(){
                         $('.update_cluster').text("Atualizado");
     
                     } else if(response.status==404){
-                        $('#updateform_errList').html("");                        
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
+                        $('#success_message').html('<div id="success_message"></div>');                     
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $('.update_cluster').text("Atualizado");
     
                     } else {
-                        $('#updateform_errList').html("");                        
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>'); 
+                        $('#success_message').html('<div id="success_message"></div>');                    
                         $('#success_message').addClass("alert alert-success");
                         $('#success_message').text(response.message);
                         $('.update_cluster').text("Atualizado");                    
@@ -444,6 +449,7 @@ $(document).ready(function(){
             e.preventDefault();             
             $('#myform').trigger('reset');        
             $('#AddClusterModal').modal('show');           
+            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');   
         });   
     
         //fim exibe form de adição de registro
@@ -465,13 +471,14 @@ $(document).ready(function(){
                 data: data,                  
                 success: function(response){
                     if(response.status==400){
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
                         $('#saveform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });
                     } else {
-                        $('#saveform_errList').html("");                        
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');      
+                        $('#success_message').html('<div id="success_message"></div>');                 
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);                                        
     
@@ -527,6 +534,7 @@ $(document).ready(function(){
             $('#AddHostModal').modal('show');                                       
             $('.cluster').val(($(this).data("nomecluster")).trim());
             $('#add_cluster_id').val($(this).data("id"));
+            $('#saveformHost_errList').html('<ul id="saveformHost_errList"></ul>');
         });
         //Fim Novo Host do cluster caso não possua nenhum
     
@@ -551,13 +559,14 @@ $(document).ready(function(){
                 data: data,                  
                 success: function(response){
                     if(response.status==400){
-                        $('#saveformHost_errList').html("");
+                        $('#saveformHost_errList').html('<ul id="saveformHost_errList"></ul>');
                         $('#saveformHost_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveformHost_errList').append('<li>'+err_values+'</li>');
                         });
                     } else {
-                        $('#saveformHost_errList').html("");                        
+                        $('#saveformHost_errList').html('<ul id="saveformHost_errList"></ul>');
+                        $('#success_message').html('<div id="success_message"></div>');                   
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);                                        
     
@@ -608,6 +617,7 @@ $(document).ready(function(){
             $('#AddVirtualMachineModal').modal('show');
             $('#vm_add_cluster_id').val($(this).data("id"));
             $('#vm_nome_cluster').html('<Label id="vm_nome_cluster" style="font-style:italic;">'+labelHtml+'</Label>');
+            $('#vm_saveform_errList').html('<ul id="vm_saveform_errList"></ul>'); 
 
         });
         ///Fim Nova VM do cluster caso não possua nenhuma
@@ -647,7 +657,7 @@ $(document).on('click','.add_virtualmachine',function(e){
                 success: function(response){
                     if(response.status==400){
                         //erros
-                        $('#vm_saveform_errList').html("");
+                        $('#vm_saveform_errList').html('<ul id="vm_saveform_errList"></ul>');
                         $('#vm_saveform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
                             $('#vm_saveform_errList').append('<li>'+err_values+'</li>');
@@ -655,7 +665,8 @@ $(document).on('click','.add_virtualmachine',function(e){
                         $(this).text("Adicionado!");
                     }else{
                         //sucesso na operação
-                        $('#vm_saveform_errList').html("");                        
+                        $('#vm_saveform_errList').html('<ul id="vm_saveform_errList"></ul>'); 
+                        $('#success_message').html('<div id="success_message"></div>');                   
                         $('#success_message').addClass("alert alert-success");
                         $('$success_message').text(response.message);
                         $('#vm_addform').trigger('reset');

@@ -159,7 +159,8 @@
                         success:function(response){
                             if(response.status==200){
                             //remove a tr correspondente da tabela html
-                            $('#sub'+id).remove();                            
+                            $('#sub'+id).remove();          
+                            $('#Success_message').html('<div id="success_message"></div>');
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);         
                             }
@@ -179,7 +180,8 @@
             
             var id = $(this).data("id");                       
             $('#myform').trigger('reset');
-            $('#EditSub_Area_Conhecimento').modal('show');                        
+            $('#EditSub_Area_Conhecimento').modal('show');     
+            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');                   
     
             $.ajaxSetup({
                     headers:{
@@ -243,20 +245,20 @@
                     success:function(response){
                         if(response.status==400){
                             //erros
-                            $('#updateform_errList').innerHtml = "";
+                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
                             $('#updateform_errList').addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
                                 $('#updateform_errList').append('<li>'+err_values+'</li');
                             });                        
                         }else if(response.status==404){
-                            $('#updateform_errList').innerHtml = "";
-                            $('#success_message').innerHtml = "";
+                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
+                            $('#Success_message').html('<div id="success_message"></div>');
                             $('#success_message').addClass('alert alert-warning');
                             $('#success_message').text(response.message);
                             $('.update_sub_area_conhecimento').text("Atualizado");
                         }else{
-                            $('#updateform_errList').innerHtml = "";
-                            $('#success_message').innerHtml = "";
+                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
+                            $('#Success_message').html('<div id="success_message"></div>');
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
                             $('.update_sub_area_conhecimento').text("Atualizado");
@@ -295,6 +297,7 @@
     
             $('#myform').trigger('reset');
             $('#AddSub_Area_Conhecimento').modal('show');
+            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
     
         });
         //fim exibição da adição do novo registro
@@ -317,13 +320,14 @@
                     success:function(response){
                         if(response.status==400){
                             //erros
-                            $('#saveform_errList').html("");
+                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
                             $('#saveform_errList').addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
                                 $('#saveform_errList').append('<li>'+err_values+'</li>');
                             });
                         }else{
-                            $('#saveform_errList').html("");                            
+                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
+                            $('#Success_message').html('<div id="success_message"></div>');                          
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
     

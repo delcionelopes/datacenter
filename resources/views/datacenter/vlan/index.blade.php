@@ -198,10 +198,12 @@ $(document).ready(function(){
                     success:function(response){
                         if(response.status==200){                        
                             //remove linha correspondente da tabela html
-                            $("#vlan"+id).remove();                            
+                            $("#vlan"+id).remove();           
+                            $('#success_message').html('<div id="success_message"></div>');
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);         
-                        }else{                            
+                        }else{                          
+                            $('#success_message').html('<div id="success_message"></div>');  
                             $('#success_message').addClass('alert alert-danger');
                             $('#success_message').text(response.message);         
                         }
@@ -218,7 +220,8 @@ $(document).ready(function(){
             
             var id = $(this).data("id");                                   
             $('editform').trigger('reset');
-            $('#EditVlanModal').modal('show');                
+            $('#EditVlanModal').modal('show');
+            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');                   
     
             $.ajaxSetup({
                     headers:{
@@ -262,7 +265,7 @@ $(document).ready(function(){
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
                         $('#updateform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#updateform_errList').append('<li>'+err_values+'</li>');
@@ -271,13 +274,15 @@ $(document).ready(function(){
                         $('.update_vlan').text("Atualizado");
     
                     } else if(response.status==404){
-                        $('#updateform_errList').html("");                        
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');    
+                        $('#success_message').html('<div id="success_message"></div>');                     
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $('.update_vlan').text("Atualizado");
     
                     } else {
-                        $('#updateform_errList').html("");                        
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');        
+                        $('#success_message').html('<div id="success_message"></div>');                  
                         $('#success_message').addClass("alert alert-success");
                         $('#success_message').text(response.message);
                         $('.update_vlan').text("Atualizado");                    
@@ -303,7 +308,8 @@ $(document).ready(function(){
             e.preventDefault();       
             
             $('#addform').trigger('reset');
-            $('#AddVlanModal').modal('show');                        
+            $('#AddVlanModal').modal('show');  
+            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');                      
     
         });
     
@@ -325,13 +331,14 @@ $(document).ready(function(){
                 dataType: 'json',
                 success: function(response){
                     if(response.status==400){
-                        $('#saveform_errList').html("");
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
                         $('#saveform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });
                     } else {
-                        $('#saveform_errList').html("");                        
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');              
+                        $('#success_message').html('<div id="success_message"></div>');            
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);                                        
     
@@ -376,6 +383,7 @@ $(document).ready(function(){
             $('#addredeform').trigger('reset');
             $('#AddRedeModal').modal('show');
             $('#add_vlan_id').val($(this).data("id"));
+            $('#saveformrede_errList').html('<ul id="saveformrede_errList"></ul>');
         });
         //Fim exibe nova rede do VLAN caso não possua nenhuma
         //Inicio adiciona nova rede no vlan
@@ -397,13 +405,14 @@ $(document).ready(function(){
                 data:data,
                 success:function(response){
                     if(response.status==400){
-                        $('#saveformrede_errList').html("");
+                        $('#saveformrede_errList').html('<ul id="saveformrede_errList"></ul>');
                         $('#saveformrede_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveformrede_errList').append('<li>'+err_values+'</li>');
                         });
                     }else{
-                        $('#saveformrede_errList').html("");                        
+                        $('#saveformrede_errList').html('<ul id="saveformrede_errList"></ul>');    
+                        $('#success_message').html('<div id="success_message"></div>');                   
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);                                        
     

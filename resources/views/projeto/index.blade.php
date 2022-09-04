@@ -142,10 +142,12 @@
                     success:function(response){
                         if(response.status==200){
                             //remove a linha correspondente da tabela html
-                            $("#projeto"+id).remove();                            
+                            $("#projeto"+id).remove();      
+                            $('#success_message').html('<div id="success_message"></div>');
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);         
-                        }else{                            
+                        }else{                          
+                            $('#success_message').html('<div id="success_message"></div>');  
                             $('#success_message').addClass('alert alert-danger');
                             $('#success_message').text(response.message);  
                         }
@@ -164,6 +166,7 @@
             var id = $(this).data("id");             
             $('#myform').trigger('reset');
             $('#EditProjetoModal').modal('show');
+            $('#updateform_errList').html('<ul id="updateform_errList"></ul>'); 
     
             $.ajaxSetup({
                     headers:{
@@ -203,18 +206,20 @@
                     success:function(response){
                         if(response.status==400){
                             //erros
-                            $('#updateform_errList').html("");
+                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
                             $('#updateform_errList').addClass('alert alert-danger');
                             $.each(reponse.errors,function(key,err_values){
                                 $('#updateform_errList').append('<li>'+err_values+'</li>');
                             });
                         }else if(response.status==404){
-                            $('#updateform_errList').html("");                            
+                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');    
+                            $('#success_message').html('<div id="success_message"></div>');                        
                             $('#success_message').addClass('alert alert-warning');
                             $('#success_message').text(response.message);
                             $('.update_projeto').text("Atualizado");
                         }else{
-                            $('#updataform_errList').html("");
+                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
+                            $('#success_message').html('<div id="success_message"></div>');
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
                             $('.update_projeto').text("Atualizado");
@@ -249,7 +254,8 @@
             e.preventDefault();       
             
             $('#myform').trigger('reset');
-            $('#AddProjetoModal').modal('show');                
+            $('#AddProjetoModal').modal('show');               
+            $('#saveform_errList').html('<ul id="saveform_errList"></ul>'); 
     
         });
     
@@ -272,13 +278,14 @@
                     dataType:'json',
                     success:function(response){
                         if(response.status==400){
-                            $('#saveform_errList').html("");
+                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
                             $('#saveform_errList').addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
                                 $('#saveform_errList').append('<li>'+err_values+'</li>');
                             });
                         }else{
-                            $('#saveform_errList').html("");
+                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
+                            $('#success_message').html('<div id="success_message"></div>');
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
     

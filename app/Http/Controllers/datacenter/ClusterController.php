@@ -161,7 +161,8 @@ class ClusterController extends Controller
                     $cluster->virtual_machines()->detach($vms);
                 }
                 $status = 200;
-                $message = $cluster->nome_cluster.' foi excluído com sucesso!';
+                $nomecluster = $cluster->nome_cluster;
+                $message = $nomecluster.' foi excluído com sucesso!';
                 $cluster->delete();
             }else{
                 $status = 400;
@@ -169,13 +170,14 @@ class ClusterController extends Controller
             }
         }else{
             $status = 200;
-            $message = $cluster->nome_cluster.' foi excluído com sucesso!';
+            $nomecluster = $cluster->nome_cluster;
+            $message = $nomecluster.' foi excluído com sucesso!';
             $cluster->delete();
         }
         
         return response()->json([
             'status'  => $status,
-            'mensage' => $message,
+            'message' => $message,
         ]);
     }
 

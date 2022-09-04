@@ -172,10 +172,12 @@ $(document).ready(function(){
                         success:function(response){
                             if(response.status==200){
                                 //remove a linha tr da table html
-                                $('#host'+id).remove();                                
+                                $('#host'+id).remove();  
+                                $('#success_message').html('<div id="success_message"></div>');
                                 $('#success_message').addClass('alert alert-success');
                                 $('#success_message').text(response.message);
-                            }else{                                
+                            }else{               
+                                $('#success_message').html('<div id="success_message"></div>');                 
                                 $('#success_message').addClass('alert alert-danger');
                                 $('#success_message').text(response.message);
                             }
@@ -195,6 +197,7 @@ $(document).ready(function(){
             var id = $(this).data("id");        
             $('#editform').trigger('reset');
             $('#EditHostModal').modal('show');
+            $('#updateform_errList').html('<ul id="updateform_errList"></ul>'); 
     
             $.ajaxSetup({
                 headers:{
@@ -249,19 +252,21 @@ $(document).ready(function(){
                 success:function(response){
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html("");
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
                         $('#updateform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
                             $('#updateform_errList').append('<li>'+err_values+'</li>');
                         });
                         $(this).text("Atualizado");
                     }else if(response.status==404){
-                        $("#updateform_errList").html("");                        
+                        $("#updateform_errList").html('<ul id="updateform_errList"></ul>');  
+                        $('#success_message').html('<div id="success_message"></div>');                      
                         $('#success_message').addClass('alert alert-warning');
                         $('#success_message').text(response.message);
                         $(this).text("Atualizado");
                     }else{
-                        $('#updateform_errList').html("");                        
+                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');     
+                        $('#success_message').html('<div id="success_message"></div>');                   
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
                         $(this).text("Atualizado");
@@ -298,6 +303,7 @@ $(document).ready(function(){
             $('#addform').trigger('reset');
             $('#AddHostModal').modal('show');
             $('#add_cluster_id').val($(this).data("id"));
+            $('#saveform_errList').html('<ul id="saveform_errList"></ul>'); 
         });
         //fim exibe form de adição de host
         //inicio da adição de host
@@ -320,13 +326,14 @@ $(document).ready(function(){
                 data: data,
                 success:function(response){                
                     if(response.status==400){
-                        $('#saveform_errList').html("");                        
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');                        
                         $('#saveform_errList').addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });                    
                     }else{
-                        $('#saveform_errList').html("");                        
+                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');      
+                        $('#success_message').html('<div id="success_message"></div>');                  
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);
     

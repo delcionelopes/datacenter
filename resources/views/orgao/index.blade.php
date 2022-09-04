@@ -80,7 +80,7 @@
 <!--index-->
 
 <div class="container py-5">
-    <div id="success-message"></div>
+    <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
                 <form action="{{route('admin.orgao.index')}}" class="form-search" method="GET">
                     <div class="col-sm-12">
@@ -161,11 +161,13 @@
                     success:function(response){
                         if(response.status==200){                           
                             //remove a linha correspondente da tabela html
-                            $("#orgao"+id).remove();                           
+                            $("#orgao"+id).remove();    
+                            $('#success_message').html('<div id="success_message"></div>');
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
                         }else{
-                            //O registro não pôde ser excluído                           
+                            //O registro não pôde ser excluído      
+                            $('#success_message').html('<div id="success_message"></div>');                    
                             $('#success_message').addClass('alert alert-danger');
                             $('#success_message').text(response.message);
                         }
@@ -185,6 +187,7 @@
         var id = $(this).data("id");
         $('#myform').trigger('reset');
         $('#EditOrgaoModal').modal('show');
+        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');     
     
         $.ajaxSetup({
                     headers:{
@@ -233,19 +236,21 @@
                     success:function(response){
                         if(response.status==400){
                             //erros
-                            $('#updateform_errList').html("");
+                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
                             $('#updateform_errList').addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
                                 $('#updateform_errList').append('<li>'+err_values+'</li>');
                             });
                             $('.update_orgao').text("Atualizado");
                         }else if(response.status==404){
-                            $('#updateform_errList').html("");                            
+                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');   
+                            $('#success_message').html('<div id="success_message"></div>');                         
                             $('#success_message').addClass('alert alert-warning');
                             $('#success_message').text(response.message);
                             $('.update_orgao').text("Atualizado");
                         }else{  
-                            $('#updateform_errList').html("");                            
+                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');        
+                            $('#success_message').html('<div id="success_message"></div>');                    
                             $('#sucess_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
                             $('.update_orgao').text("Atualizado");
@@ -280,7 +285,8 @@
             e.preventDefault();        
                                            
             $('#myform').trigger('reset');
-            $('#AddOrgaoModal').modal('show');                
+            $('#AddOrgaoModal').modal('show');         
+            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');        
     
         });
     
@@ -305,13 +311,14 @@
                     cache: false, 
                     success: function(response){
                         if(response.status==400){
-                            $('#saveform_errList').html("");
+                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
                             $('#saveform_errList').addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
                                 $('#saveform_errList').append('<li>'+err_values+'</li>');                            
                             });
                         }else{
-                            $('#saveform_errList').html("");                            
+                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');   
+                            $('#success_message').html('<div id="success_message"></div>');                         
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
     
