@@ -230,9 +230,19 @@ $(document).ready(function(){
         var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var id = $(this).data("id");
         var nomeusuario = ($(this).data("nomeusuario")).trim();
-        var resposta = confirm("Deseja excluir "+nomeusuario+"?");
 
-        if(resposta==true){           
+        Swal.fire({
+                title:nomeusuario,
+                text: "Deseja excluir?",
+                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){            
             $.ajax({
                 url:'delete-user/'+id,
                 type:'POST',
@@ -250,10 +260,13 @@ $(document).ready(function(){
                         $('#success_message').addClass("alert alert-success");
                         $('#success_message').text(response.message);
                     }
-                }
-            });
-        }
-    });
+                    } 
+                });
+            }                                       
+        
+        });                        
+        
+        });
     //fim delete usuário
 //Início chamada EditUserModal
 $('#EditUserModal').on('shown.bs.modal',function(){

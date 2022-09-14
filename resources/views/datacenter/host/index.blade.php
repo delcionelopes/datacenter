@@ -23,7 +23,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" class="ip form-control">
+                        <input type="text" class="ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Cluster</label>
@@ -64,7 +64,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" id="edit_ip" class="ip form-control">
+                        <input type="text" id="edit_ip" class="ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Cluster</label>
@@ -164,8 +164,18 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
             var nomedatacenter = ($(this).data("nomedatacenter")).trim();
-            var resposta = confirm("Deseja excluir "+nomedatacenter+"?")                     
-                if(resposta==true){                               
+            Swal.fire({
+                title:nomedatacenter,
+                text: "Deseja excluir?",
+                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){                                     
                     $.ajax({
                         url:'/datacenter/delete-host/'+id,
                         type:'POST',                    
@@ -187,10 +197,13 @@ $(document).ready(function(){
                                 $('#success_message').addClass('alert alert-danger');
                                 $('#success_message').text(response.message);
                             }
-                        }
-                    });
-                }         
-        });
+                    } 
+                });
+            }                                       
+        
+        });                        
+        
+        }); 
         //fim delete host
         //Inicio Exibe EditHostModal
         $('#EditHostModal').on('shown.bs.modal',function(){

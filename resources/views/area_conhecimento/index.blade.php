@@ -132,8 +132,18 @@
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");           
             var nomedaarea = ($(this).data("descricao")).trim();
-            var resposta = confirm("Deseja excluir "+nomedaarea+"?");                
-                if(resposta==true){
+            Swal.fire({
+                title:nomedaarea,
+                text: "Deseja excluir?",
+                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){             
                     $.ajax({
                     url:'delete-areaconhecimento/'+id,
                     type:'POST',
@@ -156,9 +166,12 @@
                         $('#success_message').addClass('alert alert-danger');
                         $('#success_message').text(response.message);         
                         }
-                    }              
+                    } 
                 });
-            }
+            }                                       
+        
+        });                        
+        
         });//fim delete area_conhecimento
     
         //Exibe EditArea_ConhecimentoModal

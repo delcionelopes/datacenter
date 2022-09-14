@@ -19,7 +19,7 @@
                     <ul id="saveform_errList"></ul>                    
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" class="ip form-control">
+                        <input type="text" class="ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Status</label>
@@ -52,7 +52,7 @@
                     <input type="hidden" id="edit_ip_id">                    
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" id="edit_ip" class="ip form-control">
+                        <input type="text" id="edit_ip" class="ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Status</label>
@@ -151,8 +151,18 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
             var enderecoip = ($(this).data("enderecoip")).trim();
-            var resposta = confirm("Deseja excluir "+enderecoip+"?");
-                if(resposta==true){                                                    
+            Swal.fire({
+                title:enderecoip,
+                text: "Deseja excluir?",
+                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){                                                      
                     $.ajax({
                         url:'/datacenter/delete-ip/'+id,
                         type:'POST',                    
@@ -170,10 +180,13 @@ $(document).ready(function(){
                                 $('#success_message').addClass('alert alert-success');
                                 $('#success_message').text(response.message);
                             }
-                        }
-                    });
-                }
-        });
+                    } 
+                });
+            }                                       
+        
+        });                        
+        
+        }); 
         //fim delete ip
         //Inicio Exibe EditIPModal
         $('#EditIPModal').on('shown.bs.modal',function(){

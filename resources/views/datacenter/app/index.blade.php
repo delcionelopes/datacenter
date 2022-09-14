@@ -230,8 +230,18 @@
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var id = $(this).data("id");
         var nomeapp = ($(this).data("nomeapp")).trim();
-        var resposta = confirm("Deseja excluir "+nomeapp+"?");
-            if(resposta==true){                
+        Swal.fire({
+                title:nomeapp,
+                text: "Deseja excluir?",
+                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){               
                 $.ajax({
                     url: '/datacenter/delete-app/'+id,
                     type: 'POST',
@@ -249,10 +259,13 @@
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
                         }
-                    }
+                    } 
                 });
-            }        
-    });
+            }                                       
+        
+        });                        
+        
+        });
     ///fim delete app
     
     //inicio exibe EditAppModal

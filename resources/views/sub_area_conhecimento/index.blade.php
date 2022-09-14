@@ -151,8 +151,18 @@
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
             var descricao = ($(this).data("descricao")).trim();
-            var resposta = confirm("Deseja excluir "+descricao+"?");
-                if(resposta == true){
+            Swal.fire({
+                title:descricao,
+                text: "Deseja excluir?",
+                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
                     $.ajax({
                         url:'delete-subareaconhecimento/'+id,
                         type:'POST',
@@ -169,10 +179,13 @@
                             $('#Success_message').html('<div id="success_message"></div>');
                             $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);         
-                            }
-                        }                
-                    });
-                }            
+                        }
+                    } 
+                });
+            }                                       
+        
+        });                        
+        
         });
         //fim delete registro
     

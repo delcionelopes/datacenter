@@ -35,7 +35,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" class="ip form-control">
+                        <input type="text" class="ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Dono</label>
@@ -90,7 +90,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" id="ip" class="edit_ip form-control">
+                        <input type="text" id="ip" class="edit_ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Dono</label>
@@ -208,8 +208,7 @@
                 <thead class="sidebar-dark-primary" style="color: white">
                     <tr>                        
                         <th scope="col">BASE(s)</th>
-                        <th scope="col">IP</th>
-                        <th scope="col">Dono</th>
+                        <th scope="col">IP</th>                        
                         <th scope="col">APP(s)</th>                        
                         <th scope="col">AÇÕES</th>                       
                     </tr>                    
@@ -219,8 +218,7 @@
                     @forelse($bases as $base)
                     <tr id="base{{$base->id}}">                        
                         <th scope="row">{{$base->nome_base}}</th>
-                        <td>{{$base->ip}}</td>
-                        <td>{{$base->dono}}</td>
+                        <td>{{$base->ip}}</td>                        
                         <td>
                         <div class="btn-group">
                         @if($base->apps->count())
@@ -277,8 +275,18 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
             var nomebase = ($(this).data("nomebase")).trim();
-            var resposta = confirm("Deseja excluir "+nomebase+"?");
-                if(resposta==true){                    
+            Swal.fire({
+                title:nomebase,
+                text: "Deseja excluir?",
+                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){                 
                     $.ajax({
                         url: '/datacenter/delete-base/'+id,
                         type: 'POST',
@@ -300,9 +308,12 @@ $(document).ready(function(){
                                 $('#success_message').addClass('alert alert-danger');
                                 $('#success_message').text(response.message);
                             }
-                        }
-                    });
-                }          
+                    } 
+                });
+            }                                       
+        
+        });                        
+        
         });
         //fim delete base
     
@@ -417,7 +428,6 @@ $(document).ready(function(){
                         tupla = '<tr id="base'+response.base.id+'">\
                             <th scope="row">'+response.base.nome_base+'</th>\
                             <td>'+response.base.ip+'</td>\
-                            <td>'+response.base.dono+'</td>\
                             <td>App</td>\
                             <td>\
                                 <div class="btn-group">\
@@ -495,7 +505,6 @@ $(document).ready(function(){
                         linha1 = '<tr id="base'+response.base.id+'">\
                             <th scope="row">'+response.base.nome_base+'</th>\
                             <td>'+response.base.ip+'</td>\
-                            <td>'+response.base.dono+'</td>\
                             <td>App</td>\
                             <td>\
                                 <div class="btn-group">\

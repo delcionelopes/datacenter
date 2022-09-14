@@ -245,9 +245,7 @@
                             <tr>                                
                                 <th scope="col">CLUSTERS</th>
                                 <th scope="col">HOSTS</th>
-                                <th scope="col">VM</th>
-                                <th scope="col">TOTAL DE MEMÓRIA</th>
-                                <th scope="col">TOTAL DE PROCESSADOR</th>                              
+                                <th scope="col">VM</th>                                
                                 <th scope="col">AÇÕES</th>
                             </tr>
                         </thead>
@@ -277,9 +275,7 @@
                                         <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>
                                         @endif
                                     </div>
-                                </td>
-                                <td>{{$cluster->total_memoria}}</td>
-                                <td>{{$cluster->total_processador}}</td>                               
+                                </td>                                                            
                                 <td>                                    
                                         <div class="btn-group">                                           
                                             <button type="button" data-id="{{$cluster->id}}" class="edit_cluster fas fa-edit" style="background:transparent;border:none;"></button>
@@ -323,8 +319,18 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
             var nomecluster = ($(this).data("nomecluster")).trim();
-            var resposta = confirm("Deseja excluir "+nomecluster+"?");
-                if(resposta==true){                
+            Swal.fire({
+                title:nomecluster,
+                text: "Deseja excluir?",
+                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){                    
                 $.ajax({
                     url: 'delete-cluster/'+id,
                     type: 'POST',
@@ -346,9 +352,12 @@ $(document).ready(function(){
                             $('#success_message').addClass('alert alert-danger');
                             $('#success_message').text(response.message);                           
                         }
-                    }
-                });            
-            }    
+                    } 
+                });
+            }                                       
+        
+        });                        
+        
         });  ///fim delete cluster
         $('#EditClusterModal').on('shown.bs.modal',function(){
             $('#edit_nome_cluster').focus();
@@ -507,8 +516,6 @@ $(document).ready(function(){
                                         <button type="button" data-id="'+response.cluster.id+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
                                     </div>\
                                 </td>\
-                                    <td>'+response.cluster.total_memoria+'</td>\
-                                    <td>'+response.cluster.total_processador+'</td>\
                                     <td>\
                                             <div class="btn-group">\
                                                 <button type="button" data-id="'+response.cluster.id+'" class="edit_cluster fas fa-edit" style="background:transparent;border:none;"></button>\

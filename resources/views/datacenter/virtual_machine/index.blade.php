@@ -63,7 +63,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" class="ip form-control">
+                        <input type="text" class="ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Resource Pool</label>
@@ -130,7 +130,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" class="baseip form-control">
+                        <input type="text" class="baseip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Dono</label>
@@ -213,7 +213,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" id="ip" class="ip form-control">
+                        <input type="text" id="ip" class="ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Resource Pool</label>
@@ -277,10 +277,7 @@
                 <thead class="sidebar-dark-primary" style="color: white">
                     <tr>                        
                         <th scope="col">VM</th>
-                        <th scope="col">IP</th>
-                        <th scope="col">CPU</th>
-                        <th scope="col">MEMÓRIA</th>
-                        <th scope="col">DISCO(s)</th>
+                        <th scope="col">IP</th>                       
                         <th scope="col">VLAN(s)</th>
                         <th scope="col">BASE(s)</th>                                         
                         <th scope="col">AÇÕES</th>                       
@@ -291,10 +288,7 @@
                     @forelse($virtualmachines as $vm)
                     <tr id="vm{{$vm->id}}">                        
                         <th scope="row">{{$vm->nome_vm}}</th>
-                        <td>{{$vm->ip}}</td>
-                        <td>{{$vm->cpu}}</td>
-                        <td>{{$vm->memoria}}</td>
-                        <td>{{$vm->disco}}</td>
+                        <td>{{$vm->ip}}</td>                       
                         <td>                            
                         <div class="btn-group">                                
                                 <button type="button" class="btn btn-none dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -361,8 +355,18 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");       
             var nomevm = ($(this).data("vm")).trim();
-            var resposta = confirm("Deseja excluir "+nomevm+"?");
-                if(resposta==true){                               
+            Swal.fire({
+                title:nomevm,
+                text: "Deseja excluir?",
+                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){                                
                     $.ajax({
                         url:'/datacenter/delete-vm/'+id,
                         type:'POST',                    
@@ -384,9 +388,12 @@ $(document).ready(function(){
                                 $('#success_message').addClass('alert alert-danger');
                                 $('#success_message').text(response.message);
                             }
-                        }
-                    });
-                }        
+                    } 
+                });
+            }                                       
+        
+        });                        
+        
         });
         //fim delete vm
         //Inicio Exibe EditVirtualMachineModal
@@ -575,9 +582,6 @@ $(document).ready(function(){
                             linha1 = '<tr id="vm'+response.virtualmachine.id+'">\
                             <th scope="row">'+response.virtualmachine.nome_vm+'</th>\
                             <td>'+response.virtualmachine.ip+'</td>\
-                            <td>'+response.virtualmachine.cpu+'</td>\
-                            <td>'+response.virtualmachine.memoria+'</td>\
-                            <td>'+response.virtualmachine.disco+'</td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" class="btn btn-none dropdown-toggle" data-toggle="dropdown" aria-expanded="false">\
@@ -686,9 +690,6 @@ $(document).ready(function(){
                             linha1 = '<tr id="vm'+response.virtualmachine.id+'">\
                             <th scope="row">'+response.virtualmachine.nome_vm+'</th>\
                             <td>'+response.virtualmachine.ip+'</td>\
-                            <td>'+response.virtualmachine.cpu+'</td>\
-                            <td>'+response.virtualmachine.memoria+'</td>\
-                            <td>'+response.virtualmachine.disco+'</td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" class="btn btn-none dropdown-toggle" data-toggle="dropdown" aria-expanded="false">\
