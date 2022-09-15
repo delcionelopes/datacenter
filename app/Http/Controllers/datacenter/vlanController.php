@@ -69,7 +69,7 @@ class vlanController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(int $id)
     {
         $vlan = $this->vlan->find($id);
         return response()->json([
@@ -78,7 +78,7 @@ class vlanController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {
         $validator = Validator::make($request->all(),[
             'nome_vlan' => 'required|max:100',
@@ -114,7 +114,7 @@ class vlanController extends Controller
 
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $vlan = $this->vlan->find($id);
         $vms = $vlan->virtual_machines;

@@ -17,7 +17,7 @@ class HostController extends Controller
         $this->host = $host;
     }
 
-    public function index(Request $request,$id)
+    public function index(Request $request,int $id)
     {             
         if(is_null($request->pesquisa)){            
             $hosts = $this->host->query()->where('cluster_id','=',$id)->orderByDesc('id')->paginate(6);
@@ -84,7 +84,7 @@ class HostController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(int $id)
     {
         $host = $this->host->find($id);
         return response()->json([
@@ -93,7 +93,7 @@ class HostController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {
         $validator = Validator::make($request->all(),[            
             'ip'          => 'required|max:15',
@@ -138,7 +138,7 @@ class HostController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {             
         $host = $this->host->find($id); 
         $host->delete();        

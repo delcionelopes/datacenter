@@ -69,7 +69,7 @@ class ProjetoController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(int $id)
     {             
         $proj = $this->projeto->find($id);                
 
@@ -80,7 +80,7 @@ class ProjetoController extends Controller
     }
 
     
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {        
         $validator = Validator::make($request->all(),[
             'nome_projeto' => 'required|max:100',
@@ -114,7 +114,7 @@ class ProjetoController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $projeto = $this->projeto->find($id);
         $bases = $projeto->bases;

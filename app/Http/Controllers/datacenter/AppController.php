@@ -26,7 +26,7 @@ class AppController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $id)
+    public function index(Request $request, int $id)
     {
         if(is_null($request->pesquisa)){
             $apps = $this->app->query()->where('base_id','=',$id)->orderByDesc('id')->paginate(6);
@@ -125,7 +125,7 @@ class AppController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $app = $this->app->find($id);
         $projeto = Projeto::find($app->projeto_id);
@@ -149,7 +149,7 @@ class AppController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {
         $validator = Validator::make($request->all(),[
             'bases_id'    => 'required',
@@ -202,7 +202,7 @@ class AppController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $app = $this->app->find($id);        
         $app->delete();
@@ -212,7 +212,7 @@ class AppController extends Controller
         ]);
     }
 
-    public function httpsApp(Request $request, $id)
+    public function httpsApp(Request $request,int $id)
     {           
         $app = $this->app->find($id);  
         $data = ['https' => $request->input('https')];        

@@ -71,7 +71,7 @@ class AmbienteController extends Controller
     }
 
 
-    public function edit($id)    
+    public function edit(int $id)    
     {              
         $a = $this->ambiente->find($id);                    
         
@@ -81,7 +81,7 @@ class AmbienteController extends Controller
     }
 
  
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {     
         
         $validator = Validator::make($request->all(),[
@@ -118,7 +118,7 @@ class AmbienteController extends Controller
     }
 
  
-    public function destroy($id)
+    public function destroy(int $id)
     {        
         $ambiente = $this->ambiente->find($id);
         $vm = $ambiente->virtual_machine;  

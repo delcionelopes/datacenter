@@ -89,7 +89,7 @@ class ManualController extends Controller
         //
     }
 
-    public function edit($id)
+    public function edit(int $id)
     {
         $manual = $this->manual->find($id);
         $area = Area_Conhecimento::find($manual->area_conhecimento_id);
@@ -101,7 +101,7 @@ class ManualController extends Controller
         ]);
     }
     
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {                   
         $validator = Validator::make($request->all(),[
             'area_conhecimento_id' => 'required',
@@ -155,7 +155,7 @@ class ManualController extends Controller
     }
 
     
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $manual = $this->manual->find($id);
         $uploads = $manual->uploads;
@@ -180,7 +180,7 @@ class ManualController extends Controller
         ]);
     }
 
-    public function indexFile($id)
+    public function indexFile(int $id)
     {
         $uploadsManual = Upload::query('upload')
                          ->where('manual_id',$id)
@@ -191,7 +191,7 @@ class ManualController extends Controller
         ]);
     }
 
-    public function editFileUpload($id){   
+    public function editFileUpload(int $id){   
         $manual = $this->manual->find($id);        
         return response()->json([
             'status' => 200,
@@ -199,7 +199,7 @@ class ManualController extends Controller
         ]);
     }
 
-    public function upload(Request $request,$id)
+    public function upload(Request $request,int $id)
     {                           
          $manual = $this->manual->find($id);         
          //Salvar informações no banco através                  
@@ -234,7 +234,7 @@ class ManualController extends Controller
          ]);                   
     }
 
-    public function downloadFile($id){        
+    public function downloadFile(int $id){        
        
         $uploadmanual = Upload::find($id);                
         $downloadPath = public_path('storage/'.$uploadmanual->path_arquivo);       
@@ -247,7 +247,7 @@ class ManualController extends Controller
         return response()->download($downloadPath,$uploadmanual->nome_arquivo,$headers);    
     }
 
-    public function destroyFile($id)
+    public function destroyFile(int $id)
     {
         $uploadmanual = Upload::find($id);        
         $manualid = $uploadmanual->manual_id;

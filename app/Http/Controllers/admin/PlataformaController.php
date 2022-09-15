@@ -69,7 +69,7 @@ class PlataformaController extends Controller
     }
 
     
-    public function edit($id)
+    public function edit(int $id)
     {
         $p = $this->plataforma->find($id);
 
@@ -80,7 +80,7 @@ class PlataformaController extends Controller
     }
 
     
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {
         $validator = Validator::make($request->all(),[
             'nome_plataforma'  => 'required|max:100',            
@@ -117,7 +117,7 @@ class PlataformaController extends Controller
     }
 
     
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $plataforma = $this->plataforma->find($id);
         $plataforma->delete();

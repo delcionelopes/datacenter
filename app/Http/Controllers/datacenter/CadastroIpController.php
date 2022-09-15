@@ -16,7 +16,7 @@ class CadastroIpController extends Controller
         $this->cadastroIp = $cadastroIp;
     }
 
-    public function index(Request $request, $id)
+    public function index(Request $request, int $id)
     {
         if(is_null($request->pesquisa)){
             $cadastroIps = $this->cadastroIp->query()
@@ -77,7 +77,7 @@ class CadastroIpController extends Controller
         //        
     }
     
-    public function edit($id)
+    public function edit(int $id)
     {
         $cadastroIp = $this->cadastroIp->find($id);        
         return response()->json([            
@@ -86,7 +86,7 @@ class CadastroIpController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(),[            
             'ip'      => 'required|max:15',            
@@ -125,7 +125,7 @@ class CadastroIpController extends Controller
  
     }
     
-    public function destroy($id)    {
+    public function destroy(int $id)    {
         $cadastroIp = $this->cadastroIp->find($id);
         $cadastroIp->delete();
         return response()->json([
@@ -134,7 +134,7 @@ class CadastroIpController extends Controller
         ]);
     }
 
-    public function status(Request $request, $id){
+    public function status(Request $request, int $id){
         $vstatus = $request->input('pstatus');        
         $data = ['status' => $vstatus];
         $cadastroIp = $this->cadastroIp->find($id);

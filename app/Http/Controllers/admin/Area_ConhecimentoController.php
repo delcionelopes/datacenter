@@ -72,7 +72,7 @@ class Area_ConhecimentoController extends Controller
     }
 
     
-    public function edit($id)
+    public function edit(int $id)
     {
         $area_C = $this->area_conhecimento->find($id);
 
@@ -83,7 +83,7 @@ class Area_ConhecimentoController extends Controller
     }
 
     
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(),[
             'descricao' => 'required|max:80',
@@ -117,7 +117,7 @@ class Area_ConhecimentoController extends Controller
 
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $area_conhecimento = $this->area_conhecimento->find($id);
         $sub_area = $area_conhecimento->sub_area_conhecimento;

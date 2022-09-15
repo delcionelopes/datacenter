@@ -127,7 +127,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit(int $id)
     {
         $user = $this->user->find($id);
         return response()->json([
@@ -143,7 +143,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {
         $validator = Validator::make($request->all(),[
             'name' => 'required|max:100',
@@ -221,7 +221,7 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $user = $this->user->find($id);
         //exclusão do arquivo do avatar se houver
@@ -239,7 +239,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function moderadorUsuario(Request $request,$id){
+    public function moderadorUsuario(Request $request,int $id){
         $moderador = $request->input('moderador');
         $data = ['moderador' => $moderador];
         $user = $this->user->find($id);
@@ -251,7 +251,7 @@ class UserController extends Controller
         ]);
     }
 
-    public function inativoUsuario(Request $request,$id){
+    public function inativoUsuario(Request $request,int $id){
         $inativo = $request->input('inativo');
         $data = ['inativo' => $inativo];
         $user = $this->user->find($id);

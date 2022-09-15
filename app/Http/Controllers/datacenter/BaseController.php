@@ -22,7 +22,7 @@ class BaseController extends Controller
         $this->app = $app;
     }
     
-    public function index(Request $request,$id)
+    public function index(Request $request,int $id)
     {
         if(is_null($request->pesquisa)){
             $bases = $this->base->query()->where('virtual_machine_id','=',$id)->orderByDesc('id')->paginate(6);
@@ -100,7 +100,7 @@ class BaseController extends Controller
     }
 
     
-    public function edit($id)
+    public function edit(int $id)
     {
         $base = $this->base->find($id);
         $projeto = Projeto::find($base->projetos_id);
@@ -114,7 +114,7 @@ class BaseController extends Controller
     }
 
     
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {
         $validator = Validator::make($request->all(),[
             'virtual_machine_id'  => 'required',
@@ -161,7 +161,7 @@ class BaseController extends Controller
     }
     }    
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $base = $this->base->find($id);        
         $apps = $base->apps;

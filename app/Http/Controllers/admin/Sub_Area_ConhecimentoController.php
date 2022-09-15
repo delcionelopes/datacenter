@@ -74,7 +74,7 @@ class Sub_Area_ConhecimentoController extends Controller
         //
     }
     
-    public function edit($id)
+    public function edit(int $id)
     {        
         $sub = $this->sub_area_conhecimento->find($id);
         $area = Area_Conhecimento::find($sub->area_conhecimento_id);               
@@ -86,7 +86,7 @@ class Sub_Area_ConhecimentoController extends Controller
         ]);
     }
 
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {       
         $validator = Validator::make($request->all(),[
             'area_conhecimento_id'  => 'required',
@@ -125,7 +125,7 @@ class Sub_Area_ConhecimentoController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $sub_area_conhecimento = $this->sub_area_conhecimento->find($id);
         $sub_area_conhecimento->delete();

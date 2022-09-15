@@ -466,6 +466,11 @@ return [
                     'asset' => false,
                     'location' => '//cdn.jsdelivr.net/npm/sweetalert2@11',
                 ],
+                [
+                    'type' => 'css',
+                    'asset' => false,
+                    'location' => '//cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css',
+                ],
             ],
         ],       
         'Pace' => [

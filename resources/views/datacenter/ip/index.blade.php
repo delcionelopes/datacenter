@@ -152,6 +152,12 @@ $(document).ready(function(){
             var id = $(this).data("id");
             var enderecoip = ($(this).data("enderecoip")).trim();
             Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
                 title:enderecoip,
                 text: "Deseja excluir?",
                 imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',

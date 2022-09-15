@@ -20,7 +20,7 @@ class RedeController extends Controller
         $this->cadastroIp = $cadastroIp;
     }
     
-    public function index(Request $request,$id)
+    public function index(Request $request,int $id)
     {        
         if(is_null($request->pesquisa)){
             $redes = $this->rede->query()->where('vlan_id','=',$id)->orderByDesc('id')->paginate(6);
@@ -91,7 +91,7 @@ class RedeController extends Controller
     }
 
 
-    public function edit($id)
+    public function edit(int $id)
     {
         $rede = $this->rede->find($id);
         return response()->json([
@@ -99,7 +99,7 @@ class RedeController extends Controller
             'status' => 200,
         ]);
     }
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(),[
             'nome_rede' => 'required|max:100',
@@ -148,7 +148,7 @@ class RedeController extends Controller
             
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $rede = $this->rede->find($id);
         $ips = $rede->cadastro_ips;

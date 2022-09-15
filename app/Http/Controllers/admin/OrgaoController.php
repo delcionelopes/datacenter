@@ -73,7 +73,7 @@ class OrgaoController extends Controller
         //
     }
     
-    public function edit($id)
+    public function edit(int $id)
     {
         $o = $this->orgao->find($id);
 
@@ -84,7 +84,7 @@ class OrgaoController extends Controller
     }
 
     
-    public function update(Request $request, $id)
+    public function update(Request $request,int $id)
     {        
         $validator = Validator::make($request->all(),[
             'nome'     =>  'required|max:191',
@@ -124,7 +124,7 @@ class OrgaoController extends Controller
         }
     }
 
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $orgao = $this->orgao->find($id);
 

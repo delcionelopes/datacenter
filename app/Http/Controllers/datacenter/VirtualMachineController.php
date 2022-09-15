@@ -26,7 +26,7 @@ class VirtualMachineController extends Controller
         $this->base = $base;
     }
 
-    public function index(Request $request,$id)
+    public function index(Request $request,int $id)
     {      
         if(is_null($request->pesquisa)){                    
             $virtualmachines = $this->virtualmachine->query()->where('cluster_id','=',$id)->orderByDesc('id')->paginate(6);        
@@ -142,7 +142,7 @@ class VirtualMachineController extends Controller
     }
 
     
-    public function edit($id)
+    public function edit(int $id)
     {
         $virtualmachine = $this->virtualmachine->find($id);
         $vlans = $virtualmachine->vlans; //apenas vlans relacionadas
@@ -239,7 +239,7 @@ class VirtualMachineController extends Controller
     }
 
     
-    public function destroy($id)
+    public function destroy(int $id)
     {
         $virtualmachine = $this->virtualmachine->find($id);
         $vl = $virtualmachine->vlans; //todos as vlans relacionadas
@@ -271,7 +271,7 @@ class VirtualMachineController extends Controller
         ]);
     } 
     
-    public function VlanXVm($id,$vlid){                   
+    public function VlanXVm(int $id,int $vlid){                   
                 $vlan = $this->vlan->whereId($vlid)->first();                
                 $virtualmachines = $vlan->virtual_machines()->paginate(5);                
                 $projetos = Projeto::all(); //todos os projetos        
