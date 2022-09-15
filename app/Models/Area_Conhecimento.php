@@ -14,11 +14,11 @@ class Area_Conhecimento extends Model
 
     public function sub_area_conhecimento()
     {
-        return $this->hasMany(Sub_Area_Conhecimento::class,'id','area_conhecimento_id');
+        return $this->hasMany(Sub_Area_Conhecimento::class,'area_conhecimento_id','id');
     }
 
     public function manual()
     {
-        return $this->hasMany(Manual::class,'id','area_conhecimento_id');
+        return $this->hasMany(Manual::class,'area_conhecimento_id','id');
     }    
 }

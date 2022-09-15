@@ -65,12 +65,10 @@ class ManualController extends Controller
             ]);
         }else{                            
             $data = [
-                'area_conhecimento_id' => $request->input('area_conhecimento_id'),
-                'data_criacao' => now(),
+                'area_conhecimento_id' => $request->input('area_conhecimento_id'),                
                 'descricao' => strtoupper($request->input('descricao')),
                 'objetivo' => strtoupper($request->input('objetivo')),
-                'manual' => strtoupper($request->input('manual')),                
-                'usuario' => auth()->user->name,               
+                'manual' => strtoupper($request->input('manual')),                            
             ];
             $manual = $this->manual->create($data);          
                                                        
@@ -125,11 +123,9 @@ class ManualController extends Controller
             $manual = $this->manual->find($id);                        
             if($manual){
                 $manual->area_conhecimento_id = $request->input('area_conhecimento_id');
-                $manual->descricao = strtoupper($request->input('descricao'));
-                $manual->data_atualizacao = now();
+                $manual->descricao = strtoupper($request->input('descricao'));               
                 $manual->objetivo = strtoupper($request->input('objetivo'));
-                $manual->manual = strtoupper($request->input('manual'));
-                $manual->usuario = auth()->user->name;               
+                $manual->manual = strtoupper($request->input('manual'));                           
                 $manual->update();                
                 $ma = Manual::find($id);                
                 $area = Area_Conhecimento::find($ma->area_conhecimento_id);
@@ -157,21 +153,24 @@ class ManualController extends Controller
     
     public function destroy(int $id)
     {
-        $manual = $this->manual->find($id);
-        $uploads = $manual->uploads;
+        $manual = $this->manual->find($id);  
+        $descricao = $this->manual->descricao;      
+        $uploads = $manual->uploads;        
         if($manual->uploads()->count()){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
-                $manual->uploads()->detach($uploads);
+                foreach ($uploads as $upload) {
+                    $this->destroyFile($upload->id);
+                }                
                 $status = 200;
-                $message = $manual->descricao.' excluído com sucesso!';
+                $message = $descricao.' excluído com sucesso!';
                 $manual->delete();
             }else{
                 $status = 400;
-                $message = $manual->descricao.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';                
+                $message = $descricao.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';                
             }
         }else{        
         $status = 200;
-        $message = $manual->descricao.' excluído com sucesso!';
+        $message = $descricao.' excluído com sucesso!';
         $manual->delete();
         }
         return response()->json([
@@ -209,7 +208,7 @@ class ManualController extends Controller
             if($request->hasFile('arquivo'.$x))
             {
                 $file = $request->file('arquivo'.$x);                           
-                $fileName =  $file->getClientOriginalName();
+                $fileName =  $id.'_'.$file->getClientOriginalName();
                 $filePath = 'downloads/'.$fileName;
                 $storagePath = public_path('/storage/downloads/');
                 $file->move($storagePath,$fileName);    

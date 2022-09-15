@@ -505,8 +505,8 @@ return [
 
     'iframe' => [
         'default_tab' => [
-            'url' => 'datacenter/index-cluster',
-            'title' => 'Clusters/Hosts/VM/BD/APP',
+            'url' => '',
+            'title' => 'home',
         ],
         'buttons' => [
             'close' => true,

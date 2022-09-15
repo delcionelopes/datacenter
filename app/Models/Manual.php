@@ -9,22 +9,19 @@ class Manual extends Model
     protected $table = 'manuais';    
     protected $fillable =
     [        
-        'data_criacao',
-        'data_atualizacao',
         'descricao',
         'objetivo',
         'manual',
         'area_conhecimento_id',
-        'usuario',   
     ];
 
     public function area_conhecimento()
     {
-        return $this->belongsTo(Area_Conhecimento::class,'area_conhecimento_id','id');
+        return $this->belongsTo(Area_Conhecimento::class,'area_conhecimento_id');
     }
 
     public function uploads()
     {
-        return $this->hasMany(Upload::class);
+        return $this->hasMany(Upload::class,'manual_id');
     }
 }

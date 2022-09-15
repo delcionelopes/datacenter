@@ -5,6 +5,9 @@ namespace App\Http\Controllers\admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Area_Conhecimento;
+use App\Models\Manual;
+use App\Models\Sub_Area_Conhecimento;
+use App\Models\Upload;
 use Illuminate\Support\Facades\Validator;
 
 class Area_ConhecimentoController extends Controller
@@ -120,15 +123,33 @@ class Area_ConhecimentoController extends Controller
     public function destroy(int $id)
     {
         $area_conhecimento = $this->area_conhecimento->find($id);
-        $sub_area = $area_conhecimento->sub_area_conhecimento;
+        $sub_areas = $area_conhecimento->sub_area_conhecimento;
         $manuais = $area_conhecimento->manual;
         if(($area_conhecimento->sub_area_conhecimento()->count())||($area_conhecimento->manual()->count())){
-            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
-                if($area_conhecimento->sub_area_conhecimento()->count()){
-                    $area_conhecimento->sub_area_conhecimento()->detach($sub_area);
+            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){                
+                if($area_conhecimento->sub_area_conhecimento()->count()){                                        
+                    foreach ($sub_areas as $sub_area) {
+                        $s = Sub_Area_Conhecimento::find($sub_area->id);
+                        $s->delete();
+                    }
                 }
                 if($area_conhecimento->manual()->count()){
-                    $area_conhecimento->manual()->detach($manuais);
+                    foreach ($manuais as $manual) {
+                        $m = Manual::find($manual->id);
+                        $uploads = $m->uploads;
+                        if($m->uploads()->count()){
+                            foreach ($uploads as $upload) {
+                                $up = Upload::find($upload->id);
+                                $upPath = public_path('storage/'.$up->path_arquivo);
+                                $up->delete();
+                                //deleta o arquivo na pasta do servidor  
+                                if(file_exists($upPath)){
+                                    unlink($upPath);
+                                }                                        
+                            }
+                        }
+                        $m->delete();
+                    }                    
                 }
                 $status = 200;
                 $message = $area_conhecimento->descricao.' excluído com sucesso!';

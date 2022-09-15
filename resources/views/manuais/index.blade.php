@@ -22,7 +22,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Área de Conhecimento</label>
-                        <select name="area_id" id="area_id" class="custom-select">
+                        <select name="add_area_id" id="add_area_id" class="custom-select">
                             @foreach($areas_conhecimento as $area)
                             <option value="{{$area->id}}">{{$area->descricao}}</option>
                             @endforeach
@@ -66,7 +66,7 @@
                         <input type="text" id="edit_descricao" class="descricao form-control">
                     </div>
                     <div class="form-group bm-3">
-                        <select name="area_id" id="area_id" class="custom-select">
+                        <select name="edit_area_id" id="edit_area_id" class="custom-select">
                             @foreach($areas_conhecimento as $area)
                             <option value="{{$area->id}}">{{$area->descricao}}</option>
                             @endforeach
@@ -160,6 +160,7 @@
                         <td>{{$manual->area_conhecimento->descricao}}</td>
                         <td id="uploads{{$manual->id}}">
                         <label id="files{{$manual->id}}">Files: {{$manual->uploads->count()}} </label><button type="button" id="upload_files_btn" data-manualid="{{$manual->id}}" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>    
+                        <ul id="listaarquivos">
                         @if($manual->uploads->count())    
                             @foreach($manual->uploads as $upload)                                                        
                             <li id="up{{$upload->id}}">
@@ -169,6 +170,7 @@
                             <br>
                             @endforeach
                         @endif    
+                        </ul>
                         </td>                       
                         <td>
                             <div class="btn-group">
@@ -285,7 +287,7 @@
                         $('.descricao').val(descricaomanual);
                         //seta a area de conhecimento no select html
                         var opcao = response.area_conhecimento.id;
-                        $('#area_id option')
+                        $('#edit_area_id option')
                         .removeAttr('selected')
                         .filter('[value='+opcao+']')
                         .attr('selected',true);
@@ -302,11 +304,11 @@
         });//fim EditManualForm
     
         //inicio reconfigura o option selected do select html
-        $('select[name="area_id"]').on('change',function(){
-            var opt = this.value;
-                      $('#area_id option')
+        $('select[name="edit_area_id"]').on('change',function(){
+            var editoptarea = this.value;
+                      $('#edit_area_id option')
                       .removeAttr('selected')
-                      .filter('[value='+opt+']')
+                      .filter('[value='+editoptarea+']')
                       .attr('selected',true);
         });
         //fim reconfigura o option selected do select html
@@ -317,7 +319,7 @@
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             $(this).text("Atualizando...");
             
-            var opt = $('#area_id').val();        
+            var opt = $('#edit_area_id').val();        
             var id = $('#edit_manual_id').val();        
             var data = {
                 'area_conhecimento_id' : opt,
@@ -358,19 +360,34 @@
                         $('#editmyform').trigger('reset');
                         $('#EditManualForm').modal('hide');
                             //atualizando a tr da tabela html
-                       
-                        var linha = '<tr id="man'+response.manual.id+'">\
+                        var tupla = "";
+                        var linha1 = "";
+                        var linha2 = "";
+                            linha1 = '<tr id="man'+response.manual.id+'">\
                                     <th scope="row">'+response.manual.descricao+'</th>\
                                     <td>'+response.area_conhecimento.descricao+'</td>\
-                                    <td id="uploads'+response.manual.id+'"></td>\
+                                    <td id="uploads'+response.manual.id+'">\
+                                    <label id="files'+response.manual.id+'">Files: '+response.uploads.count()+' </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
+                                    <ul id="listaarquivos">';
+                                    if(response.uploads){  
+                                        $('#listaarquivos').innerHtml = '<ul id="listaarquivos"></ul>';                                      
+                                        $.each(response.uploads,function(key,arq){                                           
+                                            $('#listaarquivos').append('li id="up'+arq.id+'">\
+                                            <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>\
+                                            <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="delete_file_btn fas fa-trash"></i>\
+                                            '+arq.nome_arquivo+'</li><br>');
+                                    });                                     
+                                    }    
+                            linha2 = '</td>\
                                     <td>\
                                     <div class="btn-group">\
                                     <button type="button" data-id="'+response.manual.id+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.manual.id+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div>\
                                     </td>\
-                                    </tr>';                             
-                         $("#man"+id).replaceWith(linha);                                                                              
+                                    </tr>';   
+                            tupla = linha1+linha2;                          
+                         $("#man"+id).replaceWith(tupla);                                                                              
                  } 
                 }                   
             
@@ -387,13 +404,24 @@
             $('#AddManualForm').modal('show');
             $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
         });//fim exibição do form AddManualForm
+
+         //inicio reconfigura o option selected do select html
+         $('select[name="add_area_id"]').on('change',function(){
+            var addoptarea = this.value;
+                      $('#add_area_id option')
+                      .removeAttr('selected')
+                      .filter('[value='+addoptarea+']')
+                      .attr('selected',true);
+        });
+        //fim reconfigura o option selected do select html
     
         //inicio do envio do novo registro para o controller
         $(document).on('click','.add_manual_btn',function(e){
             e.preventDefault();       
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');      
+            var opt = $('#add_area_id').val();
             var dataAdd = {
-                'area_conhecimento_id' : $('#area_id').val(),
+                'area_conhecimento_id' : opt,
                 'descricao' : ($('.descricao').val()).trim(),
                 'objetivo' : ($('.objetivo').val()).trim(),
                 'manual' : ($('.manual').val()).trim(),
@@ -401,7 +429,6 @@
                 '_token':CSRF_TOKEN
             }   
            
-    
             $.ajax({
                 type:'POST',
                 url:'adiciona-manual',
@@ -432,7 +459,10 @@
                             linha1 = '<tr id="man'+response.manual.id+'">\
                                     <th scope="row">'+response.manual.descricao+'</th>\
                                     <td>'+response.area_conhecimento.descricao+'</td>\
-                                    <td id="uploads'+response.manual.id+'"></td>\
+                                    <td id="uploads'+response.manual.id+'">\
+                                    <label id="files'+response.manual.id+'">Files: 0 </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
+                                    <ul id="listaarquivos"></ul>\
+                                    </td>\
                                     <td>\
                                     <div class="btn-group">\
                                     <button type="button" data-id="'+response.manual.id+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none;"></button>\
@@ -442,8 +472,9 @@
                                     </tr>'; 
                         if(!$('#nadaencontrado').html==""){
                             $('#nadaencontrado').remove();
-                        }
+                        }                        
                             tupla = linha0+linha1;                           
+                            console.log(tupla);
                          $("#novo").replaceWith(tupla);                                         
                     }
                 }
@@ -458,8 +489,24 @@
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var id = $(this).data("id");        
         var vfilename = ($(this).data("filename")).trim();
-        var resposta = confirm("Deseja excluir o arquivo "+vfilename+"?");          
-                if(resposta==true){                    
+        Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:vfilename,
+                text: "Deseja excluir?",
+                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){                  
                     $.ajax({
                         url:'delete-file/'+id,                    
                         type: 'POST',
@@ -476,11 +523,19 @@
                                 $("#files"+response.manualid).replaceWith(labelhtml);                            
                                 //remove li correspondente na td da tabela html
                                 $('#up'+id).remove();                            
-                            }
+                          /*   }
                         }
                     });  
                 }
-    });           
+    });            */
+}
+                    } 
+                });
+            }                                       
+        
+        });                        
+        
+        });
         
     
        $(document).on('click','.download_file_btn',function(e){                                                                       
@@ -580,11 +635,11 @@
                      $('#files'+response.manualid).replaceWith(labelhtml);                    
                       $.each(response.arquivos,function(key,arq){
                       $('#up'+arq.id).remove();
-                     var item = '<li id="up'+arq.id+'">'+arq.nome_arquivo+
+                     var item = '<li id="up'+arq.id+'">'+
                                 '<i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>'+
-                                '<i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="delete_file_btn fas fa-trash"></i>'+
+                                '<i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="delete_file_btn fas fa-trash"></i>'+arq.nome_arquivo+
                                 '</li><br>';
-                       $('#uploads'+response.manualid).append(item);                
+                       $('#listaarquivos').append(item);                
                        });                                                                                                                                       
               } 
             }
