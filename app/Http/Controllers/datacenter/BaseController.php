@@ -22,6 +22,9 @@ class BaseController extends Controller
         $this->app = $app;
     }
     
+    /**
+     * Método para listagem dos registros com opção de pesquisa
+     */
     public function index(Request $request,int $id)
     {
         if(is_null($request->pesquisa)){
@@ -54,7 +57,9 @@ class BaseController extends Controller
         //
     }
 
-    
+    /**
+     * Método para a criação de um novo registro
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -99,7 +104,9 @@ class BaseController extends Controller
         //
     }
 
-    
+    /**
+     * Método para a edição de registro
+     */
     public function edit(int $id)
     {
         $base = $this->base->find($id);
@@ -113,7 +120,9 @@ class BaseController extends Controller
         ]);
     }
 
-    
+    /**
+     * Método para a atualização de registro editado
+     */
     public function update(Request $request,int $id)
     {
         $validator = Validator::make($request->all(),[
@@ -161,6 +170,9 @@ class BaseController extends Controller
     }
     }    
 
+    /**
+     * Método para a exclusão recursiva do registro para o adm
+     */
     public function destroy(int $id)
     {
         $base = $this->base->find($id);        
@@ -192,6 +204,9 @@ class BaseController extends Controller
         ]);
     }
 
+    /**
+     * Método para a criação de um novo registro de app
+     */
     public function storeApp(Request $request)
     {
         $validator = Validator::make($request->all(),[

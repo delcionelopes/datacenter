@@ -16,6 +16,9 @@ class CadastroIpController extends Controller
         $this->cadastroIp = $cadastroIp;
     }
 
+    /**
+     * Método para listagem de registros com a opção de pesquisa
+     */
     public function index(Request $request, int $id)
     {
         if(is_null($request->pesquisa)){
@@ -42,6 +45,9 @@ class CadastroIpController extends Controller
     {        
     }
     
+    /**
+     * Método para a criação de um novo registro
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[           
@@ -77,6 +83,9 @@ class CadastroIpController extends Controller
         //        
     }
     
+    /**
+     * Método para a edição de registro
+     */
     public function edit(int $id)
     {
         $cadastroIp = $this->cadastroIp->find($id);        
@@ -86,6 +95,9 @@ class CadastroIpController extends Controller
         ]);
     }
 
+    /**
+     * Método para a atualização de registro editado
+     */
     public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(),[            
@@ -125,6 +137,9 @@ class CadastroIpController extends Controller
  
     }
     
+    /**
+     * Método para a exclusão de registro
+     */
     public function destroy(int $id)    {
         $cadastroIp = $this->cadastroIp->find($id);
         $cadastroIp->delete();
@@ -134,6 +149,9 @@ class CadastroIpController extends Controller
         ]);
     }
 
+    /**
+     * Método para a mudança de status do ip
+     */
     public function status(Request $request, int $id){
         $vstatus = $request->input('pstatus');        
         $data = ['status' => $vstatus];

@@ -19,7 +19,9 @@ class RedeController extends Controller
         $this->rede = $rede;
         $this->cadastroIp = $cadastroIp;
     }
-    
+    /**
+     * Método para listagem de registros com opção de pesquisa
+     */
     public function index(Request $request,int $id)
     {        
         if(is_null($request->pesquisa)){
@@ -45,6 +47,9 @@ class RedeController extends Controller
         //
     }
 
+    /**
+     * Método para criar novo registro
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -90,7 +95,9 @@ class RedeController extends Controller
         //
     }
 
-
+    /**
+     * Método para edição de registro
+     */
     public function edit(int $id)
     {
         $rede = $this->rede->find($id);
@@ -99,6 +106,10 @@ class RedeController extends Controller
             'status' => 200,
         ]);
     }
+
+    /**
+     * Método para atualizar registro editado
+     */
     public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(),[
@@ -148,6 +159,9 @@ class RedeController extends Controller
             
     }
 
+    /**
+     * Método para exclusão de registro
+     */
     public function destroy(int $id)
     {
         $rede = $this->rede->find($id);

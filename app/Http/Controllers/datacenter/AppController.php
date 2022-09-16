@@ -143,7 +143,7 @@ class AppController extends Controller
     }
 
     /**
-     * método update: Valida e efetiva a atualização
+     * método update: Valida e efetiva a atualização de registro editado
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -211,7 +211,10 @@ class AppController extends Controller
             'message' => 'Registro excluído com sucesso!',
         ]);
     }
-
+    
+    /**
+     * Atribui a opção do HTTPS ao app
+     */
     public function httpsApp(Request $request,int $id)
     {           
         $app = $this->app->find($id);  

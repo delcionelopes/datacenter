@@ -28,7 +28,9 @@ class ClusterController extends Controller
         $this->virtualmachine = $virtualmachine;
     }
 
-    
+    /**
+     * Método para listar os registros com opção de pesquisa
+     */
     public function index(Request $request)
     {
         if(is_null($request->pesquisa)){
@@ -57,7 +59,9 @@ class ClusterController extends Controller
         //
     }
 
-    
+    /**
+     * Método para criar um novo registro
+     */
     public function store(Request $request)
     {        
         $validator = Validator::make($request->all(),[
@@ -96,7 +100,9 @@ class ClusterController extends Controller
         //
     }
 
-    
+    /**
+     * Método para a edição de registro
+     */
     public function edit(int $id)
     {
         $cluster = $this->cluster->find($id);
@@ -106,7 +112,9 @@ class ClusterController extends Controller
         ]);
     }
 
-    
+    /**
+     * Método para a atualização de registro editado
+     */
     public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(),[
@@ -148,10 +156,13 @@ class ClusterController extends Controller
         }   
     }
 
-    
+    /**
+     * Método para a exclusão recursiva de registro para o adm
+     */
     public function destroy(int $id)
     {
         $cluster = $this->cluster->find($id);
+        $nomecluster = $cluster->nome_cluster;
         $hosts = $cluster->hosts;
         $vms = $cluster->virtual_machines;
         if(($cluster->hosts()->count())||($cluster->virtual_machines()->count())){
@@ -166,22 +177,27 @@ class ClusterController extends Controller
                     foreach ($vms as $vm) {
                         $v = VirtualMachine::find($vm->id);
                         $bases = $v->bases;
+                        if($v->bases()->count()){
                         foreach ($bases as $base) {
                             $b = Base::find($base->id);
                             $apps = $b->apps;
+                            if($b->apps()->count()){
                             foreach ($apps as $app) {
                                 $a = App::find($app->id);
                                 $a->delete();
                             }
+                            }
                             $b->delete();
                         }
+                        }
                         $vmXvlans = $v->vlans;
-                        $v->vlans()->detach($vmXvlans);
-                        $v->delete();
+                        if($v->vlans()->count()){
+                            $v->vlans()->detach($vmXvlans);
+                            $v->delete();
+                        }
                     }                         
                 }
-                $status = 200;
-                $nomecluster = $cluster->nome_cluster;
+                $status = 200;                
                 $message = $nomecluster.' foi excluído com sucesso!';
                 $cluster->delete();
             }else{
@@ -189,8 +205,7 @@ class ClusterController extends Controller
                 $message = $cluster->nome_cluster.' não pode ser excluído. Pois há outros registros que dependem dele. Contacte o administrador!';
             }
         }else{
-            $status = 200;
-            $nomecluster = $cluster->nome_cluster;
+            $status = 200;            
             $message = $nomecluster.' foi excluído com sucesso!';
             $cluster->delete();
         }
@@ -201,6 +216,9 @@ class ClusterController extends Controller
         ]);
     }
 
+    /**
+     * Método para criar um novo host
+     */
     public function storehost(Request $request)
     {        
         $validator = Validator::make($request->all(),[            
@@ -239,6 +257,9 @@ class ClusterController extends Controller
         }
     }
 
+    /**
+     * Método para criar uma nova VM
+     */
     public function storeVM(Request $request)
     {
         $validator = Validator::make($request->all(),[

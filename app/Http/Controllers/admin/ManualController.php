@@ -19,6 +19,9 @@ class ManualController extends Controller
         $this->manual = $manual;
     }   
     
+    /**
+     * Método para listagem de manuais com opção de pesquisa
+     */
     public function index(Request $request)
     {        
         if(is_null($request->pesquisa)){
@@ -42,7 +45,9 @@ class ManualController extends Controller
     {
         //
     }
-   
+    /**
+     * Método para gravação de novo manual
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -87,6 +92,9 @@ class ManualController extends Controller
         //
     }
 
+    /**
+     * Método para edição de registro do manual
+     */
     public function edit(int $id)
     {
         $manual = $this->manual->find($id);
@@ -99,6 +107,9 @@ class ManualController extends Controller
         ]);
     }
     
+    /**
+     * Método para atualizar o registro editado
+     */
     public function update(Request $request,int $id)
     {                   
         $validator = Validator::make($request->all(),[
@@ -150,7 +161,9 @@ class ManualController extends Controller
         }     
     }
 
-    
+    /**
+     * Método para exclusão de registro recursivamente para o administrador
+     */
     public function destroy(int $id)
     {
         $manual = $this->manual->find($id);  
@@ -179,6 +192,9 @@ class ManualController extends Controller
         ]);
     }
 
+    /**
+     * lista os arquivos anexados do manual
+     */
     public function indexFile(int $id)
     {
         $uploadsManual = Upload::query('upload')
@@ -190,6 +206,7 @@ class ManualController extends Controller
         ]);
     }
 
+    //edita manual
     public function editFileUpload(int $id){   
         $manual = $this->manual->find($id);        
         return response()->json([
@@ -198,10 +215,10 @@ class ManualController extends Controller
         ]);
     }
 
+    //upload de arquivos anexados do manual
     public function upload(Request $request,int $id)
     {                           
-         $manual = $this->manual->find($id);         
-         //Salvar informações no banco através                  
+         $manual = $this->manual->find($id);                  
          $TotalFiles = $request->input('TotalFiles');         
          if($TotalFiles>0){
          for($x = 0; $x < $TotalFiles;$x++){
@@ -233,6 +250,9 @@ class ManualController extends Controller
          ]);                   
     }
 
+    /**
+     * método para baixar o arquivo
+     */
     public function downloadFile(int $id){        
        
         $uploadmanual = Upload::find($id);                
@@ -246,6 +266,9 @@ class ManualController extends Controller
         return response()->download($downloadPath,$uploadmanual->nome_arquivo,$headers);    
     }
 
+    /**
+     * Método para exclusão de arquivos anexados ao manual
+     */
     public function destroyFile(int $id)
     {
         $uploadmanual = Upload::find($id);        
