@@ -17,6 +17,9 @@ class PlataformaController extends Controller
         $this->plataforma = $plataforma;
     }
 
+    /**
+     * Método para listar plataformas parametrizada pela pesquisa
+     */
     public function index(Request $request)
     {
         if(is_null($request->pesquisanome)){
@@ -35,6 +38,9 @@ class PlataformaController extends Controller
         //
     }
 
+    /**
+     * Método para gravar um novo registro
+     */
     public function store(Request $request)
     {       
 
@@ -68,7 +74,9 @@ class PlataformaController extends Controller
         //
     }
 
-    
+    /**
+     * Método para edição de registro
+     */
     public function edit(int $id)
     {
         $p = $this->plataforma->find($id);
@@ -79,7 +87,9 @@ class PlataformaController extends Controller
         ]);
     }
 
-    
+    /**
+     * Método para atualização de registro editado
+     */
     public function update(Request $request,int $id)
     {
         $validator = Validator::make($request->all(),[
@@ -116,7 +126,9 @@ class PlataformaController extends Controller
         }
     }
 
-    
+    /**
+     * Método para exclusão de registro
+     */
     public function destroy(int $id)
     {
         $plataforma = $this->plataforma->find($id);

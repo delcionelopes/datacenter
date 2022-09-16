@@ -17,7 +17,7 @@ class UserController extends Controller
         $this->user = $user;
     }
     /**
-     * listagem.
+     * Método para listagem de registros com opção de pesquisa
      *
      * @return \Illuminate\Http\Response
      */
@@ -48,7 +48,7 @@ class UserController extends Controller
     }
 
     /**
-     * inclusão
+     * Método para criação de novo registro
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -122,7 +122,7 @@ class UserController extends Controller
     }
 
     /**
-     * Show the form for editing the specified resource.
+     * Método para edição de registro
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -137,7 +137,7 @@ class UserController extends Controller
     }
 
     /**
-     * atualização
+     * Método para atualizar registro editado
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
@@ -216,7 +216,7 @@ class UserController extends Controller
     }
 
     /**
-     * exclusão
+     * Método para exclusão de registro
      *
      * @param  int  $id
      * @return \Illuminate\Http\Response
@@ -239,6 +239,9 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Método para mudar o perfil do usuário 
+     */
     public function moderadorUsuario(Request $request,int $id){
         $moderador = $request->input('moderador');
         $data = ['moderador' => $moderador];
@@ -251,6 +254,9 @@ class UserController extends Controller
         ]);
     }
 
+    /**
+     * Método para desativar o usuário
+     */
     public function inativoUsuario(Request $request,int $id){
         $inativo = $request->input('inativo');
         $data = ['inativo' => $inativo];

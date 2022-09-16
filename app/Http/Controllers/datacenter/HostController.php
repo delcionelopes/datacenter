@@ -17,6 +17,9 @@ class HostController extends Controller
         $this->host = $host;
     }
 
+    /**
+     * Método para listagem de registros com a opção de pesquisa
+     */
     public function index(Request $request,int $id)
     {             
         if(is_null($request->pesquisa)){            
@@ -42,7 +45,9 @@ class HostController extends Controller
         //
     }
 
-    
+    /**
+     * Método para criar um novo registro
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[            
@@ -84,6 +89,9 @@ class HostController extends Controller
         //
     }
 
+    /**
+     * Método para edição de registro
+     */
     public function edit(int $id)
     {
         $host = $this->host->find($id);
@@ -93,6 +101,9 @@ class HostController extends Controller
         ]);
     }
 
+    /**
+     * Método para atualizar registro editado
+     */
     public function update(Request $request,int $id)
     {
         $validator = Validator::make($request->all(),[            
@@ -138,6 +149,9 @@ class HostController extends Controller
         }
     }
 
+    /**
+     * Método para exclusão de registro
+     */
     public function destroy(int $id)
     {             
         $host = $this->host->find($id); 

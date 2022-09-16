@@ -20,7 +20,9 @@ class ProjetoController extends Controller
     }
 
 
-    
+    /**
+     * Método para listagem de registros com opção de pesquisa
+     */
     public function index(Request $request)
     {
         if(is_null($request->pesquisanome)){
@@ -39,7 +41,9 @@ class ProjetoController extends Controller
         //
     }
 
-    
+    /**
+     * Método para a criação de um novo registro
+     */
     public function store(Request $request)
     {       
         $validator = Validator::make($request->all(),[
@@ -72,6 +76,9 @@ class ProjetoController extends Controller
         //
     }
 
+    /**
+     * Método para a edição do registro
+     */
     public function edit(int $id)
     {             
         $proj = $this->projeto->find($id);                
@@ -82,7 +89,9 @@ class ProjetoController extends Controller
         ]);
     }
 
-    
+    /**
+     * Método para atualizar o registro editado
+     */
     public function update(Request $request,int $id)
     {        
         $validator = Validator::make($request->all(),[
@@ -117,6 +126,9 @@ class ProjetoController extends Controller
         }
     }
 
+    /**
+     * Método para exclusão de registro recursivamente para o adm
+     */
     public function destroy(int $id)
     {
         $projeto = $this->projeto->find($id);
@@ -128,7 +140,7 @@ class ProjetoController extends Controller
                 if($projeto->bases()->count()){
                     foreach ($bases as $base) {
                         $b = Base::find($base->id);
-                        $aps = $b->apps;
+                        $aps = $b->apps;                        
                         foreach ($aps as $ap) {
                             $a = App::find($ap->id);
                             $a->delete();
@@ -151,8 +163,10 @@ class ProjetoController extends Controller
                             $b->delete();
                         }
                         $vmXvlans = $v->vlans;
+                        if($v->vlans()->count()){
                         $v->vlans()->detach($vmXvlans);
                         $v->delete();
+                        }
                     }                                  
                 }
                 if($projeto->apps()->count()){

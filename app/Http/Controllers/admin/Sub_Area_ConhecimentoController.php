@@ -16,7 +16,10 @@ class Sub_Area_ConhecimentoController extends Controller
     {
         $this->sub_area_conhecimento = $sub_area_conhecimento;        
     }
- 
+
+    /**
+     * Método para listagem de registro com opção de pesquisa
+     *  */ 
     public function index(Request $request)
     {
         if(is_null($request->nomepesquisa)){
@@ -37,6 +40,9 @@ class Sub_Area_ConhecimentoController extends Controller
         //
     }
     
+    /**
+     * Método para criação de registro novo
+     */
     public function store(Request $request)
     {       
         $validator = Validator::make($request->all(),[
@@ -74,6 +80,9 @@ class Sub_Area_ConhecimentoController extends Controller
         //
     }
     
+    /**
+     * Método para edição de registro
+     */
     public function edit(int $id)
     {        
         $sub = $this->sub_area_conhecimento->find($id);
@@ -86,6 +95,9 @@ class Sub_Area_ConhecimentoController extends Controller
         ]);
     }
 
+    /**
+     * Método para atualização de registro editado
+     */
     public function update(Request $request,int $id)
     {       
         $validator = Validator::make($request->all(),[
@@ -125,6 +137,9 @@ class Sub_Area_ConhecimentoController extends Controller
         }
     }
 
+    /**
+     * Método para exclusão de registro
+     */
     public function destroy(int $id)
     {
         $sub_area_conhecimento = $this->sub_area_conhecimento->find($id);

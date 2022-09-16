@@ -27,6 +27,9 @@ class VirtualMachineController extends Controller
         $this->base = $base;
     }
 
+    /**
+     * Método para listagem de registros com opção de pesquisa
+     */
     public function index(Request $request,int $id)
     {      
         if(is_null($request->pesquisa)){                    
@@ -64,7 +67,9 @@ class VirtualMachineController extends Controller
         //
     }
 
-    
+    /**
+     * Método para a criação de um novo registro
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -142,7 +147,9 @@ class VirtualMachineController extends Controller
         //
     }
 
-    
+    /**
+     * Método para a edição de registro
+     */
     public function edit(int $id)
     {
         $virtualmachine = $this->virtualmachine->find($id);
@@ -160,7 +167,9 @@ class VirtualMachineController extends Controller
         ]);
     }
 
-    
+    /**
+     * Método para atualização de registro editado
+     */
     public function update(Request $request, $id)
     {          
         $validator = Validator::make($request->all(),[
@@ -239,7 +248,9 @@ class VirtualMachineController extends Controller
         }
     }
 
-    
+    /**
+     * Método para exclusão recursiva de registro para o adm
+     */
     public function destroy(int $id)
     {
         $virtualmachine = $this->virtualmachine->find($id);
@@ -248,15 +259,17 @@ class VirtualMachineController extends Controller
         if(($virtualmachine->vlans()->count())||($virtualmachine->bases()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
                 if($virtualmachine->vlans()->count){
-                    $virtualmachine->vlans()->detach($vl); //exclui o relacionamento
+                    $virtualmachine->vlans()->detach($vl); //exclui o relacionamento n:n
                 }
                 if($virtualmachine->bases()->count()){
                     foreach ($bases as $base) {
                         $b = $this->base->find($base->id);
                         $apps = $b->apps;
+                        if($b->apps()->count()){
                         foreach ($apps as $app) {
                             $a = App::find($app->id);
                             $a->delete();
+                        }
                         }
                         $b->delete();
                     }                   
@@ -280,6 +293,9 @@ class VirtualMachineController extends Controller
         ]);
     } 
     
+    /**
+     * Método para mostrar as vlans relacionadas às vms
+     */
     public function VlanXVm(int $id,int $vlid){                   
                 $vlan = $this->vlan->whereId($vlid)->first();                
                 $virtualmachines = $vlan->virtual_machines()->paginate(5);                
@@ -299,6 +315,9 @@ class VirtualMachineController extends Controller
                 ]);        
     }
 
+    /**
+     * Método para criar uma nova base
+     */
     public function storeBase(Request $request)
     {
         $validator = Validator::make($request->all(),[

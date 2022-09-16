@@ -18,12 +18,15 @@ class Area_ConhecimentoController extends Controller
     {
         $this->area_conhecimento = $area_conhecimento;
     }
-
+    
+    /**
+     * Método de listagem das áreas de conhecimento com opção de pesquisa
+     */
     public function index(Request $request)
-    {
+    {        
         if(is_null($request->nomepesquisa)){
             $areas_conhecimento = $this->area_conhecimento->orderByDesc('id')->paginate(6);
-        }else{            
+        }else{                 
             $query = $this->area_conhecimento->query()
             ->where('descricao','LIKE','%'.strtoupper($request->nomepesquisa).'%');
             $areas_conhecimento = $query->orderByDesc('id')->paginate(6);
@@ -37,23 +40,24 @@ class Area_ConhecimentoController extends Controller
         //
     }
 
-    
+    /**
+     * grava o novo registro da área de conhecimento
+     */
     public function store(Request $request)
-    {             
-
+    {            
+     
         $validator = Validator::make($request->all(),[
             'descricao'  => 'required|max:80',
         ],[
             'descricao.required' => 'O campo DESCRIÇÃO é obrigatório!',
             'descricao.max'   => 'A DESCRIÇÃO deve conter no máximno :max caracteres!',
-        ]);
-
+        ]);     
         if($validator->fails()){
             return response()->json([
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{    
+        }else{               
             $data = [
                 'descricao' => strtoupper($request->input('descricao')),                             
             ];            
@@ -74,9 +78,11 @@ class Area_ConhecimentoController extends Controller
         //
     }
 
-    
+    /**
+     * Método para edição do registro
+     */
     public function edit(int $id)
-    {
+    {     
         $area_C = $this->area_conhecimento->find($id);
 
         return response()->json([
@@ -85,21 +91,23 @@ class Area_ConhecimentoController extends Controller
         ]);
     }
 
-    
+    /**
+     * Método para atualização do registro editado
+     */
     public function update(Request $request, int $id)
-    {
+    {        
         $validator = Validator::make($request->all(),[
             'descricao' => 'required|max:80',
         ],[
             'descricao.required' => 'O campo DESCRIÇÃO é obrigatório!',
             'descricao.max'  => 'A DESCRIÇÃO deve conter no máximo :max caracteres!',
-        ]);
+        ]);        
         if($validator->fails()){
             return response()->json([
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{            
+        }else{                 
             $area_conhecimento = $this->area_conhecimento->find($id);
             if($area_conhecimento){
                 $area_conhecimento->descricao = strtoupper($request->input('descricao'));               
@@ -120,8 +128,11 @@ class Area_ConhecimentoController extends Controller
 
     }
 
+    /**
+     * Método para exclusão de registro
+     */
     public function destroy(int $id)
-    {
+    {        
         $area_conhecimento = $this->area_conhecimento->find($id);
         $sub_areas = $area_conhecimento->sub_area_conhecimento;
         $manuais = $area_conhecimento->manual;

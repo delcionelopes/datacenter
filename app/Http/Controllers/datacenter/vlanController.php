@@ -20,6 +20,9 @@ class vlanController extends Controller
         $this->rede = $rede;
     }
 
+    /**
+     * Método para listagem com opção de pesquisa
+     */
     public function index(Request $request)
     {
         if(is_null($request->pesquisa)){
@@ -39,6 +42,9 @@ class vlanController extends Controller
         //
     }
 
+    /**
+     * Método para a criação de um novo registro
+     */
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
@@ -69,7 +75,10 @@ class vlanController extends Controller
     {
         //
     }
-
+    
+    /**
+     * Método para a edição de registro
+     */
     public function edit(int $id)
     {
         $vlan = $this->vlan->find($id);
@@ -79,6 +88,9 @@ class vlanController extends Controller
         ]);
     }
 
+    /**
+     * Método para atualizar um registro editado
+     */
     public function update(Request $request,int $id)
     {
         $validator = Validator::make($request->all(),[
@@ -115,6 +127,9 @@ class vlanController extends Controller
 
     }
 
+    /**
+     * Método para exclusão recursiva pelo adm
+     */
     public function destroy(int $id)
     {
         $vlan = $this->vlan->find($id);
@@ -123,7 +138,7 @@ class vlanController extends Controller
         if(($vlan->virtual_machines()->count())||($vlan->redes()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
                 if($vlan->virtual_machines()->count()){
-                    $vlan->virtual_machines()->detach($vms);
+                    $vlan->virtual_machines()->detach($vms); //exclusão da relação n:n
                 }
                 if($vlan->redes()->count()){
                     foreach ($redes as $rede) {
@@ -157,6 +172,9 @@ class vlanController extends Controller
         ]);
     }
 
+    /**
+     * Método para a criação de uma nova rede vinculada à vlan
+     */
     public function storerede(Request $request){        
         $validator = Validator::make($request->all(),[            
             'nome_rede' => 'required|max:100',

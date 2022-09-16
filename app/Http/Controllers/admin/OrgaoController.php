@@ -20,7 +20,9 @@ class OrgaoController extends Controller
         $this->orgao = $orgao;
     }   
 
-    
+    /**
+     * Método de listagem dos órgãos com opção de pesquisa
+     */
     public function index(Request $request)
     {        
         if(is_null($request->pesquisanome)){
@@ -40,6 +42,9 @@ class OrgaoController extends Controller
         //
     }
     
+    /**
+     * Método para gravação de um novo registro
+     */
     public function store(Request $request)
     {      
         
@@ -77,6 +82,9 @@ class OrgaoController extends Controller
         //
     }
     
+    /**
+     * Método para edição de registro
+     */
     public function edit(int $id)
     {
         $o = $this->orgao->find($id);
@@ -87,7 +95,9 @@ class OrgaoController extends Controller
         ]);
     }
 
-    
+    /**
+     * Método para atualização do registro editado
+     */
     public function update(Request $request,int $id)
     {        
         $validator = Validator::make($request->all(),[
@@ -128,6 +138,9 @@ class OrgaoController extends Controller
         }
     }
 
+    /**
+     * Método para exclusão recursiva do registro para o adm
+     */
     public function destroy(int $id)
     {
         $orgao = $this->orgao->find($id);
@@ -151,8 +164,10 @@ class OrgaoController extends Controller
                             $b->delete();
                         }
                         $vmXvlans = $v->vlans;
+                        if($v->vlans()->count()){
                         $v->vlans()->detach($vmXvlans);
                         $v->delete();
+                        }
                     }                    
                 }
                 if($orgao->apps()->count()){
