@@ -55,7 +55,7 @@
                     <ul id="saveipform_errList"></ul>                    
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" class="ip form-control">
+                        <input type="text" class="ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Status</label>

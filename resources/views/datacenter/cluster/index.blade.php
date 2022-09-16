@@ -61,7 +61,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" class="ip form-control">
+                        <input type="text" class="ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Cluster</label>
@@ -107,6 +107,7 @@
                     <div class="form-group mb-3">
                         <label for="">Cluster:</label>
                         <label for="" id="vm_nome_cluster" style="font-style:italic;"></label>
+                        <input type="hidden" id="input_nome_cluster">
                     </div>             
                     <div class="form-group mb-3">
                         <label for="">Orgão</label>
@@ -142,7 +143,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" class="vm_ip form-control">
+                        <input type="text" class="vm_ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Resource Pool</label>
@@ -568,7 +569,7 @@ $(document).ready(function(){
                 'cluster_id': $('#add_cluster_id').val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
-            }   
+            }              
            
             $.ajax({            
                 url: 'adiciona-hostcluster',
@@ -635,6 +636,7 @@ $(document).ready(function(){
             $('#AddVirtualMachineModal').modal('show');
             $('#vm_add_cluster_id').val($(this).data("id"));
             $('#vm_nome_cluster').html('<Label id="vm_nome_cluster" style="font-style:italic;">'+labelHtml+'</Label>');
+            $('#input_nome_cluster').val( ($(this).data("nomecluster")).trim());
             $('#vm_saveform_errList').html('<ul id="vm_saveform_errList"></ul>'); 
 
         });
@@ -643,6 +645,11 @@ $(document).ready(function(){
 $(document).on('click','.add_virtualmachine',function(e){
             e.preventDefault();      
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+
+            var vmprojetoid = $('#vm_projeto_id').val();
+            var vmorgaoid = $('#vm_orgao_id').val();
+            var vmambienteid = $('#vm_ambiente_id').val()
+
             var vlans = new Array;
             $("input[name='vlans[]']:checked").each(function(){
                 vlans.push($(this).val());
@@ -650,23 +657,23 @@ $(document).on('click','.add_virtualmachine',function(e){
     
             var data = {
                 'cluster_id': $('#vm_add_cluster_id').val(),
-                'projeto_id': $('.vm_projeto_id').val(),
-                'orgao_id': $('.vm_orgao_id').val(),
-                'ambiente_id': $('.vm_ambiente_id').val(),
+                'projeto_id': vmprojetoid,
+                'orgao_id': vmorgaoid,
+                'ambiente_id': vmambienteid,
                 'nome_vm': ($('.vm_nome_vm').val()).trim(),
                 'cpu': ($('.vm_cpu').val()).trim(),
                 'memoria': ($('.vm_memoria').val()).trim(),
                 'disco': ($('.vm_disco').val()).trim(),
                 'ip': ($('.vm_ip').val()).trim(),
                 'resource_pool': ($('.vm_resource_pool').val()).trim(),
-                'cluster': ($('#vm_nome_cluster').val()).trim(),
+                'cluster': ($('#input_nome_cluster').val()).trim(),
                 'sistema_operacional': ($('.vm_sistema_operacional').val()).trim(),
                 'gatway': ($('.vm_gatway').val()).trim(),            
                 'vlans': vlans,
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
-            }    
-           
+            }   
+                      
             $.ajax({
                 url:'/datacenter/cluster-adiciona-vm/',
                 type:'POST',
@@ -686,7 +693,7 @@ $(document).on('click','.add_virtualmachine',function(e){
                         $('#vm_saveform_errList').html('<ul id="vm_saveform_errList"></ul>'); 
                         $('#success_message').html('<div id="success_message"></div>');                   
                         $('#success_message').addClass("alert alert-success");
-                        $('$success_message').text(response.message);
+                        $('#success_message').text(response.message);
                         $('#vm_addform').trigger('reset');
                         $('#AddVirtualMachineModal').modal('hide');
                         
