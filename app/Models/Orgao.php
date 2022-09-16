@@ -15,18 +15,18 @@ class Orgao extends Model
 
     public function virtualmachine()
     {
-        return $this->hasMany(VirtualMachine::class);
+        return $this->hasMany(VirtualMachine::class,'orgao_id');
     }
 
 
     public function apps()
     {
-        return $this->hasMany(App::class);
+        return $this->hasMany(App::class,'orgao_id');
     }   
 
     public function users()
     {
-        return $this->hasMany(User::class);
+        return $this->hasMany(User::class,'orgao_id');
     }
 
 

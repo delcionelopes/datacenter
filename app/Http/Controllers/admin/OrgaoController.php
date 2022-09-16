@@ -3,8 +3,12 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\App;
+use App\Models\Base;
 use Illuminate\Http\Request;
 use App\Models\Orgao;
+use App\Models\User;
+use App\Models\VirtualMachine;
 use Illuminate\Support\Facades\Validator;
 
 class OrgaoController extends Controller
@@ -134,13 +138,35 @@ class OrgaoController extends Controller
         if(($orgao->virtualmachine()->count())||($orgao->apps()->count())||($orgao->users()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
                 if($orgao->virtualmachine()->count()){
-                    $orgao->virtualmachine()->detach($vms);
+                    foreach ($vms as $vm) {
+                        $v = VirtualMachine::find($vm->id);
+                        $bases = $v->bases;
+                        foreach ($bases as $base) {
+                            $b = Base::find($base->id);
+                            $apps = $b->apps;
+                            foreach ($apps as $app) {
+                                $a = App::find($app->id);
+                                $a->delete();
+                            }
+                            $b->delete();
+                        }
+                        $vmXvlans = $v->vlans;
+                        $v->vlans()->detach($vmXvlans);
+                        $v->delete();
+                    }                    
                 }
                 if($orgao->apps()->count()){
-                    $orgao->apps()->detach($apps);
+                    foreach ($apps as $app) {
+                        $a = App::find($app->id);
+                        $a->delete();
+                    }                    
                 }
                 if($orgao->users()->count()){
-                    $orgao->users()->detach($users);
+                    $users = $orgao->users;
+                    foreach ($users as $user) {
+                        $u = User::find($user->id);
+                        $u->delete();
+                    }                    
                 }                
                 $status = 200;
                 $message = $orgao->nome.' excluído com sucesso!';

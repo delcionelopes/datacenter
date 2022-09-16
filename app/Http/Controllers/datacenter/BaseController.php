@@ -168,7 +168,10 @@ class BaseController extends Controller
         if(($base->apps()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){             
                 if($base->apps()->count()){
-                    $base->apps()->detach($apps);
+                    foreach ($apps as $app) {
+                        $a = App::find($app->id);
+                        $a->delete();
+                    }                  
                 }
                 $status = 200;
                 $message = $base->nome_base.' excluído com sucesso!'; 

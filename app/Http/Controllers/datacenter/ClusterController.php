@@ -5,6 +5,8 @@ namespace App\Http\Controllers\datacenter;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Ambiente;
+use App\Models\App;
+use App\Models\Base;
 use App\Models\Cluster;
 use Illuminate\Support\Facades\Validator;
 use App\models\Host;
@@ -155,10 +157,28 @@ class ClusterController extends Controller
         if(($cluster->hosts()->count())||($cluster->virtual_machines()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
                 if($cluster->hosts()->count()){
-                    $cluster->hosts()->detach($hosts);
+                    foreach ($hosts as $host) {
+                        $h = Host::find($host->id);
+                        $h->delete();
+                    }                    
                 }
                 if($cluster->virtual_machines()->count()){
-                    $cluster->virtual_machines()->detach($vms);
+                    foreach ($vms as $vm) {
+                        $v = VirtualMachine::find($vm->id);
+                        $bases = $v->bases;
+                        foreach ($bases as $base) {
+                            $b = Base::find($base->id);
+                            $apps = $b->apps;
+                            foreach ($apps as $app) {
+                                $a = App::find($app->id);
+                                $a->delete();
+                            }
+                            $b->delete();
+                        }
+                        $vmXvlans = $v->vlans;
+                        $v->vlans()->detach($vmXvlans);
+                        $v->delete();
+                    }                         
                 }
                 $status = 200;
                 $nomecluster = $cluster->nome_cluster;

@@ -5,6 +5,9 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Ambiente;
+use App\Models\App;
+use App\Models\Base;
+use App\Models\VirtualMachine;
 use Illuminate\Support\Facades\Validator;
 
 class AmbienteController extends Controller
@@ -121,10 +124,25 @@ class AmbienteController extends Controller
     public function destroy(int $id)
     {        
         $ambiente = $this->ambiente->find($id);
-        $vm = $ambiente->virtual_machine;  
+        $vms = $ambiente->virtual_machine;  
         if($ambiente->virtual_machine()->count()){          
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){                
-                $ambiente->virtual_machine()->detach($vm);                
+                foreach ($vms as $vm) {
+                    $v = VirtualMachine::find($vm->id);
+                    $bases = $v->bases;
+                    foreach ($bases as $base) {
+                        $b = Base::find($base->id);
+                        $apps = $b->apps;
+                        foreach ($apps as $app) {
+                            $a = App::find($app->id);
+                            $a->delete();
+                        }
+                        $b->delete();
+                    }
+                    $vmXvlans = $v->vlans;
+                    $v->vlans()->detach($vmXvlans);
+                    $v->delete();
+                }                                      
                 $status = 200;
                 $message = $ambiente->nome_ambiente.' excluído com sucesso!';                
                 $ambiente->delete();

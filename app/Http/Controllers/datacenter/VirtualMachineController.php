@@ -4,6 +4,7 @@ namespace App\Http\Controllers\datacenter;
 
 use App\Http\Controllers\Controller;
 use App\Models\Ambiente;
+use App\Models\App;
 use App\Models\Base;
 use App\Models\Cluster;
 use App\Models\Orgao;
@@ -250,7 +251,15 @@ class VirtualMachineController extends Controller
                     $virtualmachine->vlans()->detach($vl); //exclui o relacionamento
                 }
                 if($virtualmachine->bases()->count()){
-                    $virtualmachine->bases()->detach($bases);
+                    foreach ($bases as $base) {
+                        $b = $this->base->find($base->id);
+                        $apps = $b->apps;
+                        foreach ($apps as $app) {
+                            $a = App::find($app->id);
+                            $a->delete();
+                        }
+                        $b->delete();
+                    }                   
                 }
                 $status = 200;
                 $message = $virtualmachine->nome_vm.' foi excluído com sucesso!';

@@ -523,12 +523,7 @@
                                 $("#files"+response.manualid).replaceWith(labelhtml);                            
                                 //remove li correspondente na td da tabela html
                                 $('#up'+id).remove();                            
-                          /*   }
                         }
-                    });  
-                }
-    });            */
-}
                     } 
                 });
             }                                       

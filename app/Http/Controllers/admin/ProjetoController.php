@@ -3,8 +3,11 @@
 namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
+use App\Models\App;
+use App\Models\Base;
 use Illuminate\Http\Request;
 use App\Models\Projeto;
+use App\Models\VirtualMachine;
 use Illuminate\Support\Facades\Validator;
 
 class ProjetoController extends Controller
@@ -123,13 +126,40 @@ class ProjetoController extends Controller
         if(($projeto->bases()->count())||($projeto->virtual_machines()->count())||($projeto->apps()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
                 if($projeto->bases()->count()){
-                    $projeto->bases()->detach($bases);
+                    foreach ($bases as $base) {
+                        $b = Base::find($base->id);
+                        $aps = $b->apps;
+                        foreach ($aps as $ap) {
+                            $a = App::find($ap->id);
+                            $a->delete();
+                        }
+                        $b->delete();
+                    }
+                  
                 }
                 if($projeto->virtual_machines()->count()){
-                    $projeto->virtual_machines()->detach($vms);
+                    foreach ($vms as $vm) {
+                        $v = VirtualMachine::find($vm->id);
+                        $dbs = $v->bases;
+                        foreach ($dbs as $db) {
+                            $b = Base::find($db->id);
+                            $aps = $b->apps;
+                            foreach ($aps as $ap) {
+                                $a = App::find($ap->id);
+                                $a->delete();
+                            }
+                            $b->delete();
+                        }
+                        $vmXvlans = $v->vlans;
+                        $v->vlans()->detach($vmXvlans);
+                        $v->delete();
+                    }                                  
                 }
                 if($projeto->apps()->count()){
-                    $projeto->apps()->detach($apps);
+                    foreach ($apps as $app) {
+                        $a = App::find($app->id);
+                        $a->delete();
+                    }                 
                 }
                 $status = 200;
                 $message = $projeto->nome_projeto.' excluído com sucesso!';

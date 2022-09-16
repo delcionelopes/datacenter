@@ -154,7 +154,10 @@ class RedeController extends Controller
         $ips = $rede->cadastro_ips;
         if($rede->cadastro_ips()->count()){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
-                $rede->cadastro_ips()->detach($ips);
+                foreach ($ips as $ip) {
+                    $i = Cadastro_ip::find($ip->id);
+                    $i->delete();
+                }                
                 $status = 200;
                 $message = $rede->nome_rede.' foi excluído com sucesso!';
                 $rede->delete();

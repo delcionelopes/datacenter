@@ -4,6 +4,7 @@ namespace App\Http\Controllers\datacenter;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
+use App\Models\Cadastro_ip;
 use App\Models\Vlan;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Rede;
@@ -125,7 +126,17 @@ class vlanController extends Controller
                     $vlan->virtual_machines()->detach($vms);
                 }
                 if($vlan->redes()->count()){
-                    $vlan->redes()->detach($redes);
+                    foreach ($redes as $rede) {
+                        $r = $this->rede->find($rede->id);
+                        $ips = $r->cadastro_ips;
+                        if($r->cadastro_ips()->count()){
+                            foreach ($ips as $ip) {
+                                $i = Cadastro_ip::find($ip->id);
+                                $i->delete();
+                            }
+                        }
+                        $r->delete();
+                    }                    
                 }
                 $status = 200;
                 $message = $vlan->nome_vlan.' foi excluído com sucesso!';
