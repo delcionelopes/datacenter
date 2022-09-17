@@ -276,8 +276,7 @@
             <table class="table table-hover">
                 <thead class="sidebar-dark-primary" style="color: white">
                     <tr>                        
-                        <th scope="col">VM</th>
-                        <th scope="col">IP</th>                       
+                        <th scope="col">VM</th>                                           
                         <th scope="col">VLAN(s)</th>
                         <th scope="col">BASE(s)</th>                                         
                         <th scope="col">AÇÕES</th>                       
@@ -287,8 +286,7 @@
                 <tr id="novo" style="display:none;"></tr>
                     @forelse($virtualmachines as $vm)
                     <tr id="vm{{$vm->id}}">                        
-                        <th scope="row">{{$vm->nome_vm}}</th>
-                        <td>{{$vm->ip}}</td>                       
+                        <th scope="row">{{$vm->nome_vm}}</th>                                              
                         <td>                            
                         <div class="btn-group">                                
                                 <button type="button" class="btn btn-none dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -587,7 +585,6 @@ $(document).ready(function(){
                             linha2 = "";
                             linha1 = '<tr id="vm'+response.virtualmachine.id+'">\
                             <th scope="row">'+response.virtualmachine.nome_vm+'</th>\
-                            <td>'+response.virtualmachine.ip+'</td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" class="btn btn-none dropdown-toggle" data-toggle="dropdown" aria-expanded="false">\
@@ -695,7 +692,6 @@ $(document).ready(function(){
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
                             linha1 = '<tr id="vm'+response.virtualmachine.id+'">\
                             <th scope="row">'+response.virtualmachine.nome_vm+'</th>\
-                            <td>'+response.virtualmachine.ip+'</td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" class="btn btn-none dropdown-toggle" data-toggle="dropdown" aria-expanded="false">\
