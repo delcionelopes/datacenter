@@ -198,7 +198,7 @@ $(document).ready(function(){
                 },
                 title:nomevlan,
                 text: "Deseja excluir?",
-                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageUrl: '../../logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',

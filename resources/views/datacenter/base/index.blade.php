@@ -284,7 +284,7 @@ $(document).ready(function(){
                 },
                 title:nomebase,
                 text: "Deseja excluir?",
-                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageUrl: '../../logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -553,7 +553,7 @@ $(document).ready(function(){
         }); 
         //fim configura os selects do AddAppModal
         ///Inicio Novo App da base caso não possua nenhum
-        $('#AddApptModal').on('shown.bs.modal',function(){
+        $('#AddAppModal').on('shown.bs.modal',function(){
             $('#add_nome_app').focus();
         });
         $(document).on('click','.novo_app_btn',function(e){
@@ -588,10 +588,11 @@ $(document).ready(function(){
                 'bases_id': ins_base_id,
                 'nome_app': $('.add_nome_app').val(),
                 'dominio': $('.add_dominio').val(),
+                '_method':'PUT',
                 'https': add_https,     
                 '_token': CSRF_TOKEN,       
             };           
-    
+          
             $.ajax({
                 type: 'POST',
                 url: '/datacenter/armazena-app',

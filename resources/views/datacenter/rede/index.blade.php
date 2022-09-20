@@ -55,7 +55,7 @@
                     <ul id="saveipform_errList"></ul>                    
                     <div class="form-group mb-3">
                         <label for="">IP</label>
-                        <input type="text" class="ip form-control">
+                        <input type="text" class="ip form-control" data-mask="099.099.099.099">
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Status</label>
@@ -203,7 +203,7 @@ $(document).ready(function(){
                 },
                 title:nomerede,
                 text: "Deseja excluir?",
-                imageUrl: 'http://redmine.prodap.ap.gov.br/system/rich/rich_files/rich_files/000/000/004/original/logo_prodap.jpg',
+                imageUrl: '../../logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
