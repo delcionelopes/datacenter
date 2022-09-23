@@ -38,7 +38,7 @@
         {{-- CPF field --}}
         <div class="input-group mb-3">
             <input type="cpf" name="cpf" class="form-control @error('cpf') is-invalid @enderror"
-                value="{{ old('cpf') }}" placeholder="CPF">
+                value="{{ old('cpf') }}" placeholder="CPF" data-mask="000.000.000-00" data-mask-reverse="true">
 
             <div class="input-group-append">
                 <div class="input-group-text">
