@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">CPF</label>
-                        <input type="text" class="cpf form-control">
+                        <input type="text" class="cpf form-control" data-mask="000.000.000-00" data-mask-reverse="true">
                     </div>                                      
                     <div class="form-group mb-3">
                         <label for="">Matrícula</label>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">CPF</label>
-                        <input type="text" id="edit_cpf" class="cpf form-control">
+                        <input type="text" id="edit_cpf" class="cpf form-control" data-mask="000.000.000-00" data-mask-reverse="true">
                     </div>                                      
                     <div class="form-group mb-3">
                         <label for="">Matrícula</label>
