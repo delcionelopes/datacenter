@@ -26,7 +26,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">CPF</label>
-                        <input type="text" class="cpf form-control" data-mask="000.000.000-00" data-mask-reverse="true">
+                        <input type="input" class="cpf form-control" data-mask="000.000.000-00" data-mask-reverse="true">
                     </div>                                      
                     <div class="form-group mb-3">
                         <label for="">Matrícula</label>
@@ -94,7 +94,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">CPF</label>
-                        <input type="text" id="edit_cpf" class="cpf form-control" data-mask="000.000.000-00" data-mask-reverse="true">
+                        <input type="input" name="cpf" id="edit_cpf" class="cpf form-control" data-mask="000.000.000-00" data-mask-reverse="true">
                     </div>                                      
                     <div class="form-group mb-3">
                         <label for="">Matrícula</label>
@@ -223,7 +223,7 @@
 <script type="text/javascript">
 
 //Início escopo geral
-$(document).ready(function(){
+$(document).ready(function(){    
     //inicio delete usuário
     $(document).on('click','.delete_user_btn',function(e){
         e.preventDefault();     
@@ -308,8 +308,8 @@ $('#EditUserModal').on('shown.bs.modal',function(){
                     $('.inativo').attr('checked',true);
                     }else{
                     $('.inativo').attr('checked',false);
-                    }
-                    $('.cpf').val(response.user.cpf);
+                    }                    
+                    $('.cpf').val(response.user.cpf);                    
                     $('.matricula').val(response.user.matricula);
                     var opcaoorgao = response.user.orgao_id;
                     $('#edit_selorgao_id option')
