@@ -5,7 +5,7 @@
 @section('content')
     <!--AddProjetoModal-->
 
-<div class="modal fade" id="AddProjetoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="AddProjetoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
@@ -35,7 +35,7 @@
 <!--Fim AddProjetoModal-->
 
 <!--EditProjetoModal-->
-<div class="modal fade" id="EditProjetoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EditProjetoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
@@ -77,7 +77,7 @@
                             <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
                                 <i class="fas fa-search"></i>
                             </button>                                                                                                             
-                            <button type="button" class="AddProjetoModal_btn input-group-text border-0" style="background: transparent;border: none;"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="AddProjetoModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-plus"></i></button>
                         </div>                        
                     </div>                    
                 </form>                                

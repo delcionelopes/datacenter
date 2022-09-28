@@ -4,7 +4,7 @@
 
 @section('content')
    <!--AddManualForm-->
- <div class="modal fade" id="AddManualForm" tabindex="-1" role="dialog" aria-labelledby="titleModaLabel" aria-hidden="true">
+ <div class="modal fade animate__animated animate__bounce animate__faster" id="AddManualForm" tabindex="-1" role="dialog" aria-labelledby="titleModaLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
@@ -48,7 +48,7 @@
 <!--fim AddManualForm-->
 
 <!--EditManualForm-->
-<div class="modal fade" id="EditManualForm" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EditManualForm" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
@@ -92,7 +92,7 @@
 <!--fim EditManualForm-->
 
 <!--inicio upload multiplo de arquivos manuais-->
-<div class="modal fade" id="uploadPDFModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="uploadPDFModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
@@ -136,7 +136,7 @@
                             <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
                             <i class="fas fa-search"></i>
                             </button>                
-                            <button class="Add_Manual_btn input-group-text border-0" style="background: transparent;border: none;">
+                            <button class="Add_Manual_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;">
                             <i class="fas fa-plus"></i>
                             </button>            
                         </div>

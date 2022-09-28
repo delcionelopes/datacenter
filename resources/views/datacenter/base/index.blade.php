@@ -4,7 +4,7 @@
 
 @section('content')
     <!--inicio AddBaseModal -->
-<div class="modal fade" id="AddBaseModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="AddBaseModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
@@ -58,7 +58,7 @@
 <!-- fim AddBaseModal -->
 
 <!--inicio EditBaseModal -->
-<div class="modal fade" id="EditBaseModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EditBaseModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
@@ -113,7 +113,7 @@
 <!-- fim EditBaseModal -->
 
 <!-- início AddAppModal -->
-<div class="modal fade" id="AddAppModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="AddAppModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
@@ -197,7 +197,7 @@
                             <button type="submit" class="input-group-text border-0" id="search-addon" style="background:transparent;border: none;">
                                <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" data-nome_vm="{{$vm->nome_vm}}" class="AddBase_btn input-group-text border-0" style="background: transparent;border: none;">
+                            <button type="button" data-id="{{$id}}" data-nome_vm="{{$vm->nome_vm}}" class="AddBase_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;">
                                <i class="fas fa-plus"></i>
                             </button>                              
                         </div>
