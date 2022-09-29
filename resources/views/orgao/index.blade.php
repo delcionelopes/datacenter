@@ -24,7 +24,7 @@
                     </div>
                     <div class="form-group mb3">
                         <label for="">Telefone</label>
-                        <input type="text" class="telefone form-control">
+                        <input type="text" class="telefone form-control" placeholder="(00)00000-0000" data-mask="(00)00000-0000">
                     </div>
                 </form>
                 <div class="modal-footer">
@@ -62,7 +62,7 @@
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Telefone</label>
-                        <input type="text" id="edit_telefone" class="telefone form-control">
+                        <input type="text" id="edit_telefone" class="telefone form-control" placeholder="(00)00000-0000" data-mask="(00)00000-0000">
                     </div>                    
                 </form>
                 <div class="modal-footer">
