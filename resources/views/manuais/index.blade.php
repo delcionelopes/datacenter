@@ -160,7 +160,7 @@
                         <td>{{$manual->area_conhecimento->descricao}}</td>
                         <td id="uploads{{$manual->id}}">
                         <label id="files{{$manual->id}}">Files: {{$manual->uploads->count()}} </label><button type="button" id="upload_files_btn" data-manualid="{{$manual->id}}" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>    
-                        <ul id="listaarquivos">
+                        <ul id="listaarquivos{{$manual->id}}">
                         @if($manual->uploads->count())    
                             @foreach($manual->uploads as $upload)                                                        
                             <li id="up{{$upload->id}}">
@@ -368,9 +368,9 @@
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td id="uploads'+response.manual.id+'">\
                                     <label id="files'+response.manual.id+'">Files: '+response.uploads.count()+' </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
-                                    <ul id="listaarquivos">';
+                                    <ul id="listaarquivos'+response.manual.id+'">';
                                     if(response.uploads){  
-                                        $('#listaarquivos').innerHtml = '<ul id="listaarquivos"></ul>';                                      
+                                        $('#listaarquivos'+response.manual.id).innerHtml = '<ul id="listaarquivos'+response.manual.id+'"></ul>';                                      
                                         $.each(response.uploads,function(key,arq){                                           
                                             $('#listaarquivos').append('li id="up'+arq.id+'">\
                                             <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>\
@@ -461,7 +461,7 @@
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td id="uploads'+response.manual.id+'">\
                                     <label id="files'+response.manual.id+'">Files: 0 </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
-                                    <ul id="listaarquivos"></ul>\
+                                    <ul id="listaarquivos'+response.manual.id+'"></ul>\
                                     </td>\
                                     <td>\
                                     <div class="btn-group">\
@@ -627,15 +627,14 @@
                       $('#uploadmyform').trigger('reset');
                       $('#uploadPDFModal').modal('hide');
                       var labelhtml = '<label id="files'+response.manualid+'">Files: '+response.totalfiles+' </label>';
-                     $('#files'+response.manualid).replaceWith(labelhtml);                    
+                     $('#files'+response.manualid).replaceWith(labelhtml);                                         
                       $.each(response.arquivos,function(key,arq){
                       $('#up'+arq.id).remove();
-                     var item = '<li id="up'+arq.id+'">'+
-                                '<i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>'+
-                                '<i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="delete_file_btn fas fa-trash"></i>'+arq.nome_arquivo+
-                                '</li><br>';
-                       $('#listaarquivos').append(item);                
-                       });                                                                                                                                       
+                       var item = '<li id="up'+arq.id+'">\
+                                <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>\
+                                <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="delete_file_btn fas fa-trash"></i>'+arq.nome_arquivo+'</li><br>';                                
+                       $('#listaarquivos'+response.manualid).append(item);                
+                       });     
               } 
             }
                                      
