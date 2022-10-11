@@ -167,20 +167,10 @@ class ManualController extends Controller
     public function destroy(int $id)
     {
         $manual = $this->manual->find($id);  
-        $descricao = $this->manual->descricao;      
-        $uploads = $manual->uploads;        
-        if($manual->uploads()->count()){
-            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
-                foreach ($uploads as $upload) {
-                    $this->destroyFile($upload->id);
-                }                
-                $status = 200;
-                $message = $descricao.' excluído com sucesso!';
-                $manual->delete();
-            }else{
+        $descricao = $this->manual->descricao;              
+        if($manual->uploads()->count()){            
                 $status = 400;
-                $message = $descricao.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';                
-            }
+                $message = $descricao.' não pode ser excluído. Pois existem arquivos que dependem dele!';            
         }else{        
         $status = 200;
         $message = $descricao.' excluído com sucesso!';
