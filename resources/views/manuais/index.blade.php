@@ -155,8 +155,8 @@
                 <tbody id="lista_manual">  
                 <tr id="novo" style="display:none;"></tr>                  
                     @forelse($manuais as $manual)
-                    <tr id="man{{$manual->id}}">                       
-                        <th scope="row">{{$manual->descricao}}</th>
+                    <tr id="man{{$manual->id}}" data-toggle="tooltip" title="{{$manual->objetivo}}">
+                        <th scope="row">{{$manual->descricao}}</th>                        
                         <td>{{$manual->area_conhecimento->descricao}}</td>
                         <td id="uploads{{$manual->id}}">
                         <label id="files{{$manual->id}}">Files: {{$manual->uploads->count()}} </label><button type="button" id="upload_files_btn" data-manualid="{{$manual->id}}" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>    
@@ -363,7 +363,7 @@
                         var tupla = "";
                         var linha1 = "";
                         var linha2 = "";
-                            linha1 = '<tr id="man'+response.manual.id+'">\
+                            linha1 = '<tr id="man'+response.manual.id+'" data-toggle="tooltip" title="'+response.manual.objetivo+'">\
                                     <th scope="row">'+response.manual.descricao+'</th>\
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td id="uploads'+response.manual.id+'">\
@@ -456,7 +456,7 @@
                         var linha0 = "";
                         var linha1 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
-                            linha1 = '<tr id="man'+response.manual.id+'">\
+                            linha1 = '<tr id="man'+response.manual.id+'" data-toggle="tooltip" title="'+response.manual.objetivo+'">\
                                     <th scope="row">'+response.manual.descricao+'</th>\
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td id="uploads'+response.manual.id+'">\
@@ -473,8 +473,7 @@
                         if(!$('#nadaencontrado').html==""){
                             $('#nadaencontrado').remove();
                         }                        
-                            tupla = linha0+linha1;                           
-                            console.log(tupla);
+                            tupla = linha0+linha1;                                                       
                          $("#novo").replaceWith(tupla);                                         
                     }
                 }
