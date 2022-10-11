@@ -50,12 +50,10 @@ class OrgaoController extends Controller
         
 
         $validator = Validator::make($request->all(),[
-            'nome' => 'required|max:191',
-            'telefone' => 'required',
+            'nome' => 'required|max:191',           
         ],[
             'nome.required'   => 'O campo NOME é obrigatório!',
-            'nome.max'        => 'O NOME deve conter no máximo :max caracteres!',
-            'telefone.required' => 'O campo TELEFONE é obrigatório!',
+            'nome.max'        => 'O NOME deve conter no máximo :max caracteres!',            
         ]);
 
         if($validator->fails()){
@@ -101,12 +99,10 @@ class OrgaoController extends Controller
     public function update(Request $request,int $id)
     {        
         $validator = Validator::make($request->all(),[
-            'nome'     =>  'required|max:191',
-            'telefone' =>  'required',
+            'nome'     =>  'required|max:191',            
         ],[
             'nome.required'  => 'O campo NOME é obrigatório!',
-            'nome.max'       => 'O NOME deve conter no máximo :max caracteres',
-            'telefone.required'  => 'O campo TELEFONE é obrigatório!',
+            'nome.max'       => 'O NOME deve conter no máximo :max caracteres',            
         ]);
 
         if($validator->fails()){
