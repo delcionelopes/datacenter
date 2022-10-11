@@ -169,11 +169,11 @@ class ManualController extends Controller
         $manual = $this->manual->find($id);  
         $descricao = $this->manual->descricao;              
         if($manual->uploads()->count()){            
-                $status = 400;
-                $message = $descricao.' não pode ser excluído. Pois existem arquivos que dependem dele!';            
-        }else{        
-        $status = 200;
+            $message = 'Este registro não pode ser excluído. Pois existem arquivos que dependem dele!'; 
+            $status = 400;                           
+        }else{                
         $message = $descricao.' excluído com sucesso!';
+        $status = 200;
         $manual->delete();
         }
         return response()->json([

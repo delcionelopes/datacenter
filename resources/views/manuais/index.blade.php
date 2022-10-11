@@ -517,7 +517,10 @@
                             '_token':CSRF_TOKEN,
                         },
                         success:function(response){
-                            if(response.status==200){                            
+                            if(response.status==200){                                     
+                                $('#success_message').html('<div id="success_message"></div>');
+                                $('#success_message').addClass('alert alert-success');
+                                $('#success_message').text(response.message);                       
                                 //atualiza qtd arquivos
                                 var labelhtml = '<label id="files'+response.manualid+'">Files: '+response.totalfiles+' </label>';
                                 $("#files"+response.manualid).replaceWith(labelhtml);                            
