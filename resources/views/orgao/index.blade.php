@@ -274,7 +274,7 @@
                         }else{  
                             $('#updateform_errList').html('<ul id="updateform_errList"></ul>');        
                             $('#success_message').html('<div id="success_message"></div>');                    
-                            $('#sucess_message').addClass('alert alert-success');
+                            $('#success_message').addClass('alert alert-success');
                             $('#success_message').text(response.message);
                             $('.update_orgao').text("Atualizado");
     
