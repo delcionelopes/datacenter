@@ -2,12 +2,14 @@
 
 use App\Http\Controllers\admin\AmbienteController;
 use App\Http\Controllers\admin\Area_ConhecimentoController;
-use App\Http\Controllers\Admin\ManualController;
+use App\Http\Controllers\admin\ManualController;
 use App\Http\Controllers\admin\OrgaoController;
 use App\Http\Controllers\admin\PlataformaController;
 use App\Http\Controllers\admin\ProjetoController;
-use App\Http\Controllers\Admin\Sub_Area_ConhecimentoController;
+use App\Http\Controllers\admin\Sub_Area_ConhecimentoController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\admin\TemaController;
+use App\Http\Controllers\admin\ArtigoController;
 use App\Http\Controllers\datacenter\AppController;
 use App\Http\Controllers\datacenter\BaseController;
 use App\Http\Controllers\datacenter\CadastroIpController;
@@ -21,13 +23,39 @@ use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
+Route::get('/', [App\Http\Controllers\Page\HomeController::class, 'master'])->name('home');
 
 
 Route::group(['middleware'=>['auth']],function(){
-       ///ADMIN 
+       ///ADMIN        
        Route::prefix('admin')->name('admin.')->namespace('admin')->group(function(){
-    
+
+       //administração da frontpage
+       
+        Route::prefix('artigos')->name('artigos.')->group(function(){
+        Route::get('/index',[ArtigoController::class, 'index'])->name('index');         
+        Route::get('/create',[ArtigoController::class,'create'])->name('create');
+        Route::post('/store',[ArtigoController::class,'store'])->name('store');
+        Route::get('/edit/{id}',[ArtigoController::class,'edit'])->name('edit');
+        Route::put('/update/{id}',[ArtigoController::class,'update'])->name('update');
+        Route::delete('/delete/{id}',[ArtigoController::class,'destroy'])->name('delete');
+        Route::get('/edit-capa/{id}',[ArtigoController::class,'editCapa']);
+        Route::put('/upload-capa/{id}',[ArtigoController::class,'uploadCapa']);
+        Route::post('/delete-capa/{id}',[ArtigoController::class,'deleteCapa']);
+        Route::get('/edit-arquivo/{id}',[ArtigoController::class,'editArquivo']);
+        Route::put('/upload-arquivo/{id}',[ArtigoController::class,'uploadArquivo']);
+        Route::delete('/delete-arquivo/{id}',[ArtigoController::class,'deleteArquivo']);            
+        });  
+        
+        Route::prefix('tema')->name('tema.')->group(function(){
+        Route::get('/index',[TemaController::class,'index'])->name('index');
+        Route::post('/store',[TemaController::class,'store']);
+        Route::get('/edit/{id}',[TemaController::class,'edit']);
+        Route::put('/update/{id}',[TemaController::class,'update']);
+        Route::delete('/delete/{id}',[TemaController::class,'destroy']);
+        });          
+       //fim administração da frontpage
+       
         //Rotas para a view index de ambiente    
         Route::get('index-ambientes',[AmbienteController::class,'index'])->name('ambiente.index');
         Route::delete('delete-ambiente/{id}',[AmbienteController::class,'destroy']);
@@ -93,9 +121,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::put('moderador-user/{id}', [UserController::class,'moderadorUsuario']);
         Route::put('inativo-user/{id}', [UserController::class,'inativoUsuario']);   
 
-        });        
-
-
+        });                
 
         ///DATACENTER
         Route::prefix('datacenter')->name('datacenter.')->namespace('datacenter')->group(function(){
@@ -163,7 +189,20 @@ Route::group(['middleware'=>['auth']],function(){
          Route::put('update-app/{id}',[AppController::class,'update']);
          Route::put('adiciona-app',[AppController::class,'store']);
          Route::put('https-app/{id}',[AppController::class,'httpsApp']);
-        });        
-        
+
+         Route::get('sistema', [App\Http\Controllers\HomeController::class, 'index'])->name('sistema'); //index do sistema
+        });    
     
-    });
+    }); //fim do escopo do middleware auth
+
+    Route::namespace('App\Http\Controllers\Page')->name('page.')->group(function(){
+        Route::get('/','HomeController@master')->name('master');
+        Route::get('/artigo/{slug}','HomeController@detail')->name('detail');
+        Route::get('/download-arquivo/{id}','HomeController@downloadArquivo')->name('download');
+        Route::get('/tema/{slug}','TemaArtigoController@index')->name('tema');
+        Route::get('/show-perfil/{id}','HomeController@showPerfil')->name('showperfil');
+        Route::put('/perfil/{id}','HomeController@perfilUsuario')->name('perfil');  
+        Route::post('/salvar-comentario','ComentarioController@salvarComentario');
+        Route::delete('/delete-comentario/{id}','ComentarioController@deleteComentario');
+        Route::get('/enviar-email/{slug}','HomeController@enviarEmail');
+      });
