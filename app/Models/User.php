@@ -27,11 +27,26 @@ class User extends Authenticatable
         'orgao_id',  
         'cpf',
         'matricula',
+        'link_instagram',
+        'link_facebook',
+        'link_site',
     ];
 
     public function orgao()
     {
         return $this->belongsTo(Orgao::class);
+    }
+
+    public function artigos(){
+        return $this->hasMany(Artigo::class);
+    }
+
+    public function comentarios(){
+        return $this->hasMany(Comentario::class);
+    }
+
+    public function arquivos(){
+        return $this->hasMany(Arquivo::class);
     }
 
     /**

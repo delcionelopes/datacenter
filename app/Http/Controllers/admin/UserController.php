@@ -99,7 +99,10 @@ class UserController extends Controller
             'avatar'  => $filePath,
             'orgao_id' => $request->input('orgao_id'),
             'matricula' => $request->input('matricula'),
-            'cpf' => $request->input('cpf'),            
+            'cpf' => $request->input('cpf'),           
+            'link_instagram' => $request->input('link_instagram'),
+            'link_facebook' => $request->input('link_facebook'),
+            'link_site' => $request->input('link_site'), 
         ];
         $user = $this->user->create($data);
         return response()->json([
@@ -198,7 +201,10 @@ class UserController extends Controller
         }
         $data['matricula'] = $request->input('matricula');
         $data['cpf'] = $request->input('cpf');
-        $data['orgao_id'] = $request->input('orgao_id');        
+        $data['orgao_id'] = $request->input('orgao_id');   
+        $data['link_instagram'] = $request->input('link_instagram');
+        $data['link_facebook'] = $request->input('link_facebook');
+        $data['link_site'] = $request->input('link_site');
         $user->update($data);
         $u = User::find($id);
         return response()->json([

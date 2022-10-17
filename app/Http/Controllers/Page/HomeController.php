@@ -42,8 +42,7 @@ class HomeController extends Controller
         ]);
     }
 
-    public function detail($slug){
-
+    public function detail($slug){        
         setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
@@ -51,7 +50,7 @@ class HomeController extends Controller
 
         $query = Comentario::query()
                  ->where('artigos_id','=',$artigo->id);
-        $comentarios = $query->orderByDesc('id')->paginate(10);             
+        $comentarios = $query->orderByDesc('id')->paginate(10);                    
 
         return view('page.artigos.detail',[
             'artigo' => $artigo,
@@ -79,7 +78,7 @@ class HomeController extends Controller
             ]);
     }
 
-    public function perfilUsuario(Request $request,$id){        
+    public function perfilUsuario(Request $request,$id){                
         $validator = Validator::make($request->all(),[
             'name' => 'required|max:100',
             'email' => 'required|email|max:100',
@@ -110,7 +109,7 @@ class HomeController extends Controller
             unlink($antigoPath);
             }
           }
-        //upload do novo arquivo
+        //upload do novo arquivo se houver
         $file = $request->file('imagem');                           
         $fileName =  $user->id.'_'.$file->getClientOriginalName();
         $filePath = 'avatar/'.$fileName;
@@ -118,15 +117,17 @@ class HomeController extends Controller
         $file->move($storagePath,$fileName);
         }        
         $data['name'] = $request->input('name');
-        $data['email'] = $request->input('email');
+        $data['email'] = strtolower($request->input('email'));
         $data['password'] = bcrypt($request->input('password'));        
-        if($filePath!=""){
+        if($filePath){
         $data['avatar']  = $filePath;
         }
-        $data['link_instagram'] = $request->input('link_instagram');
-        $data['link_facebook'] = $request->input('link_facebook');
-        $data['link_site'] = $request->input('link_site');        
+        $data['link_instagram'] = strtolower($request->input('link_instagram'));
+        $data['link_facebook'] = strtolower($request->input('link_facebook'));
+        $data['link_site'] = strtolower($request->input('link_site'));                
+        
         $user->update($data);          
+
         return response()->json([
             'status' => 200,            
         ]);

@@ -18,15 +18,19 @@ use App\Http\Controllers\datacenter\HostController;
 use App\Http\Controllers\datacenter\RedeController;
 use App\Http\Controllers\datacenter\VirtualMachineController;
 use App\Http\Controllers\datacenter\vlanController;
+use App\Http\Controllers\Page\ComentarioController;
+use App\Http\Controllers\Page\TemaArtigoController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
 Route::get('/', [App\Http\Controllers\Page\HomeController::class, 'master'])->name('home');
+//Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 
-Route::group(['middleware'=>['auth']],function(){
+Route::group(['middleware'=> ['auth']],function(){
+
        ///ADMIN        
        Route::prefix('admin')->name('admin.')->namespace('admin')->group(function(){
 
@@ -121,7 +125,7 @@ Route::group(['middleware'=>['auth']],function(){
         Route::put('moderador-user/{id}', [UserController::class,'moderadorUsuario']);
         Route::put('inativo-user/{id}', [UserController::class,'inativoUsuario']);   
 
-        });                
+        });                      
 
         ///DATACENTER
         Route::prefix('datacenter')->name('datacenter.')->namespace('datacenter')->group(function(){
@@ -188,21 +192,21 @@ Route::group(['middleware'=>['auth']],function(){
          Route::get('edit-app/{id}',[AppController::class,'edit']);
          Route::put('update-app/{id}',[AppController::class,'update']);
          Route::put('adiciona-app',[AppController::class,'store']);
-         Route::put('https-app/{id}',[AppController::class,'httpsApp']);
-
-         Route::get('sistema', [App\Http\Controllers\HomeController::class, 'index'])->name('sistema'); //index do sistema
+         Route::put('https-app/{id}',[AppController::class,'httpsApp']);         
         });    
-    
-    }); //fim do escopo do middleware auth
 
-    Route::namespace('App\Http\Controllers\Page')->name('page.')->group(function(){
-        Route::get('/','HomeController@master')->name('master');
-        Route::get('/artigo/{slug}','HomeController@detail')->name('detail');
-        Route::get('/download-arquivo/{id}','HomeController@downloadArquivo')->name('download');
-        Route::get('/tema/{slug}','TemaArtigoController@index')->name('tema');
-        Route::get('/show-perfil/{id}','HomeController@showPerfil')->name('showperfil');
-        Route::put('/perfil/{id}','HomeController@perfilUsuario')->name('perfil');  
-        Route::post('/salvar-comentario','ComentarioController@salvarComentario');
-        Route::delete('/delete-comentario/{id}','ComentarioController@deleteComentario');
-        Route::get('/enviar-email/{slug}','HomeController@enviarEmail');
-      });
+        Route::get('sistema', [App\Http\Controllers\HomeController::class, 'index'])->name('sistema'); //index do sistema      
+
+    }); //fim do escopo do middleware auth
+    
+    Route::prefix('page')->name('page.')->group(function(){
+      Route::get('/',[App\Http\Controllers\Page\HomeController::class,'master'])->name('master');
+      Route::get('/artigo/{slug}',[App\Http\Controllers\Page\HomeController::class,'detail'])->name('detail');
+      Route::get('/download-arquivo/{id}',[App\Http\Controllers\Page\HomeController::class,'downloadArquivo'])->name('download');
+      Route::get('/tema/{slug}',[TemaArtigoController::class,'index'])->name('tema');
+      Route::get('/show-perfil/{id}',[App\Http\Controllers\Page\HomeController::class,'showPerfil'])->name('showperfil');
+      Route::put('/perfil/{id}',[App\Http\Controllers\Page\HomeController::class,'perfilUsuario'])->name('perfil');  
+      Route::post('/salvar-comentario',[ComentarioController::class,'salvarComentario']);
+      Route::delete('/delete-comentario/{id}',[ComentarioController::class,'deleteComentario']);
+      Route::get('/enviar-email/{slug}',[App\Http\Controllers\Page\HomeController::class,'enviarEmail']);      
+    });        

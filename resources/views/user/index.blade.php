@@ -58,6 +58,18 @@
                        </span>                       
                      </div>  
                      <!--arquivo de imagem-->                                                      
+                     <div class="form-group mb-3">
+                        <label for="">URL Linkedin</label>
+                        <input type="text" class="link_instagram form-control">
+                    </div>                                   
+                    <div class="form-group mb-3">
+                        <label for="">URL Facebook</label>
+                        <input type="text" class="link_facebook form-control">
+                    </div>                                   
+                    <div class="form-group mb-3">
+                        <label for="">URL Site</label>
+                        <input type="text" class="link_site form-control">
+                    </div>                                   
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                 <button type="submit" class="btn btn-primary add_user">Salvar</button>
@@ -131,7 +143,19 @@
                           <input id="upimagem" type="file" name="imagem" accept="image/x-png,image/gif,image/jpeg">
                        </span>                       
                      </div>  
-                     <!--arquivo de imagem-->                
+                     <!--arquivo de imagem--> 
+                     <div class="form-group mb-3">
+                        <label for="">URL Linkedin</label>
+                        <input type="text" id="edit_link_instagram" class="link_instagram form-control">
+                    </div>                                   
+                    <div class="form-group mb-3">
+                        <label for="">URL Facebook</label>
+                        <input type="text" id="edit_link_facebook" class="link_facebook form-control">
+                    </div>                                   
+                    <div class="form-group mb-3">
+                        <label for="">URL Site</label>
+                        <input type="text" id="edit_link_site" class="link_site form-control">
+                    </div>                                   
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
                 <button type="submit" class="btn btn-primary update_user">Atualizar</button>
@@ -311,6 +335,9 @@ $('#EditUserModal').on('shown.bs.modal',function(){
                     }                    
                     $('.cpf').val(response.user.cpf);                    
                     $('.matricula').val(response.user.matricula);
+                    $('.link_instagram').val(response.user.link_instagram);
+                    $('.link_facebook').val(response.user.link_facebook);
+                    $('.link_site').val(response.user.link_site);
                     var opcaoorgao = response.user.orgao_id;
                     $('#edit_selorgao_id option')
                     .removeAttr('selected')
@@ -347,8 +374,11 @@ $('#EditUserModal').on('shown.bs.modal',function(){
         $("#edit_inativo:checked").each(function(){inativo = true;});                     
         var id = $('#edit_user_id').val();
         var data = new FormData();
-            data.append('name',($('#edit_name').val()).trim());
+            data.append('name',($('#edit_name').val()).trim());            
             data.append('email',$('#edit_email').val());
+            data.append('link_instagram',($('#edit_link_instagram').val()).trim());
+            data.append('link_facebook',($('#edit_link_facebook').val()).trim());
+            data.append('link_site',($('#edit_link_site').val()).trim());
             data.append('password',$('#edit_password').val());
             data.append('moderador',moderador);
             data.append('inativo',inativo),
@@ -471,6 +501,9 @@ $('#EditUserModal').on('shown.bs.modal',function(){
         var data = new FormData();        
             data.append('name',($('.name').val()).trim());
             data.append('email',($('.email').val()).trim());
+            data.append('link_instagram',($('.link_instagram').val()).trim());
+            data.append('link_facebook',($('.link_facebook').val()).trim());
+            data.append('link_site',($('.link_site').val()).trim());
             data.append('password',($('.password').val()).trim());
             data.append('moderador',moderador);
             data.append('cpf',($('.cpf').val()).trim());

@@ -23,7 +23,8 @@
                 <h5 class="modal-title" id="titleModalLabel">Atualize o seu perfil</h5>                
             </div>
             <div class="modal-body form-horizontal">
-                <form id="editform" name="editfom" class="form-horizontal" role="form" enctype="multipart/form-data">
+                <form id="editform" name="editfom" class="form-horizontal" role="form" enctype="multipart/form-data" method="POST">
+                    @csrf
                     <ul id="updateform_errList"></ul>
                     <input type="hidden" id="edit_user_id" value="{{$user->id}}">
                     <div class="form-group mb-3">
@@ -39,7 +40,7 @@
                         <input type="password" id="edit_password" class="password form-control">
                     </div>                                        
                     <div class="form-group mb-3">
-                        <label for="">URL Instagram</label>
+                        <label for="">URL Linkedin</label>
                         <input type="text" id="edit_link_instagram" class="link_instagram form-control" value="{{$user->link_instagram}}">
                     </div>                                        
                     <div class="form-group mb-3">
@@ -102,7 +103,7 @@ $(document).on('click','.update_user',function(e){
             data.append('imagem',$('#upimagem')[0].files[0]);
             data.append('_enctype','multipart/form-data');
             data.append('_token',CSRF_TOKEN);
-            data.append('_method','put');                           
+            data.append('_method','put');                                       
         $.ajax({
             type:'POST',            
             dataType:'json',            

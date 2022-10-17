@@ -12,7 +12,11 @@
                             <span class="meta">
                                 Postado por
                                 <a href="#!">{{$artigo->user->name}}</a>
+                                @if($artigo->user->avatar)
                                 <img src="{{asset('/storage/'.$artigo->user->avatar)}}" class="rounded-circle" width="50">
+                                @else
+                                <img src="../../user.png" class="rounded-circle" width="50">
+                                @endif
                                 <span class="caret"></span><br>                               
                                 {{ucwords(strftime('%A, %d de %B de %Y', strtotime($artigo->created_at)))}}
                             </span>
@@ -79,6 +83,8 @@
                     <div class="col-14">                                    
                         @if($comentario->user->avatar)    
                         <img id="avatar" src="{{asset('storage/' . $comentario->user->avatar)}}" alt="Foto de {{$comentario->user->name}}" class="rounded-circle" width="40">
+                        @else
+                        <img id="avatar" src="../../user.png" alt="Usuário" class="rounded-circle" width="40">
                         @endif                                                                                                               
                         <small><strong>{{$comentario->user->name}}</strong></small>
                         <small class="text-muted">enviado em {{date('d/m/Y H:i:s',strtotime($comentario->created_at))}}</small>                                                
@@ -120,7 +126,7 @@
                                 <a href="{{asset($artigo->user->link_instagram)}}" target="_blank">
                                     <span class="fa-stack fa-lg">
                                         <i class="fas fa-circle fa-stack-2x"></i>
-                                        <i class="fab fa-instagram fa-stack-1x fa-inverse"></i>
+                                        <i class="fab fa-linkedin fa-stack-1x fa-inverse"></i>
                                     </span>
                                 </a>
                             </li>

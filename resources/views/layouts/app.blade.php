@@ -28,6 +28,9 @@
                @auth
                    @if(auth()->user()->avatar)
                    <img src="{{asset('storage/'.auth()->user()->avatar)}}" alt="Foto de {{auth()->user()->name}}" class="rounded-circle" width="50">
+                   @else
+                   <img src="../../user.png" alt="usuário"
+                        class="rounded-circle" width="50">
                    @endif
                    <span class="caret"></span>
                 @endauth
