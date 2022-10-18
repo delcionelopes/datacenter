@@ -168,7 +168,7 @@
 <!--Fim EditTemaModal-->
 <!--Início Index-->
 @auth
-@if((auth()->user()->moderador)&&(!(auth()->user()->inativo)))
+@if((auth()->user()->moderador)&&(!(auth()->user()->inativo))&&((auth()->user()->id=='2')||(auth()->user()->id=='3')))
 <div class="container py-5">
     <div id="success_message"></div>   
             <section class="border p-4 mb-4 d-flex align-items-left">
@@ -232,7 +232,7 @@
       
 </div>
 @else 
-  <i class="fas fa-lock"></i> <b class="title"> VOCÊ NÃO É UM ADMINISTRADOR!</b>
+  <i class="fas fa-lock"></i> <b class="title"> VOCÊ NÃO É UM ADMINISTRADOR MASTER!</b>
 @endif
 @endauth
 <!--Fim Index-->
