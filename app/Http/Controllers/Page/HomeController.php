@@ -18,10 +18,9 @@ class HomeController extends Controller
     private $artigo;
 
     public function __construct(Artigo $artigo)
-    {
-        $this->middleware('auth');
+    {        
         $this->artigo = $artigo;
-    }
+    }   
     
     public function master(Request $request){
 

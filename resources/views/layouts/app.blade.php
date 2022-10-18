@@ -43,7 +43,7 @@
                 <ul class="navbar-nav ms-auto py-4 py-lg-0">
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('page.master')}}">Home</a></li>                
                 @auth                
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('datacenter.sistema')}}">DATACENTER</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('sistema.index')}}">DATACENTER</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('admin.artigos.index')}}">Artigos</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('admin.tema.index')}}">Temas</a></li>                
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" 

@@ -52,7 +52,7 @@
                 @endguest
                 @auth
                 @if((auth()->user()->moderador) && (auth()->user()->inativo!=1))
-                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('datacenter.sistema')}}">DATACENTER</a></li>
+                <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('sistema.index')}}">DATACENTER</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('admin.artigos.index')}}">Artigos</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('admin.tema.index')}}">Temas</a></li>                                                        
                 @endif   

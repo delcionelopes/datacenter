@@ -8,8 +8,6 @@ use App\Http\Controllers\admin\PlataformaController;
 use App\Http\Controllers\admin\ProjetoController;
 use App\Http\Controllers\admin\Sub_Area_ConhecimentoController;
 use App\Http\Controllers\admin\UserController;
-use App\Http\Controllers\admin\TemaController;
-use App\Http\Controllers\admin\ArtigoController;
 use App\Http\Controllers\datacenter\AppController;
 use App\Http\Controllers\datacenter\BaseController;
 use App\Http\Controllers\datacenter\CadastroIpController;
@@ -18,46 +16,51 @@ use App\Http\Controllers\datacenter\HostController;
 use App\Http\Controllers\datacenter\RedeController;
 use App\Http\Controllers\datacenter\VirtualMachineController;
 use App\Http\Controllers\datacenter\vlanController;
-use App\Http\Controllers\Page\ComentarioController;
-use App\Http\Controllers\Page\TemaArtigoController;
+use App\Http\Controllers\HomeController;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
 Auth::routes();
 
-Route::get('/', [App\Http\Controllers\Page\HomeController::class, 'master'])->name('home');
-//Route::get('/', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
-
+Route::get('/home', [App\Http\Controllers\Page\HomeController::class, 'master'])->name('home');
 
 Route::group(['middleware'=> ['auth']],function(){
 
        ///ADMIN        
-       Route::prefix('admin')->name('admin.')->namespace('admin')->group(function(){
+    Route::prefix('admin')->namespace('App\Http\Controllers\admin')->name('admin.')->group(function(){
+      //Administração da frontpage
+    Route::prefix('artigos')->name('artigos.')->group(function(){
+        Route::get('/index','ArtigoController@index')->name('index');         
+        Route::get('/create','ArtigoController@create')->name('create');
+        Route::post('/store','ArtigoController@store')->name('store');
+        Route::get('/edit/{id}','ArtigoController@edit')->name('edit');
+        Route::put('/update/{id}','ArtigoController@update')->name('update');
+        Route::delete('/delete/{id}','ArtigoController@destroy')->name('delete');
+        Route::get('/edit-capa/{id}','ArtigoController@editCapa');
+        Route::put('/upload-capa/{id}','ArtigoController@uploadCapa');
+        Route::post('/delete-capa/{id}','ArtigoController@deleteCapa');
+        Route::get('/edit-arquivo/{id}','ArtigoController@editArquivo');
+        Route::put('/upload-arquivo/{id}','ArtigoController@uploadArquivo');
+        Route::delete('/delete-arquivo/{id}','ArtigoController@deleteArquivo');            
+    });  
 
-       //administração da frontpage
-       
-        Route::prefix('artigos')->name('artigos.')->group(function(){
-        Route::get('/index',[ArtigoController::class, 'index'])->name('index');         
-        Route::get('/create',[ArtigoController::class,'create'])->name('create');
-        Route::post('/store',[ArtigoController::class,'store'])->name('store');
-        Route::get('/edit/{id}',[ArtigoController::class,'edit'])->name('edit');
-        Route::put('/update/{id}',[ArtigoController::class,'update'])->name('update');
-        Route::delete('/delete/{id}',[ArtigoController::class,'destroy'])->name('delete');
-        Route::get('/edit-capa/{id}',[ArtigoController::class,'editCapa']);
-        Route::put('/upload-capa/{id}',[ArtigoController::class,'uploadCapa']);
-        Route::post('/delete-capa/{id}',[ArtigoController::class,'deleteCapa']);
-        Route::get('/edit-arquivo/{id}',[ArtigoController::class,'editArquivo']);
-        Route::put('/upload-arquivo/{id}',[ArtigoController::class,'uploadArquivo']);
-        Route::delete('/delete-arquivo/{id}',[ArtigoController::class,'deleteArquivo']);            
-        });  
-        
-        Route::prefix('tema')->name('tema.')->group(function(){
-        Route::get('/index',[TemaController::class,'index'])->name('index');
-        Route::post('/store',[TemaController::class,'store']);
-        Route::get('/edit/{id}',[TemaController::class,'edit']);
-        Route::put('/update/{id}',[TemaController::class,'update']);
-        Route::delete('/delete/{id}',[TemaController::class,'destroy']);
-        });          
+    Route::prefix('tema')->name('tema.')->group(function(){
+        Route::get('/index','TemaController@index')->name('index');
+        Route::post('/store','TemaController@store');
+        Route::get('/edit/{id}','TemaController@edit');
+        Route::put('/update/{id}','TemaController@update');
+        Route::delete('/delete/{id}','TemaController@destroy');
+      }); 
+
+    Route::prefix('user')->name('user.')->group(function(){
+        Route::get('/index','UserController@index')->name('index');
+        Route::put('/store','UserController@store');
+        Route::get('/edit/{id}','UserController@edit');
+        Route::put('/update/{id}','UserController@update');
+        Route::delete('/delete/{id}','UserController@destroy');
+        Route::post('/moderador/{id}', 'UserController@moderadorUsuario');
+        Route::post('/inativo/{id}', 'UserController@inativoUsuario');
+      });      
        //fim administração da frontpage
        
         //Rotas para a view index de ambiente    
@@ -128,8 +131,9 @@ Route::group(['middleware'=> ['auth']],function(){
         });                      
 
         ///DATACENTER
-        Route::prefix('datacenter')->name('datacenter.')->namespace('datacenter')->group(function(){
-        //Rotas para a view index de clusters
+        Route::prefix('datacenter')->name('datacenter.')->namespace('datacenter')->group(function(){       
+
+          //Rotas para a view index de clusters
         Route::get('index-cluster',[ClusterController::class,'index'])->name('cluster.index');
         Route::delete('delete-cluster/{id}',[ClusterController::class,'destroy']);
         Route::get('edit-cluster/{id}',[ClusterController::class,'edit']);
@@ -193,20 +197,23 @@ Route::group(['middleware'=> ['auth']],function(){
          Route::put('update-app/{id}',[AppController::class,'update']);
          Route::put('adiciona-app',[AppController::class,'store']);
          Route::put('https-app/{id}',[AppController::class,'httpsApp']);         
-        });    
-
-        Route::get('sistema', [App\Http\Controllers\HomeController::class, 'index'])->name('sistema'); //index do sistema      
+        });           
 
     }); //fim do escopo do middleware auth
     
-    Route::prefix('page')->name('page.')->group(function(){
-      Route::get('/',[App\Http\Controllers\Page\HomeController::class,'master'])->name('master');
-      Route::get('/artigo/{slug}',[App\Http\Controllers\Page\HomeController::class,'detail'])->name('detail');
-      Route::get('/download-arquivo/{id}',[App\Http\Controllers\Page\HomeController::class,'downloadArquivo'])->name('download');
-      Route::get('/tema/{slug}',[TemaArtigoController::class,'index'])->name('tema');
-      Route::get('/show-perfil/{id}',[App\Http\Controllers\Page\HomeController::class,'showPerfil'])->name('showperfil');
-      Route::put('/perfil/{id}',[App\Http\Controllers\Page\HomeController::class,'perfilUsuario'])->name('perfil');  
-      Route::post('/salvar-comentario',[ComentarioController::class,'salvarComentario']);
-      Route::delete('/delete-comentario/{id}',[ComentarioController::class,'deleteComentario']);
-      Route::get('/enviar-email/{slug}',[App\Http\Controllers\Page\HomeController::class,'enviarEmail']);      
-    });        
+   Route::namespace('App\Http\Controllers\Page')->name('page.')->group(function(){
+    Route::get('/','HomeController@master')->name('master');
+    Route::get('/artigo/{slug}','HomeController@detail')->name('detail');
+    Route::get('/download-arquivo/{id}','HomeController@downloadArquivo')->name('download');
+    Route::get('/tema/{slug}','TemaArtigoController@index')->name('tema');
+    Route::get('/show-perfil/{id}','HomeController@showPerfil')->name('showperfil');
+    Route::put('/perfil/{id}','HomeController@perfilUsuario')->name('perfil');  
+    Route::post('/salvar-comentario','ComentarioController@salvarComentario');
+    Route::delete('/delete-comentario/{id}','ComentarioController@deleteComentario');
+    Route::get('/enviar-email/{slug}','HomeController@enviarEmail');
+  });
+
+   //acesso ao sistema do datacenter
+   Route::prefix('sistema')->name('sistema.')->group(function(){
+        Route::get('/index',[HomeController::class,'index'])->name('index');
+        }); 
