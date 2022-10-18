@@ -18,11 +18,11 @@
             <div class="row gx-4 gx-lg-5 justify-content-center">
                 <div class="col-md-10 col-lg-8 col-xl-7">
                 <!--pesquisa -->
-                <form action="{{route('page.master')}}" class="form-search" method="GET">
-                    <div class="input-group">                    
-                        <input class="form-control rounded-pill py-2 pr-5 mr-1 bg-transparent" tabindex="1" type="search" name="pesquisa" autocomplete="off">                                                
-<div class="input-group-text border-0 bg-transparent ml-n5"><i class="fas fa-search"></i> </div>                        
-                    </div>                     
+                <form action="{{route('page.master')}}" class="form-search" method="GET">                    
+                    <div class="input-group">                                            
+                        <input class="form-control rounded-pill py-2 pr-5 mr-1 bg-transparent" tabindex="1" type="text" name="pesquisa" autocomplete="off">                                                                        
+                        <div class="input-group-text border-0 bg-transparent ml-n5"><i class="fas fa-search"></i> </div>                        
+                    </div>                                    
                 </form>
                 <!--barra de informações-->
                 <nav class="navbar navbar-expand-lg navbar-default bg-default justify-content-left">        
