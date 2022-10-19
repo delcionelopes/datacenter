@@ -83,8 +83,8 @@
                     <div class="col-14">                                    
                         @if($comentario->user->avatar)    
                         <img id="avatar" src="{{asset('storage/' . $comentario->user->avatar)}}" alt="Foto de {{$comentario->user->name}}" class="rounded-circle" width="40">
-                        @else
-                        <img id="avatar" src="../../user.png" alt="Usuário" class="rounded-circle" width="40">
+                        @else                        
+                        <img id="avatar" src="{{asset('storage/user.png')}}" alt="Usuário" class="rounded-circle" width="40">
                         @endif                                                                                                               
                         <small><strong>{{$comentario->user->name}}</strong></small>
                         <small class="text-muted">enviado em {{date('d/m/Y H:i:s',strtotime($comentario->created_at))}}</small>                                                
