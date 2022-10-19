@@ -48,7 +48,7 @@
                             @if($artigo->user)
                             <a href="#!">{{$artigo->user->name}}</a>                            
                             @endif
-                            {{ucwords(strftime('%A, %d de %B de %Y', strtotime($artigo->created_at)))}}
+                            {{utf8_encode(ucwords(strftime('%A, %d de %B de %Y', strtotime($artigo->created_at))))}}
                             <a href="{{route('page.detail',['slug' => $artigo->slug])}}">
                                 <i class="fas fa-comment-alt"></i> {{$artigo->comentarios()->count()}}
                             </a> 

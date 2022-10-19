@@ -101,7 +101,7 @@
                 </thead>
                 <tbody id="lista_tema">
                     @forelse($temas as $tema)
-                    <tr id="tema{{$tema->id}}">
+                    <tr id="tema{{$tema->id}}" data-toggle="tooltip" title="{{$tema->descricao}}">
                         <td>{{$tema->id}}</td>
                         <td>{{$tema->titulo}}</td>
                         @if(is_null($tema->created_at))
@@ -256,7 +256,7 @@ $('#EditTemaModal').on('shown.bs.modal',function(){
                     if(dataatualizacao=="31/12/1969 21:00:00"){
                         dataatualizacao="";
                     }
-                    var linhaatualizada = '<tr id="tema'+response.tema.id+'">\
+                    var linhaatualizada = '<tr id="tema'+response.tema.id+'" data-toggle="tooltip" title="'+response.tema.descricao+'">\
                                 <td>'+response.tema.id+'</td>\
                                 <td>'+response.tema.titulo+'</td>\
                                 <td>'+datacriacao+'</td>\
@@ -330,7 +330,7 @@ $('#EditTemaModal').on('shown.bs.modal',function(){
                         dataatualizacao="";
                     }                       
                     //Insere linha nova na tabela html do index
-                    var linhacriada = '<tr id="tema'+response.tema.id+'">\
+                    var linhacriada = '<tr id="tema'+response.tema.id+'" data-toggle="tooltip" title="'+response.tema.descricao+'">\
                                 <td>'+response.tema.id+'</td>\
                                 <td>'+response.tema.titulo+'</td>\
                                 <td>'+datacriacao+'</td>\

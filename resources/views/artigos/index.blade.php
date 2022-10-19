@@ -202,7 +202,7 @@
                         </thead>
                         <tbody id="lista_artigo">  
                         @forelse($artigos as $artigo)   
-                            <tr id="art{{$artigo->id}}">
+                            <tr id="art{{$artigo->id}}" data-toggle="tooltip" title="{{$artigo->descricao}}">
                                 <td>{{$artigo->id}}</td>                                
                                 <td>{{$artigo->titulo}}</td>
                                 <td>{{$artigo->user->name}}</td>
@@ -406,7 +406,7 @@ e.preventDefault();
                         var limita4 = "";                     
                         var limita5 = "";                     
 
-                        limita1 = '<tr id="art'+response.artigo.id+'">\
+                        limita1 = '<tr id="art'+response.artigo.id+'" data-toggle="tooltip" title="'+response.artigo.descricao+'">\
                             <td>'+response.artigo.id+'</td>\
                             <td>'+response.artigo.titulo+'</td>\
                             <td>'+response.user.name+'</td>\
@@ -524,7 +524,7 @@ e.preventDefault();
                 var limita3 = "";
                 var limita4 = "";                     
 
-                limita1 = '<tr id="art'+response.artigo.id+'">\
+                limita1 = '<tr id="art'+response.artigo.id+'" data-toggle="tooltip" title="'+response.artigo.descricao+'">\
                     <td>'+response.artigo.id+'</td>\
                     <td>'+response.artigo.titulo+'</td>\
                     <td>'+response.user.name+'</td>\
