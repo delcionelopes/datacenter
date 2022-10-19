@@ -8,7 +8,7 @@
         <!-- CSRF Token -->    
         <meta name="_token" content="{{ csrf_token() }}">
 
-        <title>Karate do Amapá - Painel Administrativo</title>
+        <title>PRODAP - Datacenter</title>
 
         <link type="text/css" rel="stylesheet" href="{{mix('css/app.css') }}">
 
@@ -35,7 +35,7 @@
                    <span class="caret"></span>
                 @endauth
 
-                <a class="navbar-brand" href="{{route('page.master')}}">Seja bem-vindo(a) ao PRODAP!</a>
+                <a class="navbar-brand" href="{{route('page.master')}}">bem-vindo(a)!</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
                 </button> 
