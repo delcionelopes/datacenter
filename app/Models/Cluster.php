@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 
 class Cluster extends Model
 {    
-    protected $table = "cluster";   
+    protected $table = 'cluster';   
     protected $fillable = [
         'nome_cluster',
         'total_memoria',
