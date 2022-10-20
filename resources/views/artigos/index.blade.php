@@ -4,7 +4,7 @@
 
 <!--AddArtigoModal-->
 
-<div class="modal fade" id="AddArtigoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="AddArtigoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
         <div class="modal-header navbar navbar-dark bg-primary">
@@ -54,7 +54,7 @@
 <!--End AddArtigoModal-->
 
 <!--EditArtigoModal-->
-<div class="modal fade" id="EditArtigoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EditArtigoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
            <div class="modal-header navbar navbar-dark bg-primary">
@@ -106,7 +106,7 @@
 <!--Fim EditArtigoModal-->
 
 <!--EnviarCapaModal-->
-<div class="modal fade" id="EnviarCapaModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EnviarCapaModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar navbar-dark bg-primary">
@@ -137,7 +137,7 @@
 <!--Fim EnviarCapaModal-->
 
 <!--EnviarPDFModal-->
-<div class="modal fade" id="EnviarPDFModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EnviarPDFModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
            <div class="modal-header navbar navbar-dark bg-primary">
@@ -182,15 +182,15 @@
             <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
                 <i class="fas fa-search"></i>
             </button>        
-            <button type="button" class="AddArtigoModal_btn input-group-text border-0" style="background: transparent;border: none;"><i class="fas fa-plus"></i></button>
+            <button type="button" class="AddArtigoModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-plus"></i></button>
             </div>            
             </div>        
             </form>                     
   
     </section>    
             
-                    <table class="table table-bordered table-striped table-hover">
-                        <thead>
+                    <table class="table table-hover">
+                        <thead class="navbar-dark bg-primary" style="color: white">
                             <tr>                                
                                 <th>#</th>
                                 <th>TÍTULO</th>
@@ -263,20 +263,12 @@ $(document).ready(function(){  //INÍCIO
     ///inicio delete artigo
     $(document).on('click','.delete_artigo_btn',function(e){
         e.preventDefault();
-      
+        var CSRF_TOKEN  = document.querySelector('meta[name="_token"]').getAttribute('content');
         var id = $(this).data("id");
         var tituloartigo = $(this).data("tituloartigo");
-
-        var resposta = confirm('Excluindo '+tituloartigo+'. Deseja prosseguir?');
-
-        if(resposta==true){
+        var resposta = confirm(tituloartigo+". Deseja excluir?");
         
-            $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-                }
-            });
-            
+        if(resposta==true){
             $.ajax({
                 url: 'delete/'+id,
                 type: 'POST',
@@ -284,6 +276,7 @@ $(document).ready(function(){  //INÍCIO
                 data:{
                     "id": id,
                     "_method": 'DELETE',
+                    "_token":CSRF_TOKEN,
                 },
                 success:function(response){
                     if(response.status==200){                        
@@ -293,8 +286,9 @@ $(document).ready(function(){  //INÍCIO
                         $('#success_message').text(response.message);                         
                     }
                 }
-            });            
-        }   
+            });
+        }
+    
     });  
     ///fim delete artigo
 
@@ -761,7 +755,7 @@ var labelFiles = '<label id="arquivos'+response.artigoid+'">Files: \
 ///inicio exclui arquivo PDF
 $(document).on('click','.arq_exclui_btn',function(e){
   e.preventDefault();        
-            	
+  var CSRF_TOKEN  = document.querySelector('meta[name="_token"]').getAttribute('content');            	
   var id = $(this).data("arquivoid");
   var nomearquivo = $(this).data("nomearquivo");
     
@@ -782,6 +776,7 @@ $(document).on('click','.arq_exclui_btn',function(e){
         data:{
         "id":id,
         "_method":'DELETE',
+        "_token":CSRF_TOKEN,
         },                  
         success:function(response){
         if(response.status==200){                                                      

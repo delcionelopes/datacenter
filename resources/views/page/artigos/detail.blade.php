@@ -64,10 +64,10 @@
                 <!--chamada dos comentários--> 
                 @auth   
                 <div class="col-14">             
-                <button type="button" class="btn btn-primary FormCommentModal_btn" data-id="{{$artigo->id}}"><i class="fas fa-heart"></i> Comentar</button>
+                <button type="button" class="btn btn-primary FormCommentModal_btn animate__animated animate__bounce" data-id="{{$artigo->id}}"><i class="fas fa-heart"></i> Comentar</button>
                 </div>
                 @else <!--se não estiver logado-->
-                <strong>Faça Login para comentar! <i class="fas fa-comments"></i></strong>
+                <strong class="animate__animated animate__bounce">Faça Login para comentar! <i class="fas fa-comments"></i></strong>
                 @endauth                                                             
                 <div class="col-14">
                 <hr class="my-4" /> 
@@ -154,7 +154,7 @@
 </footer>
 
 <!--FormCommentModal-->
-<div class="modal fade" id="FormCommentModal" tabindex="-1" role="dialog" aria-labelledby="titleLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="FormCommentModal" tabindex="-1" role="dialog" aria-labelledby="titleLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar navbar-light bg-light">

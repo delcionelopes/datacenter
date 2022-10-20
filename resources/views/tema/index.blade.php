@@ -1,7 +1,7 @@
 @extends('layouts.app')
 @section('content')
 <!--AddTemaModal-->
-<div class="modal fade" id="AddTemaModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="AddTemaModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
            <div class="modal-header navbar navbar-dark bg-primary">
@@ -36,7 +36,7 @@
 </div>
 <!--Fim AddTemaModal-->
 <!--EditTemaModal-->
-<div class="modal fade" id="EditTemaModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EditTemaModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar navbar-dark bg-primary">
@@ -82,15 +82,15 @@
                             <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
                                 <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" class="AddTemaModal_btn input-group-text border-0" style="background: transparent;border: none;">
+                            <button type="button" class="AddTemaModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;">
                                  <i class="fas fa-plus"></i>
                             </button>
                         </div>
                     </div>
                 </form>
             </section>
-            <table class="table table-bordered table-striped table-hover">
-                <thead>
+            <table class="table table-hover">
+                <thead class="navbar-dark bg-primary" style="color: white">
                     <tr>
                         <th>#</th>
                         <th>TÍTULO</th>
@@ -143,6 +143,7 @@ $(document).ready(function(){
     //inicio delete Tema
     $(document).on('click','.delete_tema_btn',function(e){
         e.preventDefault();
+        var CSRF_TOKEN  = document.querySelector('meta[name="_token"]').getAttribute('content');
         var id = $(this).data("id");
         var titulotema = $(this).data("titulotema");
         var resposta = confirm(titulotema+". Deseja excluir?");
@@ -160,6 +161,7 @@ $(document).ready(function(){
                 data:{
                     "id":id,
                     "_method":'DELETE',
+                    "_token":CSRF_TOKEN,
                 },                
                 success:function(response){
                     if(response.status==200){

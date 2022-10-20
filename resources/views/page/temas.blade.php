@@ -28,7 +28,7 @@
                         <p class="post-meta">
                             Postado por
                             <a href="#!">{{$artigo->user->name}}</a>                            
-                            {{ucwords(strftime('%A, %d de %B de %Y', strtotime($artigo->created_at)))}}
+                            {{utf8_encode(ucwords(strftime('%A, %d de %B de %Y', strtotime($artigo->created_at))))}}
                             <a href="{{route('page.detail',['slug' => $artigo->slug])}}">
                                 <i class="fas fa-comment"></i> {{$artigo->comentarios()->count()}}
                             </a> 

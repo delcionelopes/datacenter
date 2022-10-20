@@ -19,6 +19,8 @@
          <!-- Google fonts-->
         <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
+
+        <link rel="stylesheet" href="{{asset('//cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css')}}">
         
         <link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
         <link href="{{asset('css/menu_estilo.css')}}" rel="stylesheet"/>
@@ -74,6 +76,7 @@
         <script src="{{asset('jquery/jquery-3.6.0.js')}}"></script>
         <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>                
         <script src="{{asset('js/scripts.js')}}"></script>                              
+        <script src="{{asset('https://cdnjs.cloudflare.com/ajax/libs/limonte-sweetalert2/11.6.0/sweetalert2.min.js')}}"></script>
       @yield('scripts')
     </body>
 </html>

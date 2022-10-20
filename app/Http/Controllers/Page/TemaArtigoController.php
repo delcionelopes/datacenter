@@ -17,7 +17,7 @@ class TemaArtigoController extends Controller
 
     public function index($slug){
         $tema = $this->tema->whereSlug($slug)->first();
-        $artigos = $tema->artigos()->paginate(5);
+        $artigos = $tema->artigos()->orderByDesc('id')->paginate(5);
         return view('page.temas',[
             'tema' => $tema,
             'artigos' =>$artigos,
