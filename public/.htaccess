@@ -2,8 +2,10 @@
     <IfModule mod_negotiation.c>
         Options -MultiViews -Indexes
     </IfModule>
-
+    
     RewriteEngine On
+    
+    
 
     # Handle Authorization Header
     RewriteCond %{HTTP:Authorization} .

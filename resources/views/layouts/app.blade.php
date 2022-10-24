@@ -36,7 +36,7 @@
                    <span class="caret"></span>
                 @endauth
 
-                <a class="navbar-brand" href="https://www.prodap.ap.gov.br">PRODAP</a>
+                <a class="navbar-brand" href="https://www.prodap.ap.gov.br" target="_blank">PRODAP</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarDropdown" aria-controls="navbarDropdown" aria-expanded="false" aria-label="Toggle navigation">
                 <i class="fas fa-bars"></i>
                 </button> 
