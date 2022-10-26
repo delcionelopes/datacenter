@@ -49,6 +49,22 @@ class User extends Authenticatable
         return $this->hasMany(Arquivo::class);
     }
 
+    public function senhaapp(){
+        return $this->belongsToMany(SenhaApp::class,'senhaapp_users','user_id','senhaapp_id');
+    }
+
+    public function senhahost(){
+        return $this->belongsToMany(SenhaHost::class,'senhahost_users','user_id','senhahost_id');
+    }
+
+    public function senhavm(){
+        return $this->belongsToMany(SenhaVM::class,'senhavm_users','user_id','senhavm_id');        
+    }    
+
+    public function senhabase(){
+        return $this->belongsToMany(SenhaBase::class,'senhabase_users','user_id','senhabase_id');
+    }
+
     /**
      * The attributes that should be hidden for serialization.
      *

@@ -8,6 +8,7 @@ use App\Models\App;
 use App\Models\Base;
 use App\Models\Orgao;
 use App\Models\Projeto;
+use App\Models\SenhaBase;
 use App\Models\VirtualMachine;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,11 +16,13 @@ class BaseController extends Controller
 {
     private $base;
     private $app;
+    private $senhabase;
 
-    public function __construct(Base $base, App $app)
+    public function __construct(Base $base, App $app, SenhaBase $senhabase)
     {
         $this->base = $base;
         $this->app = $app;
+        $this->senhabase = $senhabase;
     }
     
     /**
@@ -177,13 +180,19 @@ class BaseController extends Controller
     {
         $base = $this->base->find($id);        
         $apps = $base->apps;
-        if(($base->apps()->count())){
+        if(($base->apps()->count())||($base->senhabase()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){             
                 if($base->apps()->count()){
                     foreach ($apps as $app) {
                         $a = App::find($app->id);
                         $a->delete();
-                    }                  
+                    }                                      
+                }
+                if($base->senhabase()->count()){
+                    $senhabase = $this->senhabase->whereBase_id($id)->first();
+                    $usuarios = $senhabase->users;
+                    $senhabase->users()->detach($usuarios);
+                    $senhabase->delete();
                 }
                 $status = 200;
                 $message = $base->nome_base.' excluído com sucesso!'; 
@@ -249,6 +258,90 @@ class BaseController extends Controller
                 'message' => 'Registro gravado com sucesso!',
             ]);
         }
+    }
+
+    public function storesenhabase(Request $request){
+        $validator = Validator::make($request->all(),[
+            'senha' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()->getMessages(),
+            ]);
+        }else{
+            $user = auth()->user();
+            $senhabase_id = $this->maxsenhabase_inc();
+            $data = [
+                'id' => $senhabase_id,
+                'senha' => $request->input('senha'),
+                'validade' => $request->input('validade'),
+                'val_indefinida' => $request->input('val_indefinida'),
+                'base_id' => $request->input('base_id'),
+                'criador_id' => $user->id,                
+            ];
+            $senhabase = $this->senhabase->create($data); //criação da senha
+            $s = SenhaBase::find($senhabase->id);
+            $b = $s->base;
+            $senhabase->users()->sync($request->input('users')); //sincronização            
+            return response()->json([
+                'user' => $user,
+                'senhabase' => $s,
+                'base' => $b,
+                'status' => 200,
+                'message' => 'Senha de'+$b->nome_base+' foi criada com sucesso!',
+            ]);
+        }        
+    }
+
+    protected function maxsenhabase_inc(){
+        $senhabase = $this->senhabase->orderByDesc('id')->first();
+        if($senhabase){
+            $codigo = $senhabase->id+1;
+        }else{
+            $codigo = 1;
+        }
+        return $codigo;
+    }
+
+    public function updatesenhabase(Request $request, int $id){
+        $validator = Validator::make($request->all(),[
+            'senha' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()->getMessages(),
+            ]);
+        }else{
+            $senhabase = $this->senhabase->find($id);
+            if($senhabase){
+            $user = auth()->user();            
+            $data = [                
+                'senha' => $request->input('senha'),
+                'validade' => $request->input('validade'),
+                'val_indefinida' => $request->input('val_indefinida'),
+                'base_id' => $request->input('base_id'),
+                'alterador_id' => $user->id,                
+            ];
+            $senhabase->update($data); //atualização da senha
+            $s = SenhaBase::find($id);
+            $b = $s->base;
+            $s->users()->sync($request->input('users')); //sincronização            
+            return response()->json([
+                'user' => $user,
+                'senhabase' => $s,
+                'base' => $b,
+                'status' => 200,
+                'message' => 'Senha de '+$b->nome_base+' foi atualizada com sucesso!',
+            ]);
+            }else{
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Senha não localizada!',
+                ]);
+            }
+        }        
     }
 
 }

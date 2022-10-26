@@ -8,6 +8,7 @@ use App\Models\App;
 use App\Models\Base;
 use App\Models\Orgao;
 use App\Models\Projeto;
+use App\Models\SenhaApp;
 use App\Models\VirtualMachine;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,11 +16,13 @@ class AppController extends Controller
 {
     private $app;
     private $base;
+    private $senhaapp;
 
-    public function __construct(App $app, Base $base)
+    public function __construct(App $app, Base $base, SenhaApp $senhaapp)
     {
         $this->app = $app;
         $this->base = $base;
+        $this->senhaapp = $senhaapp;
     }
     /**
      * método index: Faz a listagem, pesquisa e chama a view index
@@ -204,7 +207,15 @@ class AppController extends Controller
      */
     public function destroy(int $id)
     {
-        $app = $this->app->find($id);        
+        $app = $this->app->find($id);                
+        $senhaapp = $this->senhaapp->whereApp_id($id)->first();                
+        if($senhaapp){
+            if($senhaapp->users()->count()){
+                $usuarios = $senhaapp->users;
+                $senhaapp->users()->detach($usuarios);
+            }
+            $senhaapp->delete();
+        }
         $app->delete();
         return response()->json([
             'status'  => 200,
@@ -227,5 +238,86 @@ class AppController extends Controller
         ]);
     }
 
+    public function storesenhaapp(Request $request){
+        $validator = Validator::make($request->all(),[
+            'senha' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()->getMessages(),
+            ]);
+        }else{
+            $user = auth()->user();
+            $senhaapp_id = $this->maxsenhaapp_inc();
+            $data = [
+                'id' => $senhaapp_id,
+                'senha' => $request->input('senha'),
+                'validade' => $request->input('validade'),
+                'val_indefinida' => $request->input('val_indefinida'),
+                'app_id' => $request->input('app_id'),
+                'criador_id' => $user->id,                
+            ];
+            $senhaapp = $this->senhaapp->create($data); //criação da senha
+            $s = SenhaApp::find($senhaapp->id);
+            $a = $s->app;
+            $senhaapp->users()->sync($request->input('users')); //sincronização            
+            return response()->json([
+                'user' => $user,
+                'senhaapp' => $s,
+                'status' => 200,
+                'message' => 'Senha de'+$a->nome_app+' criada com sucesso!',
+            ]);
+        }        
+    }
+
+    protected function maxsenhaapp_inc(){
+        $senhaapp = $this->senhaapp->orderByDesc('id')->first();
+        if($senhaapp){
+            $codigo = $senhaapp->id+1;
+        }else{
+            $codigo = 1;
+        }
+        return $codigo;
+    }
+
+    public function updatesenhaapp(Request $request, int $id){
+        $validator = Validator::make($request->all(),[
+            'senha' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()->getMessages(),
+            ]);
+        }else{
+            $senhaapp = $this->senhaapp->find($id);
+            if($senhaapp){
+            $user = auth()->user();            
+            $data = [                
+                'senha' => $request->input('senha'),
+                'validade' => $request->input('validade'),
+                'val_indefinida' => $request->input('val_indefinida'),
+                'app_id' => $request->input('app_id'),
+                'alterador_id' => $user->id,                
+            ];
+            $senhaapp->update($data); //atualização da senha
+            $s = SenhaApp::find($senhaapp->id);
+            $a = $s->app;
+            $senhaapp->users()->sync($request->input('users')); //sincronização            
+            return response()->json([
+                'user' => $user,
+                'senhaapp' => $s,
+                'status' => 200,
+                'message' => 'Senha de '+$a->nome_app+' atualizada com sucesso!',
+            ]);
+            }else{
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Senha não localizada!',
+                ]);
+            }
+        }        
+    }
 
 }

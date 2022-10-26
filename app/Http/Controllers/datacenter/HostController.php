@@ -7,14 +7,17 @@ use App\Http\Controllers\Controller;
 use App\models\Host;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Cluster;
+use App\Models\SenhaHost;
 
 class HostController extends Controller
 {
     private $host;    
+    private $senhahost;
     
-    public function __construct(Host $host)
+    public function __construct(Host $host, SenhaHost $senhahost)
     {
         $this->host = $host;
+        $this->senhahost = $senhahost;
     }
 
     /**
@@ -154,11 +157,103 @@ class HostController extends Controller
      */
     public function destroy(int $id)
     {             
-        $host = $this->host->find($id); 
+        $host = $this->host->find($id);       
+        $senhahost = $this->senhahost->whereHost_id($id)->first();
+        if($senhahost){            
+            if($senhahost->users()->count()){
+                $usuarios = $senhahost->users;
+                $senhahost->users()->detach($usuarios);
+            }
+            $senhahost->delete();
+        }
         $host->delete();        
         return response()->json([
             'status'  => 200,
             'message' => 'Resgistro excluído com sucesso!',
         ]);
+    }
+
+    public function storesenhahost(Request $request){
+        $validator = Validator::make($request->all(),[
+            'senha' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()->getMessages(),
+            ]);
+        }else{
+            $user = auth()->user();
+            $senhahost_id = $this->maxsenhahost_inc();
+            $data = [
+                'id' => $senhahost_id,
+                'senha' => $request->input('senha'),
+                'validade' => $request->input('validade'),
+                'val_indefinida' => $request->input('val_indefinida'),
+                'host_id' => $request->input('host_id'),
+                'criador_id' => $user->id,                
+            ];
+            $senhahost = $this->senhahost->create($data); //criação da senha
+            $s = SenhaHost::find($senhahost->id);
+            $h = $s->host;
+            $senhahost->users()->sync($request->input('users')); //sincronização            
+            return response()->json([
+                'user' => $user,
+                'senhahost' => $h,
+                'host' => $h,
+                'status' => 200,
+                'message' => 'Senha de'+$h->datacenter+' foi criada com sucesso!',
+            ]);
+        }        
+    }
+
+    protected function maxsenhahost_inc(){
+        $senhahost = $this->senhahost->orderByDesc('id')->first();
+        if($senhahost){
+            $codigo = $senhahost->id+1;
+        }else{
+            $codigo = 1;
+        }
+        return $codigo;
+    }
+
+    public function updatesenhahost(Request $request, int $id){
+        $validator = Validator::make($request->all(),[
+            'senha' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()->getMessages(),
+            ]);
+        }else{
+            $senhahost = $this->senhahost->find($id);
+            if($senhahost){
+            $user = auth()->user();            
+            $data = [                
+                'senha' => $request->input('senha'),
+                'validade' => $request->input('validade'),
+                'val_indefinida' => $request->input('val_indefinida'),
+                'host_id' => $request->input('host_id'),
+                'alterador_id' => $user->id,                
+            ];
+            $senhahost->update($data); //atualização da senha
+            $s = SenhaHost::find($senhahost->id);
+            $h = $s->host;
+            $senhahost->users()->sync($request->input('users')); //sincronização            
+            return response()->json([
+                'user' => $user,
+                'senhahost' => $s,
+                'host' => $h,
+                'status' => 200,
+                'message' => 'Senha de '+$h->datacenter+' atualizada com sucesso!',
+            ]);
+            }else{
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Senha não localizada!',
+                ]);
+            }
+        }        
     }
 }

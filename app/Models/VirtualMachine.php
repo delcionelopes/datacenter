@@ -40,5 +40,9 @@ class VirtualMachine extends Model
     public function bases(){
         return $this->hasMany(Base::class);
     }
+
+    public function senhavm(){
+        return $this->hasMany(SenhaVM::class);
+    }
     
 }
