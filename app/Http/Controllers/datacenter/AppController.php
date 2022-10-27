@@ -9,6 +9,7 @@ use App\Models\Base;
 use App\Models\Orgao;
 use App\Models\Projeto;
 use App\Models\SenhaApp;
+use App\Models\User;
 use App\Models\VirtualMachine;
 use Illuminate\Support\Facades\Validator;
 
@@ -18,11 +19,12 @@ class AppController extends Controller
     private $base;
     private $senhaapp;
 
-    public function __construct(App $app, Base $base, SenhaApp $senhaapp)
+    public function __construct(App $app, Base $base, SenhaApp $senhaapp, User $users)
     {
         $this->app = $app;
         $this->base = $base;
         $this->senhaapp = $senhaapp;
+        $this->users = $users;
     }
     /**
      * método index: Faz a listagem, pesquisa e chama a view index
@@ -45,7 +47,7 @@ class AppController extends Controller
         $orgaos = Orgao::all();
         $projetos = Projeto::all();
         $bases = $this->base->query()->where('virtual_machine_id','=',$bd->virtual_machine_id)->orderByDesc('id')->get();
-
+        $users = $this->users->query()->where('moderador','=','1')->where('inativo','=','0')->orderBy('name')->get();                
         return view('datacenter.app.index',[
             'id' => $id,
             'apps' => $apps,
@@ -54,6 +56,7 @@ class AppController extends Controller
             'projetos' => $projetos,
             'bases' => $bases,
             'vm' => $vm,
+            'users' => $users,
         ]);
     }
 
@@ -208,14 +211,14 @@ class AppController extends Controller
     public function destroy(int $id)
     {
         $app = $this->app->find($id);                
-        $senhaapp = $this->senhaapp->whereApp_id($id)->first();                
+       /*  $senhaapp = $this->senhaapp->whereApp_id($id)->first();                
         if($senhaapp){
             if($senhaapp->users()->count()){
                 $usuarios = $senhaapp->users;
                 $senhaapp->users()->detach($usuarios);
             }
             $senhaapp->delete();
-        }
+        } */
         $app->delete();
         return response()->json([
             'status'  => 200,
@@ -238,7 +241,7 @@ class AppController extends Controller
         ]);
     }
 
-    public function storesenhaapp(Request $request){
+     public function storesenhaapp(Request $request){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
         ]);
@@ -318,6 +321,23 @@ class AppController extends Controller
                 ]);
             }
         }        
+    } 
+
+      public function editSenhaApp($id){
+        $senhaapp = $this->senhaapp->find($id);
+        $app = $senhaapp->app;
+        $criador = $senhaapp->criador;
+        $alterador = $senhaapp->alterador;
+        $users = $senhaapp->users;        
+        return response()->json([
+            'status' => 200,
+            'senhaapp' => $senhaapp,
+            'app' => $app,
+            'criador' => $criador,
+            'alterador' => $alterador,
+            'users' => $users,
+        ]);
     }
+ 
 
 }

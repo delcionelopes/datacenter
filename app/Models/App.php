@@ -6,8 +6,8 @@ use Illuminate\Database\Eloquent\Model;
 
 class App extends Model
 {
-    protected $table = 'app'; 
-    protected $fillable = [
+    protected $table = 'app';     
+    protected $fillable = [        
         'base_id',
         'projeto_id',
         'orgao_id',

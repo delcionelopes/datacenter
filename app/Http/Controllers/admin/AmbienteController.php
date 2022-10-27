@@ -16,7 +16,7 @@ class AmbienteController extends Controller
     private $ambiente;
     
     public function __construct(Ambiente $ambiente){
-        $this->ambiente = $ambiente;
+        $this->ambiente = $ambiente;        
     }
 
     /**
@@ -36,7 +36,7 @@ class AmbienteController extends Controller
             
         }                           
         return view('ambientes.index',[
-            'ambientes' => $ambientes,
+            'ambientes' => $ambientes,            
         ]);                
     }
 

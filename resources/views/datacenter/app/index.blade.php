@@ -144,6 +144,52 @@
 </div>
 <!-- início EditAppModal -->
 
+<!-- início AddSenhaApp -->
+   <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaApp" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header navbar-dark bg-primary">
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Senha</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true" style="color: white;">&times</span>
+                </button>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form id="addform" name="addform" class="form-horizontal" role="form">
+                    <input type="hidden" id="add_app_id">
+                    <ul id="saveformsenha_errList"></ul>                    
+                    <div class="form-group mb-3">
+                        <label  for="">Nome APP:</label>
+                        <label  id="nomeapp"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">Domínio:</label>
+                        <label  id="dominioapp"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Senha</label>
+                        <input type="text" class="add_senha form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Validade</label>
+                        <input type="text" class="add_validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for=""> 
+                        <input type="checkbox" name="add_val_indefinida" id="add_val_indefinida"> Validade indeterminada
+                        </label>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary add_senhaapp_btn">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim AddSenhaApp -->
+
 <!-- início index -->
 @auth
 @if(!(auth()->user()->inativo))
@@ -170,7 +216,7 @@
                 <thead class="sidebar-dark-primary" style="color: white">
                     <tr>
                         <th scope="col">APP</th>
-                        <th scope="col">DOMÍNIO</th>
+                        <th scope="col"><i class="fas fa-key"></i> PASS</th>
                         <th scope="col">HTTPS</th>                       
                         <th scope="col">AÇÕES</th>
                     </tr>
@@ -178,9 +224,19 @@
                 <tbody id="lista_app">
                     <tr id="novo" style="display: none;"></tr>
                     @forelse($apps as $app)
-                    <tr id="app{{$app->id}}">
-                        <th scope="row">{{$app->nome_app}}</th>
-                        <td>{{$app->dominio}}</td>
+                    <tr id="app{{$app->id}}" data-toggle="tooltip" title="{{$app->dominio}}">
+                        <th scope="row">{{$app->nome_app}}</th>                        
+                        <td>                            
+                            @if($app->senhaapp()->count()==0)
+                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>                            
+                            @else
+                            @if(($app->senhaapp()->users()->id)==(auth()->user()->id))
+                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>
+                            @else
+                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>                            
+                            @endif
+                            @endif
+                        </td>
                         @if($app->https)
                         <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>
                         @else
@@ -598,6 +654,33 @@
     
         });
         //fim muda o https na lista index
+
+        //cadastro de senha
+        $('#AddSenhaApp').on('shown.bs.modal',function(){
+            $('.add_senha').focus();
+        });
+        $(document).on('click','.cadsenha_btn',function(e){
+            e.preventDefault();
+            var labelHtml = ($(this).data("nomeapp")).trim();            
+            var labelDominio = ($(this).data("dominio")).trim();            
+            $('#addform').trigger('reset');
+            $('#AddSenhaApp').modal('show');
+            $('#add_app_id').val($(this).data("id"));
+            $('#nomeapp').html('<Label id="nomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
+            $('#dominioapp').html('<Label id="dominioapp" style="font-style:italic;">'+labelDominio+'</Label>');            
+            $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>'); 
+        });
+        //fim cadastro de senha
+        //formatação str para date
+       function formatDate(data, formato) {
+        if (formato == 'pt-br') {
+            return (data.substr(0, 10).split('-').reverse().join('/'));
+        } else {
+            return (data.substr(0, 10).split('/').reverse().join('-'));
+        }
+        }
+        //fim formatDate
+
     });
     //fim escopo geral
     
