@@ -244,6 +244,7 @@ class AppController extends Controller
      public function storesenhaapp(Request $request){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
+            'validade' => ['required','date']
         ]);
         if($validator->fails()){
             return response()->json([
@@ -287,6 +288,7 @@ class AppController extends Controller
     public function updatesenhaapp(Request $request, int $id){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
+            'validade' => ['required','date']
         ]);
         if($validator->fails()){
             return response()->json([

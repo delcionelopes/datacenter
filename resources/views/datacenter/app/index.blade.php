@@ -155,9 +155,13 @@
                 </button>
             </div>
             <div class="modal-body form-horizontal">
-                <form id="addform" name="addform" class="form-horizontal" role="form">
+                <form id="addformsenha" name="addformsenha" class="form-horizontal" role="form">
                     <input type="hidden" id="add_app_id">
-                    <ul id="saveformsenha_errList"></ul>                    
+                    <ul id="saveformsenha_errList"></ul>   
+                    <div class="card">
+                    <div class="card-body">         
+                     <fieldset>
+                    <legend>Dados da Senha</legend>                    
                     <div class="form-group mb-3">
                         <label  for="">Nome APP:</label>
                         <label  id="nomeapp"></label>
@@ -174,11 +178,28 @@
                         <label for="">Validade</label>
                         <input type="text" class="add_validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
                     </div>
-                    <div class="form-group mb-3">
-                        <label for=""> 
-                        <input type="checkbox" name="add_val_indefinida" id="add_val_indefinida"> Validade indeterminada
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheck"> 
+                        <input type="checkbox" class="add_val_indefinida form-check-input" name="add_val_indefinida" id="flexCheck"> Validade indeterminada
                         </label>
+                    </div>         
+                     </fieldset>
                     </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-body">                        
+                            <fieldset>
+                                <legend>Quem tem acesso a esta informação?</legend>
+                                <div class="form-check">
+                                    @foreach ($users as $user)
+                                    <label class="form-check-label" for="CheckUser{{$user->id}}">
+                                        <input type="checkbox" id="CheckUser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                    </label>
+                                    @endforeach
+                                </div>
+                            </fieldset>  
+                            </div>
+                     </div>                             
                 </form>
             </div>
             <div class="modal-footer">
@@ -189,6 +210,85 @@
     </div>
 </div>
 <!-- fim AddSenhaApp -->
+
+<!-- início EditSenhaApp -->
+   <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaApp" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header navbar-dark bg-primary">
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Senha</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true" style="color: white;">&times</span>
+                </button>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form id="editformsenha" name="editformsenha" class="form-horizontal" role="form">
+                    <input type="hidden" id="edit_app_id">
+                    <ul id="updateformsenha_errList"></ul>  
+                    <div class="card">
+                    <div class="card-body"> 
+                    <fieldset>
+                    <legend>Dados da Senha</legend>                 
+                    <div class="form-group mb-3">
+                        <label  for="">Nome APP:</label>
+                        <label  id="editnomeapp"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">Domínio:</label>
+                        <label  id="editdominioapp"></label>
+                    </div>
+                     <div class="form-group mb-3">
+                        <label  for="">Criação:</label>
+                        <label  id="editdatacriacao"></label>
+                        <label  for="">Modificação:</label>
+                        <label  id="editdatamodificacao"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">Criador:</label>
+                        <label  id="editcriador"></label>
+                        <label  for="">Modificador:</label>
+                        <label  id="editmodificador"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Senha</label>
+                        <input type="text" id="edit_senha" class="senha form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Validade</label>
+                        <input type="text" id="edit_validade" class="validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="edit_val_indefinida"> 
+                        <input type="checkbox" class="val_indefinida form-check-input" name="add_val_indefinida" id="edit_val_indefinida"> Validade indeterminada
+                        </label>
+                    </div>                
+                    </fieldset>    
+                    </div>
+                    </div>
+                     <div class="card">
+                     <div class="card-body"> 
+                            <fieldset>
+                                <legend>Quem tem acesso a esta informação?</legend>
+                                <div class="form-check">
+                                    @foreach ($users as $user)
+                                    <label class="form-check-label" for="check{{$user->id}}">
+                                        <input type="checkbox" id="check{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                    </label>
+                                    @endforeach
+                                </div>
+                            </fieldset>   
+                     </div>
+                     </div>                  
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary update_senhaapp_btn">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim EditSenhaApp -->
 
 <!-- início index -->
 @auth
@@ -261,8 +361,7 @@
             </div>
             <div>
                 <button type="button" class="fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()"></button>
-            </div>
-        
+            </div>    
 </div>
 @else 
 <i class="fas fa-lock"></i><b class="title"> USUÁRIO INATIVO OU NÃO LIBERADO! CONTACTE O ADMINISTRADOR.</b>
@@ -659,6 +758,8 @@
         $('#AddSenhaApp').on('shown.bs.modal',function(){
             $('.add_senha').focus();
         });
+
+
         $(document).on('click','.cadsenha_btn',function(e){
             e.preventDefault();
             var labelHtml = ($(this).data("nomeapp")).trim();            
@@ -670,7 +771,47 @@
             $('#dominioapp').html('<Label id="dominioapp" style="font-style:italic;">'+labelDominio+'</Label>');            
             $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>'); 
         });
+
+        $(document).on('click','.add_senhaapp_btn',function(e){
+            e.preventDefault();
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            //array apenas com os checkboxes marcados
+            var users = new Array;
+            $("input[name='users[]']:checked").each(function(){
+                users.push($(this).val());
+            });
+
+            var data = {
+                'senha':$('.add_senha').val(),
+                'validade':formatDate($('.add_validade').val()),
+                'val_indefinida':$('.add_val_indefinida').val(),
+                'app_id':$('#add_app_id').val();
+                'users':users,
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }
+
+            $.ajax({
+                url:'storesenhaapp',
+                type:'POST',
+                dataType: 'json',
+                data:data,
+                success:function(response){
+                     if(response.status==400){
+                           //erros
+                            $('#saveformsenha_errList').html("");
+                            $('#saveformsenha_errList').addClass("alert alert-danger");
+                            $.each(response.errors,function(key,err_values){
+                                    $('#saveformsenha_errList').append('<li>'+err_values+'</li>');
+                            });
+          
+                }else{
+                }
+                }
+
+        });
         //fim cadastro de senha
+
         //formatação str para date
        function formatDate(data, formato) {
         if (formato == 'pt-br') {
