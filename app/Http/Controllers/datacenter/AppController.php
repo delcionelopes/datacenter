@@ -302,9 +302,9 @@ class AppController extends Controller
                 'alterador_id' => $user->id,                
             ];
             $senhaapp->update($data); //atualização da senha
-            $s = SenhaApp::find($senhaapp->id);
+            $s = SenhaApp::find($id);
             $a = $s->app;
-            $senhaapp->users()->sync($request->input('users')); //sincronização            
+            $s->users()->sync($request->input('users')); //sincronização            
             return response()->json([
                 'user' => $user,
                 'senhaapp' => $s,

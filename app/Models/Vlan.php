@@ -17,4 +17,8 @@ class Vlan extends Model
     public function redes(){
         return $this->hasMany(Rede::class);
     }
+
+    public function senhavlan(){
+        return $this->hasMany(SenhaVLAN::class);
+    }
 }

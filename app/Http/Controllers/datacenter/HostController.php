@@ -238,9 +238,9 @@ class HostController extends Controller
                 'alterador_id' => $user->id,                
             ];
             $senhahost->update($data); //atualização da senha
-            $s = SenhaHost::find($senhahost->id);
+            $s = SenhaHost::find($id);
             $h = $s->host;
-            $senhahost->users()->sync($request->input('users')); //sincronização            
+            $s->users()->sync($request->input('users')); //sincronização            
             return response()->json([
                 'user' => $user,
                 'senhahost' => $s,
@@ -256,4 +256,6 @@ class HostController extends Controller
             }
         }        
     }
+
+
 }

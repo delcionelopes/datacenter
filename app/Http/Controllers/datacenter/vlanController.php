@@ -8,16 +8,19 @@ use App\Models\Cadastro_ip;
 use App\Models\Vlan;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Rede;
+use App\Models\SenhaVLAN;
 
 class vlanController extends Controller
 {
     private $vlan;
     private $rede;
+    private $senhavlan;
     
-    public function __construct(Vlan $vlan,Rede $rede)
+    public function __construct(Vlan $vlan,Rede $rede, SenhaVLAN $senhavlan)
     {
         $this->vlan = $vlan;        
         $this->rede = $rede;
+        $this->senhavlan = $senhavlan;
     }
 
     /**
@@ -135,7 +138,7 @@ class vlanController extends Controller
         $vlan = $this->vlan->find($id);
         $vms = $vlan->virtual_machines;
         $redes = $vlan->redes;
-        if(($vlan->virtual_machines()->count())||($vlan->redes()->count())){
+        if(($vlan->virtual_machines()->count())||($vlan->redes()->count())||($vlan->senhavlan()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
                 if($vlan->virtual_machines()->count()){
                     $vlan->virtual_machines()->detach($vms); //exclusão da relação n:n
@@ -152,6 +155,12 @@ class vlanController extends Controller
                         }
                         $r->delete();
                     }                    
+                }
+                if($vlan->senhavlan()->count()){
+                    $senhavlan = $this->senhavlan->whereVlan_id($id)->first();
+                    $usuarios = $senhavlan->users;
+                    $senhavlan->users()->detach($usuarios);
+                    $senhavlan->delete();
                 }
                 $status = 200;
                 $message = $vlan->nome_vlan.' foi excluído com sucesso!';
@@ -212,4 +221,90 @@ class vlanController extends Controller
             ]);
         }
     }
+
+public function storesenhavlan(Request $request){
+        $validator = Validator::make($request->all(),[
+            'senha' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()->getMessages(),
+            ]);
+        }else{
+            $user = auth()->user();
+            $senhavlan_id = $this->maxsenhavlan_inc();
+            $data = [
+                'id' => $senhavlan_id,
+                'senha' => $request->input('senha'),
+                'validade' => $request->input('validade'),
+                'val_indefinida' => $request->input('val_indefinida'),
+                'vlan_id' => $request->input('vlan_id'),
+                'criador_id' => $user->id,                
+            ];
+            $senhavlan = $this->senhavlan->create($data); //criação da senha
+            $s = SenhaVLAN::find($senhavlan->id);
+            $v = $s->vlan;
+            $senhavlan->users()->sync($request->input('users')); //sincronização            
+            return response()->json([
+                'user' => $user,
+                'senhavlan' => $s,
+                'vlan' => $v,
+                'status' => 200,
+                'message' => 'Senha de'+$v->nome_vlan+' foi criada com sucesso!',
+            ]);
+        }        
+    }
+
+    protected function maxsenhavlan_inc(){
+        $senhavlan = $this->senhavlan->orderByDesc('id')->first();
+        if($senhavlan){
+            $codigo = $senhavlan->id+1;
+        }else{
+            $codigo = 1;
+        }
+        return $codigo;
+    }
+
+    public function updatesenhavlan(Request $request, int $id){
+        $validator = Validator::make($request->all(),[
+            'senha' => 'required',
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()->getMessages(),
+            ]);
+        }else{
+            $senhavlan = $this->senhavlan->find($id);
+            if($senhavlan){
+            $user = auth()->user();            
+            $data = [                
+                'senha' => $request->input('senha'),
+                'validade' => $request->input('validade'),
+                'val_indefinida' => $request->input('val_indefinida'),
+                'vlan_id' => $request->input('vlan_id'),
+                'alterador_id' => $user->id,                
+            ];
+            $senhavlan->update($data); //atualização da senha
+            $s = SenhaVLAN::find($id);
+            $v = $s->vlan;
+            $senhavlan->users()->sync($request->input('users')); //sincronização            
+            return response()->json([
+                'user' => $user,
+                'senhahost' => $s,
+                'vlan' => $v,
+                'status' => 200,
+                'message' => 'Senha de '+$v->nome_vlan+' atualizada com sucesso!',
+            ]);
+            }else{
+                return response()->json([
+                    'status' => 404,
+                    'message' => 'Senha não localizada!',
+                ]);
+            }
+        }        
+    }
+
+
 }

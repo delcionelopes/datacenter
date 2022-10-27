@@ -389,7 +389,7 @@ class VirtualMachineController extends Controller
             $senhavm = $this->senhavm->create($data); //criação da senha
             $s = SenhaVM::find($senhavm->id);
             $vm = $s->virtual_machine;
-            $senhavm->users()->sync($request->input('users')); //sincronização            
+            $s->users()->sync($request->input('users')); //sincronização            
             return response()->json([
                 'user' => $user,
                 'senhavm' => $s,
@@ -433,7 +433,7 @@ class VirtualMachineController extends Controller
             $senhavm->update($data); //atualização da senha
             $s = SenhaVM::find($senhavm->id);
             $vm = $s->virtual_machine;
-            $senhavm->users()->sync($request->input('users')); //sincronização            
+            $s->users()->sync($request->input('users')); //sincronização            
             return response()->json([
                 'user' => $user,
                 'senhahost' => $s,
