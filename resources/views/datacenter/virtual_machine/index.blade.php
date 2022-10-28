@@ -663,7 +663,7 @@ $(document).ready(function(){
             }    
            
             $.ajax({
-                url:'/datacenter/adiciona-vm/',
+                url:'/datacenter/adiciona-vm',
                 type:'POST',
                 dataType: 'json',
                 data: data,

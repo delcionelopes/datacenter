@@ -31,8 +31,9 @@ class App extends Model
         return $this->belongsTo(Orgao::class);
     }
 
-    public function senhaapp(){
-        return $this->hasMany(SenhaApp::class);
+    public function senhaapp()
+    {
+        return $this->hasMany(SenhaApp::class,'app_id');
     }
     
 

@@ -8,8 +8,8 @@ use Illuminate\Database\Eloquent\Model;
 class SenhaApp extends Model
 {
     use HasFactory;
-    protected $table = 'senhaapp';
-    protected $primaryKey = 'id';
+    protected $table = "senhaapp";    
+    protected $primaryKey = "id";
     protected $fillable = [
         'id',
         'senha',
@@ -17,7 +17,7 @@ class SenhaApp extends Model
         'val_indefinida',
         'criador_id',
         'alterador_id',
-        'app_id',
+        'app_id',        
     ];
 
     public function app(){

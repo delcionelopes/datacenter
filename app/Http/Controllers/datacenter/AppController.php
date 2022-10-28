@@ -47,7 +47,8 @@ class AppController extends Controller
         $orgaos = Orgao::all();
         $projetos = Projeto::all();
         $bases = $this->base->query()->where('virtual_machine_id','=',$bd->virtual_machine_id)->orderByDesc('id')->get();
-        $users = $this->users->query()->where('moderador','=','1')->where('inativo','=','0')->orderBy('name')->get();                
+        $users = $this->users->query()->where('moderador','=','1')->where('inativo','=','0')->orderBy('name')->get();                        
+        $senhaapps = SenhaApp::all();
         return view('datacenter.app.index',[
             'id' => $id,
             'apps' => $apps,
@@ -56,7 +57,8 @@ class AppController extends Controller
             'projetos' => $projetos,
             'bases' => $bases,
             'vm' => $vm,
-            'users' => $users,
+            'users' => $users,       
+            'senhaapps' => $senhaapps,
         ]);
     }
 
@@ -77,7 +79,7 @@ class AppController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {        
         $validator = Validator::make($request->all(),[
             'bases_id'    => 'required',
             'projetos_id' => 'required',
@@ -211,14 +213,14 @@ class AppController extends Controller
     public function destroy(int $id)
     {
         $app = $this->app->find($id);                
-       /*  $senhaapp = $this->senhaapp->whereApp_id($id)->first();                
+         $senhaapp = $this->senhaapp->whereApp_id($id)->first();                
         if($senhaapp){
             if($senhaapp->users()->count()){
                 $usuarios = $senhaapp->users;
                 $senhaapp->users()->detach($usuarios);
             }
             $senhaapp->delete();
-        } */
+        }
         $app->delete();
         return response()->json([
             'status'  => 200,
@@ -241,10 +243,10 @@ class AppController extends Controller
         ]);
     }
 
-     public function storesenhaapp(Request $request){
+     public function storesenhaapp(Request $request){             
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
-            'validade' => ['required','date']
+            'validade' => ['required','date'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -260,17 +262,18 @@ class AppController extends Controller
                 'validade' => $request->input('validade'),
                 'val_indefinida' => $request->input('val_indefinida'),
                 'app_id' => $request->input('app_id'),
-                'criador_id' => $user->id,                
-            ];
-            $senhaapp = $this->senhaapp->create($data); //criação da senha
-            $s = SenhaApp::find($senhaapp->id);
-            $a = $s->app;
+                'criador_id' => $user->id,                                
+            ];            
+            
+            $senhaapp = $this->senhaapp->create($data); //criação da senha                                    
             $senhaapp->users()->sync($request->input('users')); //sincronização            
+            $app = $senhaapp->app;
             return response()->json([
                 'user' => $user,
-                'senhaapp' => $s,
+                'senhaapp' => $senhaapp,
+                'app' => $app,
                 'status' => 200,
-                'message' => 'Senha de'+$a->nome_app+' criada com sucesso!',
+                'message' => 'Senha criada com sucesso!',
             ]);
         }        
     }
@@ -288,7 +291,7 @@ class AppController extends Controller
     public function updatesenhaapp(Request $request, int $id){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
-            'validade' => ['required','date']
+            'validade' => ['required','date'],
         ]);
         if($validator->fails()){
             return response()->json([

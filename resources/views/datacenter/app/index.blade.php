@@ -326,16 +326,17 @@
                     @forelse($apps as $app)
                     <tr id="app{{$app->id}}" data-toggle="tooltip" title="{{$app->dominio}}">
                         <th scope="row">{{$app->nome_app}}</th>                        
-                        <td>                            
+                        <td id="senha{{$app->id}}">                            
                             @if($app->senhaapp()->count()==0)
-                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>                            
-                            @else
-                            @if(($app->senhaapp()->users()->id)==(auth()->user()->id))
-                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>
-                            @else
-                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>                            
+                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>
                             @endif
-                            @endif
+                            @forelse($app->senhaapp()->users() as $user)
+                                  @if(($user->id) == (auth()->user()->id))
+                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>
+                                  @endif
+                            @empty      
+                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>
+                            @endforelse
                         </td>
                         @if($app->https)
                         <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>
@@ -764,7 +765,7 @@
             e.preventDefault();
             var labelHtml = ($(this).data("nomeapp")).trim();            
             var labelDominio = ($(this).data("dominio")).trim();            
-            $('#addform').trigger('reset');
+            $('#addformsenha').trigger('reset');
             $('#AddSenhaApp').modal('show');
             $('#add_app_id').val($(this).data("id"));
             $('#nomeapp').html('<Label id="nomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
@@ -775,27 +776,33 @@
         $(document).on('click','.add_senhaapp_btn',function(e){
             e.preventDefault();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            //validade indeterminada
+            var val_indefinida = 0;
+            $("input[name='add_val_indefinida']:checked").each(function(){
+                val_indefinida = 1
+            });
+
             //array apenas com os checkboxes marcados
             var users = new Array;
             $("input[name='users[]']:checked").each(function(){
                 users.push($(this).val());
-            });
-
+            });            
+            
             var data = {
                 'senha':$('.add_senha').val(),
                 'validade':formatDate($('.add_validade').val()),
-                'val_indefinida':$('.add_val_indefinida').val(),
-                'app_id':$('#add_app_id').val();
+                'val_indefinida':val_indefinida,
+                'app_id':$('#add_app_id').val(),
                 'users':users,
                 '_method':'PUT',
-                '_token':CSRF_TOKEN,
-            }
+                '_token': CSRF_TOKEN,       
+            };          
 
-            $.ajax({
-                url:'storesenhaapp',
+            $.ajax({                
                 type:'POST',
-                dataType: 'json',
+                url:'/datacenter/storesenhaapp',                
                 data:data,
+                dataType: 'json',
                 success:function(response){
                      if(response.status==400){
                            //erros
@@ -806,14 +813,39 @@
                             });
           
                 }else{
+                        $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>');     
+                        $('#success_message').html('<div id="success_message"></div>');              
+                        $('#success_message').addClass('alert alert-success');
+                        $('#success_message').text(response.message);                                        
+    
+                        $('#addformsenha').trigger('reset');                    
+                        $('#AddSenhaApp').modal('hide');
+
+                        var limita1 = "";
+                        var limita2 = "";
+                        var limita3 = "";
+                        if(response.senhaapp){
+                        limita1 = '<button id="botaosenha'+response.senhaapp.app_id+'" type="button" data-id="'+response.senhaapp.app_id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.senhaapp.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        }else{
+                            if((response.senhaapp.users.id)==(response.user.id)){
+                            limita2 = '<button id="botaosenha'+response.senhaapp.app_id+'" type="button" data-id="'+response.senhaapp.app_id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.senhaapp.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                            }else{
+                            limita3 = '<button id="botaosenha'+response.senhaapp.app_id+'" type="button" data-id="'+response.senhaapp.app_id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.senhaapp.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            }
+                        }                       
+
+                        var celula = limita1+limita2+limita3;
+                        $('#senha'+id).replaceWith(celula);
+
                 }
                 }
 
         });
+    });
         //fim cadastro de senha
 
-        //formatação str para date
-       function formatDate(data, formato) {
+    //formatação str para date
+    function formatDate(data, formato) {
         if (formato == 'pt-br') {
             return (data.substr(0, 10).split('-').reverse().join('/'));
         } else {
@@ -821,7 +853,6 @@
         }
         }
         //fim formatDate
-
     });
     //fim escopo geral
     

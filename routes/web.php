@@ -131,7 +131,8 @@ Route::group(['middleware'=> ['auth']],function(){
         });                      
 
         ///DATACENTER
-        Route::prefix('datacenter')->name('datacenter.')->namespace('datacenter')->group(function(){       
+        //Route::prefix('datacenter')->name('datacenter.')->namespace('datacenter')->group(function(){       
+        Route::prefix('datacenter')->namespace('App\Http\Controllers\datacenter')->name('datacenter.')->group(function(){
 
           //Rotas para a view index de clusters
         Route::get('index-cluster',[ClusterController::class,'index'])->name('cluster.index');
@@ -196,7 +197,9 @@ Route::group(['middleware'=> ['auth']],function(){
          Route::get('edit-app/{id}',[AppController::class,'edit']);
          Route::put('update-app/{id}',[AppController::class,'update']);
          Route::put('adiciona-app',[AppController::class,'store']);
-         Route::put('https-app/{id}',[AppController::class,'httpsApp']);         
+         Route::put('https-app/{id}',[AppController::class,'httpsApp']);     
+         Route::put('storesenhaapp',[AppController::class,'storesenhaapp']);
+
         });           
 
     }); //fim do escopo do middleware auth

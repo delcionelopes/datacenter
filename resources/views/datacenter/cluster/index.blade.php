@@ -339,7 +339,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                    
                 $.ajax({
-                    url: 'delete-cluster/'+id,
+                    url: '/datacenter/delete-cluster/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data:{
@@ -387,7 +387,7 @@ $(document).ready(function(){
             $.ajax({ 
                 type: 'GET',             
                 dataType: 'json',                                    
-                url: 'edit-cluster/'+id,                                
+                url: '/datacenter/edit-cluster/'+id,                                
                 success: function(response){           
                     if(response.status==200){    
                         var vnomecluster = (response.cluster.nome_cluster).trim();
@@ -422,7 +422,7 @@ $(document).ready(function(){
                 type: 'POST',                          
                 data: data,
                 dataType: 'json',    
-                url: 'update-cluster/'+id,         
+                url: '/datacenter/update-cluster/'+id,         
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
@@ -486,7 +486,7 @@ $(document).ready(function(){
                 '_token':CSRF_TOKEN,
             }           
             $.ajax({            
-                url: 'adiciona-cluster',
+                url: '/datacenter/adiciona-cluster',
                 type: 'POST',
                 dataType: 'json',
                 data: data,                  
@@ -572,7 +572,7 @@ $(document).ready(function(){
             }              
            
             $.ajax({            
-                url: 'adiciona-hostcluster',
+                url: '/datacenter/adiciona-hostcluster',
                 type: 'POST',
                 dataType: 'json',
                 data: data,                  
@@ -675,7 +675,7 @@ $(document).on('click','.add_virtualmachine',function(e){
             }   
                       
             $.ajax({
-                url:'/datacenter/cluster-adiciona-vm/',
+                url:'/datacenter/cluster-adiciona-vm',
                 type:'POST',
                 dataType: 'json',
                 data: data,
