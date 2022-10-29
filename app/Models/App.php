@@ -13,7 +13,13 @@ class App extends Model
         'orgao_id',
         'nome_app',
         'dominio',
-        'https',   
+        'https',
+        'senha',
+        'validade',
+        'val_indefinida',
+        'criador_id',
+        'alterador_id',
+        'app_id',  
     ];
 
     public function bases()
@@ -31,9 +37,8 @@ class App extends Model
         return $this->belongsTo(Orgao::class);
     }
 
-    public function senhaapp()
-    {
-        return $this->hasMany(SenhaApp::class,'app_id');
+    public function users(){
+        return $this->belongsToMany(User::class,'app_has_users','app_id','user_id');
     }
     
 

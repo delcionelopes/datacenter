@@ -49,20 +49,24 @@ class User extends Authenticatable
         return $this->hasMany(Arquivo::class);
     }
 
-    public function senhaapp(){
-        return $this->belongsToMany(SenhaApp::class,'senhaapp_users','user_id','senhaapp_id');
+    public function app(){
+        return $this->belongsToMany(App::class,'app_has_users','user_id','app_id');
     }
 
-    public function senhahost(){
-        return $this->belongsToMany(SenhaHost::class,'senhahost_users','user_id','senhahost_id');
+    public function host(){
+        return $this->belongsToMany(Host::class,'hosts_has_users','user_id','host_id');
     }
 
-    public function senhavm(){
-        return $this->belongsToMany(SenhaVM::class,'senhavm_users','user_id','senhavm_id');        
-    }    
+    public function virtual_machine(){
+        return $this->belongsToMany(VirtualMachine::class,'virtual_machine_has_users','user_id','virtual_machine_id');        
+    }   
+    
+    public function vlan(){
+        return $this->belongsToMany(Vlan::class,'vlan_has_users','user_id','vlan_id');        
+    }  
 
-    public function senhabase(){
-        return $this->belongsToMany(SenhaBase::class,'senhabase_users','user_id','senhabase_id');
+    public function base(){
+        return $this->belongsToMany(Base::class,'bases_has_users','user_id','base_id');
     }
 
     /**

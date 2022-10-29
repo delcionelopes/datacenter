@@ -8,19 +8,16 @@ use App\Models\Cadastro_ip;
 use App\Models\Vlan;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Rede;
-use App\Models\SenhaVLAN;
 
 class vlanController extends Controller
 {
     private $vlan;
     private $rede;
-    private $senhavlan;
     
-    public function __construct(Vlan $vlan,Rede $rede, SenhaVLAN $senhavlan)
+    public function __construct(Vlan $vlan,Rede $rede)
     {
         $this->vlan = $vlan;        
-        $this->rede = $rede;
-        $this->senhavlan = $senhavlan;
+        $this->rede = $rede;       
     }
 
     /**
@@ -222,7 +219,7 @@ class vlanController extends Controller
         }
     }
 
-public function storesenhavlan(Request $request){
+public function storesenhavlan(Request $request, int $id){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
         ]);
@@ -233,38 +230,25 @@ public function storesenhavlan(Request $request){
             ]);
         }else{
             $user = auth()->user();
-            $senhavlan_id = $this->maxsenhavlan_inc();
-            $data = [
-                'id' => $senhavlan_id,
+            $vlan = $this->vlan->find($id);
+            $data = [          
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
                 'val_indefinida' => $request->input('val_indefinida'),
                 'vlan_id' => $request->input('vlan_id'),
                 'criador_id' => $user->id,                
             ];
-            $senhavlan = $this->senhavlan->create($data); //criação da senha
-            $s = SenhaVLAN::find($senhavlan->id);
-            $v = $s->vlan;
-            $senhavlan->users()->sync($request->input('users')); //sincronização            
+            $vlan->update($data); //criação da senha
+            $v = Vlan::find($id);            
+            $v->users()->sync($request->input('users')); //sincronização            
             return response()->json([
-                'user' => $user,
-                'senhavlan' => $s,
+                'user' => $user,              
                 'vlan' => $v,
                 'status' => 200,
                 'message' => 'Senha de'+$v->nome_vlan+' foi criada com sucesso!',
             ]);
         }        
-    }
-
-    protected function maxsenhavlan_inc(){
-        $senhavlan = $this->senhavlan->orderByDesc('id')->first();
-        if($senhavlan){
-            $codigo = $senhavlan->id+1;
-        }else{
-            $codigo = 1;
-        }
-        return $codigo;
-    }
+    } 
 
     public function updatesenhavlan(Request $request, int $id){
         $validator = Validator::make($request->all(),[
@@ -276,8 +260,8 @@ public function storesenhavlan(Request $request){
                 'errors' => $validator->errors()->getMessages(),
             ]);
         }else{
-            $senhavlan = $this->senhavlan->find($id);
-            if($senhavlan){
+            $vlan = $this->vlan->find($id);
+            if($vlan){
             $user = auth()->user();            
             $data = [                
                 'senha' => $request->input('senha'),
@@ -286,13 +270,11 @@ public function storesenhavlan(Request $request){
                 'vlan_id' => $request->input('vlan_id'),
                 'alterador_id' => $user->id,                
             ];
-            $senhavlan->update($data); //atualização da senha
-            $s = SenhaVLAN::find($id);
-            $v = $s->vlan;
-            $senhavlan->users()->sync($request->input('users')); //sincronização            
+            $vlan->update($data); //atualização da senha
+            $v = Vlan::find($id);            
+            $v->users()->sync($request->input('users')); //sincronização            
             return response()->json([
-                'user' => $user,
-                'senhahost' => $s,
+                'user' => $user,                
                 'vlan' => $v,
                 'status' => 200,
                 'message' => 'Senha de '+$v->nome_vlan+' atualizada com sucesso!',

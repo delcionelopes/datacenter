@@ -8,7 +8,12 @@ class Vlan extends Model
 {    
     protected $table = 'vlan';   
     protected $fillable = [
-        'nome_vlan',       
+        'nome_vlan',
+        'senha',
+        'validade',
+        'val_indefinida',
+        'criador_id',
+        'alterador_id',       
     ];
 
     public function virtual_machines(){
@@ -18,7 +23,7 @@ class Vlan extends Model
         return $this->hasMany(Rede::class);
     }
 
-    public function senhavlan(){
-        return $this->hasMany(SenhaVLAN::class);
+    public function users(){
+        return $this->belongsToMany(User::class,'vlan_has_users','vlan_id','user_id');
     }
 }

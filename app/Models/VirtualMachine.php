@@ -20,7 +20,12 @@ class VirtualMachine extends Model
         'orgao_id',
         'cluster_id',
         'projeto_id',
-        'cluster',     
+        'cluster',
+         'senha',
+        'validade',
+        'val_indefinida',
+        'criador_id',
+        'alterador_id',
     ];
     public function cluster(){
         return $this->belongsTo(Cluster::class,'cluster_id');
@@ -41,8 +46,8 @@ class VirtualMachine extends Model
         return $this->hasMany(Base::class);
     }
 
-    public function senhavm(){
-        return $this->hasMany(SenhaVM::class);
+    public function users(){
+        return $this->belongsToMany(User::class,'virtual_machine_has_users','virtual_machine_id','user_id');
     }
     
 }

@@ -14,7 +14,12 @@ class Host extends Model
         'obs_host',
         'ip',
         'datacenter',
-        'cluster',      
+        'cluster',
+        'senha',
+        'validade',
+        'val_indefinida',
+        'criador_id',
+        'alterador_id',
     ];
 
     public function cluster(){
@@ -23,5 +28,9 @@ class Host extends Model
 
     public function senhahost(){
         return $this->hasMany(SenhaHost::class);
+    }
+
+    public function users(){
+        return $this->belongsToMany(User::class,'hosts_has_users','host_id','user_id');
     }
 }

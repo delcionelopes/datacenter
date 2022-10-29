@@ -9,7 +9,6 @@ use App\Models\Base;
 use App\Models\Cluster;
 use App\Models\Orgao;
 use App\Models\Projeto;
-use App\Models\SenhaVM;
 use Illuminate\Http\Request;
 use App\Models\VirtualMachine;
 use App\Models\Vlan;
@@ -19,15 +18,13 @@ class VirtualMachineController extends Controller
 {
     private $virtualmachine;
     private $vlan;
-    private $base;
-    private $senhavm;
+    private $base;    
 
-    public function __construct(VirtualMachine $virtualmachine, Vlan $vlan, Base $base, SenhaVM $senhavm)
+    public function __construct(VirtualMachine $virtualmachine, Vlan $vlan, Base $base)
     {
         $this->virtualmachine = $virtualmachine;
         $this->vlan = $vlan;
-        $this->base = $base;
-        $this->senhavm = $senhavm;
+        $this->base = $base;        
     }
 
     /**
@@ -259,7 +256,7 @@ class VirtualMachineController extends Controller
         $virtualmachine = $this->virtualmachine->find($id);
         $vl = $virtualmachine->vlans; //todos as vlans relacionadas
         $bases = $virtualmachine->bases;
-        if(($virtualmachine->vlans()->count())||($virtualmachine->bases()->count())||($virtualmachine->senhavm()->count())){
+        if(($virtualmachine->vlans()->count())||($virtualmachine->bases()->count())||($virtualmachine->users()->count())){
             if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
                 if($virtualmachine->vlans()->count){
                     $virtualmachine->vlans()->detach($vl); //exclui o relacionamento n:n
@@ -277,11 +274,9 @@ class VirtualMachineController extends Controller
                         $b->delete();
                     }                   
                 }
-                if($virtualmachine->senhavm()->count()){
+                if($virtualmachine->users()->count()){
                     $usuarios = $virtualmachine->users;
-                    $virtualmachine->users()->detach($usuarios);
-                    $senhavm = $this->senhavm->whereVirtual_machine_id($id);
-                    $senhavm->delete();
+                    $virtualmachine->users()->detach($usuarios);                   
                 }
                 $status = 200;
                 $message = $virtualmachine->nome_vm.' foi excluído com sucesso!';
@@ -366,7 +361,7 @@ class VirtualMachineController extends Controller
     }
 
 
-    public function storesenhavm(Request $request){
+    public function storesenhavm(Request $request, int $id){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
         ]);
@@ -377,38 +372,25 @@ class VirtualMachineController extends Controller
             ]);
         }else{
             $user = auth()->user();
-            $senhavm_id = $this->maxsenhavm_inc();
-            $data = [
-                'id' => $senhavm_id,
+            $virtualmachine = $this->virtualmachine->find($id);
+            $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
                 'val_indefinida' => $request->input('val_indefinida'),
                 'virtual_machine_id' => $request->input('virtual_machine_id'),
                 'criador_id' => $user->id,                
             ];
-            $senhavm = $this->senhavm->create($data); //criação da senha
-            $s = SenhaVM::find($senhavm->id);
-            $vm = $s->virtual_machine;
-            $s->users()->sync($request->input('users')); //sincronização            
+            $virtualmachine->update($data); //criação da senha
+            $vm = VirtualMachine::find($id);            
+            $vm->users()->sync($request->input('users')); //sincronização            
             return response()->json([
-                'user' => $user,
-                'senhavm' => $s,
+                'user' => $user,                
                 'vm' => $vm,
                 'status' => 200,
                 'message' => 'Senha de'+$vm->nome_vm+' criada com sucesso!',
             ]);
         }        
-    }
-
-    protected function maxsenhavm_inc(){
-        $senhavm = $this->senhavm->orderByDesc('id')->first();
-        if($senhavm){
-            $codigo = $senhavm->id+1;
-        }else{
-            $codigo = 1;
-        }
-        return $codigo;
-    }
+    }    
 
     public function updatesenhavm(Request $request, int $id){
         $validator = Validator::make($request->all(),[
@@ -420,8 +402,8 @@ class VirtualMachineController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ]);
         }else{
-            $senhavm = $this->senhavm->find($id);
-            if($senhavm){
+            $virtualmachine = $this->virtualmachine->find($id);
+            if($virtualmachine){
             $user = auth()->user();            
             $data = [                
                 'senha' => $request->input('senha'),
@@ -430,13 +412,11 @@ class VirtualMachineController extends Controller
                 'virtual_machine_id' => $request->input('virtual_machine_id'),
                 'alterador_id' => $user->id,                
             ];
-            $senhavm->update($data); //atualização da senha
-            $s = SenhaVM::find($senhavm->id);
-            $vm = $s->virtual_machine;
-            $s->users()->sync($request->input('users')); //sincronização            
+            $virtualmachine->update($data); //atualização da senha
+            $vm = VirtualMachine::find($id);            
+            $vm->users()->sync($request->input('users')); //sincronização            
             return response()->json([
-                'user' => $user,
-                'senhahost' => $s,
+                'user' => $user,                
                 'vm' => $vm,
                 'status' => 200,
                 'message' => 'Senha de '+$vm->nome_vm+' atualizada com sucesso!',

@@ -327,10 +327,10 @@
                     <tr id="app{{$app->id}}" data-toggle="tooltip" title="{{$app->dominio}}">
                         <th scope="row">{{$app->nome_app}}</th>                        
                         <td id="senha{{$app->id}}">                            
-                            @if($app->senhaapp()->count()==0)
+                            @if(!$app->senha)
                             <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>
                             @endif
-                            @forelse($app->senhaapp()->users() as $user)
+                            @forelse($app->users() as $user)
                                   @if(($user->id) == (auth()->user()->id))
                                   <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>
                                   @endif
@@ -777,6 +777,7 @@
             e.preventDefault();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
+            var id = $('#add_app_id').val();
             var val_indefinida = 0;
             $("input[name='add_val_indefinida']:checked").each(function(){
                 val_indefinida = 1
@@ -791,16 +792,15 @@
             var data = {
                 'senha':$('.add_senha').val(),
                 'validade':formatDate($('.add_validade').val()),
-                'val_indefinida':val_indefinida,
-                'app_id':$('#add_app_id').val(),
+                'val_indefinida':val_indefinida,                
                 'users':users,
-                '_method':'PUT',
+                '_method':'PATCH',
                 '_token': CSRF_TOKEN,       
             };          
 
             $.ajax({                
                 type:'POST',
-                url:'/datacenter/storesenhaapp',                
+                url:'/datacenter/storesenhaapp/'+id,                
                 data:data,
                 dataType: 'json',
                 success:function(response){
@@ -824,13 +824,18 @@
                         var limita1 = "";
                         var limita2 = "";
                         var limita3 = "";
-                        if(response.senhaapp){
-                        limita1 = '<button id="botaosenha'+response.senhaapp.app_id+'" type="button" data-id="'+response.senhaapp.app_id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.senhaapp.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        var bloqueia = true;
+                        if(response.app.senha==""){
+                        limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
-                            if((response.senhaapp.users.id)==(response.user.id)){
-                            limita2 = '<button id="botaosenha'+response.senhaapp.app_id+'" type="button" data-id="'+response.senhaapp.app_id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.senhaapp.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
-                            }else{
-                            limita3 = '<button id="botaosenha'+response.senhaapp.app_id+'" type="button" data-id="'+response.senhaapp.app_id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.senhaapp.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            $.each(response.users,function(key,users){
+                                if(users->id == response.user.id){
+                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    bloqueia = false;
+                                }
+                            });                            
+                            if(bloqueia{
+                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 

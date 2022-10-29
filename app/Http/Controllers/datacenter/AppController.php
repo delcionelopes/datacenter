@@ -8,7 +8,6 @@ use App\Models\App;
 use App\Models\Base;
 use App\Models\Orgao;
 use App\Models\Projeto;
-use App\Models\SenhaApp;
 use App\Models\User;
 use App\Models\VirtualMachine;
 use Illuminate\Support\Facades\Validator;
@@ -17,13 +16,12 @@ class AppController extends Controller
 {
     private $app;
     private $base;
-    private $senhaapp;
+    private $users;    
 
-    public function __construct(App $app, Base $base, SenhaApp $senhaapp, User $users)
+    public function __construct(App $app, Base $base, User $users)
     {
         $this->app = $app;
-        $this->base = $base;
-        $this->senhaapp = $senhaapp;
+        $this->base = $base;       
         $this->users = $users;
     }
     /**
@@ -47,8 +45,7 @@ class AppController extends Controller
         $orgaos = Orgao::all();
         $projetos = Projeto::all();
         $bases = $this->base->query()->where('virtual_machine_id','=',$bd->virtual_machine_id)->orderByDesc('id')->get();
-        $users = $this->users->query()->where('moderador','=','1')->where('inativo','=','0')->orderBy('name')->get();                        
-        $senhaapps = SenhaApp::all();
+        $users = $this->users->query()->where('moderador','=','1')->where('inativo','=','0')->orderBy('name')->get();                                
         return view('datacenter.app.index',[
             'id' => $id,
             'apps' => $apps,
@@ -57,8 +54,7 @@ class AppController extends Controller
             'projetos' => $projetos,
             'bases' => $bases,
             'vm' => $vm,
-            'users' => $users,       
-            'senhaapps' => $senhaapps,
+            'users' => $users,                   
         ]);
     }
 
@@ -243,7 +239,7 @@ class AppController extends Controller
         ]);
     }
 
-     public function storesenhaapp(Request $request){             
+     public function storesenhaapp(Request $request, int $id){             
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
             'validade' => ['required','date'],
@@ -254,10 +250,9 @@ class AppController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ]);
         }else{
-            $user = auth()->user();
-            $senhaapp_id = $this->maxsenhaapp_inc();
-            $data = [
-                'id' => $senhaapp_id,
+            $app = $this->app->find($id);
+            $user = auth()->user();            
+            $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
                 'val_indefinida' => $request->input('val_indefinida'),
@@ -265,27 +260,16 @@ class AppController extends Controller
                 'criador_id' => $user->id,                                
             ];            
             
-            $senhaapp = $this->senhaapp->create($data); //criação da senha                                    
-            $senhaapp->users()->sync($request->input('users')); //sincronização            
-            $app = $senhaapp->app;
+            $app->update($data); //criação da senha                                    
+            $a = App::find($id);
+            $a->users()->sync($request->input('users')); //sincronização                        
             return response()->json([
-                'user' => $user,
-                'senhaapp' => $senhaapp,
-                'app' => $app,
+                'user' => $user,                
+                'app' => $a,
                 'status' => 200,
-                'message' => 'Senha criada com sucesso!',
+                'message' => 'Senha para '+$a->nome_app+' foi criada com sucesso!',
             ]);
         }        
-    }
-
-    protected function maxsenhaapp_inc(){
-        $senhaapp = $this->senhaapp->orderByDesc('id')->first();
-        if($senhaapp){
-            $codigo = $senhaapp->id+1;
-        }else{
-            $codigo = 1;
-        }
-        return $codigo;
     }
 
     public function updatesenhaapp(Request $request, int $id){
@@ -299,8 +283,8 @@ class AppController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ]);
         }else{
-            $senhaapp = $this->senhaapp->find($id);
-            if($senhaapp){
+            $app = $this->app->find($id);
+            if($app){
             $user = auth()->user();            
             $data = [                
                 'senha' => $request->input('senha'),
@@ -309,13 +293,12 @@ class AppController extends Controller
                 'app_id' => $request->input('app_id'),
                 'alterador_id' => $user->id,                
             ];
-            $senhaapp->update($data); //atualização da senha
-            $s = SenhaApp::find($id);
-            $a = $s->app;
-            $s->users()->sync($request->input('users')); //sincronização            
+            $app->update($data); //atualização da senha
+            $a = App::find($id);            
+            $a->users()->sync($request->input('users')); //sincronização            
             return response()->json([
                 'user' => $user,
-                'senhaapp' => $s,
+                'app' => $a,
                 'status' => 200,
                 'message' => 'Senha de '+$a->nome_app+' atualizada com sucesso!',
             ]);
@@ -329,14 +312,12 @@ class AppController extends Controller
     } 
 
       public function editSenhaApp($id){
-        $senhaapp = $this->senhaapp->find($id);
-        $app = $senhaapp->app;
-        $criador = $senhaapp->criador;
-        $alterador = $senhaapp->alterador;
-        $users = $senhaapp->users;        
+        $app = $this->app->find($id);        
+        $criador = User::find($app->criador_id);
+        $alterador = User::find($app->alterador_id);
+        $users = $app->users;        
         return response()->json([
-            'status' => 200,
-            'senhaapp' => $senhaapp,
+            'status' => 200,            
             'app' => $app,
             'criador' => $criador,
             'alterador' => $alterador,

@@ -13,7 +13,12 @@ class Base extends Model
         'dono',
         'encoding',
         'virtual_machine_id',
-        'projetos_id',  
+        'projetos_id',
+        'senha',
+        'validade',
+        'val_indefinida',
+        'criador_id',
+        'alterador_id',
     ];
 
     public function virtualmachine(){
@@ -27,5 +32,9 @@ class Base extends Model
     public function apps()
     {
         return $this->hasMany(App::class);
+    }
+    
+    public function users(){
+        return $this->belongsToMany(User::class,'bases_has_users','base_id','user_id');
     }
 }

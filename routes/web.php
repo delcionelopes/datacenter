@@ -198,7 +198,7 @@ Route::group(['middleware'=> ['auth']],function(){
          Route::put('update-app/{id}',[AppController::class,'update']);
          Route::put('adiciona-app',[AppController::class,'store']);
          Route::put('https-app/{id}',[AppController::class,'httpsApp']);     
-         Route::put('storesenhaapp',[AppController::class,'storesenhaapp']);
+         Route::patch('storesenhaapp/{id}',[AppController::class,'storesenhaapp']);
 
         });           
 
