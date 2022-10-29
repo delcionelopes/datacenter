@@ -208,15 +208,11 @@ class AppController extends Controller
      */
     public function destroy(int $id)
     {
-        $app = $this->app->find($id);                
-         $senhaapp = $this->senhaapp->whereApp_id($id)->first();                
-        if($senhaapp){
-            if($senhaapp->users()->count()){
-                $usuarios = $senhaapp->users;
-                $senhaapp->users()->detach($usuarios);
-            }
-            $senhaapp->delete();
-        }
+        $app = $this->app->find($id);                       
+            if($app->users()->count()){
+                $usuarios = $app->users;
+                $app->users()->detach($usuarios);
+            }            
         $app->delete();
         return response()->json([
             'status'  => 200,
@@ -255,17 +251,17 @@ class AppController extends Controller
             $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
-                'val_indefinida' => $request->input('val_indefinida'),
-                'app_id' => $request->input('app_id'),
+                'val_indefinida' => $request->input('val_indefinida'),               
                 'criador_id' => $user->id,                                
-            ];            
-            
+            ];         
             $app->update($data); //criação da senha                                    
             $a = App::find($id);
             $a->users()->sync($request->input('users')); //sincronização                        
+            $u = $app->users;
             return response()->json([
                 'user' => $user,                
                 'app' => $a,
+                'users' => $u,
                 'status' => 200,
                 'message' => 'Senha para '+$a->nome_app+' foi criada com sucesso!',
             ]);
@@ -289,16 +285,17 @@ class AppController extends Controller
             $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
-                'val_indefinida' => $request->input('val_indefinida'),
-                'app_id' => $request->input('app_id'),
+                'val_indefinida' => $request->input('val_indefinida'),                
                 'alterador_id' => $user->id,                
-            ];
+            ];       
             $app->update($data); //atualização da senha
             $a = App::find($id);            
-            $a->users()->sync($request->input('users')); //sincronização            
+            $a->users()->sync($request->input('users')); //sincronização   
+            $u = $app->users;         
             return response()->json([
                 'user' => $user,
                 'app' => $a,
+                'users' => $u,
                 'status' => 200,
                 'message' => 'Senha de '+$a->nome_app+' atualizada com sucesso!',
             ]);

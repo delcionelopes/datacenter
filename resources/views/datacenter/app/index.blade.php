@@ -212,7 +212,7 @@
 <!-- fim AddSenhaApp -->
 
 <!-- início EditSenhaApp -->
-   <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaApp" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaApp" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
@@ -326,17 +326,21 @@
                     @forelse($apps as $app)
                     <tr id="app{{$app->id}}" data-toggle="tooltip" title="{{$app->dominio}}">
                         <th scope="row">{{$app->nome_app}}</th>                        
-                        <td id="senha{{$app->id}}">                            
+                        <td id="senha{{$app->id}}">
                             @if(!$app->senha)
                             <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>
-                            @endif
-                            @forelse($app->users() as $user)
+                            @else
+                            @if($app->users()->count())
+                            @foreach($app->users as $user)
                                   @if(($user->id) == (auth()->user()->id))
                                   <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>
-                                  @endif
-                            @empty      
-                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>
-                            @endforelse
+                                  @break
+                                  @elseif ($loop->last)
+                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>
+                                  @endif                                                        
+                            @endforeach                            
+                            @endif
+                            @endif                                                        
                         </td>
                         @if($app->https)
                         <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>
@@ -773,15 +777,15 @@
             $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>'); 
         });
 
-        $(document).on('click','.add_senhaapp_btn',function(e){
+         $(document).on('click','.add_senhaapp_btn',function(e){
             e.preventDefault();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
             var id = $('#add_app_id').val();
             var val_indefinida = 0;
             $("input[name='add_val_indefinida']:checked").each(function(){
-                val_indefinida = 1
-            });
+                val_indefinida = 1;
+            });         
 
             //array apenas com os checkboxes marcados
             var users = new Array;
@@ -796,15 +800,15 @@
                 'users':users,
                 '_method':'PATCH',
                 '_token': CSRF_TOKEN,       
-            };          
-
+            };            
+            
             $.ajax({                
-                type:'POST',
-                url:'/datacenter/storesenhaapp/'+id,                
+                type:'POST',                                
                 data:data,
                 dataType: 'json',
+                url:'/datacenter/storesenhaapp/'+id,
                 success:function(response){
-                     if(response.status==400){
+                      if(response.status==400){
                            //erros
                             $('#saveformsenha_errList').html("");
                             $('#saveformsenha_errList').addClass("alert alert-danger");
@@ -825,16 +829,16 @@
                         var limita2 = "";
                         var limita3 = "";
                         var bloqueia = true;
-                        if(response.app.senha==""){
+                        if(!(response.app.senha)){
                         limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
-                            $.each(response.users,function(key,users){
-                                if(users->id == response.user.id){
+                            $.each(response.users,function(key,user_values){
+                                if(user_values.id == response.user.id){
                                     limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;
                                 }
                             });                            
-                            if(bloqueia{
+                            if(bloqueia){
                             limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
@@ -842,11 +846,10 @@
                         var celula = limita1+limita2+limita3;
                         $('#senha'+id).replaceWith(celula);
 
-                }
-                }
-
-        });
-    });
+                } 
+                }   
+            });
+    }); 
         //fim cadastro de senha
 
     //formatação str para date

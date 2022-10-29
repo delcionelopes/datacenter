@@ -18,8 +18,7 @@ class App extends Model
         'validade',
         'val_indefinida',
         'criador_id',
-        'alterador_id',
-        'app_id',  
+        'alterador_id',      
     ];
 
     public function bases()
