@@ -199,7 +199,7 @@ Route::group(['middleware'=> ['auth']],function(){
          Route::put('adiciona-app',[AppController::class,'store']);
          Route::put('https-app/{id}',[AppController::class,'httpsApp']);     
          Route::patch('storesenhaapp/{id}',[AppController::class,'storesenhaapp']);
-
+         Route::get('editsenhaapp/{id}',[AppController::class,'editsenhaapp']);
         });           
 
     }); //fim do escopo do middleware auth

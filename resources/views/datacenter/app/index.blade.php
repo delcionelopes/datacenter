@@ -229,7 +229,7 @@
             </div>
             <div class="modal-body form-horizontal">
                 <form id="editformsenha" name="editformsenha" class="form-horizontal" role="form">
-                    <input type="hidden" id="edit_app_id">
+                    <input type="hidden" id="edit_appsenha_id">
                     <ul id="updateformsenha_errList"></ul>  
                     <div class="card">
                     <div class="card-body"> 
@@ -339,19 +339,19 @@
                             @if($app->users()->count())                           
                             @foreach($app->users as $user)
                                   @if(($user->id) == (auth()->user()->id))                                  
-                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"></button>
                                   @break
                                   @elseif ($loop->last)
-                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"></button>
                                   @endif                                                        
                             @endforeach                            
                             @endif
                             @endif                                                        
                         </td>
                         @if($app->https)
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="APPs COM certificação SSL"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} COM certificação SSL"></button></td>
                         @else
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="APPs SEM certificação SSL"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} SEM certificação SSL"></button></td>
                         @endif                       
                         <td>
                             <div class="btn-group">
@@ -785,6 +785,7 @@
 
          $(document).on('click','.add_senhaapp_btn',function(e){
             e.preventDefault();
+            $(this).text('Salvando...');
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
             var id = $('#add_app_id').val();
@@ -834,29 +835,104 @@
                         var limita1 = "";
                         var limita2 = "";
                         var limita3 = "";
-                        var bloqueia = true;
-                        if(!(response.app.senha)){
+                        var bloqueia = true;                        
+                        if((response.app.senha)==""){
                         limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
-                                if(user_values.id == response.user.id){
-                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
-                                    bloqueia = false;
+                                if(user_values.id == response.user.id){                                    
+                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 
-                        var celula = limita1+limita2+limita3;
-                        $('#senha'+id).replaceWith(celula);
+                        var elemento = limita1+limita2+limita3;
+                        $('#botaosenha'+id).replaceWith(elemento);
 
                 } 
                 }   
             });
     }); 
         //fim cadastro de senha
+    ////inicio alteração de senha
+    $('#EditSenhaApp').on('shown.bs.modal',function(){
+        $('#nome_app').focus();
+    });
+    $(document).on('click','.senhabloqueada_btn',function(e){
+        e.preventDefault();
+
+        var opcaosenha = $(this).data("opt");
+
+        if(opcaosenha){
+    
+        var id = $(this).data("id");
+        var labelHtml = ($(this).data("nomeapp")).trim();            
+        var labelDominio = ($(this).data("dominio")).trim(); 
+        $('#editformsenha').trigger('reset');
+        $('#EditSenhaApp').modal('show');  
+        $('#editnomeapp').html('<Label id="editnomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $('#editdominioapp').html('<Label id="editdominioapp" style="font-style:italic;">'+labelDominio+'</Label>');     
+        $('#edit_appsenha_id').val(id);  
+        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');
+    
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/datacenter/editsenhaapp/'+id,
+            success: function(response){
+                if(response.status==200){                  
+                    var datacriacao = new Date(response.app.created_at);
+                     if(datacriacao=="31/12/1969 21:00:00"){
+                        datacriacao = "";
+                        }  
+                    dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
+                    var dataatualizacao = new Date(response.app.updated_at);
+                    dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
+                     if(dataatualizacao=="31/12/1969 21:00:00"){
+                        dataatualizacao = "";
+                        }  
+                    var criador = response.criador;
+                        if(!response.criador){
+                            criador = "";
+                        }
+                    var alterador = response.alterador;
+                        if(!response.alterador){
+                            alterador = "";
+                        }                   
+                    
+                    $('#editdatacriacao').html('<label  id="editdatacriacao">'+datacriacao+'</label>');
+                    $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
+                    $('#editcriador').html('<label  id="editcriador">'+criador+'</label>');
+                    $('#editmodificador').html('<label  id="editmodificador">'+alterador+'</label>');                         
+
+                     //Atribuindo aos checkboxs
+                    $("input[name='users[]']").attr('checked',false); //desmarca todos
+                        //apenas os temas relacionados ao artigo
+                        $.each(response.users,function(key,values){                                                        
+                                $("#check"+values.id).attr('checked',true);  //faz a marcação seletiva                         
+                        });
+                }
+            }
+        });
+
+    }else{      
+    }
+    });
+    //fim exibe EditAppModal
+
+
+    ////fim alteração de senha
+
+
 
     //formatação str para date
     function formatDate(data, formato) {

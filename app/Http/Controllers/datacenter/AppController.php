@@ -252,11 +252,11 @@ class AppController extends Controller
             $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
-                'val_indefinida' => $request->input('val_indefinida'),               
+                'val_indefinida' => intval($request->input('val_indefinida')),
                 'criador_id' => $user->id,                                
-            ];         
+            ];            
             $app->update($data); //criação da senha                                    
-            $a = App::find($id);
+            $a = App::find($id);            
             $a->users()->sync($request->input('users')); //sincronização                        
             $u = $app->users;
             return response()->json([
@@ -264,7 +264,7 @@ class AppController extends Controller
                 'app' => $a,
                 'users' => $u,
                 'status' => 200,
-                'message' => 'Senha para '+$a->nome_app+' foi criada com sucesso!',
+                'message' => 'Senha foi criada com sucesso!',
             ]);
         }        
     }
@@ -287,11 +287,12 @@ class AppController extends Controller
             $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
-                'val_indefinida' => $request->input('val_indefinida'),                
+                'val_indefinida' => intval($request->input('val_indefinida')),
                 'alterador_id' => $user->id,                
             ];       
             $app->update($data); //atualização da senha
             $a = App::find($id);            
+           
             $a->users()->sync($request->input('users')); //sincronização   
             $u = $app->users;         
             return response()->json([
@@ -299,7 +300,7 @@ class AppController extends Controller
                 'app' => $a,
                 'users' => $u,
                 'status' => 200,
-                'message' => 'Senha de '+$a->nome_app+' atualizada com sucesso!',
+                'message' => 'Senha atualizada com sucesso!',
             ]);
             }else{
                 return response()->json([
@@ -310,7 +311,7 @@ class AppController extends Controller
         }        
     } 
 
-      public function editSenhaApp($id){
+      public function editsenhaapp($id){
         $app = $this->app->find($id);        
         $criador = User::find($app->criador_id);
         $alterador = User::find($app->alterador_id);
