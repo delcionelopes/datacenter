@@ -239,13 +239,14 @@ class AppController extends Controller
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
             'validade' => ['required','date'],
+            'users' => ['required','array','min:2'],
         ]);
         if($validator->fails()){
             return response()->json([
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
+        }else{                 
             $app = $this->app->find($id);
             $user = auth()->user();            
             $data = [                
@@ -272,6 +273,7 @@ class AppController extends Controller
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
             'validade' => ['required','date'],
+            'users' => ['required','array','min:2'],
         ]);
         if($validator->fails()){
             return response()->json([

@@ -3,7 +3,13 @@
 @section('title', 'Datacenter')
 
 @section('content')
-   <!-- início AddAppModal -->
+
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+<!-- início AddAppModal -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddAppModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -194,7 +200,7 @@
                                     @foreach ($users as $user)
                                     <label class="form-check-label" for="CheckUser{{$user->id}}">
                                         <input type="checkbox" id="CheckUser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
-                                    </label>
+                                    </label><br>
                                     @endforeach
                                 </div>
                             </fieldset>  
@@ -273,7 +279,7 @@
                                     @foreach ($users as $user)
                                     <label class="form-check-label" for="check{{$user->id}}">
                                         <input type="checkbox" id="check{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
-                                    </label>
+                                    </label><br>
                                     @endforeach
                                 </div>
                             </fieldset>   
@@ -328,24 +334,24 @@
                         <th scope="row">{{$app->nome_app}}</th>                        
                         <td id="senha{{$app->id}}">
                             @if(!$app->senha)
-                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>
+                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
                             @else
-                            @if($app->users()->count())
+                            @if($app->users()->count())                           
                             @foreach($app->users as $user)
-                                  @if(($user->id) == (auth()->user()->id))
-                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>
+                                  @if(($user->id) == (auth()->user()->id))                                  
+                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="0" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"></button>
                                   @break
                                   @elseif ($loop->last)
-                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>
+                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="1" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"></button>
                                   @endif                                                        
                             @endforeach                            
                             @endif
                             @endif                                                        
                         </td>
                         @if($app->https)
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="APPs COM certificação SSL"></button></td>
                         @else
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="APPs SEM certificação SSL"></button></td>
                         @endif                       
                         <td>
                             <div class="btn-group">
@@ -861,8 +867,19 @@
         }
         }
         //fim formatDate
+
+        ///tooltip
+    $(function(){      
+        $('.senhabloqueada_btn').tooltip();       
+        $('.cadsenha_btn').tooltip();        
+        $('.https_btn').tooltip();
+    });
+    ///fim tooltip
+
     });
     //fim escopo geral
+
+    
     
     </script>
 @stop

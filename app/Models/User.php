@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
@@ -49,7 +50,7 @@ class User extends Authenticatable
         return $this->hasMany(Arquivo::class);
     }
 
-    public function app(){
+    public function app():BelongsToMany{
         return $this->belongsToMany(App::class,'app_has_users','user_id','app_id');
     }
 
