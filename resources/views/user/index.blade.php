@@ -203,9 +203,9 @@
                         <td>{{$user->id}}</td>
                         <td>{{$user->name}}</td>
                         @if($user->moderador)
-                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="0" class="moderador_user fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>
+                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="false" class="moderador_user fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>
                         @else
-                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="1" class="moderador_user fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>
+                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="true" class="moderador_user fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>
                         @endif
                         @if($user->inativo)
                         <td id="inativo{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-inativo="false" class="inativo_user fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>
@@ -368,9 +368,9 @@ $('#EditUserModal').on('shown.bs.modal',function(){
         $(this).text("Atualizando...");
         var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var upd_orgao_id = $('#edit_selorgao_id').val();
-        var moderador = 0;
+        var moderador = false;
         var inativo = false;
-        $("#edit_moderador:checked").each(function(){moderador = 1;});             
+        $("#edit_moderador:checked").each(function(){moderador = true;});             
         $("#edit_inativo:checked").each(function(){inativo = true;});                     
         var id = $('#edit_user_id').val();
         var data = new FormData();
@@ -496,8 +496,9 @@ $('#EditUserModal').on('shown.bs.modal',function(){
         $(this).text("Salvando...");        
         var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
         var ins_orgao_id = $('#add_selorgao_id').val();
-        var moderador = 0;        
-        $("#moderador:checked").each(function(){moderador = 1;});                     
+        var moderador = false; 
+        var inativo = false;      
+        $("#moderador:checked").each(function(){moderador = true;});                     
         var data = new FormData();        
             data.append('name',($('.name').val()).trim());
             data.append('email',($('.email').val()).trim());
@@ -506,6 +507,7 @@ $('#EditUserModal').on('shown.bs.modal',function(){
             data.append('link_site',($('.link_site').val()).trim());
             data.append('password',($('.password').val()).trim());
             data.append('moderador',moderador);
+            data.append('inativo',inativo);
             data.append('cpf',($('.cpf').val()).trim());
             data.append('matricula',($('.matricula').val()).trim());
             data.append('orgao_id',ins_orgao_id);
@@ -554,14 +556,14 @@ $('#EditUserModal').on('shown.bs.modal',function(){
                         if(response.user.moderado){
                         limita2 = '<td id="moderador'+response.user.id+'"><button type="button"\
                                    data-id="'+response.user.id+'" \
-                                   data-moderador="0" \
+                                   data-moderador="false" \
                                    class="moderador_user fas fa-lock"\
                                    style="background: transparent; color: green; border: none;">\
                                    </button></td>';
                         }else{
                         limita3 = '<td id="moderador'+response.user.id+'"><button type="button" \
                                    data-id="'+response.user.id+'" \
-                                   data-moderador="1" \
+                                   data-moderador="true" \
                                    class="moderador_user fas fa-lock-open" \
                                    style="background: transparent; color: red; border: none;">\
                                    </button></td>';
@@ -626,14 +628,14 @@ $(document).on('click','.moderador_user',function(e){
                         if(response.user.moderador==1){
                         limita1 = '<td id="moderador'+response.user.id+'"><button type="button"\
                                    data-id="'+response.user.id+'" \
-                                   data-moderador="0" \
-                                   class="moderador_user fas fa-lock\
+                                   data-moderador="false" \
+                                   class="moderador_user fas fa-lock" \
                                    style="background: transparent; color: green; border: none;">\
                                    </button></td>';
                                 }else{
                         limita2 = '<td id="moderador'+response.user.id+'"><button type="button" \
                                    data-id="'+response.user.id+'" \
-                                   data-moderador="1" \
+                                   data-moderador="true" \
                                    class="moderador_user fas fa-lock-open" \
                                    style="background: transparent; color: red; border: none;">\
                                    </button></td>';

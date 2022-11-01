@@ -162,7 +162,7 @@
             </div>
             <div class="modal-body form-horizontal">
                 <form id="addformsenha" name="addformsenha" class="form-horizontal" role="form">
-                    <input type="hidden" id="add_app_id">
+                    <input type="hidden" id="add_appsenha_id">
                     <ul id="saveformsenha_errList"></ul>   
                     <div class="card">
                     <div class="card-body">         
@@ -245,13 +245,13 @@
                     </div>
                      <div class="form-group mb-3">
                         <label  for="">Criação:</label>
-                        <label  id="editdatacriacao"></label>
+                        <label  id="editdatacriacao"></label><br>
                         <label  for="">Modificação:</label>
                         <label  id="editdatamodificacao"></label>
                     </div>
                     <div class="form-group mb-3">
                         <label  for="">Criador:</label>
-                        <label  id="editcriador"></label>
+                        <label  id="editcriador"></label><br>
                         <label  for="">Modificador:</label>
                         <label  id="editmodificador"></label>
                     </div>
@@ -265,7 +265,7 @@
                     </div>
                     <div class="form-check">
                         <label class="form-check-label" for="edit_val_indefinida"> 
-                        <input type="checkbox" class="val_indefinida form-check-input" name="add_val_indefinida" id="edit_val_indefinida"> Validade indeterminada
+                        <input type="checkbox" class="val_indefinida form-check-input" name="edit_val_indefinida" id="edit_val_indefinida"> Validade indeterminada
                         </label>
                     </div>                
                     </fieldset>    
@@ -308,10 +308,10 @@
                             <input type="hidden" id="baseid" value="{{$id}}">
                             <input type="hidden" id="vmnome" value="{{$vm->nome_vm}}"> 
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do APP" aria-label="Search" aria-describedby="search-addon">
-                            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent; border: none;">
+                            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                             <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" data-nome_base="{{$bd->nome_base}}" class="AddApp_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent; border: none;">
+                            <button type="button" data-id="{{$id}}" data-nome_base="{{$bd->nome_base}}" class="AddApp_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent; border: none;white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                             <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -334,7 +334,7 @@
                         <th scope="row">{{$app->nome_app}}</th>                        
                         <td id="senha{{$app->id}}">
                             @if(!$app->senha)
-                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
+                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
                             @else
                             @if($app->users()->count())                           
                             @foreach($app->users as $user)
@@ -349,14 +349,14 @@
                             @endif                                                        
                         </td>
                         @if($app->https)
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} COM certificação SSL"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} COM certificação HTTPS"></button></td>
                         @else
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} SEM certificação SSL"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} SEM certificação HTTPS"></button></td>
                         @endif                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$app->id}}" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>
-                                <button type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>
+                                <button type="button" data-id="{{$app->id}}" class="edit_app_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar {{$app->nome_app}}"></button>
+                                <button type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" class="delete_app_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir {{$app->nome_app}}"></button>
                             </div>
                         </td>
                     </tr>
@@ -371,7 +371,7 @@
                 {{$apps->links()}}                
             </div>
             <div>
-                <button type="button" class="fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()"></button>
+                <button type="button" class="voltar_btn fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()" style="white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Voltar para BASE(s)"></button>
             </div>    
 </div>
 @else 
@@ -777,7 +777,7 @@
             var labelDominio = ($(this).data("dominio")).trim();            
             $('#addformsenha').trigger('reset');
             $('#AddSenhaApp').modal('show');
-            $('#add_app_id').val($(this).data("id"));
+            $('#add_appsenha_id').val($(this).data("id"));
             $('#nomeapp').html('<Label id="nomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
             $('#dominioapp').html('<Label id="dominioapp" style="font-style:italic;">'+labelDominio+'</Label>');            
             $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>'); 
@@ -788,7 +788,7 @@
             $(this).text('Salvando...');
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
-            var id = $('#add_app_id').val();
+            var id = $('#add_appsenha_id').val();
             var val_indefinida = 0;
             $("input[name='add_val_indefinida']:checked").each(function(){
                 val_indefinida = 1;
@@ -860,7 +860,7 @@
         //fim cadastro de senha
     ////inicio alteração de senha
     $('#EditSenhaApp').on('shown.bs.modal',function(){
-        $('#nome_app').focus();
+        $('#edit_senha').focus();
     });
     $(document).on('click','.senhabloqueada_btn',function(e){
         e.preventDefault();
@@ -889,16 +889,21 @@
             dataType: 'json',
             url: '/datacenter/editsenhaapp/'+id,
             success: function(response){
-                if(response.status==200){                  
+                if(response.status==200){                                                       
                     var datacriacao = new Date(response.app.created_at);
+                    datacriacao = datacriacao.toLocaleString("pt-BR");
                      if(datacriacao=="31/12/1969 21:00:00"){
                         datacriacao = "";
-                        }  
-                    dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
+                        }                      
                     var dataatualizacao = new Date(response.app.updated_at);
                     dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
                      if(dataatualizacao=="31/12/1969 21:00:00"){
                         dataatualizacao = "";
+                        }  
+                    var datavalidade = new Date(response.app.validade);
+                    datavalidade = datavalidade.toLocaleDateString("pt-BR");
+                     if(datavalidade=="31/12/1969 21:00:00"){
+                        datavalidade = "";
                         }  
                     var criador = response.criador;
                         if(!response.criador){
@@ -908,11 +913,17 @@
                         if(!response.alterador){
                             alterador = "";
                         }                   
-                    
+                    $('#edit_validade').val(datavalidade);
                     $('#editdatacriacao').html('<label  id="editdatacriacao">'+datacriacao+'</label>');
                     $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
                     $('#editcriador').html('<label  id="editcriador">'+criador+'</label>');
                     $('#editmodificador').html('<label  id="editmodificador">'+alterador+'</label>');                         
+                    $('#edit_senha').val(response.app.senha);
+                    if(response.app.val_indefinida){
+                      $("input[name='edit_val_indefinida']").attr('checked',true);  
+                    }else{
+                      $("input[name='edit_val_indefinida']").attr('checked',false);  
+                    }
 
                      //Atribuindo aos checkboxs
                     $("input[name='users[]']").attr('checked',false); //desmarca todos
@@ -924,11 +935,103 @@
             }
         });
 
-    }else{      
+    }else{
+        Swal.fire({
+             showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"Você não tem acesso a esta informação!",
+                text: "Peça sua inclusão a um dos usuários sugeridos na dica!",
+                imageUrl: '../../logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'Ok, obrigado!',                
+                cancelButtonText: 'Não necessito, obrigado!',
+            });      
     }
+             
     });
     //fim exibe EditAppModal
+    ///inicio alterar senha
+    $(document).on('click','.update_senhaapp_btn',function(e){
+            e.preventDefault();
+            $(this).text('Salvando...');
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            //validade indeterminada
+            var id = $('#edit_appsenha_id').val();
+            var val_indefinida = 0;
+            $("input[name='edit_val_indefinida']:checked").each(function(){
+                val_indefinida = 1;
+            });         
 
+            //array apenas com os checkboxes marcados
+            var users = new Array;
+            $("input[name='users[]']:checked").each(function(){
+                users.push($(this).val());
+            });            
+            
+            var data = {
+                'senha':$('.senha').val(),
+                'validade':formatDate($('.validade').val()),
+                'val_indefinida':val_indefinida,                
+                'users':users,
+                '_method':'PATCH',
+                '_token': CSRF_TOKEN,       
+            };            
+            
+            $.ajax({                
+                type:'POST',                                
+                data:data,
+                dataType: 'json',
+                url:'/datacenter/updatesenhaapp/'+id,
+                success:function(response){
+                      if(response.status==400){
+                           //erros
+                            $('#updateformsenha_errList').html("");
+                            $('#updateformsenha_errList').addClass("alert alert-danger");
+                            $.each(response.errors,function(key,err_values){
+                                    $('#updateformsenha_errList').append('<li>'+err_values+'</li>');
+                            });
+          
+                }else{
+                        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');     
+                        $('#success_message').html('<div id="success_message"></div>');              
+                        $('#success_message').addClass('alert alert-success');
+                        $('#success_message').text(response.message);                                        
+    
+                        $('#editformsenha').trigger('reset');                    
+                        $('#EditSenhaApp').modal('hide');
+
+                        var limita1 = "";
+                        var limita2 = "";
+                        var limita3 = "";
+                        var bloqueia = true;                        
+                        if((response.app.senha)==""){
+                        limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        }else{
+                            $.each(response.users,function(key,user_values){
+                                if(user_values.id == response.user.id){                                    
+                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    bloqueia = false;                              
+                                }
+                            });                            
+                            if(bloqueia){
+                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            }
+                        }                       
+
+                        var elemento = limita1+limita2+limita3;
+                        $('#botaosenha'+id).replaceWith(elemento);
+
+                } 
+                }   
+            });
+    });         
 
     ////fim alteração de senha
 
@@ -949,6 +1052,11 @@
         $('.senhabloqueada_btn').tooltip();       
         $('.cadsenha_btn').tooltip();        
         $('.https_btn').tooltip();
+        $('.AddApp_btn').tooltip();
+        $('.pesquisa_btn').tooltip();        
+        $('.delete_app_btn').tooltip();
+        $('.edit_app_btn').tooltip();
+        $('.voltar_btn').tooltip();
     });
     ///fim tooltip
 

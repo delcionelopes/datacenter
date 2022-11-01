@@ -311,10 +311,16 @@ class AppController extends Controller
         }        
     } 
 
-      public function editsenhaapp($id){
-        $app = $this->app->find($id);        
-        $criador = User::find($app->criador_id);
-        $alterador = User::find($app->alterador_id);
+      public function editsenhaapp(int $id){        
+        $app = $this->app->find($id);
+        $criador = "";
+        $alterador ="";
+        if ($app->criador_id) {
+           $criador = User::find($app->criador_id)->name;
+        }       
+        if ($app->alterador_id) {
+            $alterador = User::find($app->alterador_id)->name;
+        }                
         $users = $app->users;        
         return response()->json([
             'status' => 200,            
