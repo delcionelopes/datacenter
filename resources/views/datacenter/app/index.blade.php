@@ -9,6 +9,7 @@
     text-align: left;
 }
 </style>
+
 <!-- início AddAppModal -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddAppModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">

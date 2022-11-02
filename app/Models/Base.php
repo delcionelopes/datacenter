@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Base extends Model
 {
@@ -34,7 +35,7 @@ class Base extends Model
         return $this->hasMany(App::class);
     }
     
-    public function users(){
-        return $this->belongsToMany(User::class,'bases_has_users','base_id','user_id');
+    public function users():BelongsToMany{
+        return $this->belongsToMany(User::class,'bases_has_users','base_id','user_id')->withPivot(['users.name']);
     }
 }

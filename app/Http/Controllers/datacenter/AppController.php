@@ -45,7 +45,7 @@ class AppController extends Controller
         $orgaos = Orgao::all();
         $projetos = Projeto::all();
         $bases = $this->base->query()->where('virtual_machine_id','=',$bd->virtual_machine_id)->orderByDesc('id')->get();
-        $users = $this->users->query()->where('moderador','=','1')->where('inativo','=','0')->orderBy('name')->get();                                
+        $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();                                
         return view('datacenter.app.index',[
             'id' => $id,
             'apps' => $apps,
@@ -258,7 +258,7 @@ class AppController extends Controller
             $app->update($data); //criação da senha                                    
             $a = App::find($id);            
             $a->users()->sync($request->input('users')); //sincronização                        
-            $u = $app->users;
+            $u = $a->users;
             return response()->json([
                 'user' => $user,                
                 'app' => $a,
@@ -291,8 +291,7 @@ class AppController extends Controller
                 'alterador_id' => $user->id,                
             ];       
             $app->update($data); //atualização da senha
-            $a = App::find($id);            
-           
+            $a = App::find($id);           
             $a->users()->sync($request->input('users')); //sincronização   
             $u = $app->users;         
             return response()->json([

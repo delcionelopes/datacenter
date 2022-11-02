@@ -190,6 +190,9 @@ Route::group(['middleware'=> ['auth']],function(){
          Route::put('update-base/{id}',[BaseController::class,'update']);
          Route::put('adiciona-base',[BaseController::class,'store']);         
          Route::put('armazena-app',[BaseController::class,'storeApp']);
+         Route::patch('storesenhabase/{id}',[BaseController::class,'storesenhabase']);
+         Route::get('editsenhabase/{id}',[BaseController::class,'editsenhabase']);
+         Route::patch('updatesenhabase/{id}',[BaseController::class,'updatesenhabase']);
 
         //Rotas para a view index de App
          Route::get('index-app/{id}',[AppController::class,'index'])->name('app.index');

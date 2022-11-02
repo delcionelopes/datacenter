@@ -8,6 +8,7 @@ use App\Models\App;
 use App\Models\Base;
 use App\Models\Orgao;
 use App\Models\Projeto;
+use App\Models\User;
 use App\Models\VirtualMachine;
 use Illuminate\Support\Facades\Validator;
 
@@ -15,11 +16,13 @@ class BaseController extends Controller
 {
     private $base;
     private $app;   
+    private $users;
 
-    public function __construct(Base $base, App $app)
+    public function __construct(Base $base, App $app, User $users)
     {
         $this->base = $base;
         $this->app = $app;       
+        $this->users = $users;
     }
     
     /**
@@ -40,6 +43,7 @@ class BaseController extends Controller
         $orgaos = Orgao::all();
         $bds = $this->base->query()->where('virtual_machine_id','=',$id)->orderByDesc('id')->get();
         $virtual_machines = VirtualMachine::all();
+        $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
         return view('datacenter.base.index',[
             'bases' => $bases,
             'id' => $id,
@@ -48,6 +52,7 @@ class BaseController extends Controller
             'orgaos' => $orgaos,
             'bds' => $bds,
             'virtual_machines' => $virtual_machines,
+            'users' => $users,
         ]);
     }
 
@@ -233,24 +238,18 @@ class BaseController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{
-            $timestamps = $this->app->timestamps;
-            $this->app->timestamps = false;
+        }else{          
             $data = [
                 'base_id'    => $request->input('bases_id'),
                 'projeto_id' => $request->input('projetos_id'),
                 'orgao_id'    => $request->input('orgao_id'),
                 'nome_app'    => strtoupper($request->input('nome_app')),
                 'dominio'     => strtolower($request->input('dominio')),
-                'https'       => $request->input('https'),
-                'created_at'  => now(),
-                'updated_at'  => null,
+                'https'       => $request->input('https'),              
             ];
-            $app = $this->app->create($data);
-            $this->app->timestamps = true;
-            $a = App::find($app->id);
+            $app = $this->app->create($data);            
             return response()->json([
-                'app'     => $a,
+                'app'     => $app,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -260,6 +259,8 @@ class BaseController extends Controller
     public function storesenhabase(Request $request, int $id){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
+            'validade' => ['required','date'],
+            'users' => ['required','array','min:2'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -272,18 +273,19 @@ class BaseController extends Controller
             $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
-                'val_indefinida' => $request->input('val_indefinida'),
-                'base_id' => $request->input('base_id'),
-                'criador_id' => $user->id,                
+                'val_indefinida' => intval($request->input('val_indefinida')),
+                'criador_id' => $user->id,
             ];
             $base->update($data); //criação da senha
             $b = Base::find($id);            
-            $b->users()->sync($request->input('users')); //sincronização            
+            $b->users()->sync($request->input('users')); //sincronização
+            $u = $b->users;
             return response()->json([
                 'user' => $user,                
                 'base' => $b,
+                'users' => $u,
                 'status' => 200,
-                'message' => 'Senha de'+$b->nome_base+' foi criada com sucesso!',
+                'message' => 'Senha foi criada com sucesso!',
             ]);
         }        
     }
@@ -291,6 +293,8 @@ class BaseController extends Controller
     public function updatesenhabase(Request $request, int $id){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
+            'validade' => ['required','date'],
+            'users' => ['required','array','min:2'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -304,18 +308,19 @@ class BaseController extends Controller
             $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
-                'val_indefinida' => $request->input('val_indefinida'),
-                'base_id' => $request->input('base_id'),
+                'val_indefinida' => intval($request->input('val_indefinida')),
                 'alterador_id' => $user->id,                
             ];
             $base->update($data); //atualização da senha
             $b = Base::find($id);            
             $b->users()->sync($request->input('users')); //sincronização            
+            $u = $b->users;
             return response()->json([
                 'user' => $user,                
                 'base' => $b,
+                'users' => $u,
                 'status' => 200,
-                'message' => 'Senha de '+$b->nome_base+' foi atualizada com sucesso!',
+                'message' => 'Senha atualizada com sucesso!',
             ]);
             }else{
                 return response()->json([
@@ -324,6 +329,26 @@ class BaseController extends Controller
                 ]);
             }
         }        
+    }
+
+     public function editsenhabase(int $id){        
+        $base = $this->base->find($id);
+        $criador = "";
+        $alterador ="";
+        if ($base->criador_id) {
+           $criador = User::find($base->criador_id)->name;
+        }       
+        if ($base->alterador_id) {
+            $alterador = User::find($base->alterador_id)->name;
+        }                
+        $users = $base->users;        
+        return response()->json([
+            'status' => 200,            
+            'base' => $base,
+            'criador' => $criador,
+            'alterador' => $alterador,
+            'users' => $users,
+        ]);
     }
 
 }

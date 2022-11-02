@@ -3,7 +3,14 @@
 @section('title', 'Datacenter')
 
 @section('content')
-    <!--inicio AddBaseModal -->
+
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+
+<!--inicio AddBaseModal -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddBaseModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -181,6 +188,160 @@
     </div>
 </div>
 <!-- fim AddAppModal -->
+
+<!-- início AddSenhaBase -->
+   <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaBase" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header navbar-dark bg-primary">
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Senha</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true" style="color: white;">&times</span>
+                </button>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form id="addformsenha" name="addformsenha" class="form-horizontal" role="form">
+                    <input type="hidden" id="add_basesenha_id">
+                    <ul id="saveformsenha_errList"></ul>   
+                    <div class="card">
+                    <div class="card-body">         
+                     <fieldset>
+                    <legend>Dados da Senha</legend>                    
+                    <div class="form-group mb-3">
+                        <label  for="">Nome Base:</label>
+                        <label  id="nomebase"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">IP:</label>
+                        <label  id="ipbase"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">Dono:</label>
+                        <label  id="donobase"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Senha</label>
+                        <input type="text" class="add_senha form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Validade</label>
+                        <input type="text" class="add_validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheck"> 
+                        <input type="checkbox" class="add_val_indefinida form-check-input" name="add_val_indefinida" id="flexCheck"> Validade indeterminada
+                        </label>
+                    </div>         
+                     </fieldset>
+                    </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-body">                        
+                            <fieldset>
+                                <legend>Quem tem acesso a esta informação?</legend>
+                                <div class="form-check">
+                                    @foreach ($users as $user)
+                                    <label class="form-check-label" for="CheckUser{{$user->id}}">
+                                        <input type="checkbox" id="CheckUser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                    </label><br>
+                                    @endforeach
+                                </div>
+                            </fieldset>  
+                            </div>
+                     </div>                             
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary add_senhabase_btn">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim AddSenhaApp -->
+
+<!-- início EditSenhaApp -->
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaBase" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header navbar-dark bg-primary">
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Senha</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true" style="color: white;">&times</span>
+                </button>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form id="editformsenha" name="editformsenha" class="form-horizontal" role="form">
+                    <input type="hidden" id="edit_basesenha_id">
+                    <ul id="updateformsenha_errList"></ul>  
+                    <div class="card">
+                    <div class="card-body"> 
+                    <fieldset>
+                    <legend>Dados da Senha</legend>                 
+                    <div class="form-group mb-3">
+                        <label  for="">Nome Base:</label>
+                        <label  id="editnomebase"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">IP Base:</label>
+                        <label  id="editipbase"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">Dono Base:</label>
+                        <label  id="editdonobase"></label>
+                    </div>
+                     <div class="form-group mb-3">
+                        <label  for="">Criação:</label>
+                        <label  id="editdatacriacao"></label><br>
+                        <label  for="">Modificação:</label>
+                        <label  id="editdatamodificacao"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">Criador:</label>
+                        <label  id="editcriador"></label><br>
+                        <label  for="">Modificador:</label>
+                        <label  id="editmodificador"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Senha</label>
+                        <input type="text" id="edit_senha" class="senha form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Validade</label>
+                        <input type="text" id="edit_validade" class="validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="edit_val_indefinida"> 
+                        <input type="checkbox" class="val_indefinida form-check-input" name="edit_val_indefinida" id="edit_val_indefinida"> Validade indeterminada
+                        </label>
+                    </div>                
+                    </fieldset>    
+                    </div>
+                    </div>
+                     <div class="card">
+                     <div class="card-body"> 
+                            <fieldset>
+                                <legend>Quem tem acesso a esta informação?</legend>
+                                <div class="form-check">
+                                    @foreach ($users as $user)
+                                    <label class="form-check-label" for="check{{$user->id}}">
+                                        <input type="checkbox" id="check{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                    </label><br>
+                                    @endforeach
+                                </div>
+                            </fieldset>   
+                     </div>
+                     </div>                  
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary update_senhabase_btn">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim EditSenhaApp -->
 
 <!--index-->
 @auth
