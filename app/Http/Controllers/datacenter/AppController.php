@@ -104,8 +104,10 @@ class AppController extends Controller
                 'https'       => $request->input('https'),              
             ];
             $app = $this->app->create($data);          
+            $users = $app->users;
             return response()->json([
                 'app'     => $app,
+                'users'   => $users,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -136,12 +138,14 @@ class AppController extends Controller
         $base = Base::find($app->base_id);
         $orgao = Orgao::find($app->orgao_id);
         $vm = VirtualMachine::find($base->virtual_machine_id);
+        $users = $app->users;
         return response()->json([
             'app'     => $app,
             'projeto' => $projeto,
             'base'    => $base,
             'orgao'   => $orgao,
             'vm'      => $vm,
+            'users' => $users,
             'status'  => 200,
         ]);
     }
@@ -186,8 +190,10 @@ class AppController extends Controller
                 ];
                 $app->update($data);          
                 $a = App::find($id);
+                $users = $a->users;
                 return response()->json([
                     'app'     => $a,
+                    'users'   => $users,
                     'status'  => 200,
                     'message' => 'Registro atualizado com sucesso!',
                 ]);

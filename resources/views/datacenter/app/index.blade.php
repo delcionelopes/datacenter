@@ -312,7 +312,7 @@
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                             <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" data-nome_base="{{$bd->nome_base}}" class="AddApp_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent; border: none;white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                            <button type="button" data-id="{{$id}}" data-nome_base="{{$bd->nome_base}}" class="AddApp_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                             <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -350,9 +350,9 @@
                             @endif                                                        
                         </td>
                         @if($app->https)
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} COM certificação HTTPS"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} COM certificação HTTPS"></button></td>
                         @else
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} SEM certificação HTTPS"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} SEM certificação HTTPS"></button></td>
                         @endif                       
                         <td>
                             <div class="btn-group">
@@ -571,7 +571,7 @@
                 'https': edit_https,
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
-            }    
+            };    
             $.ajax({
                 type: 'POST',
                 data: data,
@@ -604,30 +604,47 @@
     
                        
                         var tupla = ""; 
-                        var linha1 = "";                    
-                        var linha2 = "";
-                        var linha3 = "";
-                        var linha4 = "";
-                        linha1 = '<tr id="app'+response.app.id+'">\
-                            <th scope="row">'+response.app.nome_app+'</th>\
-                            <td>'+response.app.dominio+'</td>';
-                            if(response.app.https){
-                               linha2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
-                            }else{
-                               linha3 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
+                        var limita1 = "";                    
+                        var limita2 = "";
+                        var limita3 = "";
+                        var limita4 = "";
+                        var limita5 = "";
+                        var limita6 = "";
+                        var limita7 = "";
+                        limita1 = '<tr id="app'+response.app.id+'">\
+                            <th scope="row">'+response.app.nome_app+'</th>';
+                        var bloqueia = true;                        
+                        if((response.app.senha)==""){
+                        limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        }else{
+                            $.each(response.users,function(key,user_values){
+                                if(user_values.id == response.user.id){                                    
+                                    limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    bloqueia = false;                              
+                                }
+                            });                            
+                            if(bloqueia){
+                            limita4 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
-                            linha4 = '<td>\
+                        }            
+                   
+                            if(response.app.https){
+                               limita5 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
+                            }else{
+                               limita6 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
+                            }
+                            limita7 = '<td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.app.id+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
                                     <button type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';   
-                        tupla = linha1+linha2+linha3+linha4;          
+                        tupla = limita1+limita2+limita3+limita4+limita5+limita6+limita7;          
                         $('#app'+id).replaceWith(tupla);
                     }
                 }
-            });
+            });            
         });
         //fim da atualização do registro
         //inicio exibição do form AddAppModal
@@ -695,22 +712,38 @@
     
                         //inserindo a tr na table html                       
                         var tupla = "";
-                        var linha0 = "";
-                        var linha1 = "";
-                        var linha2 = "";
-                        var linha3 = "";
-                        var linha4 = "";
+                        var limita0 = "";
+                        var limita1 = "";
+                        var limita2 = "";
+                        var limita3 = "";
+                        var limita4 = "";
+                        var limita5 = "";
+                        var limita6 = "";
+                        var limita7 = "";
                        
-                        linha0 = '<tr id="novo" style="display:none;"></tr>';
-                        linha1 = '<tr id="app'+response.app.id+'">\
-                            <th scope="row">'+response.app.nome_app+'</th>\
-                            <td>'+response.app.dominio+'</td>';
-                            if(response.app.https){
-                            linha2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
-                             }else{
-                            linha3 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
+                        limita0 = '<tr id="novo" style="display:none;"></tr>';
+                        limita1 = '<tr id="app'+response.app.id+'">\
+                            <th scope="row">'+response.app.nome_app+'</th>';
+                        var bloqueia = true;                        
+                        if((response.app.senha)==""){
+                        limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        }else{
+                            $.each(response.users,function(key,user_values){
+                                if(user_values.id == response.user.id){                                    
+                                    limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    bloqueia = false;                              
+                                }
+                            });                            
+                            if(bloqueia){
+                            limita4 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
-                            linha4 = '<td>\
+                        }            
+                            if(response.app.https){
+                            limita5 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
+                             }else{
+                            limita6 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
+                            }
+                            limita7 = '<td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.app.id+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
                                     <button type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\
@@ -720,7 +753,7 @@
                         if(!$('#nadaencontrado').html==""){
                             $('#nadaencontrado').remove();
                         }
-                        tupla = linha0+linha1+linha2+linha3+linha4;                           
+                        tupla = limita0+limita1+limita2+limita3+limita4+limita5+limita6+limita7;                           
                         $('#novo').replaceWith(tupla);
                     }
                 }

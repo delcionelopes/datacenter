@@ -94,9 +94,11 @@ class BaseController extends Controller
                 'dono'               => strtoupper($request->input('dono')),
                 'encoding'           => strtoupper($request->input('encoding')),         
             ];
-            $base = $this->base->create($data);         
+            $base = $this->base->create($data);    
+            $users = $base->users;     
             return response()->json([
                 'base'    => $base,
+                'users' => $users,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -116,9 +118,11 @@ class BaseController extends Controller
     {
         $base = $this->base->find($id);
         $projeto = Projeto::find($base->projetos_id);
-        $vm = VirtualMachine::find($base->virtual_machine_id);        
+        $vm = VirtualMachine::find($base->virtual_machine_id);  
+        $users = $base->users;      
         return response()->json([
             'base'   => $base,
+            'users' => $users,
             'vm' => $vm,
             'projeto' => $projeto,
             'status' => 200,
@@ -161,8 +165,10 @@ class BaseController extends Controller
             ];
             $base->update($data);          
             $b = Base::find($id);
+            $users = $b->users;
             return response()->json([
                 'base'    => $b,
+                'users' => $users,
                 'status'  => 200,
                 'message' => 'Registro atualizado com sucesso!',
             ]);
@@ -247,9 +253,11 @@ class BaseController extends Controller
                 'dominio'     => strtolower($request->input('dominio')),
                 'https'       => $request->input('https'),              
             ];
-            $app = $this->app->create($data);            
+            $app = $this->app->create($data);    
+            $users = $app->users;        
             return response()->json([
                 'app'     => $app,
+                'users' => $users,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);

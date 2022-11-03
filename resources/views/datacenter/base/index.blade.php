@@ -214,11 +214,7 @@
                     <div class="form-group mb-3">
                         <label  for="">IP:</label>
                         <label  id="ipbase"></label>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label  for="">Dono:</label>
-                        <label  id="donobase"></label>
-                    </div>
+                    </div>                  
                     <div class="form-group mb-3">
                         <label for="">Senha</label>
                         <input type="text" class="add_senha form-control">
@@ -285,11 +281,7 @@
                     <div class="form-group mb-3">
                         <label  for="">IP Base:</label>
                         <label  id="editipbase"></label>
-                    </div>
-                    <div class="form-group mb-3">
-                        <label  for="">Dono Base:</label>
-                        <label  id="editdonobase"></label>
-                    </div>
+                    </div>                    
                      <div class="form-group mb-3">
                         <label  for="">Criação:</label>
                         <label  id="editdatacriacao"></label><br>
@@ -355,10 +347,10 @@
                             <input type="hidden" id="vmid" value="{{$id}}">  
                             <input type="hidden" id="vmnome" value="{{$vm->nome_vm}}">                        
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome da base" aria-label="Search" aria-describedby="search-addon">
-                            <button type="submit" class="input-group-text border-0" id="search-addon" style="background:transparent;border: none;">
+                            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" data-nome_vm="{{$vm->nome_vm}}" class="AddBase_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;">
+                            <button type="button" data-id="{{$id}}" data-nome_vm="{{$vm->nome_vm}}" class="AddBase_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>                              
                         </div>
@@ -369,7 +361,7 @@
                 <thead class="sidebar-dark-primary" style="color: white">
                     <tr>                        
                         <th scope="col">BASE(s)</th>
-                        <th scope="col">IP</th>                        
+                        <th scope="col"><i class="fas fa-key"></i> PASS</th>
                         <th scope="col">APP(s)</th>                        
                         <th scope="col">AÇÕES</th>                       
                     </tr>                    
@@ -377,24 +369,39 @@
                 <tbody id="lista_bases">
                     <tr id="novo" style="display:none;"></tr>
                     @forelse($bases as $base)
-                    <tr id="base{{$base->id}}">                        
+                    <tr id="base{{$base->id}}" data-toggle="tooltip" title="{{$base->ip}}">                        
                         <th scope="row">{{$base->nome_base}}</th>
-                        <td>{{$base->ip}}</td>                        
+                        <td id="senha{{$base->id}}">
+                            @if(!$base->senha)
+                            <button id="botaosenha{{$base->id}}" type="button" data-id="{{$base->id}}" data-nomebase="{{$base->nome_base}}" data-ip="{{$base->ip}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
+                            @else
+                            @if($base->users()->count())                           
+                            @foreach($base->users as $user)
+                                  @if(($user->id) == (auth()->user()->id))                                  
+                                  <button id="botaosenha{{$base->id}}" type="button" data-id="{{$base->id}}" data-nomebase="{{$base->nome_base}}" data-ip="{{$base->ip}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$base->users->implode('name','<br>')}}"></button>
+                                  @break
+                                  @elseif ($loop->last)
+                                  <button id="botaosenha{{$base->id}}" type="button" data-id="{{$base->id}}" data-nomebase="{{$base->nome_base}}" data-ip="{{$base->ip}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$base->users->implode('name','<br>')}}"></button>
+                                  @endif                                                        
+                            @endforeach                            
+                            @endif
+                            @endif                                                        
+                        </td>
                         <td>
                         <div class="btn-group">
                         @if($base->apps->count())
                         <form action="{{route('datacenter.app.index',['id'=>$base->id])}}" method="get">
-                            <button type="submit" data-id="{{$base->id}}" class="list_app_btn fas fa-desktop" style="background: transparent;border:none;color: green;"> {{$base->apps->count()}}</button>
+                            <button type="submit" data-id="{{$base->id}}" class="list_app_btn fas fa-desktop" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Menu de APPs para {{$base->nome_base}}"> {{$base->apps->count()}}</button>
                         </form>
                         @else
-                        <button type="button" data-id="{{$base->id}}" data-nome_base="{{$base->nome_base}}" class="novo_app_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>
+                        <button type="button" data-id="{{$base->id}}" data-nome_base="{{$base->nome_base}}" class="novo_app_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Cadastro de APPs"></button>
                         @endif
                         </div>
                         </td>                        
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$base->id}}" class="edit_base_btn fas fa-edit" style="background: transparent;border: none;"></button>
-                                <button type="button" data-id="{{$base->id}}" data-nomebase="{{$base->nome_base}}" class="delete_base_btn fas fa-trash" style="background: transparent;border: none;"></button>
+                                <button type="button" data-id="{{$base->id}}" class="edit_base_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar {{$base->nome_base}}"></button>
+                                <button type="button" data-id="{{$base->id}}" data-nomebase="{{$base->nome_base}}" class="delete_base_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir {{$base->nome_base}}"></button>
                             </div>
                         </td>
                     </tr>
@@ -409,7 +416,7 @@
                 {{$bases->links()}}               
             </div>           
             <div>
-                <button type="button" class="fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()"></button>
+                <button type="button" class="voltar_btn fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()" style="white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Voltar para VM(s)"></button>
             </div>
      
 </div>
@@ -592,17 +599,36 @@ $(document).ready(function(){
     
                         //atualizando a tr da table html                      
                         var tupla = "";                 
-                        tupla = '<tr id="base'+response.base.id+'">\
-                            <th scope="row">'+response.base.nome_base+'</th>\
-                            <td>'+response.base.ip+'</td>\
-                            <td>App</td>\
+                        var limita1 = "";
+                        var limita2 = "";
+                        var limita3 = "";
+                        var limita4 = "";
+                        var limita5 = "";
+                        limita1 = '<tr id="base'+response.base.id+'">\
+                            <th scope="row">'+response.base.nome_base+'</th>';
+                        var bloqueia = true;
+                        if((response.base.senha)==""){
+                        limita2 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        }else{
+                            $.each(response.users,function(key,user_values){
+                                if(user_values.id == response.user.id){                                    
+                                    limita3 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    bloqueia = false;                              
+                                }
+                            });                            
+                            if(bloqueia){
+                            limita4 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomeapp="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            }
+                        } 
+                        limita5 = '<td>APPs</td>\
                             <td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.base.id+'" class="edit_base_btn fas fa-edit" style="background: transparent;border: none;"></button>\
                                     <button type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" class="delete_base_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
-                        </tr>';             
+                        </tr>';    
+                        tupla = limita1+limita2+limita3+limita4+limita5;         
                         $('#base'+id).replaceWith(tupla);
                     }
                 }
@@ -665,15 +691,33 @@ $(document).ready(function(){
     
                         //inserindo a tr na table html                             
                         var tupla = "";
-                        var linha0 = "";
-                        var linha1 = "";
+                        var limita0 = "";
+                        var limita1 = "";
+                        var limita2 = "";
+                        var limita3 = "";
+                        var limita4 = "";
+                        var limita5 = "";
+                        var limita6 = "";
                        
-                        linha0 = '<tr id="novo" style="display:none;"></tr>';
-                        linha1 = '<tr id="base'+response.base.id+'">\
-                            <th scope="row">'+response.base.nome_base+'</th>\
-                            <td>'+response.base.ip+'</td>\
-                            <td>App</td>\
-                            <td>\
+                        limita0 = '<tr id="novo" style="display:none;"></tr>';
+                        limita1 = '<tr id="base'+response.base.id+'">\
+                            <th scope="row">'+response.base.nome_base+'</th>';
+                        var bloqueia = true;
+                        if((response.base.senha)==""){
+                        limita2 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        }else{
+                            $.each(response.users,function(key,user_values){
+                                if(user_values.id == response.user.id){                                    
+                                    limita3 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    bloqueia = false;                              
+                                }
+                            });                            
+                            if(bloqueia){
+                            limita4 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomeapp="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            }
+                        } 
+                        limita5 = '<td><button type="button" data-id="'+response.base.id+'" data-nome_base="'+response.base.nome_base+'" class="novo_app_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Cadastro de APPs"></button></td>';
+                        limita6 = '<td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.base.id+'" class="edit_base_btn fas fa-edit" style="background: transparent;border: none;"></button>\
                                     <button type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" class="delete_base_btn fas fa-trash" style="background: transparent;border: none;"></button>\
@@ -683,7 +727,7 @@ $(document).ready(function(){
                         if(!$('#nadaencontrado').html==""){
                             $('#nadaencontrado').remove();
                         }
-                        tupla = linha0+linha1;                    
+                        tupla = limita0+limita1+limita2+limita3+limita4+limita5+limita6;                    
                         $('#novo').replaceWith(tupla);
                     }
                 }
@@ -786,6 +830,301 @@ $(document).ready(function(){
             });
         });    
         //Fim Adiciona Novo App da Base
+
+         //cadastro de senha
+        $('#AddSenhaBase').on('shown.bs.modal',function(){
+            $('.add_senha').focus();
+        });
+
+
+        $(document).on('click','.cadsenha_btn',function(e){
+            e.preventDefault();
+            var labelHtml = ($(this).data("nomebase")).trim();            
+            var labelip = ($(this).data("ip")).trim();            
+            $('#addformsenha').trigger('reset');
+            $('#AddSenhaBase').modal('show');
+            $('#add_basesenha_id').val($(this).data("id"));
+            $('#nomebase').html('<Label id="nomebase" style="font-style:italic;">'+labelHtml+'</Label>');            
+            $('#ipbase').html('<Label id="ipbase" style="font-style:italic;">'+labelip+'</Label>');            
+            $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>'); 
+        });
+
+         $(document).on('click','.add_senhabase_btn',function(e){
+            e.preventDefault();
+            $(this).text('Salvando...');
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            //validade indeterminada
+            var id = $('#add_basesenha_id').val();
+            var val_indefinida = 0;
+            $("input[name='add_val_indefinida']:checked").each(function(){
+                val_indefinida = 1;
+            });         
+
+            //array apenas com os checkboxes marcados
+            var users = new Array;
+            $("input[name='users[]']:checked").each(function(){
+                users.push($(this).val());
+            });            
+            
+            var data = {
+                'senha':$('.add_senha').val(),
+                'validade':formatDate($('.add_validade').val()),
+                'val_indefinida':val_indefinida,                
+                'users':users,
+                '_method':'PATCH',
+                '_token': CSRF_TOKEN,       
+            };            
+            
+            $.ajax({                
+                type:'POST',                                
+                data:data,
+                dataType: 'json',
+                url:'/datacenter/storesenhabase/'+id,
+                success:function(response){
+                      if(response.status==400){
+                           //erros
+                            $('#saveformsenha_errList').html("");
+                            $('#saveformsenha_errList').addClass("alert alert-danger");
+                            $.each(response.errors,function(key,err_values){
+                                    $('#saveformsenha_errList').append('<li>'+err_values+'</li>');
+                            });
+          
+                }else{
+                        $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>');     
+                        $('#success_message').html('<div id="success_message"></div>');              
+                        $('#success_message').addClass('alert alert-success');
+                        $('#success_message').text(response.message);                                        
+    
+                        $('#addformsenha').trigger('reset');                    
+                        $('#AddSenhaBase').modal('hide');
+
+                        var limita1 = "";
+                        var limita2 = "";
+                        var limita3 = "";
+                        var bloqueia = true;                        
+                        if((response.base.senha)==""){
+                        limita1 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        }else{
+                            $.each(response.users,function(key,user_values){
+                                if(user_values.id == response.user.id){                                    
+                                    limita2 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    bloqueia = false;                              
+                                }
+                            });                            
+                            if(bloqueia){
+                            limita3 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            }
+                        }                       
+
+                        var elemento = limita1+limita2+limita3;
+                        $('#botaosenha'+id).replaceWith(elemento);
+
+                } 
+                }   
+            });
+    }); 
+        //fim cadastro de senha
+    ////inicio alteração de senha
+    $('#EditSenhaBase').on('shown.bs.modal',function(){
+        $('#edit_senha').focus();
+    });
+    $(document).on('click','.senhabloqueada_btn',function(e){
+        e.preventDefault();
+
+        var opcaosenha = $(this).data("opt");
+
+        if(opcaosenha){
+    
+        var id = $(this).data("id");
+        var labelHtml = ($(this).data("nomebase")).trim();            
+        var labelip = ($(this).data("ip")).trim(); 
+        $('#editformsenha').trigger('reset');
+        $('#EditSenhaBase').modal('show');  
+        $('#editnomebase').html('<Label id="editnomebase" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $('#editipbase').html('<Label id="editipbase" style="font-style:italic;">'+labelip+'</Label>');     
+        $('#edit_basesenha_id').val(id);  
+        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');
+    
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/datacenter/editsenhabase/'+id,
+            success: function(response){
+                if(response.status==200){                                                       
+                    var datacriacao = new Date(response.base.created_at);
+                    datacriacao = datacriacao.toLocaleString("pt-BR");
+                     if(datacriacao=="31/12/1969 21:00:00"){
+                        datacriacao = "";
+                        }                      
+                    var dataatualizacao = new Date(response.base.updated_at);
+                    dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
+                     if(dataatualizacao=="31/12/1969 21:00:00"){
+                        dataatualizacao = "";
+                        }  
+                    var datavalidade = new Date(response.base.validade);
+                    datavalidade = datavalidade.toLocaleDateString("pt-BR");
+                     if(datavalidade=="31/12/1969"){
+                        datavalidade = "";
+                        }  
+                    var criador = response.criador;
+                        if(!response.criador){
+                            criador = "";
+                        }
+                    var alterador = response.alterador;
+                        if(!response.alterador){
+                            alterador = "";
+                        }                   
+                    $('#edit_validade').val(datavalidade);
+                    $('#editdatacriacao').html('<label  id="editdatacriacao">'+datacriacao+'</label>');
+                    $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
+                    $('#editcriador').html('<label  id="editcriador">'+criador+'</label>');
+                    $('#editmodificador').html('<label  id="editmodificador">'+alterador+'</label>');                         
+                    $('#edit_senha').val(response.base.senha);
+                    if(response.base.val_indefinida){
+                      $("input[name='edit_val_indefinida']").attr('checked',true);  
+                    }else{
+                      $("input[name='edit_val_indefinida']").attr('checked',false);  
+                    }
+
+                     //Atribuindo aos checkboxs
+                    $("input[name='users[]']").attr('checked',false); //desmarca todos
+                        //apenas os temas relacionados ao artigo
+                        $.each(response.users,function(key,values){                                                        
+                                $("#check"+values.id).attr('checked',true);  //faz a marcação seletiva                         
+                        });
+                }
+            }
+        });
+
+    }else{
+        Swal.fire({
+             showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"Você não tem acesso a esta informação!",
+                text: "Peça sua inclusão a um dos usuários sugeridos na dica!",
+                imageUrl: '../../logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'Ok, obrigado!',                
+                cancelButtonText: 'Não necessito, obrigado!',
+            });      
+    }
+             
+    });
+    //fim exibe EditAppModal
+    ///inicio alterar senha
+    $(document).on('click','.update_senhabase_btn',function(e){
+            e.preventDefault();
+            $(this).text('Salvando...');
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            //validade indeterminada
+            var id = $('#edit_basesenha_id').val();
+            var val_indefinida = 0;
+            $("input[name='edit_val_indefinida']:checked").each(function(){
+                val_indefinida = 1;
+            });         
+
+            //array apenas com os checkboxes marcados
+            var users = new Array;
+            $("input[name='users[]']:checked").each(function(){
+                users.push($(this).val());
+            });            
+            
+            var data = {
+                'senha':$('.senha').val(),
+                'validade':formatDate($('.validade').val()),
+                'val_indefinida':val_indefinida,                
+                'users':users,
+                '_method':'PATCH',
+                '_token': CSRF_TOKEN,       
+            };            
+            
+            $.ajax({                
+                type:'POST',                                
+                data:data,
+                dataType: 'json',
+                url:'/datacenter/updatesenhabase/'+id,
+                success:function(response){
+                      if(response.status==400){
+                           //erros
+                            $('#updateformsenha_errList').html("");
+                            $('#updateformsenha_errList').addClass("alert alert-danger");
+                            $.each(response.errors,function(key,err_values){
+                                    $('#updateformsenha_errList').append('<li>'+err_values+'</li>');
+                            });
+          
+                }else{
+                        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');     
+                        $('#success_message').html('<div id="success_message"></div>');              
+                        $('#success_message').addClass('alert alert-success');
+                        $('#success_message').text(response.message);                                        
+    
+                        $('#editformsenha').trigger('reset');                    
+                        $('#EditSenhaBase').modal('hide');
+
+                        var limita1 = "";
+                        var limita2 = "";
+                        var limita3 = "";
+                        var bloqueia = true;                        
+                        if((response.base.senha)==""){
+                        limita1 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        }else{
+                            $.each(response.users,function(key,user_values){
+                                if(user_values.id == response.user.id){                                    
+                                    limita2 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    bloqueia = false;                              
+                                }
+                            });                            
+                            if(bloqueia){
+                            limita3 = '<button id="botaosenha'+response.base.id+'" type="button" data-id="'+response.base.id+'" data-nomebase="'+response.base.nome_base+'" data-ip="'+response.base.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            }
+                        }                       
+
+                        var elemento = limita1+limita2+limita3;
+                        $('#botaosenha'+id).replaceWith(elemento);
+
+                } 
+                }   
+            });
+    });         
+
+    ////fim alteração de senha
+
+            //formatação str para date
+    function formatDate(data, formato) {
+        if (formato == 'pt-br') {
+            return (data.substr(0, 10).split('-').reverse().join('/'));
+        } else {
+            return (data.substr(0, 10).split('/').reverse().join('-'));
+        }
+        }
+        //fim formatDate
+
+        ///tooltip
+    $(function(){      
+        $('.senhabloqueada_btn').tooltip();       
+        $('.cadsenha_btn').tooltip();        
+        $('.list_app_btn').tooltip();
+        $('.novo_app_btn').tooltip();
+        $('.AddBase_btn').tooltip();
+        $('.pesquisa_btn').tooltip();        
+        $('.delete_base_btn').tooltip();
+        $('.edit_base_btn').tooltip();
+        $('.voltar_btn').tooltip();
+    });
+    ///fim tooltip
+
     });
     
     </script>
