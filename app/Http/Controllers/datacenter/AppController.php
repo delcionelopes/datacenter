@@ -45,7 +45,7 @@ class AppController extends Controller
         $orgaos = Orgao::all();
         $projetos = Projeto::all();
         $bases = $this->base->query()->where('virtual_machine_id','=',$bd->virtual_machine_id)->orderByDesc('id')->get();
-        $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();                                
+        $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
         return view('datacenter.app.index',[
             'id' => $id,
             'apps' => $apps,

@@ -626,8 +626,7 @@
                             if(bloqueia){
                             limita4 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
-                        }            
-                   
+                        }                   
                             if(response.app.https){
                                limita5 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
                             }else{
@@ -1068,8 +1067,6 @@
     });         
 
     ////fim alteração de senha
-
-
 
     //formatação str para date
     function formatDate(data, formato) {

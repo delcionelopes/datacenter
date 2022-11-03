@@ -3,8 +3,8 @@
 namespace App\models;
 
 use App\Models\Cluster;
-use App\Models\SenhaHost;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Host extends Model
 {    
@@ -26,11 +26,7 @@ class Host extends Model
         return $this->belongsTo(Cluster::class,'cluster_id','id');
     }
 
-    public function senhahost(){
-        return $this->hasMany(SenhaHost::class);
-    }
-
-    public function users(){
+    public function users():BelongsToMany{
         return $this->belongsToMany(User::class,'hosts_has_users','host_id','user_id');
     }
 }

@@ -7,15 +7,17 @@ use App\Http\Controllers\Controller;
 use App\models\Host;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Cluster;
+use App\Models\User;
 
 class HostController extends Controller
 {
     private $host;    
-    private $senhahost;
+    private $users;
     
-    public function __construct(Host $host)
+    public function __construct(Host $host, User $users)
     {
         $this->host = $host;        
+        $this->users = $users;
     }
 
     /**
@@ -31,12 +33,13 @@ class HostController extends Controller
                      ->where('datacenter','LIKE','%'.strtoupper($request->pesquisa).'%');
             $hosts = $query->orderByDesc('id')->paginate(6);            
         }                    
-        $cluster = Cluster::find($id);            
-
+        $cluster = Cluster::find($id);
+        $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
         return view('datacenter.host.index',[
             'hosts' => $hosts,
             'id'    => $id,
             'cluster' => $cluster,
+            'users'  => $users,
         ]);
     }
 
@@ -76,9 +79,11 @@ class HostController extends Controller
                 'datacenter' => strtoupper($request->input('datacenter')),
                 'cluster'    => strtoupper($request->input('cluster')),            
             ];
-            $host = $this->host->create($data);          
+            $host = $this->host->create($data);     
+            $users = $host->users;     
             return response()->json([
                 'host'    => $host,
+                'users' => $users,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -135,9 +140,11 @@ class HostController extends Controller
                     'cluster'    => strtoupper($request->input('cluster')),                   
                 ];
                 $host->update($data);               
-                $h = Host::find($id);                          
+                $h = Host::find($id);   
+                $users = $h->users;                       
                 return response()->json([
                     'host'    => $h,
+                    'users' => $users,
                     'status'  => 200,
                     'message' => 'Registro atualizado com sucesso!',
                 ]);
@@ -171,6 +178,8 @@ class HostController extends Controller
     public function storesenhahost(Request $request, int $id){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
+            'validade' => ['required','date'],
+            'users' => ['required','array','min:2'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -183,18 +192,19 @@ class HostController extends Controller
             $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
-                'val_indefinida' => $request->input('val_indefinida'),
-                'host_id' => $request->input('host_id'),
+                'val_indefinida' => intval($request->input('val_indefinida')),
                 'criador_id' => $user->id,                
             ];
             $host->update($data); //criação da senha
             $h = Host::find($id);            
             $h->users()->sync($request->input('users')); //sincronização            
+            $u = $h->users;
             return response()->json([
                 'user' => $user,              
                 'host' => $h,
+                'users' => $u,
                 'status' => 200,
-                'message' => 'Senha de'+$h->datacenter+' foi criada com sucesso!',
+                'message' => 'Senha criada com sucesso!',
             ]);
         }        
     }
@@ -202,6 +212,8 @@ class HostController extends Controller
     public function updatesenhahost(Request $request, int $id){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
+            'validade' => ['required','date'],
+            'users' => ['required','array','min:2'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -215,18 +227,19 @@ class HostController extends Controller
             $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
-                'val_indefinida' => $request->input('val_indefinida'),
-                'host_id' => $request->input('host_id'),
+                'val_indefinida' => intval($request->input('val_indefinida')),
                 'alterador_id' => $user->id,                
             ];
             $host->update($data); //atualização da senha
             $h = Host::find($id);            
             $h->users()->sync($request->input('users')); //sincronização            
+            $u = $h->users;
             return response()->json([
                 'user' => $user,              
                 'host' => $h,
+                'users' => $u,
                 'status' => 200,
-                'message' => 'Senha de '+$h->datacenter+' atualizada com sucesso!',
+                'message' => 'Senha atualizada com sucesso!',
             ]);
             }else{
                 return response()->json([
@@ -237,5 +250,24 @@ class HostController extends Controller
         }        
     }
 
+    public function editsenhahost(int $id){        
+        $host = $this->host->find($id);
+        $criador = "";
+        $alterador ="";
+        if ($host->criador_id) {
+           $criador = User::find($host->criador_id)->name;
+        }       
+        if ($host->alterador_id) {
+            $alterador = User::find($host->alterador_id)->name;
+        }                
+        $users = $host->users;        
+        return response()->json([
+            'status' => 200,            
+            'host' => $host,
+            'criador' => $criador,
+            'alterador' => $alterador,
+            'users' => $users,
+        ]);
+    }
 
 }

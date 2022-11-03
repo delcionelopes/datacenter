@@ -149,6 +149,9 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::get('edit-host/{id}',[HostController::class,'edit']);
         Route::put('update-host/{id}',[HostController::class,'update']);
         Route::put('adiciona-host',[HostController::class,'store']);
+        Route::patch('storesenhahost/{id}',[HostController::class,'storesenhahost']);
+        Route::get('editsenhahost/{id}',[HostController::class,'editsenhahost']);
+        Route::patch('updatesenhahost/{id}',[HostController::class,'updatesenhahost']);
 
         //Rotas para a view index de vlan
         Route::get('index-vlan',[vlanController::class,'index'])->name('vlan.index');
