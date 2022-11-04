@@ -9,6 +9,7 @@ use App\Models\Base;
 use App\Models\Cluster;
 use App\Models\Orgao;
 use App\Models\Projeto;
+use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\VirtualMachine;
 use App\Models\Vlan;
@@ -19,12 +20,14 @@ class VirtualMachineController extends Controller
     private $virtualmachine;
     private $vlan;
     private $base;    
+    private $users;
 
-    public function __construct(VirtualMachine $virtualmachine, Vlan $vlan, Base $base)
+    public function __construct(VirtualMachine $virtualmachine, Vlan $vlan, Base $base, User $users)
     {
         $this->virtualmachine = $virtualmachine;
         $this->vlan = $vlan;
-        $this->base = $base;        
+        $this->base = $base;   
+        $this->users = $users;     
     }
 
     /**
@@ -50,6 +53,7 @@ class VirtualMachineController extends Controller
         $ambientes = Ambiente::all(); //todos os ambientes
         $vlans = Vlan::all();  //todas as vlans
         $cluster = Cluster::find($id);        
+        $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
         return view('datacenter.virtual_machine.index',[            
             'cluster'         => $cluster,
             'id'              => $id,
@@ -58,6 +62,7 @@ class VirtualMachineController extends Controller
             'projetos'        => $projetos,            
             'orgaos'          => $orgaos,
             'ambientes'       => $ambientes,
+            'users'           => $users,
         ]);
     }
 
@@ -131,10 +136,13 @@ class VirtualMachineController extends Controller
             $virtualmachine->vlans()->sync($request->input('vlans'));  //sincronização do relacionamento vlan n:n
 
             $vl = $virtualmachine->vlans;
+
+            $users = $virtualmachine->users;
             
             return response()->json([
                 'virtualmachine' => $virtualmachine,
                 'vlans' => $vl,
+                'users' => $users,
                 'status' =>200,
                 'message' => 'O registro foi criado com sucesso!',
             ]);
@@ -156,13 +164,15 @@ class VirtualMachineController extends Controller
         $vlans = $virtualmachine->vlans; //apenas vlans relacionadas
         $projeto = Projeto::find($virtualmachine->projeto_id);
         $orgao = Orgao::find($virtualmachine->orgao_id);
-        $ambiente = Ambiente::find($virtualmachine->ambiente_id);        
+        $ambiente = Ambiente::find($virtualmachine->ambiente_id);    
+        $users = $virtualmachine->users;    
         return response()->json([
             'virtualmachine' => $virtualmachine,
             'projeto' => $projeto,
             'orgao' => $orgao,
             'ambiente' => $ambiente,
             'vlans'  => $vlans,
+            'users' => $users,
             'status' => 200,            
         ]);
     }
@@ -170,7 +180,7 @@ class VirtualMachineController extends Controller
     /**
      * Método para atualização de registro editado
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, int $id)
     {          
         $validator = Validator::make($request->all(),[
             'nome_vm'             => 'required|max:255',
@@ -233,9 +243,11 @@ class VirtualMachineController extends Controller
             $v = VirtualMachine::find($id);
             $v->vlans()->sync($request->input('vlans'));  //sincronização do relacionamento vlan n:n
             $vl = $v->vlans;
+            $users = $v->users;
             return response()->json([
                 'virtualmachine' => $v,
                 'vlans' => $vl,
+                'users' => $users,
                 'status' =>200,
                 'message' => 'O registro foi atualizado com sucesso!',
             ]);
@@ -364,6 +376,8 @@ class VirtualMachineController extends Controller
     public function storesenhavm(Request $request, int $id){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
+            'validade' => ['required','date'],
+            'users' => ['required','array','min:2'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -376,18 +390,19 @@ class VirtualMachineController extends Controller
             $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
-                'val_indefinida' => $request->input('val_indefinida'),
-                'virtual_machine_id' => $request->input('virtual_machine_id'),
+                'val_indefinida' => intval($request->input('val_indefinida')),
                 'criador_id' => $user->id,                
             ];
             $virtualmachine->update($data); //criação da senha
             $vm = VirtualMachine::find($id);            
-            $vm->users()->sync($request->input('users')); //sincronização            
+            $vm->users()->sync($request->input('users')); //sincronização 
+            $u = $vm->users;          
             return response()->json([
                 'user' => $user,                
-                'vm' => $vm,
+                'virtualmachine' => $vm,
+                'users' => $u,
                 'status' => 200,
-                'message' => 'Senha de'+$vm->nome_vm+' criada com sucesso!',
+                'message' => 'Senha criada com sucesso!',
             ]);
         }        
     }    
@@ -395,6 +410,8 @@ class VirtualMachineController extends Controller
     public function updatesenhavm(Request $request, int $id){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
+            'validade' => ['required','date'],
+            'users' => ['required','array','min:2'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -408,18 +425,19 @@ class VirtualMachineController extends Controller
             $data = [                
                 'senha' => $request->input('senha'),
                 'validade' => $request->input('validade'),
-                'val_indefinida' => $request->input('val_indefinida'),
-                'virtual_machine_id' => $request->input('virtual_machine_id'),
+                'val_indefinida' => intval($request->input('val_indefinida')),
                 'alterador_id' => $user->id,                
             ];
             $virtualmachine->update($data); //atualização da senha
             $vm = VirtualMachine::find($id);            
             $vm->users()->sync($request->input('users')); //sincronização            
+            $u = $vm->users;
             return response()->json([
                 'user' => $user,                
-                'vm' => $vm,
+                'virtualmachine' => $vm,
+                'users' => $u,
                 'status' => 200,
-                'message' => 'Senha de '+$vm->nome_vm+' atualizada com sucesso!',
+                'message' => 'Senha atualizada com sucesso!',
             ]);
             }else{
                 return response()->json([
@@ -428,6 +446,26 @@ class VirtualMachineController extends Controller
                 ]);
             }
         }        
+    }
+
+ public function editsenhavm(int $id){        
+        $virtualmachine = $this->virtualmachine->find($id);
+        $criador = "";
+        $alterador ="";
+        if ($virtualmachine->criador_id) {
+           $criador = User::find($virtualmachine->criador_id)->name;
+        }       
+        if ($virtualmachine->alterador_id) {
+            $alterador = User::find($virtualmachine->alterador_id)->name;
+        }                
+        $u = $virtualmachine->users;           
+        return response()->json([
+            'status' => 200,            
+            'virtualmachine' => $virtualmachine,
+            'users' => $u,
+            'criador' => $criador,
+            'alterador' => $alterador,            
+        ]);
     }
 
 }

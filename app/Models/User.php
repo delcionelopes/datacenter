@@ -54,19 +54,19 @@ class User extends Authenticatable
         return $this->belongsToMany(App::class,'app_has_users','user_id','app_id');
     }
 
-    public function host(){
+    public function host():BelongsToMany{
         return $this->belongsToMany(Host::class,'hosts_has_users','user_id','host_id');
     }
 
-    public function virtual_machine(){
+    public function virtual_machine():BelongsToMany{
         return $this->belongsToMany(VirtualMachine::class,'virtual_machine_has_users','user_id','virtual_machine_id');        
     }   
     
-    public function vlan(){
+    public function vlan():BelongsToMany{
         return $this->belongsToMany(Vlan::class,'vlan_has_users','user_id','vlan_id');        
     }  
 
-    public function base(){
+    public function base():BelongsToMany{
         return $this->belongsToMany(Base::class,'bases_has_users','user_id','base_id');
     }
 

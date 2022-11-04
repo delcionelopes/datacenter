@@ -3,6 +3,13 @@
 @section('title', 'Datacenter')
 
 @section('content')
+
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+
 <!--Inicio AddVirtualMachineModal-->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddVirtualMachineModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -247,6 +254,153 @@
     </div>
 </div>
 <!--Fim EditVMModal-->
+
+<!-- início AddSenhaVM -->
+   <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaVM" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header navbar-dark bg-primary">
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Senha</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true" style="color: white;">&times</span>
+                </button>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form id="addformsenha" name="addformsenha" class="form-horizontal" role="form">
+                    <input type="hidden" id="add_VMsenha_id">
+                    <ul id="saveformsenha_errList"></ul>   
+                    <div class="card">
+                    <div class="card-body">         
+                     <fieldset>
+                    <legend>Dados da Senha</legend>                    
+                    <div class="form-group mb-3">
+                        <label  for="">Nome VM:</label>
+                        <label  id="nomeVM"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">Cluster/IP:</label>
+                        <label  id="clusterip"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Senha</label>
+                        <input type="text" class="add_senha form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Validade</label>
+                        <input type="text" class="add_validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="flexCheck"> 
+                        <input type="checkbox" class="add_val_indefinida form-check-input" name="add_val_indefinida" id="flexCheck"> Validade indeterminada
+                        </label>
+                    </div>         
+                     </fieldset>
+                    </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-body">                        
+                            <fieldset>
+                                <legend>Quem tem acesso a esta informação?</legend>
+                                <div class="form-check">
+                                    @foreach ($users as $user)
+                                    <label class="form-check-label" for="CheckUser{{$user->id}}">
+                                        <input type="checkbox" id="CheckUser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                    </label><br>
+                                    @endforeach
+                                </div>
+                            </fieldset>  
+                            </div>
+                     </div>                             
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary add_senhaVM_btn">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim AddSenhaVM -->
+
+<!-- início EditSenhaVM -->
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaVM" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header navbar-dark bg-primary">
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Senha</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true" style="color: white;">&times</span>
+                </button>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form id="editformsenha" name="editformsenha" class="form-horizontal" role="form">
+                    <input type="hidden" id="edit_VMsenha_id">
+                    <ul id="updateformsenha_errList"></ul>  
+                    <div class="card">
+                    <div class="card-body"> 
+                    <fieldset>
+                    <legend>Dados da Senha</legend>                 
+                    <div class="form-group mb-3">
+                        <label  for="">Nome VM:</label>
+                        <label  id="editnomeVM"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">Cluster/IP:</label>
+                        <label  id="editclusterip"></label>
+                    </div>
+                     <div class="form-group mb-3">
+                        <label  for="">Criação:</label>
+                        <label  id="editdatacriacao"></label><br>
+                        <label  for="">Modificação:</label>
+                        <label  id="editdatamodificacao"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">Criador:</label>
+                        <label  id="editcriador"></label><br>
+                        <label  for="">Modificador:</label>
+                        <label  id="editmodificador"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Senha</label>
+                        <input type="text" id="edit_senha" class="senha form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Validade</label>
+                        <input type="text" id="edit_validade" class="validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
+                    </div>
+                    <div class="form-check">
+                        <label class="form-check-label" for="edit_val_indefinida"> 
+                        <input type="checkbox" class="val_indefinida form-check-input" name="edit_val_indefinida" id="edit_val_indefinida"> Validade indeterminada
+                        </label>
+                    </div>                
+                    </fieldset>    
+                    </div>
+                    </div>
+                     <div class="card">
+                     <div class="card-body"> 
+                            <fieldset>
+                                <legend>Quem tem acesso a esta informação?</legend>
+                                <div class="form-check">
+                                    @foreach ($users as $user)
+                                    <label class="form-check-label" for="check{{$user->id}}">
+                                        <input type="checkbox" id="checkuser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                    </label><br>
+                                    @endforeach
+                                </div>
+                            </fieldset>   
+                     </div>
+                     </div>                  
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary update_senhaVM_btn">Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim EditSenhaVM -->
+
 <!--index-->
 @auth
 @if(!(auth()->user()->inativo))
@@ -260,13 +414,13 @@
                             <input type="hidden" id="clusterid" value="{{$id}}">
                             <input type="hidden" id="vlanid" name="vlanid" value=""> 
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome da VM" aria-label="Search" aria-describedby="search-addon">
-                            <button type="submit" class="input-group-text border-0" id="search-addon" style="background:transparent;border: none;">
+                            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" class="AddVMModal_btn input-group-text border-0 animate__animated animate__bounce animate__faster" style="background: transparent;border: none;">
+                            <button type="button" data-id="{{$id}}" class="AddVMModal_btn input-group-text border-0 animate__animated animate__bounce animate__faster" style="background: transparent;border: none; nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
-                            <a href="{{route('datacenter.cluster.index')}}" type="button" data-id="{{$id}}" class="cluster_btn input-group-text border-0" style="background: transparent;border: none;">
+                            <a href="{{route('datacenter.cluster.index')}}" type="button" data-id="{{$id}}" class="cluster_btn input-group-text border-0" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="CLUSTER">
                                {{$cluster->nome_cluster}}
                             </a>                            
                         </div>
@@ -276,7 +430,8 @@
             <table class="table table-hover">
                 <thead class="sidebar-dark-primary" style="color: white">
                     <tr>                        
-                        <th scope="col">VM</th>                                           
+                        <th scope="col">VM</th>
+                        <th scope="col"><i class="fas fa-key"></i> PASS</th>
                         <th scope="col">VLAN(s)</th>
                         <th scope="col">BASE(s)</th>                                         
                         <th scope="col">AÇÕES</th>                       
@@ -286,7 +441,23 @@
                 <tr id="novo" style="display:none;"></tr>
                     @forelse($virtualmachines as $vm)
                     <tr id="vm{{$vm->id}}">                        
-                        <th scope="row">{{$vm->nome_vm}}</th>                                              
+                        <th scope="row">{{$vm->nome_vm}}</th>
+                        <td id="senha{{$vm->id}}">
+                            @if(!$vm->senha)
+                            <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
+                            @else
+                            @if($vm->users()->count())                           
+                            @foreach($vm->users as $user)
+                                  @if(($user->id) == (auth()->user()->id))                                  
+                                  <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"></button>
+                                  @break
+                                  @elseif ($loop->last)
+                                  <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-nomehost="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"></button>
+                                  @endif                                                        
+                            @endforeach                            
+                            @endif
+                            @endif                                                        
+                        </td>                                               
                         <td>                            
                         <div class="btn-group">                                
                                 <button type="button" class="btn btn-none dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
@@ -303,17 +474,17 @@
                             <div class="btn-group">
                                 @if($vm->bases->count())
                                 <form action="{{route('datacenter.base.index',['id' => $vm->id])}}" method="get">
-                                    <button type="submit" data-id="{{$vm->id}}" class="list_base_btn fas fa-database" style="background: transparent;border: none; color: green;"> {{$vm->bases->count()}}</button>
+                                    <button type="submit" data-id="{{$vm->id}}" class="list_base_btn fas fa-database" style="background: transparent;border: none; color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista BASE(s)"> {{$vm->bases->count()}}</button>
                                 </form>   
                                 @else
-                                    <button type="button" data-id="{{$vm->id}}" data-nome_vm="{{$vm->nome_vm}}" class="nova_base_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button> 
+                                    <button type="button" data-id="{{$vm->id}}" data-nome_vm="{{$vm->nome_vm}}" class="nova_base_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Cadastra nova BASE"></button> 
                                 @endif                             
                             </div>
                         </td>                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$vm->id}}" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>
-                                <button type="button" data-id="{{$vm->id}}" data-vm="{{$vm->nome_vm}}" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none;"></button>
+                                <button type="button" data-id="{{$vm->id}}" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar VM"></button>
+                                <button type="button" data-id="{{$vm->id}}" data-vm="{{$vm->nome_vm}}" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir VM"></button>
                             </div>
                         </td>
                     </tr>
@@ -328,7 +499,7 @@
                 {{$virtualmachines->links()}}                
             </div>                   
             <div>
-                <button type="button" class="fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()"></button>
+                <button type="button" class="voltar_btn fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()" style="white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Voltar para Cluster(s)"></button>
             </div>
 </div>
 @else 
@@ -581,11 +752,30 @@ $(document).ready(function(){
     
                         //atualizando a tr da table html                                     
     
-                        var linha1 = "";                        
-                            linha2 = "";
-                            linha1 = '<tr id="vm'+response.virtualmachine.id+'">\
-                            <th scope="row">'+response.virtualmachine.nome_vm+'</th>\
-                            <td>\
+                        var tupla = "";                        
+                        var limita1 = "";                        
+                        var limita2 = "";
+                        var limita3 = "";
+                        var limita4 = "";
+                        var limita5 = "";
+                        var limita6 = "";
+                            limita1 = '<tr id="vm'+response.virtualmachine.id+'">\
+                            <th scope="row">'+response.virtualmachine.nome_vm+'</th>';
+                            var bloqueia = true;                        
+                            if((response.virtualmachine.senha)==""){
+                            limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                            }else{
+                                $.each(response.users,function(key,user_values){
+                                    if(user_values.id == response.user.id){                                    
+                                        limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                        bloqueia = false;                              
+                                    }
+                                });                            
+                                if(bloqueia){
+                                limita4 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                                }
+                            }  
+                            limita5 = '<td>\
                                 <div class="btn-group">\
                                     <button type="button" class="btn btn-none dropdown-toggle" data-toggle="dropdown" aria-expanded="false">\
                                         vlan(s)\
@@ -604,7 +794,7 @@ $(document).ready(function(){
                                             $('#dropdown'+response.virtualmachine.id).append('<li data-id="'+vl.id+'" class="dropdown-item"><a href="'+meulink+'" class="dropdown-item">'+vl.nome_vlan+'</a></li>');
                                         });                                 
                                         
-                            linha2 = '</ul>\
+                            limita6 = '</ul>\
                                 </div>\
                             </td>\
                             <td>'+response.virtualmachine.ambiente.nome_ambiente+'</td>\
@@ -615,7 +805,8 @@ $(document).ready(function(){
                                 </div>\
                             </td>\
                         </tr>';
-                        $("#vm"+id).replaceWith(linha1+linha2);
+                        tupla = limita1+limita2+limita3+limita4+limita5+limita6;
+                        $("#vm"+id).replaceWith(tupla);
                     }
                 }
             });
@@ -686,13 +877,32 @@ $(document).ready(function(){
                         $('#AddVirtualMachineModal').modal('hide');
                         //inclui uma linha nova na tabela html                                                          
                         var tupla = "";
-                        var linha0 = "";
-                        var linha1 = "";                        
-                        var linha2 = "";
-                            linha0 = '<tr id="novo" style="display:none;"></tr>';
-                            linha1 = '<tr id="vm'+response.virtualmachine.id+'">\
-                            <th scope="row">'+response.virtualmachine.nome_vm+'</th>\
-                            <td>\
+                        var limita0 = "";
+                        var limita1 = "";                        
+                        var limita2 = "";
+                        var limita3 = "";
+                        var limita4 = "";
+                        var limita5 = "";
+                        var limita6 = "";
+
+                            limita0 = '<tr id="novo" style="display:none;"></tr>';
+                            limita1 = '<tr id="vm'+response.virtualmachine.id+'">\
+                            <th scope="row">'+response.virtualmachine.nome_vm+'</th>';
+                            var bloqueia = true;                        
+                            if((response.virtualmachine.senha)==""){
+                            limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                            }else{
+                                $.each(response.users,function(key,user_values){
+                                    if(user_values.id == response.user.id){                                    
+                                        limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                        bloqueia = false;                              
+                                    }
+                                });                            
+                                if(bloqueia){
+                                limita4 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                                }
+                            }  
+                            limita5 = '<td>\
                                 <div class="btn-group">\
                                     <button type="button" class="btn btn-none dropdown-toggle" data-toggle="dropdown" aria-expanded="false">\
                                         vlan(s)\
@@ -711,7 +921,7 @@ $(document).ready(function(){
                                             $('#dropdown'+response.virtualmachine.id).append('<li data-id="'+vl.id+'" class="dropdown-item"><a href="'+meulink+'" class="dropdown-item">'+vl.nome_vlan+'</a></li>');
                                         });                                 
                                         
-                            linha2 = '</ul>\
+                            limita6 = '</ul>\
                                 </div>\
                             </td>\
                             <td>'+response.virtualmachine.ambiente.nome_ambiente+'</td>\
@@ -726,7 +936,7 @@ $(document).ready(function(){
                         {
                             $('#nadaencontrado').remove();
                         }
-                        tupla = linha0+linha1+linha2;
+                        tupla = limita0+limita1+limita2+limita3+limita4+limita5+limita6;
                         $('#novo').replaceWith(tupla);                    
     
                     }
@@ -810,6 +1020,302 @@ $(document).ready(function(){
             });
         });
         //Fim adiciona nova base de dados no VM
+
+    //cadastro de senha
+        $('#AddSenhaVM').on('shown.bs.modal',function(){
+            $('.add_senha').focus();
+        });
+
+
+        $(document).on('click','.cadsenha_btn',function(e){
+            e.preventDefault();
+            var labelHtml = ($(this).data("nomevm")).trim();            
+            var labelclusterip = ($(this).data("clusterip")).trim();            
+            $('#addformsenha').trigger('reset');
+            $('#AddSenhaVM').modal('show');
+            $('#add_VMsenha_id').val($(this).data("id"));
+            $('#nomeVM').html('<Label id="nomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
+            $('#clusterip').html('<Label id="clusterip" style="font-style:italic;">'+labelclusterip+'</Label>');            
+            $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>'); 
+        });
+
+         $(document).on('click','.add_senhaVM_btn',function(e){
+            e.preventDefault();
+            $(this).text('Salvando...');
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            //validade indeterminada
+            var id = $('#add_VMsenha_id').val();
+            var val_indefinida = 0;
+            $("input[name='add_val_indefinida']:checked").each(function(){
+                val_indefinida = 1;
+            });         
+
+            //array apenas com os checkboxes marcados
+            var users = new Array;
+            $("input[name='users[]']:checked").each(function(){
+                users.push($(this).val());
+            });            
+            
+            var data = {
+                'senha':$('.add_senha').val(),
+                'validade':formatDate($('.add_validade').val()),
+                'val_indefinida':val_indefinida,                
+                'users':users,
+                '_method':'PATCH',
+                '_token': CSRF_TOKEN,       
+            };            
+            
+            $.ajax({                
+                type:'POST',                                
+                data:data,
+                dataType: 'json',
+                url:'/datacenter/storesenhavm/'+id,
+                success:function(response){
+                      if(response.status==400){
+                           //erros
+                            $('#saveformsenha_errList').html("");
+                            $('#saveformsenha_errList').addClass("alert alert-danger");
+                            $.each(response.errors,function(key,err_values){
+                                    $('#saveformsenha_errList').append('<li>'+err_values+'</li>');
+                            });
+          
+                }else{
+                        $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>');     
+                        $('#success_message').html('<div id="success_message"></div>');              
+                        $('#success_message').addClass('alert alert-success');
+                        $('#success_message').text(response.message);                                        
+    
+                        $('#addformsenha').trigger('reset');                    
+                        $('#AddSenhaVM').modal('hide');
+
+                        var limita1 = "";
+                        var limita2 = "";
+                        var limita3 = "";
+                        var bloqueia = true;                        
+                        if((response.virtualmachine.senha)==""){
+                        limita1 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        }else{
+                            $.each(response.users,function(key,user_values){
+                                if(user_values.id == response.user.id){                                    
+                                    limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    bloqueia = false;                              
+                                }
+                            });                            
+                            if(bloqueia){
+                            limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            }
+                        }                       
+
+                        var elemento = limita1+limita2+limita3;
+                        $('#botaosenha'+id).replaceWith(elemento);
+
+                } 
+                }   
+            });
+    }); 
+        //fim cadastro de senha
+    ////inicio alteração de senha
+    $('#EditSenhaVM').on('shown.bs.modal',function(){
+        $('#edit_senha').focus();
+    });
+    $(document).on('click','.senhabloqueada_btn',function(e){
+        e.preventDefault();
+
+        var opcaosenha = $(this).data("opt");
+
+        if(opcaosenha){
+    
+        var id = $(this).data("id");
+        var labelHtml = ($(this).data("nomevm")).trim();            
+        var labelclusterip = ($(this).data("clusterip")).trim(); 
+        $('#editformsenha').trigger('reset');
+        $('#EditSenhaVM').modal('show');  
+        $('#editnomeVM').html('<Label id="editnomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $('#editclusterip').html('<Label id="editclusterip" style="font-style:italic;">'+labelclusterip+'</Label>');     
+        $('#edit_VMsenha_id').val(id);  
+        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');
+    
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/datacenter/editsenhavm/'+id,
+            success: function(response){
+                if(response.status==200){                                                       
+                    var datacriacao = new Date(response.virtualmachine.created_at);
+                    datacriacao = datacriacao.toLocaleString("pt-BR");
+                     if(datacriacao=="31/12/1969 21:00:00"){
+                        datacriacao = "";
+                        }                      
+                    var dataatualizacao = new Date(response.virtualmachine.updated_at);
+                    dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
+                     if(dataatualizacao=="31/12/1969 21:00:00"){
+                        dataatualizacao = "";
+                        }  
+                    var datavalidade = new Date(response.virtualmachine.validade);
+                    datavalidade = datavalidade.toLocaleDateString("pt-BR");
+                     if(datavalidade=="31/12/1969 21:00:00"){
+                        datavalidade = "";
+                        }  
+                    var criador = response.criador;
+                        if(!response.criador){
+                            criador = "";
+                        }
+                    var alterador = response.alterador;
+                        if(!response.alterador){
+                            alterador = "";
+                        }                   
+                    $('#edit_validade').val(datavalidade);
+                    $('#editdatacriacao').html('<label  id="editdatacriacao">'+datacriacao+'</label>');
+                    $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
+                    $('#editcriador').html('<label  id="editcriador">'+criador+'</label>');
+                    $('#editmodificador').html('<label  id="editmodificador">'+alterador+'</label>');                         
+                    $('#edit_senha').val(response.virtualmachine.senha);
+                    if(response.virtualmachine.val_indefinida){
+                      $("input[name='edit_val_indefinida']").attr('checked',true);  
+                    }else{
+                      $("input[name='edit_val_indefinida']").attr('checked',false);  
+                    }
+                      
+                     //Atribuindo aos checkboxs
+                    $("input[name='users[]']").attr('checked',false); //desmarca todos
+                        //apenas os temas relacionados 
+                        $.each(response.users,function(key,values){                                                                           
+                                $("#checkuser"+values.id).attr('checked',true);  //faz a marcação seletiva                         
+                        });
+                }
+            }
+        });
+
+    }else{
+        Swal.fire({
+             showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"Você não tem acesso a esta informação!",
+                text: "Peça sua inclusão a um dos usuários sugeridos na dica!",
+                imageUrl: '../../logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'Ok, obrigado!',                
+                cancelButtonText: 'Não necessito, obrigado!',
+            });      
+    }
+             
+    });
+    //fim exibe 
+    ///inicio alterar senha
+    $(document).on('click','.update_senhaVM_btn',function(e){
+            e.preventDefault();
+            $(this).text('Salvando...');
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            //validade indeterminada
+            var id = $('#edit_VMsenha_id').val();
+            var val_indefinida = 0;
+            $("input[name='edit_val_indefinida']:checked").each(function(){
+                val_indefinida = 1;
+            });         
+
+            //array apenas com os checkboxes marcados
+            var users = new Array;
+            $("input[name='users[]']:checked").each(function(){
+                users.push($(this).val());
+            });            
+            
+            var data = {
+                'senha':$('.senha').val(),
+                'validade':formatDate($('.validade').val()),
+                'val_indefinida':val_indefinida,                
+                'users':users,
+                '_method':'PATCH',
+                '_token': CSRF_TOKEN,       
+            };            
+            
+            $.ajax({                
+                type:'POST',                                
+                data:data,
+                dataType: 'json',
+                url:'/datacenter/updatesenhavm/'+id,
+                success:function(response){
+                      if(response.status==400){
+                           //erros
+                            $('#updateformsenha_errList').html("");
+                            $('#updateformsenha_errList').addClass("alert alert-danger");
+                            $.each(response.errors,function(key,err_values){
+                                    $('#updateformsenha_errList').append('<li>'+err_values+'</li>');
+                            });
+          
+                }else{
+                        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');     
+                        $('#success_message').html('<div id="success_message"></div>');              
+                        $('#success_message').addClass('alert alert-success');
+                        $('#success_message').text(response.message);                                        
+    
+                        $('#editformsenha').trigger('reset');                    
+                        $('#EditSenhaVM').modal('hide');
+
+                        var limita1 = "";
+                        var limita2 = "";
+                        var limita3 = "";
+                        var bloqueia = true;                        
+                        if((response.virtualmachine.senha)==""){
+                        limita1 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        }else{
+                            $.each(response.users,function(key,user_values){
+                                if(user_values.id == response.user.id){                                    
+                                    limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    bloqueia = false;                              
+                                }
+                            });                            
+                            if(bloqueia){
+                            limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            }
+                        }                       
+
+                        var elemento = limita1+limita2+limita3;
+                        $('#botaosenha'+id).replaceWith(elemento);
+
+                } 
+                }   
+            });
+    });         
+
+    ////fim alteração de senha
+
+            //formatação str para date
+    function formatDate(data, formato) {
+        if (formato == 'pt-br') {
+            return (data.substr(0, 10).split('-').reverse().join('/'));
+        } else {
+            return (data.substr(0, 10).split('/').reverse().join('-'));
+        }
+        }
+        //fim formatDate
+
+        ///tooltip
+    $(function(){      
+        $('.senhabloqueada_btn').tooltip();       
+        $('.cadsenha_btn').tooltip();                
+        $('.cluster_btn').tooltip();
+        $('.AddVMModal_btn').tooltip();       
+        $('.list_base_btn').tooltip();       
+        $('.nova_base_btn').tooltip();       
+        $('.pesquisa_btn').tooltip();        
+        $('.delete_vm_btn').tooltip();
+        $('.edit_vm_btn').tooltip();
+        $('.voltar_btn').tooltip();        
+    });
+    ///fim tooltip
+
     
     });
     

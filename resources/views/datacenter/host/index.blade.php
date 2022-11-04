@@ -92,7 +92,7 @@
 </div>
 <!--Fim EditHostModal -->
 
-<!-- início AddSenhaApp -->
+<!-- início AddSenhaHost -->
    <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaHost" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -157,9 +157,9 @@
         </div>
     </div>
 </div>
-<!-- fim AddSenhaApp -->
+<!-- fim AddSenhaHost -->
 
-<!-- início EditSenhaApp -->
+<!-- início EditSenhaHost -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaHost" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -236,7 +236,7 @@
         </div>
     </div>
 </div>
-<!-- fim EditSenhaApp -->
+<!-- fim EditSenhahost -->
 
 <!--index-->
 @auth
@@ -262,7 +262,7 @@
                 <thead class="sidebar-dark-primary" style="color: white">
                     <tr>
                         <th scope="col">HOSTS</th>
-                        <th scope="col"><i class="fas fa-key"></i> PASS</th>                                         
+                        <th scope="col"><i class="fas fa-key"></i> PASS</th>
                         <th scope="col">AÇÕES</th>                       
                     </tr>                    
                 </thead>

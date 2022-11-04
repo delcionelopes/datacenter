@@ -178,13 +178,16 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::put('status-ip/{id}',[CadastroIpController::class,'status']);
 
          //Rotas para a view index de VirtualMachine
-         Route::get('index-vm/{id}',[VirtualMachineController::class,'index'])->name('vm.index');
-         Route::delete('delete-vm/{id}',[VirtualMachineController::class,'destroy']);
-         Route::get('edit-vm/{id}',[VirtualMachineController::class,'edit']);
-         Route::put('update-vm/{id}',[VirtualMachineController::class,'update']);
-         Route::put('adiciona-vm',[VirtualMachineController::class,'store']);
-         Route::get('vlan-vm/{id}/{vlid}',[VirtualMachineController::class,'VlanXVm'])->name('vm.index_vlanXvm');
-         Route::put('adiciona-basededados',[VirtualMachineController::class,'storeBase']);
+        Route::get('index-vm/{id}',[VirtualMachineController::class,'index'])->name('vm.index');
+        Route::delete('delete-vm/{id}',[VirtualMachineController::class,'destroy']);
+        Route::get('edit-vm/{id}',[VirtualMachineController::class,'edit']);
+        Route::put('update-vm/{id}',[VirtualMachineController::class,'update']);
+        Route::put('adiciona-vm',[VirtualMachineController::class,'store']);
+        Route::get('vlan-vm/{id}/{vlid}',[VirtualMachineController::class,'VlanXVm'])->name('vm.index_vlanXvm');
+        Route::put('adiciona-basededados',[VirtualMachineController::class,'storeBase']);
+        Route::patch('storesenhavm/{id}',[VirtualMachineController::class,'storesenhavm']);
+        Route::get('editsenhavm/{id}',[VirtualMachineController::class,'editsenhavm']);
+        Route::patch('updatesenhavm/{id}',[VirtualMachineController::class,'updatesenhavm']);
 
          //Rotas para a view index de Bases
          Route::get('index-base/{id}',[BaseController::class,'index'])->name('base.index');
