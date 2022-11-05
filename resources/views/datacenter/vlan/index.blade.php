@@ -781,7 +781,7 @@ $(document).ready(function(){
                     $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
                     $('#editcriador').html('<label  id="editcriador">'+criador+'</label>');
                     $('#editmodificador').html('<label  id="editmodificador">'+alterador+'</label>');                         
-                    $('#edit_senha').val(response.vlan.senha);
+                    $('#edit_senha').val(response.senha);
                     if(response.vlan.val_indefinida){
                       $("input[name='edit_val_indefinida']").attr('checked',true);  
                     }else{
@@ -826,7 +826,7 @@ $(document).ready(function(){
             $(this).text('Salvando...');
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
-            var id = $('#edit_VMsenha_id').val();
+            var id = $('#edit_vlansenha_id').val();
             var val_indefinida = 0;
             $("input[name='edit_val_indefinida']:checked").each(function(){
                 val_indefinida = 1;

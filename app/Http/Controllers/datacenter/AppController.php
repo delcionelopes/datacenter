@@ -10,6 +10,7 @@ use App\Models\Orgao;
 use App\Models\Projeto;
 use App\Models\User;
 use App\Models\VirtualMachine;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class AppController extends Controller
@@ -256,7 +257,7 @@ class AppController extends Controller
             $app = $this->app->find($id);
             $user = auth()->user();            
             $data = [                
-                'senha' => $request->input('senha'),
+                'senha' => Crypt::encrypt($request->input('senha')),
                 'validade' => $request->input('validade'),
                 'val_indefinida' => intval($request->input('val_indefinida')),
                 'criador_id' => $user->id,                                
@@ -291,7 +292,7 @@ class AppController extends Controller
             if($app){
             $user = auth()->user();            
             $data = [                
-                'senha' => $request->input('senha'),
+                'senha' => Crypt::encrypt($request->input('senha')),
                 'validade' => $request->input('validade'),
                 'val_indefinida' => intval($request->input('val_indefinida')),
                 'alterador_id' => $user->id,                
@@ -327,9 +328,11 @@ class AppController extends Controller
             $alterador = User::find($app->alterador_id)->name;
         }                
         $users = $app->users;        
+        $s = Crypt::decrypt($app->senha);
         return response()->json([
             'status' => 200,            
             'app' => $app,
+            'senha' => $s,
             'criador' => $criador,
             'alterador' => $alterador,
             'users' => $users,

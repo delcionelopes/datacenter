@@ -748,7 +748,7 @@ $(document).ready(function(){
                     $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
                     $('#editcriador').html('<label  id="editcriador">'+criador+'</label>');
                     $('#editmodificador').html('<label  id="editmodificador">'+alterador+'</label>');                         
-                    $('#edit_senha').val(response.host.senha);
+                    $('#edit_senha').val(response.senha);
                     if(response.host.val_indefinida){
                       $("input[name='edit_val_indefinida']").attr('checked',true);  
                     }else{

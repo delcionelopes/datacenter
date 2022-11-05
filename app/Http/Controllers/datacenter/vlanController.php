@@ -9,6 +9,7 @@ use App\Models\Vlan;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Rede;
 use App\Models\User;
+use Illuminate\Support\Facades\Crypt;
 
 class vlanController extends Controller
 {
@@ -243,7 +244,7 @@ public function storesenhavlan(Request $request, int $id){
             $user = auth()->user();
             $vlan = $this->vlan->find($id);
             $data = [          
-                'senha' => $request->input('senha'),
+                'senha' => Crypt::encrypt($request->input('senha')),
                 'validade' => $request->input('validade'),
                 'val_indefinida' => intval($request->input('val_indefinida')),
                 'criador_id' => $user->id,                
@@ -278,7 +279,7 @@ public function storesenhavlan(Request $request, int $id){
             if($vlan){
             $user = auth()->user();            
             $data = [                
-                'senha' => $request->input('senha'),
+                'senha' => Crypt::encrypt($request->input('senha')),
                 'validade' => $request->input('validade'),
                 'val_indefinida' => intval($request->input('val_indefinida')),
                 'alterador_id' => $user->id,                
@@ -313,9 +314,11 @@ public function editsenhavlan(int $id){
         if ($vlan->alterador_id) {
             $alterador = User::find($vlan->alterador_id)->name;
         }                
-        $u = $vlan->users;        
+        $u = $vlan->users; 
+        $s = Crypt::decrypt($vlan->senha);
         return response()->json([
-            'status' => 200,            
+            'status' => 200,   
+            'senha' => $s,
             'vlan' => $vlan,
             'criador' => $criador,
             'alterador' => $alterador,

@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\VirtualMachine;
 use App\Models\Vlan;
+use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
 class VirtualMachineController extends Controller
@@ -388,7 +389,7 @@ class VirtualMachineController extends Controller
             $user = auth()->user();
             $virtualmachine = $this->virtualmachine->find($id);
             $data = [                
-                'senha' => $request->input('senha'),
+                'senha' => Crypt::encrypt($request->input('senha')),
                 'validade' => $request->input('validade'),
                 'val_indefinida' => intval($request->input('val_indefinida')),
                 'criador_id' => $user->id,                
@@ -423,7 +424,7 @@ class VirtualMachineController extends Controller
             if($virtualmachine){
             $user = auth()->user();            
             $data = [                
-                'senha' => $request->input('senha'),
+                'senha' => Crypt::encrypt($request->input('senha')),
                 'validade' => $request->input('validade'),
                 'val_indefinida' => intval($request->input('val_indefinida')),
                 'alterador_id' => $user->id,                
@@ -458,10 +459,12 @@ class VirtualMachineController extends Controller
         if ($virtualmachine->alterador_id) {
             $alterador = User::find($virtualmachine->alterador_id)->name;
         }                
-        $u = $virtualmachine->users;           
+        $u = $virtualmachine->users;    
+        $s = Crypt::decrypt($virtualmachine->senha);       
         return response()->json([
             'status' => 200,            
             'virtualmachine' => $virtualmachine,
+            'senha' => $s,
             'users' => $u,
             'criador' => $criador,
             'alterador' => $alterador,            

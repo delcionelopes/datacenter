@@ -8,6 +8,7 @@ use App\models\Host;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Cluster;
 use App\Models\User;
+use Illuminate\Support\Facades\Crypt;
 
 class HostController extends Controller
 {
@@ -190,7 +191,7 @@ class HostController extends Controller
             $user = auth()->user();
             $host = $this->host->find($id);
             $data = [                
-                'senha' => $request->input('senha'),
+                'senha' => Crypt::encrypt($request->input('senha')),
                 'validade' => $request->input('validade'),
                 'val_indefinida' => intval($request->input('val_indefinida')),
                 'criador_id' => $user->id,                
@@ -225,7 +226,7 @@ class HostController extends Controller
             if($host){
             $user = auth()->user();            
             $data = [                
-                'senha' => $request->input('senha'),
+                'senha' => Crypt::encrypt($request->input('senha')),
                 'validade' => $request->input('validade'),
                 'val_indefinida' => intval($request->input('val_indefinida')),
                 'alterador_id' => $user->id,                
@@ -260,10 +261,12 @@ class HostController extends Controller
         if ($host->alterador_id) {
             $alterador = User::find($host->alterador_id)->name;
         }                
-        $users = $host->users;        
+        $users = $host->users;   
+        $s = Crypt::decrypt($host->senha);    
         return response()->json([
             'status' => 200,            
             'host' => $host,
+            'senha' => $s,
             'criador' => $criador,
             'alterador' => $alterador,
             'users' => $users,
