@@ -159,7 +159,10 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::get('edit-vlan/{id}',[vlanController::class,'edit']);
         Route::put('update-vlan/{id}',[vlanController::class,'update']);
         Route::put('adiciona-vlan',[vlanController::class,'store']);    
-        Route::put('adiciona-vlanrede',[vlanController::class,'storerede']);        
+        Route::put('adiciona-vlanrede',[vlanController::class,'storerede']);
+        Route::patch('storesenhavlan/{id}',[vlanController::class,'storesenhavlan']);
+        Route::get('editsenhavlan/{id}',[vlanController::class,'editsenhavlan']);
+        Route::patch('updatesenhavlan/{id}',[vlanController::class,'updatesenhavlan']);  
 
         //Rotas para a view index de rede
         Route::get('index-rede/{id}',[RedeController::class,'index'])->name('rede.index');

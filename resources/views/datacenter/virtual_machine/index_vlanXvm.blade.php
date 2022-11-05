@@ -1291,7 +1291,7 @@ $(document).ready(function(){
 
     ////fim alteração de senha
 
-            //formatação str para date
+    //formatação str para date
     function formatDate(data, formato) {
         if (formato == 'pt-br') {
             return (data.substr(0, 10).split('-').reverse().join('/'));

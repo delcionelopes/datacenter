@@ -25,6 +25,6 @@ class Vlan extends Model
     }
 
     public function users():BelongsToMany{
-        return $this->belongsToMany(User::class,'vlan_has_users','vlan_id','user_id');
+        return $this->belongsToMany(User::class,'vlan_has_users','vlan_id','user_id')->withPivot(['users.name']);
     }
 }
