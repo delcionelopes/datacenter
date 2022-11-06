@@ -3,7 +3,14 @@
 @section('title', 'Datacenter')
 
 @section('content')
-   <!--AddManualForm-->
+
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+
+<!--AddManualForm-->
  <div class="modal fade animate__animated animate__bounce animate__faster" id="AddManualForm" tabindex="-1" role="dialog" aria-labelledby="titleModaLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -133,10 +140,10 @@
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Descrição do manual" aria-label="Search" aria-labelledby="search-addon">
-                            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
+                            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                             <i class="fas fa-search"></i>
                             </button>                
-                            <button class="Add_Manual_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;">
+                            <button class="Add_Manual_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                             <i class="fas fa-plus"></i>
                             </button>            
                         </div>
@@ -159,7 +166,7 @@
                         <th scope="row">{{$manual->descricao}}</th>                        
                         <td>{{$manual->area_conhecimento->descricao}}</td>
                         <td id="uploads{{$manual->id}}">
-                        <label id="files{{$manual->id}}">Files: {{$manual->uploads->count()}} </label><button type="button" id="upload_files_btn" data-manualid="{{$manual->id}}" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>    
+                        <label id="files{{$manual->id}}">Files: {{$manual->uploads->count()}} </label><button type="button" id="upload_files_btn" data-manualid="{{$manual->id}}" class="upload_files_btn fas fa-file-pdf" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Enviar ARQUIVOS"></button>    
                         <ul id="listaarquivos{{$manual->id}}">
                         @if($manual->uploads->count())    
                             @foreach($manual->uploads as $upload)                                                        
@@ -174,8 +181,8 @@
                         </td>                       
                         <td>
                             <div class="btn-group">
-                                <button data-id="{{$manual->id}}" class="edit_manual_btn fas fa-edit" style="background: transparent;border: none;"></button>
-                                <button data-id="{{$manual->id}}" data-descricao="{{$manual->descricao}}" class="delete_manual_btn fas fa-trash" style="background: transparent;border: none;"></button>
+                                <button data-id="{{$manual->id}}" class="edit_manual_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button data-id="{{$manual->id}}" data-descricao="{{$manual->descricao}}" class="delete_manual_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -643,13 +650,22 @@
         });
        }
        
-    });
+    }); ///fim tratamento dos uploads e downloads
     
+    ///tooltip
+    $(function(){             
+        $('.Add_Manual_btn').tooltip();
+        $('.pesquisa_btn').tooltip();        
+        $('.upload_files_btn').tooltip();                
+        $('.delete_manual_btn').tooltip();
+        $('.edit_manual_btn').tooltip();    
+    });
+    ///fim tooltip
 
     });
     
     
-    ///fim tratamento dos uploads e downloads
+    
     
     //fim do escopo geral
     

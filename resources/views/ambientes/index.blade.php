@@ -3,7 +3,14 @@
 @section('title', 'Ambientes')
 
 @section('content')
-   <!--AddAmbienteModal-->
+
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+
+<!--AddAmbienteModal-->
 
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddAmbienteModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -67,18 +74,18 @@
 @if(!(auth()->user()->inativo))
 <div class="container py-5">   
     <div id="success_message"></div>    
-
-    <section class="border p-4 mb-4 d-flex align-items-left">
-    
+    <section class="border p-4 mb-4 d-flex align-items-left">    
     <form action="{{route('admin.ambiente.index')}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="nome" class="form-control rounded float-left" placeholder="nome do ambiente" aria-label="Search"
             aria-describedby="search-addon">
-            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
+            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                 <i class="fas fa-search"></i>
             </button>        
-            <button type="button" class="AddAmbienteModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-plus"></i></button>                
+            <button type="button" class="AddAmbienteModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                <i class="fas fa-plus"></i>
+            </button>                
             </div>            
             </div>        
             </form>                     
@@ -99,8 +106,8 @@
                                 <th scope="row">{{$ambiente->nome_ambiente}}</th>                                
                                 <td>                                    
                                         <div class="btn-group">                                           
-                                            <button type="button" data-id="{{$ambiente->id}}" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>
-                                            <button type="button" data-id="{{$ambiente->id}}" data-nomeambiente="{{$ambiente->nome_ambiente}}" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none"></button>
+                                            <button type="button" data-id="{{$ambiente->id}}" class="edit_ambiente fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar AMBIENTE"></button>
+                                            <button type="button" data-id="{{$ambiente->id}}" data-nomeambiente="{{$ambiente->nome_ambiente}}" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir AMBIENTE"></button>
                                         </div>                                    
                                 </td>
                             </tr>  
@@ -356,7 +363,15 @@ $(document).ready(function(){
             });
     
         }); //Fim da adição de registro
-    
+    ///tooltip
+    $(function(){             
+        $('.AddAmbienteModal_btn').tooltip();
+        $('.pesquisa_btn').tooltip();        
+        $('.delete_ambiente_btn').tooltip();
+        $('.edit_ambiente').tooltip();    
+    });
+    ///fim tooltip
+
     
     }); ///Fim do escopo do script
     

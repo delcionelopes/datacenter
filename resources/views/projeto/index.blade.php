@@ -3,8 +3,14 @@
 @section('title', 'Datacenter')
 
 @section('content')
-    <!--AddProjetoModal-->
 
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+
+<!--AddProjetoModal-->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddProjetoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -74,10 +80,10 @@
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisanome" class="form-control rounded float-left" placeholder="Nome do projeto" aria-label="Search" aria-describedby="search-addon">                            
-                            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
+                            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                 <i class="fas fa-search"></i>
                             </button>                                                                                                             
-                            <button type="button" class="AddProjetoModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="AddProjetoModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></button>
                         </div>                        
                     </div>                    
                 </form>                                
@@ -96,8 +102,8 @@
                         <th scope="row">{{$projeto->nome_projeto}}</th>                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$projeto->id}}" class="edit_projeto fas fa-edit" style="background: transparent;border: none;"></button>
-                                <button type="button" data-id="{{$projeto->id}}" data-nomeprojeto="{{$projeto->nome_projeto}}" class="delete_projeto_btn fas fa-trash" style="background: transparent;border: none;"></button>
+                                <button type="button" data-id="{{$projeto->id}}" class="edit_projeto fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button type="button" data-id="{{$projeto->id}}" data-nomeprojeto="{{$projeto->nome_projeto}}" class="delete_projeto_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -337,6 +343,15 @@
                     }
                 });
         });//fim da adição de projeto
+    
+    ///tooltip
+    $(function(){             
+        $('.AddProjetoModal_btn').tooltip();
+        $('.pesquisa_btn').tooltip();        
+        $('.delete_projeto_btn').tooltip();
+        $('.edit_projeto').tooltip();    
+    });
+    ///fim tooltip
     
     });//fim do escopo geral
     

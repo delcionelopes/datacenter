@@ -3,8 +3,14 @@
 @section('title', 'Datacenter')
 
 @section('content')
-    <!---AddOrgaoModal-->
 
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+
+<!---AddOrgaoModal-->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddOrgaoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -88,10 +94,12 @@
                         <div class="input-group rounded">
                             <input type="text" name="pesquisanome" class="form-control rounded float-left" placeholder="Nome do órgão" aria-label="Search"
                             aria-describedby="search-addon">
-                            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
+                            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                 <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" class="AddOrgaoModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="AddOrgaoModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                                <i class="fas fa-plus"></i>
+                            </button>
                         </div>
                     </div>
                 </form>                
@@ -112,8 +120,8 @@
                         <td>{{$orgao->telefone}}</td>                        
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$orgao->id}}" class="edit_orgao fas fa-edit" style="background:transparent;border:none;"></button>
-                                <button type="button" data-id="{{$orgao->id}}" data-nomeorgao="{{$orgao->nome}}" class="delete_orgao_btn fas fa-trash" style="background: transparent;border: none;"></button>
+                                <button type="button" data-id="{{$orgao->id}}" class="edit_orgao fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button type="button" data-id="{{$orgao->id}}" data-nomeorgao="{{$orgao->nome}}" class="delete_orgao_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -374,6 +382,14 @@
                 });
     });//fim da adição de orgão
     
+///tooltip
+    $(function(){             
+        $('.AddOrgaoModal_btn').tooltip();
+        $('.pesquisa_btn').tooltip();        
+        $('.delete_orgao_btn').tooltip();
+        $('.edit_orgao').tooltip();    
+    });
+    ///fim tooltip
     
     });
     

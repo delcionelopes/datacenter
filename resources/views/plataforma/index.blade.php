@@ -3,8 +3,14 @@
 @section('title', 'Datacenter')
 
 @section('content')
-    <!--AddPlataformaModal-->
 
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+
+<!--AddPlataformaModal-->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddPlataformaModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -73,8 +79,8 @@
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisanome" class="form-control rounded float-left" placeholder="Nome da plataforma" aria-label="Search" aria-describedby="search-addon">
-                            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;"><i class="fas fa-search"></i></button>
-                            <button type="button" class="AddPlataformaModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-plus"></i></button>
+                            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER"><i class="fas fa-search"></i></button>
+                            <button type="button" class="AddPlataformaModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></button>
                         </div>
                     </div>
                 </form>                
@@ -93,8 +99,8 @@
                         <th scope="row">{{$plataforma->nome_plataforma}}</th>                        
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$plataforma->id}}" class="edit_plataforma fas fa-edit" style="background: transparent; border: none;"></button>
-                                <button type="button" data-id="{{$plataforma->id}}" data-nomeplataforma="{{$plataforma->nome_plataforma}}" class="delete_plataforma_btn fas fa-trash" style="background: transparent;border: none;"></button>
+                                <button type="button" data-id="{{$plataforma->id}}" class="edit_plataforma fas fa-edit" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button type="button" data-id="{{$plataforma->id}}" data-nomeplataforma="{{$plataforma->nome_plataforma}}" class="delete_plataforma_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>  
@@ -339,6 +345,14 @@
                 });
     
         });//fim da adição de plataforma
+    ///tooltip
+    $(function(){             
+        $('.AddPlataformaModal_btn').tooltip();
+        $('.pesquisa_btn').tooltip();        
+        $('.delete_plataforma_btn').tooltip();
+        $('.edit_plataforma').tooltip();    
+    });
+    ///fim tooltip
     
     
     }); //fim do escopo geral

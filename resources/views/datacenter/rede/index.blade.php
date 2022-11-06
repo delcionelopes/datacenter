@@ -3,7 +3,15 @@
 @section('title', 'Datacenter')
 
 @section('content')
-    <!--inicio AddRedeModal -->
+
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+
+
+<!--inicio AddRedeModal -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddRedeModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -118,10 +126,10 @@
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome da rede" aria-label="Search" aria-describedby="search-addon">
-                            <button type="submit" class="input-group-text border-0" id="search-addon" style="background:transparent;border: none;">
+                            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" class="AddRedeModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;">
+                            <button type="button" data-id="{{$id}}" class="AddRedeModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -147,17 +155,17 @@
                             <div class="btn-group">
                                 @if($rede->cadastro_ips->count())
                                 <form action="{{route('datacenter.ip.index',['id' => $rede->id])}}" method="get">
-                                    <button type="submit" data-id="{{$rede->id}}" class="list_ip_btn fas fa-network-wired" style="background: transparent;border: none;color:green;"> {{$rede->cadastro_ips->count()}}</button>
+                                    <button type="submit" data-id="{{$rede->id}}" class="list_ip_btn fas fa-network-wired" style="background: transparent;border: none;color:green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista IPs"> {{$rede->cadastro_ips->count()}}</button>
                                 </form>
                                 @else
-                                <button type="button" data-id="{{$rede->id}}" data-nomerede="{{$rede->nome_rede}}" class="novo_ip_btn fas fa-folder" style="background: transparent;border: none;color: orange;"></button>
+                                <button type="button" data-id="{{$rede->id}}" data-nomerede="{{$rede->nome_rede}}" class="novo_ip_btn fas fa-folder" style="background: transparent;border: none;color: orange; nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Novo IP"></button>
                                 @endif
                             </div>
                         </td>                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$rede->id}}" class="edit_rede fas fa-edit" style="background: transparent;border: none;"></button>
-                                <button type="button" data-id="{{$rede->id}}" data-nomerede="{{$rede->nome_rede}}" class="delete_rede_btn fas fa-trash" style="background: transparent;border: none;"></button>
+                                <button type="button" data-id="{{$rede->id}}" class="edit_rede fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar REDE"></button>
+                                <button type="button" data-id="{{$rede->id}}" data-nomerede="{{$rede->nome_rede}}" class="delete_rede_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir REDE"></button>
                             </div>
                         </td>
                     </tr>
@@ -467,6 +475,18 @@ $(document).ready(function(){
             });
         });
         //Fim adição de ip
+
+        ///tooltip
+    $(function(){              
+        $('.list_ip_btn').tooltip();        
+        $('.novo_ip_btn').tooltip();
+        $('.AddRedeModal_btn').tooltip();
+        $('.pesquisa_btn').tooltip();        
+        $('.delete_rede_btn').tooltip();
+        $('.edit_rede').tooltip();  
+    });
+    ///fim tooltip
+
     
     });
     

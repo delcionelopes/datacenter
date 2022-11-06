@@ -3,6 +3,13 @@
 @section('title', 'Usuários')
 
 @section('content')
+
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+
 <!--AddUserModal-->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddUserModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -176,10 +183,10 @@
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do usuário" aria-label="Search" aria-describedby="search-addon">
-                            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
+                            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                 <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" class="AddUserModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;">
+                            <button type="button" class="AddUserModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                  <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -203,19 +210,19 @@
                         <td>{{$user->id}}</td>
                         <td>{{$user->name}}</td>
                         @if($user->moderador)
-                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="false" class="moderador_user fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>
+                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="false" class="moderador_user fas fa-lock" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="moderador/admin"></button></td>
                         @else
-                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="true" class="moderador_user fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>
+                        <td id="moderador{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-moderador="true" class="moderador_user fas fa-lock-open" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="externo"></button></td>
                         @endif
                         @if($user->inativo)
-                        <td id="inativo{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-inativo="false" class="inativo_user fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>
+                        <td id="inativo{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-inativo="false" class="inativo_user fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="INATIVO"></button></td>
                         @else
-                        <td id="inativo{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-inativo="true" class="inativo_user fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>
+                        <td id="inativo{{$user->id}}"><button type="button" data-id="{{$user->id}}" data-inativo="true" class="inativo_user fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="ATIVO"></button></td>
                         @endif                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$user->id}}" class="edit_user_btn fas fa-edit" style="background: transparent;border: none;"></button>
-                                <button type="button" data-id="{{$user->id}}" data-nomeusuario="{{$user->name}}" class="delete_user_btn fas fa-trash" style="background: transparent;border: none;"></button>
+                                <button type="button" data-id="{{$user->id}}" class="edit_user_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button type="button" data-id="{{$user->id}}" data-nomeusuario="{{$user->name}}" class="delete_user_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -689,6 +696,19 @@ $(document).on('click','.moderador_user',function(e){
             });
     });
     //fim inativa usuario
+
+///tooltip
+    $(function(){             
+        $('.AddUserModal_btn').tooltip();
+        $('.moderador_user').tooltip();
+        $('.inativo_user').tooltip();        
+        $('.pesquisa_btn').tooltip();        
+        $('.delete_user_btn').tooltip();
+        $('.edit_user_btn').tooltip();    
+    });
+    ///fim tooltip
+
+
 });
 //Fim escopo geral
 </script>

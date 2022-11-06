@@ -3,7 +3,14 @@
 @section('title', 'Datacenter')
 
 @section('content')
-    <!--AddSub_Area_Conhecimento-->
+
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+
+<!--AddSub_Area_Conhecimento-->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSub_Area_Conhecimento" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -86,10 +93,10 @@
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="nomepesquisa" class="form-control rounded float-left" placeholder="Descrição da sub-área" aria-label="Search" aria-describedby="search-addon">
-                            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
+                            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                             <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" class="Add_Sub_Area_Conhecimento_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;">
+                            <button type="button" class="Add_Sub_Area_Conhecimento_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                             <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -112,8 +119,8 @@
                         <td>{{$sub->area_conhecimento->descricao}}</td>                       
                         <td>
                             <div class="btn-group">
-                                <button data-id="{{$sub->id}}" class="edit_sub_area_conhecimento fas fa-edit" style="background: transparent;border: none;"></button>
-                                <button data-id="{{$sub->id}}" data-descricao="{{$sub->descricao}}" class="delete_area_conhecimento_btn fas fa-trash" style="background: transparent;border: none;"></button>
+                                <button data-id="{{$sub->id}}" class="edit_sub_area_conhecimento fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button data-id="{{$sub->id}}" data-descricao="{{$sub->descricao}}" class="delete_area_conhecimento_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -386,6 +393,15 @@
                 });
         });
         //fim do envio do novo registro para o Sub_Area_ConhecimentoController    
+    
+    ///tooltip
+    $(function(){             
+        $('.Add_Sub_Area_Conhecimento_btn').tooltip();
+        $('.pesquisa_btn').tooltip();        
+        $('.delete_area_conhecimento_btn').tooltip();
+        $('.edit_sub_area_conhecimento').tooltip();    
+    });
+    ///fim tooltip
       
     });
     //fim do escopo geral

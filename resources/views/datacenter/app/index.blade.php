@@ -372,7 +372,7 @@
                 {{$apps->links()}}                
             </div>
             <div>
-                <button type="button" class="voltar_btn fas fa-arrow-left" style="background: transparent; border: none;" onclick="history.back()" style="white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Voltar para BASE(s)"></button>
+                <button type="button" class="voltar_btn fas fa-arrow-left" style="background: transparent; border: none; white-space: nowrap;" onclick="history.back()" data-html="true" data-placement="right" data-toggle="popover" title="Voltar para BASE(s)"></button>
             </div>    
 </div>
 @else 

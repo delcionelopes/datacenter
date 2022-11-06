@@ -3,7 +3,14 @@
 @section('title', 'Datacenter')
 
 @section('content')
-    <!--AddClusterModal-->
+
+<style>
+    .tooltip-inner {
+    text-align: left;
+}
+</style>
+
+<!--AddClusterModal-->
 
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddClusterModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -220,19 +227,17 @@
 @auth
 @if(!(auth()->user()->inativo))
 <div class="container py-5"> 
-    <div id="success_message"></div>   
-  
-    <section class="border p-4 mb-4 d-flex align-items-left">
-    
+    <div id="success_message"></div>  
+    <section class="border p-4 mb-4 d-flex align-items-left">    
     <form action="{{route('datacenter.cluster.index')}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do cluster" aria-label="Search"
             aria-describedby="search-addon">
-            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
+            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                 <i class="fas fa-search"></i>
             </button>        
-            <button type="button" class="AddClusterModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;">
+            <button type="button" class="AddClusterModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                 <i class="fas fa-plus"></i>
             </button>                
             </div>            
@@ -259,10 +264,10 @@
                                     <div class="btn-group">                                        
                                         @if($cluster->hosts->count())
                                         <form action="{{route('datacenter.host.index',['id' => $cluster->id])}}" method="get">
-                                        <button type="submit" data-id="{{$cluster->id}}" class="list_host_btn fas fa-server" style="background: transparent;border:none;color: green;"> {{$cluster->hosts->count()}}</button>
+                                        <button type="submit" data-id="{{$cluster->id}}" class="list_host_btn fas fa-server" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista HOSTS"> {{$cluster->hosts->count()}}</button>
                                         </form>
                                         @else
-                                        <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>
+                                        <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Novo HOST"></button>
                                         @endif
                                     </div>
                                 </td>
@@ -270,17 +275,17 @@
                                     <div class="btn-group">                                        
                                         @if($cluster->virtual_machines->count())
                                         <form action="{{route('datacenter.vm.index',['id' => $cluster->id])}}" method="get">
-                                        <button type="submit" data-id="{{$cluster->id}}" class="list_vm_btn fas fa-network-wired" style="background: transparent;border:none;color: green;"> {{$cluster->virtual_machines->count()}}</button>
+                                        <button type="submit" data-id="{{$cluster->id}}" class="list_vm_btn fas fa-network-wired" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista VMs"> {{$cluster->virtual_machines->count()}}</button>
                                         </form>
                                         @else
-                                        <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>
+                                        <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Nova VM"></button>
                                         @endif
                                     </div>
                                 </td>                                                            
                                 <td>                                    
                                         <div class="btn-group">                                           
-                                            <button type="button" data-id="{{$cluster->id}}" class="edit_cluster fas fa-edit" style="background:transparent;border:none;"></button>
-                                            <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="delete_cluster_btn fas fa-trash" style="background:transparent;border:none;"></button>
+                                            <button type="button" data-id="{{$cluster->id}}" class="edit_cluster fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar CLUSTER"></button>
+                                            <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="delete_cluster_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir CLUSTER"></button>
                                         </div>                                    
                                 </td>
                             </tr>                              
@@ -705,6 +710,20 @@ $(document).on('click','.add_virtualmachine',function(e){
             });
         });
         //Fim da adição da VirtualMachine 
+
+            ///tooltip
+    $(function(){      
+        $('.list_host_btn').tooltip();       
+        $('.novo_host_btn').tooltip();        
+        $('.list_vm_btn').tooltip();
+        $('.novo_vm_btn').tooltip();
+        $('.AddClusterModal_btn').tooltip();
+        $('.pesquisa_btn').tooltip();        
+        $('.delete_cluster_btn').tooltip();
+        $('.edit_cluster').tooltip();        
+    });
+    ///fim tooltip
+
         
     }); ///Fim do escopo do script
     
