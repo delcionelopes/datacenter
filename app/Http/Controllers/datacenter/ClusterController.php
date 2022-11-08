@@ -9,7 +9,7 @@ use App\Models\App;
 use App\Models\Base;
 use App\Models\Cluster;
 use Illuminate\Support\Facades\Validator;
-use App\models\Host;
+use App\Models\Host;
 use App\Models\Orgao;
 use App\Models\Projeto;
 use App\Models\VirtualMachine;
@@ -140,7 +140,7 @@ class ClusterController extends Controller
                             'total_memoria'     => $request->input('total_memoria'),
                             'total_processador' => $request->input('total_processador'),                         
                         ];
-            $cluster = $this->cluster->update($data);           
+            $cluster->update($data);           
             $c = Cluster::find($id);
             return response()->json([
                 'cluster' => $c,
