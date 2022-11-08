@@ -321,6 +321,7 @@ class VirtualMachineController extends Controller
                 $ambientes = Ambiente::all(); //todos os ambientes
                 $vlans = Vlan::all();  //todas as vlans
                 $cluster = Cluster::find($id);                
+                $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
                 return view('datacenter.virtual_machine.index_vlanXvm',[
                     'cluster'         => $cluster,
                     'id'              => $id,
@@ -329,6 +330,7 @@ class VirtualMachineController extends Controller
                     'projetos'        => $projetos,            
                     'orgaos'          => $orgaos,
                     'ambientes'       => $ambientes,                    
+                    'users'           => $users,
                 ]);        
     }
 
