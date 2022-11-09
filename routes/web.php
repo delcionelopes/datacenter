@@ -14,6 +14,7 @@ use App\Http\Controllers\datacenter\CadastroIpController;
 use App\Http\Controllers\datacenter\ClusterController;
 use App\Http\Controllers\datacenter\HostController;
 use App\Http\Controllers\datacenter\RedeController;
+use App\Http\Controllers\datacenter\SenhaController;
 use App\Http\Controllers\datacenter\VirtualMachineController;
 use App\Http\Controllers\datacenter\vlanController;
 use App\Http\Controllers\HomeController;
@@ -130,12 +131,6 @@ Route::group(['middleware'=> ['auth']],function(){
 
         });                      
 
-<<<<<<< HEAD
-        ///DATACENTER   
-        Route::prefix('datacenter')->namespace('App\Http\Controllers\datacenter')->name('datacenter.')->group(function(){          
-        
-       //Rotas para a view index de hosts
-=======
         ///DATACENTER
         
         Route::prefix('datacenter')->name('datacenter.')->group(function(){
@@ -150,7 +145,6 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::put('cluster-adiciona-vm',[ClusterController::class,'storeVM']);
 
         //Rotas para a view index de hosts
->>>>>>> a045e5bf4111ea3c6905d623ed29753434f145a7
         Route::get('index-host/{id}',[HostController::class,'index'])->name('host.index');
         Route::delete('delete-host/{id}',[HostController::class,'destroy']);
         Route::get('edit-host/{id}',[HostController::class,'edit']);
@@ -229,6 +223,10 @@ Route::group(['middleware'=> ['auth']],function(){
          Route::patch('storesenhaapp/{id}',[AppController::class,'storesenhaapp']);
          Route::get('editsenhaapp/{id}',[AppController::class,'editsenhaapp']);
          Route::patch('updatesenhaapp/{id}',[AppController::class,'updatesenhaapp']);
+
+         //Rotas para painel de senhas no menu principal
+         Route::get('index-senhas',[SenhaController::class,'index'])->name('senha.index');
+         
         });           
 
     }); //fim do escopo do middleware auth

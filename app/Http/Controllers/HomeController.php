@@ -9,7 +9,7 @@ use Illuminate\Http\Request;
 class HomeController extends Controller
 {
     private $artigo;
-
+   
     /**
      * Create a new controller instance.
      *
@@ -19,7 +19,7 @@ class HomeController extends Controller
     public function __construct(Artigo $artigo)
     {
         $this->middleware('auth');
-        $this->artigo = $artigo;
+        $this->artigo = $artigo;      
     }       
     
     public function master(Request $request){
@@ -48,7 +48,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->moderador){
+        if(auth()->user()->moderador){       
         return view('home');
         }else{
             return $this->master;

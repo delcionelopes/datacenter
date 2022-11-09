@@ -298,12 +298,12 @@ return [
 
         // Sidebar items:        
         [
-            'text'        => 'Segurança',
+            'text'        => 'Segurança',            
             'route'         => 'admin.user.index',
             'icon'        => 'far fa-fw fa-user',
             'icon_color' => 'orange',            
         ],
-        ['header' => 'Painel principal'],        
+        ['header' => 'Painel principal', 'classes'=>'text-bold'],        
         [
             'text'    => 'Cadastros básicos',
             'icon'    => 'fas fa-fw fa-folder',
@@ -353,10 +353,8 @@ return [
                 ],                
             ],
         ],
-<<<<<<< HEAD
-        ['header' => 'Datacenter'],    
-        [
-            'text'    => 'Gestão',
+        ['header' => 'Datacenter', 'classes'=>'text-bold'],    
+        [   'text'    => 'Gestão',
             'icon'    => 'fas fa-fw fa-desktop',
             'icon_color' => 'orange',
             'submenu' => [
@@ -372,29 +370,16 @@ return [
                     'icon'    => 'fas fa-fw fa-network-wired',
                     'icon_color' => 'yellow',
                 ],    
+                [
+                    'text' => 'Senhas',                    
+                    'route'  => 'datacenter.senha.index',
+                    'icon'    => 'fas fa-fw fa-key',
+                    'icon_color' => 'green',
+                    'label' => 'vencidas',
+                    'label_color' => 'danger',
+                ],    
             ],
-        ],            
-=======
-        ['header' => 'Datacenter'],
-        ['text'    => 'Gestão',
-        'icon'    => 'fas fa-fw fa-desktop',
-        'icon_color' => 'orange',
-        'submenu' => [
-            [
-                'text' => 'Cluster/Host/VM/BD/APP',
-                'route'  => 'datacenter.cluster.index',
-                'icon'    => 'fas fa-fw fa-server',
-                'icon_color' => 'red',
-            ],
-            [
-                'text' => 'VLAN/Rede/IP',
-                'route'  => 'datacenter.vlan.index',
-                'icon'    => 'fas fa-fw fa-network-wired',
-                'icon_color' => 'yellow',
-            ],
-        ],    
-        ],    
->>>>>>> a045e5bf4111ea3c6905d623ed29753434f145a7
+        ],        
     ],
 
     /*

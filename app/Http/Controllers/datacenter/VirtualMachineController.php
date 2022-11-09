@@ -320,13 +320,8 @@ class VirtualMachineController extends Controller
                 $orgaos = Orgao::all(); //todos os orgãos
                 $ambientes = Ambiente::all(); //todos os ambientes
                 $vlans = Vlan::all();  //todas as vlans
-<<<<<<< HEAD
-                $cluster = Cluster::find($id);     
-                $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();           
-=======
                 $cluster = Cluster::find($id);                
                 $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
->>>>>>> a045e5bf4111ea3c6905d623ed29753434f145a7
                 return view('datacenter.virtual_machine.index_vlanXvm',[
                     'cluster'         => $cluster,
                     'id'              => $id,
@@ -334,11 +329,7 @@ class VirtualMachineController extends Controller
                     'vlans'           => $vlans,
                     'projetos'        => $projetos,            
                     'orgaos'          => $orgaos,
-<<<<<<< HEAD
-                    'ambientes'       => $ambientes,   
-=======
                     'ambientes'       => $ambientes,                    
->>>>>>> a045e5bf4111ea3c6905d623ed29753434f145a7
                     'users'           => $users,
                 ]);        
     }
