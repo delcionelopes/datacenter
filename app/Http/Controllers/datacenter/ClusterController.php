@@ -140,7 +140,7 @@ class ClusterController extends Controller
                             'total_memoria'     => $request->input('total_memoria'),
                             'total_processador' => $request->input('total_processador'),                         
                         ];
-            $cluster = $this->cluster->update($data);           
+            $cluster->update($data);           
             $c = Cluster::find($id);
             return response()->json([
                 'cluster' => $c,

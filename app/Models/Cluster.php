@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cluster extends Model
 {    
@@ -13,10 +14,10 @@ class Cluster extends Model
         'total_processador',      
     ];
 
-    public function hosts(){
+    public function hosts():HasMany{
         return $this->hasMany(Host::class);
     }
-    public function virtual_machines(){
+    public function virtual_machines():HasMany{
         return $this->hasMany(VirtualMachine::class);
     }
 }

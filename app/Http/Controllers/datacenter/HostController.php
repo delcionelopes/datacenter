@@ -4,7 +4,7 @@ namespace App\Http\Controllers\datacenter;
 
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
-use App\models\Host;
+use App\Models\Host;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Cluster;
 use App\Models\User;

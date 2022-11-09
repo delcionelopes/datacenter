@@ -130,10 +130,27 @@ Route::group(['middleware'=> ['auth']],function(){
 
         });                      
 
+<<<<<<< HEAD
         ///DATACENTER   
         Route::prefix('datacenter')->namespace('App\Http\Controllers\datacenter')->name('datacenter.')->group(function(){          
         
        //Rotas para a view index de hosts
+=======
+        ///DATACENTER
+        
+        Route::prefix('datacenter')->name('datacenter.')->group(function(){
+
+          //Rotas para a view index de clusters
+        Route::get('index-cluster',[ClusterController::class,'index'])->name('cluster.index');
+        Route::delete('delete-cluster/{id}',[ClusterController::class,'destroy']);
+        Route::get('edit-cluster/{id}',[ClusterController::class,'edit']);
+        Route::put('update-cluster/{id}',[ClusterController::class,'update']);
+        Route::put('adiciona-cluster',[ClusterController::class,'store']);    
+        Route::put('adiciona-hostcluster',[ClusterController::class,'storehost']);
+        Route::put('cluster-adiciona-vm',[ClusterController::class,'storeVM']);
+
+        //Rotas para a view index de hosts
+>>>>>>> a045e5bf4111ea3c6905d623ed29753434f145a7
         Route::get('index-host/{id}',[HostController::class,'index'])->name('host.index');
         Route::delete('delete-host/{id}',[HostController::class,'destroy']);
         Route::get('edit-host/{id}',[HostController::class,'edit']);
