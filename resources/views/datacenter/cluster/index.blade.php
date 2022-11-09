@@ -22,7 +22,7 @@
                 </button>                
             </div>
             <div class="modal-body form-horizontal">
-            <form id="myform" name="myform" class="form-horizontal" role="form"> 
+            <form id="addmyform" name="addmyform" class="form-horizontal" role="form"> 
                 <ul id="saveform_errList"></ul>                
                 <div class="form-group mb-3">
                     <label for="">Nome do Cluster</label>
@@ -45,7 +45,7 @@
         </div>
     </div>
 
-</div>
+</div> 
 <!--End AddClusterModal-->
 
 <!--inicio AddHostModal -->
@@ -182,11 +182,10 @@
             </div>
         </div>
     </div>
-</div>
+</div> 
 <!--Fim AddVirtualMachineModal-->
 
 <!--EditClusterModal-->
-
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditClusterModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -197,7 +196,7 @@
                 </button>                
             </div>
             <div class="modal-body form-horizontal">
-            <form id="myform" name="myform" class="form-horizontal" role="form">
+            <form id="editmyform" name="editmyform" class="form-horizontal" role="form">
                 <ul id="updateform_errList"></ul>
 
                 <input type="hidden" id="edit_cluster_id">
@@ -261,8 +260,8 @@
                             <tr id="cluster{{$cluster->id}}">                                
                                 <th scope="row">{{$cluster->nome_cluster}}</th>
                                 <td>
-                                    <div class="btn-group">                                        
-                                        @if($cluster->hosts->count())
+                                   <div class="btn-group">                                        
+                                        @if($cluster->hosts()->count())
                                         <form action="{{route('datacenter.host.index',['id' => $cluster->id])}}" method="get">
                                         <button type="submit" data-id="{{$cluster->id}}" class="list_host_btn fas fa-server" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista HOSTS"> {{$cluster->hosts->count()}}</button>
                                         </form>
@@ -272,15 +271,15 @@
                                     </div>
                                 </td>
                                 <td>
-                                    <div class="btn-group">                                        
-                                        @if($cluster->virtual_machines->count())
+                                     <div class="btn-group">                                        
+                                        @if($cluster->virtual_machines()->count())
                                         <form action="{{route('datacenter.vm.index',['id' => $cluster->id])}}" method="get">
                                         <button type="submit" data-id="{{$cluster->id}}" class="list_vm_btn fas fa-network-wired" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista VMs"> {{$cluster->virtual_machines->count()}}</button>
                                         </form>
                                         @else
                                         <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Nova VM"></button>
                                         @endif
-                                    </div>
+                                    </div> 
                                 </td>                                                            
                                 <td>                                    
                                         <div class="btn-group">                                           
@@ -378,7 +377,7 @@ $(document).ready(function(){
             e.preventDefault();
             
             var id = $(this).data("id");                                   
-            $('#myform').trigger('reset');
+            $('#editmyform').trigger('reset');
             $('#EditClusterModal').modal('show');    
             $('#updateform_errList').html('<ul id="updateform_errList"></ul>');             
     
@@ -453,7 +452,7 @@ $(document).ready(function(){
                         $('#success_message').text(response.message);
                         $('.update_cluster').text("Atualizado");                    
     
-                        $('#myform').trigger('reset');
+                        $('#editmyform').trigger('reset');
                         $('#EditClusterModal').modal('hide');                  
                         
                         location.reload();
@@ -473,7 +472,7 @@ $(document).ready(function(){
         });
         $(document).on('click','.AddClusterModal_btn',function(e){  //início da exibição do form AddClusterModal
             e.preventDefault();             
-            $('#myform').trigger('reset');        
+            $('#addmyform').trigger('reset');        
             $('#AddClusterModal').modal('show');           
             $('#saveform_errList').html('<ul id="saveform_errList"></ul>');   
         });   
@@ -508,7 +507,7 @@ $(document).ready(function(){
                         $('#success_message').addClass('alert alert-success');
                         $('#success_message').text(response.message);                                        
     
-                        $('#myform').trigger('reset');                    
+                        $('#addmyform').trigger('reset');                    
                         $('#AddClusterModal').modal('hide');                   
                         
                                          
@@ -728,5 +727,6 @@ $(document).on('click','.add_virtualmachine',function(e){
     }); ///Fim do escopo do script
     
     </script>
+
 @stop
 

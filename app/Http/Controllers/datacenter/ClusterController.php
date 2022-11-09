@@ -9,7 +9,7 @@ use App\Models\App;
 use App\Models\Base;
 use App\Models\Cluster;
 use Illuminate\Support\Facades\Validator;
-use App\models\Host;
+use App\Models\Host;
 use App\Models\Orgao;
 use App\Models\Projeto;
 use App\Models\VirtualMachine;
@@ -43,10 +43,10 @@ class ClusterController extends Controller
         $projetos = Projeto::all(); //todos os projetos        
         $orgaos = Orgao::all(); //todos os orgãos
         $ambientes = Ambiente::all(); //todos os ambientes
-        $vlans = Vlan::all();  //todas as vlans    
+        $vlans = Vlan::all();  //todas as vlans   
         return view('datacenter.cluster.index',[
-            'clusters' => $clusters,
-            'vlans'           => $vlans,
+           'clusters' => $clusters,
+             'vlans'           => $vlans,
             'projetos'        => $projetos,            
             'orgaos'          => $orgaos,
             'ambientes'       => $ambientes,

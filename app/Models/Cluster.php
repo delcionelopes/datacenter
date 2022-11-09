@@ -2,7 +2,6 @@
 
 namespace App\Models;
 
-use App\models\Host;
 use Illuminate\Database\Eloquent\Model;
 
 class Cluster extends Model

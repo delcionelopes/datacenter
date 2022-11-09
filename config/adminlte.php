@@ -353,19 +353,26 @@ return [
                 ],                
             ],
         ],
-        ['header' => 'Datacenter'],
+        ['header' => 'Datacenter'],    
         [
-            'text'       => 'Cluster/Host/VM/BD/APP',
-            'icon'    => 'fas fa-fw fa-server',
-            'icon_color' => 'red',
-            'route'        => 'datacenter.cluster.index',
-        ],
-        [
-            'text'       => 'VLAN/Rede/IP',
-            'icon'    => 'fas fa-fw fa-network-wired',
-            'icon_color' => 'yellow',
-            'route'        => 'datacenter.vlan.index',
-        ],       
+            'text'    => 'Gestão',
+            'icon'    => 'fas fa-fw fa-desktop',
+            'icon_color' => 'orange',
+            'submenu' => [
+                [
+                    'text' => 'Cluster/Host/VM/BD/APP',
+                    'route'  => 'datacenter.cluster.index',
+                    'icon'    => 'fas fa-fw fa-server',
+                    'icon_color' => 'red',
+                ],
+                [
+                    'text' => 'VLAN/Rede/IP',
+                    'route'  => 'datacenter.vlan.index',
+                    'icon'    => 'fas fa-fw fa-network-wired',
+                    'icon_color' => 'yellow',
+                ],    
+            ],
+        ],            
     ],
 
     /*
