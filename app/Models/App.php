@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class App extends Model
 {
-    protected $table = 'app';     
+    protected $table = 'app';         
     protected $fillable = [        
         'base_id',
         'projeto_id',

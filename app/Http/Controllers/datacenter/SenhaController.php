@@ -8,6 +8,8 @@ use App\Models\Base;
 use App\Models\Host;
 use App\Models\VirtualMachine;
 use App\Models\Vlan;
+use Carbon\Carbon;
+use DateTimeZone;
 use Illuminate\Http\Request;
 
 class SenhaController extends Controller
@@ -27,16 +29,18 @@ class SenhaController extends Controller
         $this->vlan = $vlan;
     }
 
-    public function index(){
-        $apps = $this->app->where('senha','<>',null)->where('validade','<',now())->where('val_indefinida','=',0)->get();
+    public function index(){        
+        $date = date("Y-m-d");//Carbon::now(new DateTimeZone('America/Sao_Paulo'))->toDateTimeString();                
+        $user = auth()->user();
+        $apps = $this->app->where('senha','<>',null)->where('validade','<=',$date)->where('val_indefinida','=',0)->get();
         $totalapps = $apps->count();
-        $hosts = $this->host->where('senha','<>',null)->where('validade','<',now())->where('val_indefinida','=',0)->get();
+        $hosts = $this->host->where('senha','<>',null)->where('validade','<=',$date)->where('val_indefinida','=',0)->get();
         $totalhosts = $hosts->count();
-        $virtualmachines = $this->virtualmachine->where('senha','<>',null)->where('validade','<',now())->where('val_indefinida','=',0)->get();
+        $virtualmachines = $this->virtualmachine->where('senha','<>',null)->where('validade','<=',$date)->where('val_indefinida','=',0)->get();
         $totalvirtualmachines = $virtualmachines->count();
-        $bases = $this->base->where('senha','<>',null)->where('validade','<',now())->where('val_indefinida','=',0)->get();
+        $bases = $this->base->where('senha','<>',null)->where('validade','<=',$date)->where('val_indefinida','=',0)->get();
         $totalbases = $bases->count();
-        $vlans = $this->vlan->where('senha','<>',null)->where('validade','<',now())->where('val_indefinida','=',0)->get();        
+        $vlans = $this->vlan->where('senha','<>',null)->where('validade','<=',$date)->where('val_indefinida','=',0)->get();        
         $totalvlans = $vlans->count();
         $totalgeral = $totalapps+$totalhosts+$totalvirtualmachines+$totalbases+$totalvlans;
         return view('datacenter.senha.index',[
@@ -51,6 +55,7 @@ class SenhaController extends Controller
             'totalbases' => $totalbases,
             'totalvlans' => $totalvlans,
             'totalgeral' => $totalgeral,
+            'user' => $user,
         ]);
     }
 
