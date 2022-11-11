@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Datacenter')
+@section('title', 'PRODAP - Datacenter')
 
 @section('content')
 
@@ -254,9 +254,9 @@
         </div>
     </div>
 </div>
-<!-- fim AddSenhaApp -->
+<!-- fim AddSenhaBase -->
 
-<!-- início EditSenhaApp -->
+<!-- início EditSenhaBase -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaBase" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
@@ -297,6 +297,7 @@
                     <div class="form-group mb-3">
                         <label for="">Senha</label>
                         <input type="text" id="edit_senha" class="senha form-control">
+                        <label for=""><small id="senhavencida" style="color: red">Senha vencida!</small></label>
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Validade</label>
@@ -333,7 +334,7 @@
         </div>
     </div>
 </div>
-<!-- fim EditSenhaApp -->
+<!-- fim EditSenhaBase -->
 
 <!--index-->
 @auth
@@ -978,7 +979,12 @@ $(document).ready(function(){
                     var alterador = response.alterador;
                         if(!response.alterador){
                             alterador = "";
-                        }                   
+                        }          
+                    if(new Date(response.base.validade)<new Date()){
+                    $('#senhavencida').html('<small id="senhavencida" style="color: red">Senha vencida!</small>');
+                    }else{
+                    $('#senhavencida').html('<small id="senhavencida" style="color: green">Senha na validade. OK!</small>');  
+                    }          
                     $('#edit_validade').val(datavalidade);
                     $('#editdatacriacao').html('<label  id="editdatacriacao">'+datacriacao+'</label>');
                     $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');

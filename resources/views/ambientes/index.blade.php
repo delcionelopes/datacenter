@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Ambientes')
+@section('title', 'PRODAP - Datacenter')
 
 @section('content')
 

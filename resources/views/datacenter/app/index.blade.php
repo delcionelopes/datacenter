@@ -1,6 +1,6 @@
 @extends('adminlte::page')
 
-@section('title', 'Datacenter')
+@section('title', 'PRODAP - Datacenter')
 
 @section('content')
 
@@ -259,6 +259,8 @@
                     <div class="form-group mb-3">
                         <label for="">Senha</label>
                         <input type="text" id="edit_senha" class="senha form-control">
+                     
+                    <label for=""><small id="senhavencida" style="color: red">Senha vencida!</small></label>                    
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Validade</label>
@@ -945,7 +947,12 @@
                     var alterador = response.alterador;
                         if(!response.alterador){
                             alterador = "";
-                        }                   
+                        }                  
+                    if(new Date(response.app.validade)<new Date()){
+                    $('#senhavencida').html('<small id="senhavencida" style="color: red">Senha vencida!</small>');
+                    }else{
+                    $('#senhavencida').html('<small id="senhavencida" style="color: green">Senha na validade. OK!</small>');  
+                    } 
                     $('#edit_validade').val(datavalidade);
                     $('#editdatacriacao').html('<label  id="editdatacriacao">'+datacriacao+'</label>');
                     $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');

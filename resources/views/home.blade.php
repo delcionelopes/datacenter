@@ -1,13 +1,13 @@
 @extends('adminlte::page',['iFrameEnabled' => true])
 
-@section('title', 'Datacenter')
+@section('title', 'PRODAP - Datacenter')
 
 @section('content_header')
     <h1>OLÁ!</h1>
 @stop
 
 @section('content')
-    <p>Seja bem-vindo ao <b>Datacenter PRODAP</b>!</p>
+    <p>Seja bem-vindo ao <b>PRODAP - Datacenter</b>!</p>
 @stop
 
 @section('css')    

@@ -226,7 +226,16 @@ Route::group(['middleware'=> ['auth']],function(){
 
          //Rotas para painel de senhas no menu principal
          Route::get('index-senhas',[SenhaController::class,'index'])->name('senha.index');
-         
+         Route::get('editusersenhaapp/{id}',[SenhaController::class,'editsenhaapp']);
+         Route::patch('updateusersenhaapp/{id}',[SenhaController::class,'updatesenhaapp']);
+         Route::get('editusersenhahost/{id}',[SenhaController::class,'editsenhahost']);
+         Route::patch('updateusersenhahost/{id}',[SenhaController::class,'updatesenhahost']);
+         Route::get('editusersenhavm/{id}',[SenhaController::class,'editsenhavm']);
+         Route::patch('updateusersenhavm/{id}',[SenhaController::class,'updatesenhavm']);
+         Route::get('editusersenhabase/{id}',[SenhaController::class,'editsenhabase']);
+         Route::patch('updateusersenhabase/{id}',[SenhaController::class,'updatesenhabase']);
+         Route::get('editusersenhavlan/{id}',[SenhaController::class,'editsenhavlan']);
+         Route::patch('updateusersenhavlan/{id}',[SenhaController::class,'updatesenhavlan']);  
         });           
 
     }); //fim do escopo do middleware auth
