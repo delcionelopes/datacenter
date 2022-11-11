@@ -10,49 +10,76 @@
 }
 </style>
 
-<div class="container py-5">
+<div class="container py-5"> 
   
-        <div class="card mb-3 justify-content-center">
-          <div class="rounded-top text-white d-flex flex-row" style="background-image: url('/assets/img/home-bg.jpg')">
-            <div class="ms-4 mt-5 d-flex flex-column" style="width: 150px;">
-            @if(auth()->user()->avatar)
-              <img src="{{asset('storage/'.auth()->user()->avatar)}}"
-                alt="{{auth()->user()->name}}" class="img-fluid img-thumbnail mt-4 mb-2"
-                style="width: 150px; z-index: 1">
+
+            <div class="card p-3">
+
+                <div class="d-flex align-items-center">
+
+                <div class="image">
+                @if(auth()->user()->avatar)  
+                <img src="{{asset('storage/'.auth()->user()->avatar)}}" class="rounded" width="155" >
                 @else
-                <img src="{{asset('storage/user.png')}}"
-                alt="avatar genérico" class="img-fluid img-thumbnail mt-4 mb-2"
-                style="width: 150px; z-index: 1">
-              @endif              
-            </div>
-            <div class="ms-3" style="margin-top: 130px;">
-              <h5>{{auth()->user()->name}}</h5>
-              <p>{{auth()->user()->email}}</p>
-            </div>
-          </div>
-          <div class="p-4 text-black" style="background-color: #f8f9fa;">
-            <div class="d-flex justify-content-end text-center py-1">
-              <div class="px-3">
-                <p class="mb-1 h5">253</p>
-                <p class="small text-muted mb-0">APPs</p>
-              </div>
-              <div class="px-3">
-                <p class="mb-1 h5">1026</p>
-                <p class="small text-muted mb-0">BASEs</p>
-              </div>
-              <div class="px-3">
-                <p class="mb-1 h5">478</p>
-                <p class="small text-muted mb-0">VLANs</p>
-              </div>
-              <div class="px-3">
-                <p class="mb-1 h5">500</p>
-                <p class="small text-muted mb-0">VMs</p>
-              </div>
-            </div>
-          </div>            
-          </div>       
+                <img src="{{asset('storage/user.png')}}" class="rounded" width="155" >
+                @endif
+                </div>
+
+                <div class="ml-3 w-100">
+                    
+                   <h4 class="mb-0 mt-0">{{$user->name}}</h4>
+                   <span>Minhas senhas</span>
+
+                   <div class="p-2 mt-2 bg-primary d-flex justify-content-between rounded text-white stats">
+
+                    <div class="d-flex flex-column">
+
+                        <span class="articles">APPs</span>
+                        <span class="number1">38</span>
+                        
+                    </div>
+
+                    <div class="d-flex flex-column">
+
+                        <span class="followers">HOSTs</span>
+                        <span class="number2">980</span>
+                        
+                    </div>
 
 
+                    <div class="d-flex flex-column">
+
+                        <span class="rating">VMs</span>
+                        <span class="number3">8.9</span>
+                        
+                    </div>
+
+                    <div class="d-flex flex-column">
+
+                        <span class="rating">BASEs</span>
+                        <span class="number3">10</span>
+                        
+                    </div>
+
+                    <div class="d-flex flex-column">
+
+                        <span class="rating">VLANs</span>
+                        <span class="number3">12</span>
+                        
+                    </div>
+                       
+                   </div>
+
+
+                  </div>
+
+                    
+                </div>
+                
+            </div>
+             
+         
+  
  <div class="row">
   @if($totalgeral)
   @if($totalapps)
@@ -61,7 +88,7 @@
       <div class="card-body">
         <h5 class="card-title">APPs</h5>
         <p class="card-text">Senhas vencidas por applicação. Total: {{$totalapps}}</p>
-        <a href="#" class="btn btn-danger">Ver APPs</a>        
+        <a href="#" class="btn btn-primary">Ver APPs</a>        
       </div>
     </div>
   </div>

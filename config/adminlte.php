@@ -376,7 +376,7 @@ return [
                     'icon'    => 'fas fa-fw fa-key',
                     'icon_color' => 'green',
                     'label' => 'Novo',
-                    'label_color' => 'info',
+                    'label_color' => 'primary',
                 ],    
             ],
         ],        
