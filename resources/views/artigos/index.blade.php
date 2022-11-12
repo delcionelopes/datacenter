@@ -171,7 +171,7 @@
 
 <!--inicio index-->
 
-<div class="container py-5"> 
+<div class="container-fluid py-5"> 
     <div id="success_message"></div>        
     <section class="border p-4 mb-4 d-flex align-items-left">    
     <form action="{{route('admin.artigos.index')}}" class="form-search" method="GET">

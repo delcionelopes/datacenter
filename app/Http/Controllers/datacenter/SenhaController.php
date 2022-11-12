@@ -37,7 +37,7 @@ class SenhaController extends Controller
 
         $users = $this->user->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get(); //usuários com perfil
 
-        $apps = $this->app->where('senha','<>',null)->where('validade','<=',$date)->where('val_indefinida','=',0)->get();
+        $apps = $this->app->where('senha','<>',null)->where('validade','<=',$date)->where('val_indefinida','=',0)->paginate(6);
         $totalapps = $apps->count();
         $hosts = $this->host->where('senha','<>',null)->where('validade','<=',$date)->where('val_indefinida','=',0)->get();
         $totalhosts = $hosts->count();
