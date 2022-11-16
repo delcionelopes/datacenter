@@ -279,5 +279,25 @@ class ManualController extends Controller
         ]);
     }
 
+        /**
+     * método para baixar o arquivo
+     */
+    public function previewFile(int $id){        
+       
+        $uploadmanual = Upload::find($id);                
+        $previewPath = public_path('storage/'.$uploadmanual->path_arquivo);    
+        $headers = [
+            'HTTP/1.1 200 OK',
+            'Pragma' => 'public',
+            'Content-Type' => 'application/pdf'         
+        ];                             
+        return response()->json([
+            'previewPath' => $previewPath,
+            'status' => 200,
+            'headers' => $headers,
+        ]);
+           
+    }
+
 
 }
