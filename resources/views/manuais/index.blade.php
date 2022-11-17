@@ -8,6 +8,7 @@
     .tooltip-inner {
     text-align: left;
 }
+
 </style>
 
 <!--AddManualForm-->
@@ -173,7 +174,7 @@
                             <li id="up{{$upload->id}}">
                                 <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" class="download_file_btn fas fa-download"></i>
                                 <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" class="delete_file_btn fas fa-trash"></i>                                                           
-                                {{$upload->nome_arquivo}}</li>                                
+                                {{$upload->nome_arquivo}}</li>                                                                  
                                 <iframe id="viewer{{$upload->id}}" src="{{asset('storage/ViewerJS/#../'.$upload->path_arquivo)}}" width="400" height="300" allowfullscreen webkitallowfullscreen></iframe>
                             <br>
                             @endforeach
