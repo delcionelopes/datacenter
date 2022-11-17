@@ -130,28 +130,6 @@
 </div>  
 <!--fim upload multiplo de arquivos manuais-->
 
-<!--inicio preview arquivos manuais-->
-<div class="modal fade bd-example-modal-lg animate__animated animate__bounce animate__faster" id="PreviewPDFModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg" role="document">
-        <div class="modal-content">
-            <div class="modal-header navbar-dark bg-dark">
-                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Preview</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="close">
-                    <span aria-hidden="true" style="color: white;">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body form-horizontal">
-                <form id="previewmyform" name="previewmyform" class="form-horizontal" role="form">                                     
-                   <!--arquivo pdf-->                                      
-                   <iframe id="preview" src="" width="750" height="1024" allowfullscreen webkitallowfullscreen></iframe>
-                   <!--fim arquivo pdf-->                                                                        
-                </form>
-            </div>
-        </div>
-    </div>
-</div>  
-<!--fim preview de arquivos manuais-->
-
 <!--index-->
 @auth
 @if(!(auth()->user()->inativo))
@@ -194,9 +172,9 @@
                             @foreach($manual->uploads as $upload)                                                        
                             <li id="up{{$upload->id}}">
                                 <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" class="download_file_btn fas fa-download"></i>
-                                <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" class="delete_file_btn fas fa-trash"></i> 
-                                <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" class="preview_file_btn fas fa-eye"></i>                                 
-                                {{$upload->nome_arquivo}}</li>
+                                <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" class="delete_file_btn fas fa-trash"></i>                                                           
+                                {{$upload->nome_arquivo}}</li>                                
+                                <iframe id="viewer{{$upload->id}}" src="{{asset('storage/ViewerJS/#../'.$upload->path_arquivo)}}" width="400" height="300" allowfullscreen webkitallowfullscreen></iframe>
                             <br>
                             @endforeach
                         @endif    
@@ -554,7 +532,8 @@
                                 var labelhtml = '<label id="files'+response.manualid+'">Files: '+response.totalfiles+' </label>';
                                 $("#files"+response.manualid).replaceWith(labelhtml);                            
                                 //remove li correspondente na td da tabela html
-                                $('#up'+id).remove();                            
+                                $('#up'+id).remove();    
+                                $('#viewer'+id).remove();
                         }
                     } 
                 });
@@ -673,32 +652,7 @@
         });
        }
        
-    }); ///fim tratamento dos uploads e downloads
-
-   ////preview pdf       
-         $(document).on('click','.preview_file_btn',function(e){
-            e.preventDefault();
-            var id = $(this).data("id");
-            $('#previewmyform').trigger('reset');
-            $('#PreviewPDFModal').modal('show');  
-            $.ajaxSetup({
-                        headers:{
-                            'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-                        }
-                    });                
-            $.ajax({
-                url:'preview-file/'+id,
-                type:'get',
-                dataType:'json',            
-                success:function(response){    
-                    if(response.status==200){                        
-                        $('#preview').attr('src','/ViewerJS/#../'+response.previewPath);                    
-                    }
-                }            
-            });          
-        });
- 
-   ////fim preview pdf
+    }); ///fim tratamento dos uploads e downloads   
     
     ///tooltip
     $(function(){             
@@ -710,9 +664,8 @@
     });
     ///fim tooltip
 
-    });
-    
-    
+
+   });
     
     
     //fim do escopo geral

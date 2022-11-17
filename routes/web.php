@@ -118,8 +118,7 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::get('edit-uploadfile/{id}',[ManualController::class,'editFileUpload']);        
         Route::put('upload-file/{id}',[ManualController::class,'upload']);
         Route::delete('delete-file/{id}',[ManualController::class,'destroyFile']);
-        Route::get('download-file/{id}',[ManualController::class,'downloadFile'])->name('download.file');     
-        Route::get('preview-file/{id}',[ManualController::class,'previewFile']);
+        Route::get('download-file/{id}',[ManualController::class,'downloadFile'])->name('download.file');            
         
         ///Rotas para administração do usuário   
         Route::get('index-user', [UserController::class,'index'])->name('user.index');
