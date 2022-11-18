@@ -168,7 +168,7 @@
                         <td>{{$manual->area_conhecimento->descricao}}</td>
                         <td id="uploads{{$manual->id}}">
                         <label id="files{{$manual->id}}">Files: {{$manual->uploads->count()}} </label><button type="button" id="upload_files_btn" data-manualid="{{$manual->id}}" class="upload_files_btn fas fa-file-pdf" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Enviar ARQUIVOS"></button>    
-                        <ul id="listaarquivos{{$manual->id}}">
+                        <ul id="listaarquivos{{$manual->id}}" style="list-style: none;">
                         @if($manual->uploads->count())    
                             @foreach($manual->uploads as $upload)                                                        
                             <li id="up{{$upload->id}}">
