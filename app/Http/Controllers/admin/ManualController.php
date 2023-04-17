@@ -75,12 +75,14 @@ class ManualController extends Controller
                 'objetivo' => strtoupper($request->input('objetivo')),
                 'manual' => strtoupper($request->input('manual')),                            
             ];
-            $manual = $this->manual->create($data);          
+            $manual = $this->manual->create($data);  
+            $user = auth()->user();
                                                        
             $area = Area_Conhecimento::find($manual->area_conhecimento_id);                    
             return response()->json([
                 'manual' => $manual,
                 'area_conhecimento' => $area,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Registro cadastrado com sucesso!',
             ]);
@@ -99,9 +101,10 @@ class ManualController extends Controller
     {
         $manual = $this->manual->find($id);
         $area = Area_Conhecimento::find($manual->area_conhecimento_id);
-
+        $user = auth()->user();
         return response()->json([
             'manual' => $manual,
+            'user' => $user,
             'area_conhecimento' => $area,
             'status' => 200,
         ]);
@@ -143,11 +146,13 @@ class ManualController extends Controller
                 $uploads = Upload::query('upload')
                            ->where('manual_id', $id)
                            ->get();
+                $user = auth()->user();
 
                 return response()->json([
                     'manual' => $ma,
                     'uploads' => $uploads,
                     'area_conhecimento' => $area,
+                    'user' => $user,
                     'status' => 200,
                     'message' => 'Registro atualizado com sucesso!',
                 ]);

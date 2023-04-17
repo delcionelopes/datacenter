@@ -22,10 +22,12 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'admin',
         'moderador',
         'inativo',
         'avatar',        
         'orgao_id',  
+        'setor_idsetor',
         'cpf',
         'matricula',
         'link_instagram',
@@ -68,6 +70,19 @@ class User extends Authenticatable
 
     public function base():BelongsToMany{
         return $this->belongsToMany(Base::class,'bases_has_users','user_id','base_id');
+    }
+
+     public function equipamento():BelongsToMany{
+        return $this->belongsToMany(EquipamentoRede::class,'equipamento_rede_has_users','users_id','equipamento_rede_idequipamento_rede')->withPivot([
+            'users.name',
+            'pass_user_equipamento',            
+            'created_at',
+            'updated_at',
+        ]);
+    }
+
+    public function setor(){
+        return $this->belongsTo(Setor::class,'setor_idsetor');
     }
 
     /**

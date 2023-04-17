@@ -66,9 +66,11 @@ class Sub_Area_ConhecimentoController extends Controller
             ];            
             $sub_area_conhecimento = $this->sub_area_conhecimento->create($data);           
             $area = Area_Conhecimento::find($sub_area_conhecimento->area_conhecimento_id);
+            $user = auth()->user();
             return response()->json([
                 'sub_area_conhecimento' => $sub_area_conhecimento,            
                 'area_conhecimento' => $area,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Registro cadastrado com sucesso!',
             ]);
@@ -87,10 +89,12 @@ class Sub_Area_ConhecimentoController extends Controller
     {        
         $sub = $this->sub_area_conhecimento->find($id);
         $area = Area_Conhecimento::find($sub->area_conhecimento_id);               
+        $user = auth()->user();
 
         return response()->json([            
             'sub_area_conhecimento' => $sub,
-            'area_conhecimento' => $area,             
+            'area_conhecimento' => $area, 
+            'user' => $user,
             'status' => 200,
         ]);
     }
@@ -122,9 +126,11 @@ class Sub_Area_ConhecimentoController extends Controller
                 $sub_area_conhecimento->update();               
                 $sub = Sub_Area_Conhecimento::find($id);
                 $area = Area_Conhecimento::find($sub->area_conhecimento_id);
+                $user = auth()->user();
                 return response()->json([
                     'sub_area_conhecimento' => $sub,
                     'area_conhecimento' => $area,
+                    'user' => $user,
                     'status' => 200,
                     'message' => 'Registro atualizado com sucesso!',
                 ]);

@@ -21,7 +21,7 @@
                 </button>
             </div>
             <div class="modal-body form-horizontal">
-                <form id="myform" name="myform" class="form-horizontal" role="form">
+                <form id="addform" name="addform" class="form-horizontal" role="form">
                     <ul id="saveform_errList"></ul>
 
                     <div class="form-group mb-3">
@@ -35,7 +35,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary add_orgao">Salvar</button>
+                    <button type="button" class="btn btn-primary add_orgao"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                 </div>
             </div>
         </div>
@@ -58,7 +58,7 @@
                 </button>
             </div>
             <div class="modal-body form-horizontal">
-                <form id="myform" name="myform" class="form-horizontal" role="form">
+                <form id="editform" name="editform" class="form-horizontal" role="form">
                     <ul id="updateform_errList"></ul>
 
                     <input type="hidden" id="edit_orgao_id">
@@ -73,7 +73,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" >Fechar</button>
-                    <button type="button" class="btn btn-primary update_orgao">Atualizar</button>
+                    <button type="button" class="btn btn-primary update_orgao"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
@@ -120,8 +120,8 @@
                         <td>{{$orgao->telefone}}</td>                        
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$orgao->id}}" class="edit_orgao fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button type="button" data-id="{{$orgao->id}}" data-nomeorgao="{{$orgao->nome}}" class="delete_orgao_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button type="button" data-id="{{$orgao->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeorgao="{{$orgao->nome}}" class="edit_orgao fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button type="button" data-id="{{$orgao->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeorgao="{{$orgao->nome}}" class="delete_orgao_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -155,9 +155,13 @@
     //inicio delete orgao    
         $(document).on('click','.delete_orgao_btn',function(e){
             e.preventDefault();
+            var linklogo = "{{asset('storage')}}";
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
             var nomedoorgao = ($(this).data("nomeorgao")).trim();
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -167,7 +171,7 @@
                 },
                 title:nomedoorgao,
                 text: "Deseja excluir?",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: linklogo+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -190,35 +194,61 @@
                         if(response.status==200){                           
                             //remove a linha correspondente da tabela html
                             $("#orgao"+id).remove();    
-                            $('#success_message').html('<div id="success_message"></div>');
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);
+                            $("#success_message").replaceWith('<div id="success_message"></div>');
+                            $("#success_message").addClass('alert alert-success');
+                            $("#success_message").text(response.message);
                         }else{
                             //O registro não pôde ser excluído      
-                            $('#success_message').html('<div id="success_message"></div>');                    
-                            $('#success_message').addClass('alert alert-danger');
-                            $('#success_message').text(response.message);
+                            $("#success_message").replaceWith('<div id="success_message"></div>');                    
+                            $("#success_message").addClass('alert alert-danger');
+                            $("#success_message").text(response.message);
                         }
                     } 
                 });
             }                                       
         
-        });                        
+        });                       
+    }else{
+        Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:nomedoorgao,
+                text: "Você não pode excluir este registro. Procure um administrador!",
+                imageUrl: linklogo+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    } 
         
         });//fim delete orgao
     
     //início exibição edit orgao
-    $('#EditOrgaoModal').on('shown.bs.modal',function(){
-            $('#edit_nome_orgao').focus();
+    $("#EditOrgaoModal").on('shown.bs.modal',function(){
+            $("#edit_nome_orgao").focus();
         });
     
     $(document).on('click','.edit_orgao',function(e){
         e.preventDefault();
-        
+        var link = "{{asset('storage')}}";
         var id = $(this).data("id");
-        $('#myform').trigger('reset');
-        $('#EditOrgaoModal').modal('show');
-        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');     
+        var admin = $(this).data("admin");
+        var setoradmin = $(this).data("setoradmin");
+        var nome = $(this).data("nomeorgao");
+        if(admin){
+        $("#editform").trigger('reset');
+        $("#EditOrgaoModal").modal('show');
+        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');     
     
         $.ajaxSetup({
                     headers:{
@@ -234,27 +264,49 @@
                     success:function(response){
                         if(response.status==200){
                             var vnomedoorgao = (response.orgao.nome).trim();
-                            $('.nome_orgao').val(vnomedoorgao);
+                            $(".nome_orgao").val(vnomedoorgao);
                             var vtelefone = (response.orgao.telefone).trim();
-                            $('.telefone').val(vtelefone);
-                            $('#edit_orgao_id').val(response.orgao.id);
+                            $(".telefone").val(vtelefone);
+                            $("#edit_orgao_id").val(response.orgao.id);
                         }
                     }
                 });
-    
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:nome,
+                text: "Você não pode alterar este registro. Procure um administrador!",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
     });//fim exibição edit orgão    
     
     //inicio da atualização do orgão
     $(document).on('click','.update_orgao',function(e){
         e.preventDefault();
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        $(this).text("Atualizando...");
-    
-        var id = $('#edit_orgao_id').val();
+        var loading = $("#imgedit");
+            loading.show();
+            
+        var id = $("#edit_orgao_id").val();
         
         var data = {
-            'nome' : ($('#edit_nome_orgao').val()).trim(),
-            'telefone' : ($('#edit_telefone').val()).trim(),
+            'nome' : ($("#edit_nome_orgao").val()).trim(),
+            'telefone' : ($("#edit_telefone").val()).trim(),
             '_method':'PUT',
             '_token':CSRF_TOKEN,
         }    
@@ -267,26 +319,27 @@
                     success:function(response){
                         if(response.status==400){
                             //erros
-                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                            $('#updateform_errList').addClass('alert alert-danger');
+                            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                            $("#updateform_errList").addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
-                                $('#updateform_errList').append('<li>'+err_values+'</li>');
+                                $("#updateform_errList").append('<li>'+err_values+'</li>');
                             });
-                            $('.update_orgao').text("Atualizado");
+                            loading.hide();
                         }else if(response.status==404){
-                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');   
-                            $('#success_message').html('<div id="success_message"></div>');                         
-                            $('#success_message').addClass('alert alert-warning');
-                            $('#success_message').text(response.message);
-                            $('.update_orgao').text("Atualizado");
+                            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');   
+                            $("#success_message").replaceWith('<div id="success_message"></div>');                         
+                            $("#success_message").addClass('alert alert-warning');
+                            $("#success_message").text(response.message);
+                            loading.hide();
                         }else{  
-                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');        
-                            $('#success_message').html('<div id="success_message"></div>');                    
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);
-                            $('.update_orgao').text("Atualizado");
-    
-                            $('#EditOrgaoModal').modal('hide');
+                            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');        
+                            $("#success_message").replaceWith('<div id="success_message"></div>');                    
+                            $("#success_message").addClass('alert alert-success');
+                            $("#success_message").text(response.message);
+                            loading.hide();
+
+                            $("#editform").trigger('reset');
+                            $("#EditOrgaoModal").modal('hide');
     
                             //atualizando a linha na tabela html
                            
@@ -295,8 +348,8 @@
                                          <td>'+response.orgao.telefone+'</td>\
                                          <td>\
                                              <div class="btn-group">\
-                                                 <button type="button" data-id="'+response.orgao.id+'" class="edit_orgao fas fa-edit" style="background:transparent;border:none;"></button>\
-                                                 <button type="button" data-id="'+response.orgao.id+'" data-nomeorgao="'+response.orgao.nome+'" class="delete_orgao_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                                 <button type="button" data-id="'+response.orgao.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeorgao="'+response.orgao.nome+'" class="edit_orgao fas fa-edit" style="background:transparent;border:none;"></button>\
+                                                 <button type="button" data-id="'+response.orgao.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeorgao="'+response.orgao.nome+'" class="delete_orgao_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                              </div>\
                                          </td>\
                                          </tr>';
@@ -308,16 +361,16 @@
     });//fim da atualização do orgão
     
     //exibe form de adição de registro
-    $('#AddOrgaoModal').on('shown.bs.modal',function(){
-            $('.nome_orgao').focus();
+    $("#AddOrgaoModal").on('shown.bs.modal',function(){
+            $(".nome_orgao").focus();
         });
     
     $(document).on('click','.AddOrgaoModal_btn',function(e){                  
             e.preventDefault();        
                                            
-            $('#myform').trigger('reset');
-            $('#AddOrgaoModal').modal('show');         
-            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');        
+            $("#addform").trigger('reset');
+            $("#AddOrgaoModal").modal('show');         
+            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');        
     
         });
     
@@ -328,9 +381,11 @@
     $(document).on('click','.add_orgao',function(e){     
         e.preventDefault();
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        var loading = $("#imgadd");
+            loading.show();
         var data = {
-            'nome' : ($('.nome_orgao').val()).trim(),
-            'telefone' : ($('.telefone').val()).trim(),
+            'nome' : ($(".nome_orgao").val()).trim(),
+            'telefone' : ($(".telefone").val()).trim(),
             '_method':'PUT',
             '_token':CSRF_TOKEN,
         }            
@@ -342,19 +397,21 @@
                     cache: false, 
                     success: function(response){
                         if(response.status==400){
-                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                            $('#saveform_errList').addClass('alert alert-danger');
+                            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                            $("#saveform_errList").addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
-                                $('#saveform_errList').append('<li>'+err_values+'</li>');                            
+                                $("#saveform_errList").append('<li>'+err_values+'</li>');                            
                             });
+                            loading.hide();
                         }else{
-                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');   
-                            $('#success_message').html('<div id="success_message"></div>');                         
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);
+                            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');   
+                            $("#success_message").replaceWith('<div id="success_message"></div>');                         
+                            $("#success_message").addClass('alert alert-success');
+                            $("#success_message").text(response.message);
+                            loading.hide();
     
-                            $('#myform').trigger('reset');
-                            $('#AddOrgaoModal').modal('hide');
+                            $("#addform").trigger('reset');
+                            $("#AddOrgaoModal").modal('hide');
     
                             //adiciona a linha na tabela html                            
                             var tupla = "";
@@ -366,13 +423,13 @@
                                          <td>'+response.orgao.telefone+'</td>\
                                          <td>\
                                              <div class="btn-group">\
-                                                 <button type="button" data-id="'+response.orgao.id+'" class="edit_orgao fas fa-edit" style="background:transparent;border:none;"></button>\
-                                                 <button type="button" data-id="'+response.orgao.id+'" data-nomeorgao="'+response.orgao.nome+'" class="delete_orgao_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                                 <button type="button" data-id="'+response.orgao.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeorgao="'+response.orgao.nome+'" class="edit_orgao fas fa-edit" style="background:transparent;border:none;"></button>\
+                                                 <button type="button" data-id="'+response.orgao.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeorgao="'+response.orgao.nome+'" class="delete_orgao_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                              </div>\
                                          </td>\
                                          </tr>';
-                        if(!$('#nadaencontrado').html==""){
-                            $('#nadaencontrado').remove();
+                        if(!$("#nadaencontrado").html==""){
+                            $("#nadaencontrado").remove();
                         }
                             tupla = linha0+linha1;
                             $("#novo").replaceWith(tupla);             
@@ -384,10 +441,10 @@
     
 ///tooltip
     $(function(){             
-        $('.AddOrgaoModal_btn').tooltip();
-        $('.pesquisa_btn').tooltip();        
-        $('.delete_orgao_btn').tooltip();
-        $('.edit_orgao').tooltip();    
+        $(".AddOrgaoModal_btn").tooltip();
+        $(".pesquisa_btn").tooltip();        
+        $(".delete_orgao_btn").tooltip();
+        $(".edit_orgao").tooltip();    
     });
     ///fim tooltip
     

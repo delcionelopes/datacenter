@@ -22,7 +22,7 @@
                 </button>                
             </div>
             <div class="modal-body form-horizontal">
-            <form id="myform" name="myform" class="form-horizontal" role="form">                 
+            <form id="addform" name="addform" class="form-horizontal" role="form">                 
                 <ul id="saveform_errList"></ul>                   
                 <div class="form-group mb-3">
                     <label for="">Nome</label>
@@ -32,7 +32,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_ambiente">Salvar</button>
+                <button type="button" class="btn btn-primary add_ambiente"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
                 </button>                
             </div>
             <div class="modal-body form-horizontal">
-            <form id="myform" name="myform" class="form-horizontal" role="form">                
+            <form id="editform" name="editform" class="form-horizontal" role="form">                
                 <ul id="updateform_errList"></ul>               
                 <input type="hidden" id="edit_ambiente_id">
                 <div class="form-group mb-3">
@@ -63,7 +63,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_ambiente">Atualizar</button>
+                <button type="button" class="btn btn-primary update_ambiente"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -106,8 +106,8 @@
                                 <th scope="row">{{$ambiente->nome_ambiente}}</th>                                
                                 <td>                                    
                                         <div class="btn-group">                                           
-                                            <button type="button" data-id="{{$ambiente->id}}" class="edit_ambiente fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar AMBIENTE"></button>
-                                            <button type="button" data-id="{{$ambiente->id}}" data-nomeambiente="{{$ambiente->nome_ambiente}}" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir AMBIENTE"></button>
+                                            <button type="button" data-id="{{$ambiente->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeambiente="{{$ambiente->nome_ambiente}}" class="edit_ambiente fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar AMBIENTE"></button>
+                                            <button type="button" data-id="{{$ambiente->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeambiente="{{$ambiente->nome_ambiente}}" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir AMBIENTE"></button>
                                         </div>                                    
                                 </td>
                             </tr>  
@@ -143,11 +143,15 @@
 $(document).ready(function(){        
     
         $(document).on('click','.delete_ambiente_btn',function(e){   ///inicio delete ambiente
-            e.preventDefault();           
+            e.preventDefault();          
+            var linklogo = "{{asset('storage')}}";
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
             var id = $(this).data("id");            
-            var nomedoambiente = ($(this).data("nomeambiente")).trim();
-            
+            var nome = ($(this).data("nomeambiente")).trim();
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin")
+        
+            if(admin==true){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -155,9 +159,9 @@ $(document).ready(function(){
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 },
-                title:nomedoambiente,
+                title:nome,
                 text: "Deseja excluir?",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: linklogo+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -179,32 +183,61 @@ $(document).ready(function(){
                         if(response.status==200){                        
                             //remove linha correspondente da tabela html
                             $("#ambiente"+id).remove();     
-                            $('#success_message').html('<div id="success_message"></div>');                       
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);         
+                            $("#success_message").replaceWith('<div id="success_message"></div>');                       
+                            $("#success_message").addClass('alert alert-success');
+                            $("#success_message").text(response.message);         
                         }else{
                             //Não pôde excluir por causa dos relacionamentos    
-                            $('#success_message').html('<div id="success_message"></div>');                        
-                            $('#success_message').addClass('alert alert-danger');
-                            $('#success_message').text(response.message);         
+                            $("#success_message").replaceWith('<div id="success_message"></div>');                        
+                            $("#success_message").addClass('alert alert-danger');
+                            $("#success_message").text(response.message);         
                         }
                     }
-                });            
-            }  
-        });
+                }); 
+            } 
+        })
+                 
+             }else{    
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:nome,
+                text: "Você não pode excluir este registro. Procure um administrador!",
+                imageUrl: linklogo+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    
+            }          
+   
       
         });  ///fim delete ambiente
         //início da exibição do form EditAmbientModal de ambiente                
-        $('#editAmbienteModal').on('shown.bs.modal',function(){
-            $('#edit_nome_ambiente').focus();
+        $("#editAmbienteModal").on('shown.bs.modal',function(){
+            $("#edit_nome_ambiente").focus();
         });
         $(document).on('click','.edit_ambiente',function(e){  
             e.preventDefault();
-            
-            var id = $(this).data("id");                                   
-            $('#myform').trigger('reset');
-            $('#editAmbienteModal').modal('show');          
-            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');      
+            var linklogo = "{{asset('storage')}}";
+            var id = $(this).data("id");
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
+            var nome = $(this).data("nomeambiente");
+            if(admin==true){
+            $("#editform").trigger('reset');
+            $("#editAmbienteModal").modal('show');          
+            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');      
     
             $.ajaxSetup({
                     headers:{
@@ -220,23 +253,47 @@ $(document).ready(function(){
                 success: function(response){           
                     if(response.status==200){   
                         var nomeambiente = (response.ambiente.nome_ambiente).trim();                        
-                        $('.nome_ambiente').val(nomeambiente);
-                        $('#edit_ambiente_id').val(response.ambiente.id);                                                                                                       
+                        $(".nome_ambiente").val(nomeambiente);
+                        $("#edit_ambiente_id").val(response.ambiente.id);                                                                                                       
                     }      
                 }
             });
+        }else{
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:nome,
+                text: "Você não pode alterar este registro. Procure um administrador!",
+                imageUrl: linklogo+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+        
+        }
     
         }); //fim da da exibição do form EditAmbientModal de ambiente
     
         $(document).on('click','.update_ambiente',function(e){ //inicio da atualização de registro
             e.preventDefault();
-            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            $(this).text("Atualizando...");
+            var loading = $("#imgedit");
+                loading.show();
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');            
     
-            var id = $('#edit_ambiente_id').val();        
+            var id = $("#edit_ambiente_id").val();        
     
             var data = {
-                'nome_ambiente' : ($('#edit_nome_ambiente').val()).trim(),
+                'nome_ambiente' : ($("#edit_nome_ambiente").val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }
@@ -249,38 +306,38 @@ $(document).ready(function(){
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                        $('#updateform_errList').addClass('alert alert-danger');
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#updateform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#updateform_errList').append('<li>'+err_values+'</li>');
+                            $("#updateform_errList").append('<li>'+err_values+'</li>');
                         });
     
-                        $('.update_ambiente').text("Atualizado");
+                        loading.hide();
     
                     } else if(response.status==404){
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');    
-                        $('#success_message').html('<div id="success_message"></div>');             
-                        $('#success_message').addClass('alert alert-warning');
-                        $('#success_message').text(response.message);
-                        $('.update_ambiente').text("Atualizado");
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');    
+                        $("#success_message").replaceWith('<div id="success_message"></div>');             
+                        $("#success_message").addClass('alert alert-warning');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
                     } else {
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');      
-                        $('#success_message').html('<div id="success_message"></div>');                 
-                        $('#success_message').addClass("alert alert-success");
-                        $('#success_message').text(response.message);
-                        $('.update_ambiente').text("Atualizado");                    
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');      
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                 
+                        $("#success_message").addClass("alert alert-success");
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#myform').trigger('reset');
-                        $('#editAmbienteModal').modal('hide');                  
+                        $("#editform").trigger('reset');
+                        $("#editAmbienteModal").modal('hide');                  
                         
                         //atualizando a linha na tabela html                      
     
                             var linha = '<tr id="ambiente'+response.ambiente.id+'">\
                                     <th scope="row">'+response.ambiente.nome_ambiente+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.ambiente.id+'" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.ambiente.id+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';                             
                         $("#ambiente"+id).replaceWith(linha);                                                                                
@@ -294,15 +351,15 @@ $(document).ready(function(){
         }); //fim da atualização do registro
     
         //exibe form de adição de registro
-        $('#AddAmbienteModal').on('shown.bs.modal',function(){
-            $('.nome_ambiente').focus();
+        $("#AddAmbienteModal").on('shown.bs.modal',function(){
+            $(".nome_ambiente").focus();
         });
         $(document).on('click','.AddAmbienteModal_btn',function(e){  //início da exibição do form EditAmbientModal de ambiente                
             e.preventDefault();       
             
-            $('#myform').trigger('reset');
-            $('#AddAmbienteModal').modal('show'); 
-            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');                       
+            $("#addform").trigger('reset');
+            $("#AddAmbienteModal").modal('show'); 
+            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');                       
     
         });
     
@@ -310,9 +367,11 @@ $(document).ready(function(){
     
         $(document).on('click','.add_ambiente',function(e){ //início da adição de Registro
             e.preventDefault();
+            var loading = $("#imgadd");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
             var data = {
-                'nome_ambiente': ($('.nome_ambiente').val()).trim(),               
+                'nome_ambiente': ($(".nome_ambiente").val()).trim(),               
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             } 
@@ -324,19 +383,20 @@ $(document).ready(function(){
                 dataType: 'json',
                 success: function(response){
                     if(response.status==400){
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                        $('#saveform_errList').addClass('alert alert-danger');
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                        $("#saveform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#saveform_errList').append('<li>'+err_values+'</li>');
+                            $("#saveform_errList").append('<li>'+err_values+'</li>');
                         });
+                        loading.hide();
                     } else {
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');     
-                        $('#success_message').html('<div id="success_message"></div>');              
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);                                        
-    
-                        $('#myform').trigger('reset');                    
-                        $('#AddAmbienteModal').modal('hide');
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');     
+                        $("#success_message").replaceWith('<div id="success_message"></div>');              
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);                                        
+                        loading.hide();
+                        $("#addform").trigger('reset');                    
+                        $("#AddAmbienteModal").modal('hide');
     
                         //adiciona a linha na tabela html                      
                             
@@ -347,12 +407,12 @@ $(document).ready(function(){
                             linha1 = '<tr id="ambiente'+response.ambiente.id+'">\
                                     <th scope="row">'+response.ambiente.nome_ambiente+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.ambiente.id+'" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.ambiente.id+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';
-                        if(!$('#nadaencontrado').html==""){
-                            $('#nadaencontrado').remove();
+                        if(!$("#nadaencontrado").html==""){
+                            $("#nadaencontrado").remove();
                         }
                         tupla = linha0+linha1;                             
                         $("#novo").replaceWith(tupla);                                                     
@@ -365,10 +425,10 @@ $(document).ready(function(){
         }); //Fim da adição de registro
     ///tooltip
     $(function(){             
-        $('.AddAmbienteModal_btn').tooltip();
-        $('.pesquisa_btn').tooltip();        
-        $('.delete_ambiente_btn').tooltip();
-        $('.edit_ambiente').tooltip();    
+        $(".AddAmbienteModal_btn").tooltip();
+        $(".pesquisa_btn").tooltip();        
+        $(".delete_ambiente_btn").tooltip();
+        $(".edit_ambiente").tooltip();    
     });
     ///fim tooltip
 

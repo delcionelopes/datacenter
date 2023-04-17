@@ -316,6 +316,12 @@ return [
                     'icon_color' => 'gray',
                 ],
                 [
+                    'text' => 'Setores',
+                    'route'  => 'admin.setor.index',
+                    'icon'    => 'fas fa-fw fa-file',
+                    'icon_color' => 'gray',
+                ],
+                [
                     'text' => 'Ambientes',
                     'route'  => 'admin.ambiente.index',
                     'icon'    => 'fas fa-fw fa-file',
@@ -377,8 +383,16 @@ return [
                     'icon_color' => 'green',
                     'label' => 'Novo',
                     'label_color' => 'primary',
-                ],    
-            ],
+                ],  
+                [
+                    'text' => 'Equipamentos',                    
+                    'route'  => 'datacenter.equipamento.index',
+                    'icon'    => 'fas fa-fw fa-network-wired',
+                    'icon_color' => 'silver',
+                    'label' => 'Novo',
+                    'label_color' => 'primary',
+                ],                    
+            ],                              
         ],        
     ],
 

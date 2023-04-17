@@ -46,7 +46,12 @@ class AppController extends Controller
         $orgaos = Orgao::all();
         $projetos = Projeto::all();
         $bases = $this->base->query()->where('virtual_machine_id','=',$bd->virtual_machine_id)->orderByDesc('id')->get();
-        $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
+        $users = $this->users->query()
+                             ->where('moderador','=','true')
+                             ->where('inativo','=','false')
+                             ->where('setor_idsetor','=',1)
+                             ->orderBy('name')
+                             ->get();
         return view('datacenter.app.index',[
             'id' => $id,
             'apps' => $apps,
@@ -106,9 +111,11 @@ class AppController extends Controller
             ];
             $app = $this->app->create($data);          
             $users = $app->users;
+            $user = auth()->user();
             return response()->json([
                 'app'     => $app,
                 'users'   => $users,
+                'user' => $user,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -140,6 +147,7 @@ class AppController extends Controller
         $orgao = Orgao::find($app->orgao_id);
         $vm = VirtualMachine::find($base->virtual_machine_id);
         $users = $app->users;
+        $user = auth()->user();
         return response()->json([
             'app'     => $app,
             'projeto' => $projeto,
@@ -147,6 +155,7 @@ class AppController extends Controller
             'orgao'   => $orgao,
             'vm'      => $vm,
             'users' => $users,
+            'user' => $user,
             'status'  => 200,
         ]);
     }
@@ -192,9 +201,11 @@ class AppController extends Controller
                 $app->update($data);          
                 $a = App::find($id);
                 $users = $a->users;
+                $user = auth()->user();
                 return response()->json([
                     'app'     => $a,
                     'users'   => $users,
+                    'user' => $user,
                     'status'  => 200,
                     'message' => 'Registro atualizado com sucesso!',
                 ]);
@@ -236,8 +247,10 @@ class AppController extends Controller
         $data = ['https' => $request->input('https')];        
         $app->update($data);
         $a = App::find($id);
+        $user = auth()->user();
         return response()->json([
             'app' => $a,
+            'user' => $user,
             'status' => 200,
         ]);
     }
@@ -270,6 +283,7 @@ class AppController extends Controller
                 'user' => $user,                
                 'app' => $a,
                 'users' => $u,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Senha foi criada com sucesso!',
             ]);
@@ -305,6 +319,7 @@ class AppController extends Controller
                 'user' => $user,
                 'app' => $a,
                 'users' => $u,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Senha atualizada com sucesso!',
             ]);
@@ -329,6 +344,7 @@ class AppController extends Controller
         }                
         $users = $app->users;        
         $s = Crypt::decrypt($app->senha);
+        $user = auth()->user();
         return response()->json([
             'status' => 200,            
             'app' => $app,
@@ -336,6 +352,7 @@ class AppController extends Controller
             'criador' => $criador,
             'alterador' => $alterador,
             'users' => $users,
+            'user' => $user,
         ]);
     }
  

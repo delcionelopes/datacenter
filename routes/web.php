@@ -6,12 +6,14 @@ use App\Http\Controllers\admin\ManualController;
 use App\Http\Controllers\admin\OrgaoController;
 use App\Http\Controllers\admin\PlataformaController;
 use App\Http\Controllers\admin\ProjetoController;
+use App\Http\Controllers\admin\SetorController;
 use App\Http\Controllers\admin\Sub_Area_ConhecimentoController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\datacenter\AppController;
 use App\Http\Controllers\datacenter\BaseController;
 use App\Http\Controllers\datacenter\CadastroIpController;
 use App\Http\Controllers\datacenter\ClusterController;
+use App\Http\Controllers\datacenter\EquipamentoController;
 use App\Http\Controllers\datacenter\HostController;
 use App\Http\Controllers\datacenter\RedeController;
 use App\Http\Controllers\datacenter\SenhaController;
@@ -59,7 +61,7 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::get('/edit/{id}','UserController@edit');
         Route::put('/update/{id}','UserController@update');
         Route::delete('/delete/{id}','UserController@destroy');
-        Route::post('/moderador/{id}', 'UserController@moderadorUsuario');
+        Route::post('/moderador/{id}', 'UserController@moderadorUsuario');        
         Route::post('/inativo/{id}', 'UserController@inativoUsuario');
       });      
        //fim administração da frontpage
@@ -91,6 +93,13 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::get('edit-projeto/{id}',[ProjetoController::class,'edit']);
         Route::put('update-projeto/{id}',[ProjetoController::class,'update']);
         Route::put('adiciona-projeto',[ProjetoController::class,'store']);    
+
+      //Rotas para a view index de setor    
+        Route::get('index-setor',[SetorController::class,'index'])->name('setor.index');
+        Route::delete('delete-setor/{id}',[SetorController::class,'destroy']);
+        Route::get('edit-setor/{id}',[SetorController::class,'edit']);
+        Route::put('update-setor/{id}',[SetorController::class,'update']);
+        Route::put('adiciona-setor',[SetorController::class,'store']);    
 
         //Rotas para a view index de area_conhecimento
         Route::get('index-areaconhecimento',[Area_ConhecimentoController::class,'index'])->name('areaconhecimento.index');
@@ -127,6 +136,7 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::put('update-user/{id}',[UserController::class,'update']);
         Route::delete('delete-user/{id}',[UserController::class,'destroy']);
         Route::put('moderador-user/{id}', [UserController::class,'moderadorUsuario']);
+        Route::put('admin-user/{id}', [UserController::class,'adminUsuario']);
         Route::put('inativo-user/{id}', [UserController::class,'inativoUsuario']);   
 
         });                      
@@ -236,6 +246,18 @@ Route::group(['middleware'=> ['auth']],function(){
          Route::patch('updateusersenhabase/{id}',[SenhaController::class,'updatesenhabase']);
          Route::get('editusersenhavlan/{id}',[SenhaController::class,'editsenhavlan']);
          Route::patch('updateusersenhavlan/{id}',[SenhaController::class,'updatesenhavlan']);  
+
+         //Rotas para a view index de Equipamentos
+         Route::get('index-equipamento',[EquipamentoController::class,'index'])->name('equipamento.index');
+         Route::delete('delete-equipamento/{id}',[EquipamentoController::class,'destroy']);
+         Route::get('edit-equipamento/{id}',[EquipamentoController::class,'edit']);
+         Route::put('update-equipamento/{id}',[EquipamentoController::class,'update']);
+         Route::put('adiciona-equipamento',[EquipamentoController::class,'store']);                           
+         Route::get('editsenhaequipamento/{id}',[EquipamentoController::class,'editsenhaEquipamento']);
+         Route::get('editsenhaindividual/{id}',[EquipamentoController::class,'editsenhaIndividual']);
+         Route::patch('updatesenhaequipamento/{id}',[EquipamentoController::class,'updatesenhaEquipamento']);
+         Route::patch('updatesenhaindividual/{id}',[EquipamentoController::class,'updatesenhaIndividual']);
+
         });           
 
     }); //fim do escopo do middleware auth

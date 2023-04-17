@@ -46,7 +46,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"> Fechar</button>
-                <button type="button" class="btn btn-primary add_artigo">Salvar</button>
+                <button type="button" class="btn btn-primary add_artigo"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -97,7 +97,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_artigo">Atualizar</button>
+                <button type="button" class="btn btn-primary update_artigo"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -282,8 +282,8 @@ $(document).ready(function(){  //INÍCIO
                     if(response.status==200){                        
                         //remove linha <tr> correspondente da tabela html da view index
                         $("#art"+id).remove();                           
-                        $('#success_message').addClass("alert alert-success");
-                        $('#success_message').text(response.message);                         
+                        $("#success_message").addClass("alert alert-success");
+                        $("#success_message").text(response.message);                         
                     }
                 }
             });
@@ -293,16 +293,16 @@ $(document).ready(function(){  //INÍCIO
     ///fim delete artigo
 
     //Inicio chamada EditArtigoModal
-$('#EditArtigoModal').on('shown.bs.modal',function(){
-        $('.titulo').focus();
+$("#EditArtigoModal").on('shown.bs.modal',function(){
+        $(".titulo").focus();
         });
 
     $(document).on('click','.edit_artigo_btn',function(e){
         e.preventDefault();
 
         var id = $(this).data("id");
-        $('#editform').trigger('reset');
-        $('#EditArtigoModal').modal('show');
+        $("#editform").trigger('reset');
+        $("#EditArtigoModal").modal('show');
 
         $.ajaxSetup({
             headers:{
@@ -315,10 +315,10 @@ $('#EditArtigoModal').on('shown.bs.modal',function(){
             url:'edit/'+id,
             success: function(response){
                 if(response.status==200){
-                    $('#edit_artigo_id').val(response.artigo.id);
-                    $('.titulo').val(response.artigo.titulo);
-                    $('.descricao').val(response.artigo.descricao);
-                    $('.conteudo').val(response.artigo.conteudo);
+                    $("#edit_artigo_id").val(response.artigo.id);
+                    $(".titulo").val(response.artigo.titulo);
+                    $(".descricao").val(response.artigo.descricao);
+                    $(".conteudo").val(response.artigo.conteudo);
                     //$('.slug').val(response.artigo.slug);   
                     //Atribuindo aos checkboxs
                     $("input[name='temas[]']").attr('checked',false); //desmarca todos
@@ -335,8 +335,9 @@ $('#EditArtigoModal').on('shown.bs.modal',function(){
 $(document).on('click','.update_artigo',function(e){
 e.preventDefault();
 
-            $(this).text("Atualizando...");
-            var id = $('#edit_artigo_id').val();
+            var loading = $("#imgedit");
+                loading.show();
+            var id = $("#edit_artigo_id").val();
             //Array apenas com os checkboxs marcados 
             var temas = new Array;
                         $("input[name='temas[]']:checked").each(function(){                
@@ -344,9 +345,9 @@ e.preventDefault();
                         });                      
 
             var data = {
-                'titulo': $('#edit_titulo').val(),
-                'descricao': $('#edit_descricao').val(),
-                'conteudo': $('#edit_conteudo').val(),
+                'titulo': $("#edit_titulo").val(),
+                'descricao': $("#edit_descricao").val(),
+                'conteudo': $("#edit_conteudo").val(),
                 //'slug': $('#edit_slug').val(),    
                 'temas':temas,   //Array
             }
@@ -365,27 +366,27 @@ e.preventDefault();
                 success:function(response){                    
                     if(response.status==400){                        
                         //erros na validação
-                        $('#updateform_errList').html("");
-                        $('#updateform_errList').addClass('alert alert-danger');
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#updateform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#updateform_errList').append('<li>'+err_values+'</li>');
+                            $("#updateform_errList").append('<li>'+err_values+'</li>');
                         });
-                        $(this).text("Atualizado");
+                        loading.hide();
                     }else if(response.status==404){                         
                         //não localizado
-                        $('#updateform_errList').html("");
-                        $('#success_message').addClass('alert alert-warning');
-                        $('#success_message').text(response.message);
-                        $(this).text("Atualizado");
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#success_message").addClass('alert alert-warning');
+                        $("#success_message").text(response.message);
+                        loading.hide();
                     }else{
                        //sucesso na operação
-                        $('#updateform_errList').html("");
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
-                        $(this).text("Atualizado");                  
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();                  
 
-                        $('#editform').trigger('reset');
-                        $('#EditArtigoModal').modal('hide');                                          
+                        $("#editform").trigger('reset');
+                        $("#EditArtigoModal").modal('hide');                                          
                                 
                         //atualizando a <tr> identificada na tabela html                       
                         var dataatualizacao = new Date(response.artigo.updated_at);
@@ -453,19 +454,21 @@ e.preventDefault();
 //Fim processo update
 
         //chamar o AddArtigoModal
-        $('#AddArtigoModal').on('shown.bs.modal',function(){
-                $('.titulo').focus();
+        $("#AddArtigoModal").on('shown.bs.modal',function(){
+                $(".titulo").focus();
         });
 
         $(document).on('click','.AddArtigoModal_btn',function(e){
                     e.preventDefault();
-                    $('#addform').trigger('reset');
-                    $('#AddArtigoModal').modal('show');
+                    $("#addform").trigger('reset');
+                    $("#AddArtigoModal").modal('show');
         });       
         //Fim da chamada ao AddArtigoModal
         //Inicio da criação do artigo
         $(document).on('click','.add_artigo',function(e){
             e.preventDefault();
+            var loading = $("#imgadd");
+                loading.show();
             //Array apenas com os checkboxs marcados
 
             var temas = new Array;
@@ -474,9 +477,9 @@ e.preventDefault();
             });              
                         
             var data = {
-                'titulo': $('.titulo').val(),
-                'descricao': $('.descricao').val(),
-                'conteudo': $('.conteudo').val(),
+                'titulo': $(".titulo").val(),
+                'descricao': $(".descricao").val(),
+                'conteudo': $(".conteudo").val(),
                 //'slug': $('.slug').val(),
                 'temas':temas,   //Array
             }
@@ -493,19 +496,20 @@ e.preventDefault();
                 success:function(response){
                 if(response.status==400){
                            //erros
-                            $('#saveform_errList').html("");
-                            $('#saveform_errList').addClass("alert alert-danger");
+                            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                            $("#saveform_errList").addClass("alert alert-danger");
                             $.each(response.errors,function(key,err_values){
-                                    $('#saveform_errList').append('<li>'+err_values+'</li>');
+                                    $("#saveform_errList").append('<li>'+err_values+'</li>');
                             });
           
                 }else{
                 //Sucesso na operação
-                $('#saveform_errList').html("");
-                $('#success_message').addClass("alert alert-success");
-                $('#success_message').text(response.message);
-                $('#addform').trigger('reset');
-                $('#AddArtigoModal').modal('hide');
+                $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                $("#success_message").addClass("alert alert-success");
+                $("#success_message").text(response.message);
+                loading.hide();
+                $("#addform").trigger('reset');
+                $("#AddArtigoModal").modal('hide');
                 //inclui uma linha nova na tabela html
                 var dataatualizacao = new Date(response.artigo.updated_at);
                     dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
@@ -544,11 +548,11 @@ e.preventDefault();
                     </div></td>\
                     </tr>';              
                 var linha = limita1+limita2+limita3+limita4;
-                if(!$('#nadaencontrado').html()=="")
+                if(!$("#nadaencontrado").html()=="")
                         {
-                            $('#nadaencontrado').remove();
+                            $("#nadaencontrado").remove();
                         }
-                        $('#lista_artigo').append(linha);
+                        $("#lista_artigo").append(linha);
                     }
                 }
          });
@@ -561,8 +565,8 @@ $(document).on('click','.capa_envia_btn',function(e){
             e.preventDefault();
             var id = $(this).data("artigoid");
 
-            $('#enviarcapaform').trigger('reset');
-            $('#EnviarCapaModal').modal('show');
+            $("#enviarcapaform").trigger('reset');
+            $("#EnviarCapaModal").modal('show');
 
             $.ajaxSetup({
                 headers:{
@@ -576,14 +580,14 @@ $(document).on('click','.capa_envia_btn',function(e){
                 url:'edit-capa/'+id,
                 success: function(response){
                     if(response.status==200){                                                       
-                        $('#imagem').attr('data-artigoid',response.artigo.id);
+                        $("#imagem").attr('data-artigoid',response.artigo.id);
                     }
                 }
             });
     });       
 
     $(document).on('change','#imagem',function(){  
-      var id = $(this).data('artigoid');
+      var id = $(this).data("artigoid");
       var CSRF_TOKEN = document.querySelector('meta[name="_token"]').getAttribute("content");
       var fd = new FormData();
       var files = $(this)[0].files;                      
@@ -606,11 +610,11 @@ $(document).on('click','.capa_envia_btn',function(e){
         success: function(response){                              
               if(response.status==200){                                        
                //Sucesso na operação
-                $('#updateform_errList').html("");
-                $('#success_message').addClass("alert alert-success");
-                $('#success_message').text(response.message);                
-                $('#enviarcapaform').trigger('reset');
-                $('#EnviarCapaModal').modal('hide');
+                $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                $("#success_message").addClass("alert alert-success");
+                $("#success_message").text(response.message);                
+                $("#enviarcapaform").trigger('reset');
+                $("#EnviarCapaModal").modal('hide');
                 
                 var labelCapa = '<label id="capa'+response.artigo.id+'">Capa: Sim\
                                  <button type="button" data-artigoid="'+response.artigo.id+'"\
@@ -647,8 +651,8 @@ $(document).on('click','.capa_exclui_btn',function(e){
                     dataType: 'json',                    
                     success:function(response){
                     if(response.status==200){                                                      
-                    $('#success_message').addClass("alert alert-success");
-                    $('#success_message').text(response.message);
+                    $("#success_message").addClass("alert alert-success");
+                    $("#success_message").text(response.message);
 
                     var labelCapa = '<label id="capa'+response.artigo.id+'">Capa: Não\
                     <button type="button" data-artigoid="'+response.artigo.id+'"\
@@ -667,8 +671,8 @@ $(document).on('click','.files_enviar_btn',function(e){
             e.preventDefault();
             var id = $(this).data("artigoid");
 
-            $('#enviarpdfform').trigger('reset');
-            $('#EnviarPDFModal').modal('show');
+            $("#enviarpdfform").trigger('reset');
+            $("#EnviarPDFModal").modal('show');
 
             $.ajaxSetup({
                 headers:{
@@ -682,7 +686,7 @@ $(document).on('click','.files_enviar_btn',function(e){
                 url:'edit-arquivo/'+id,
                 success: function(response){
                     if(response.status==200){                                                       
-                        $('#arquivo').attr('data-artigoid',response.artigo.id);           
+                        $("#arquivo").attr('data-artigoid',response.artigo.id);           
                     }
                 }
             });
@@ -694,9 +698,9 @@ $(document).on('click','.fazer_upload_btn',function(e){
         e.preventDefault();                  
       var CSRF_TOKEN = document.querySelector('meta[name="_token"]').getAttribute("content");
       var formData = new FormData();            
-      var id = $('#arquivo').data('artigoid');       
-      let TotalFiles = $('#arquivo')[0].files.length;
-      let files = $('#arquivo')[0];    
+      var id = $("#arquivo").data("artigoid");       
+      let TotalFiles = $("#arquivo")[0].files.length;
+      let files = $("#arquivo")[0];    
 
       for(let i=0; i < TotalFiles; i++){
           formData.append('arquivo'+i, files.files[i]);                            
@@ -725,11 +729,11 @@ $(document).on('click','.fazer_upload_btn',function(e){
         success: function(response){                              
         if(response.status==200){                                        
         //Sucesso na operação
-        $('#updateform_errList').html("");
-        $('#success_message').addClass("alert alert-success");
-        $('#success_message').text(response.message);                
-        $('#enviarpdfform').trigger('reset');
-        $('#EnviarPDFModal').modal('hide');
+        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+        $("#success_message").addClass("alert alert-success");
+        $("#success_message").text(response.message);                
+        $("#enviarpdfform").trigger('reset');
+        $("#EnviarPDFModal").modal('hide');
             
 var labelFiles = '<label id="arquivos'+response.artigoid+'">Files: \
 '+response.totalarqs+' <button type="button" \
@@ -780,8 +784,8 @@ $(document).on('click','.arq_exclui_btn',function(e){
         },                  
         success:function(response){
         if(response.status==200){                                                      
-           $('#success_message').addClass("alert alert-success");
-           $('#success_message').text(response.message);
+           $("#success_message").addClass("alert alert-success");
+           $("#success_message").text(response.message);
            var labelFiles = '<label id="arquivos'+response.artigoid+'">Files: \
                 '+response.totalarqs+' <button type="button" \
                 data-artigoid="'+response.artigoid+'"\

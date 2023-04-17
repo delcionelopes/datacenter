@@ -22,7 +22,7 @@
                 </button>
             </div>
             <div class="modal-body form-horizontal">
-                <form id="myform" name="myform" class="form-horizontal" role="form">
+                <form id="addform" name="addform" class="form-horizontal" role="form">
                     <ul id="saveform_errList"></ul>
                     <div class="form-group mb-3">
                         <label for="">Descrição</label>
@@ -47,7 +47,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" >Fechar</button>
-                    <button type="button" class="btn btn-primary add_manual_btn">Salvar</button>
+                    <button type="button" class="btn btn-primary add_manual_btn"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                 </div>
             </div>
         </div>
@@ -91,7 +91,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary update_manual">Atualizar</button>
+                    <button type="button" class="btn btn-primary update_manual"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
@@ -182,8 +182,8 @@
                         </td>                       
                         <td>
                             <div class="btn-group">
-                                <button data-id="{{$manual->id}}" class="edit_manual_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button data-id="{{$manual->id}}" data-descricao="{{$manual->descricao}}" class="delete_manual_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-descricao="{{$manual->descricao}}" class="edit_manual_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-descricao="{{$manual->descricao}}" class="delete_manual_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -220,8 +220,12 @@
         $(document).on('click','.delete_manual_btn',function(e){
             e.preventDefault();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var linklogo = "{{asset('storage')}}";
             var id = $(this).data("id");  
             var nomemanual = ($(this).data("descricao")).trim();
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -231,7 +235,7 @@
                 },
                 title:nomemanual,
                 text: "Deseja excluir?",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: linklogo+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -252,32 +256,59 @@
                         success:function(response){
                             if(response.status==200){
                                 //remove tr correspondente na tabela html
-                                $('#man'+id).remove();   
-                                $('#success_message').html('<div id="success_message"></div>');
-                                $('#success_message').addClass('alert alert-success');
-                                $('#success_message').text(response.message);         
+                                $("#man"+id).remove();   
+                                $("#success_message").replaceWith('<div id="success_message"></div>');
+                                $("#success_message").addClass('alert alert-success');
+                                $("#success_message").text(response.message);         
                             }else{            
-                                $('#success_message').html('<div id="success_message"></div>');               
-                                $('#success_message').addClass('alert alert-danger');
-                                $('#success_message').text(response.message);         
+                                $("#success_message").replaceWith('<div id="success_message"></div>');               
+                                $("#success_message").addClass('alert alert-danger');
+                                $("#success_message").text(response.message);         
                             }
                     } 
                 });
             }                                       
         
-        });                        
+        });  
+    }else{
+       Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:nomemanual,
+                text: "Você não pode excluir este registro. Procure um administrador!",
+                imageUrl: linklogo+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            }) 
+    }                      
         
         });//fim delete registro
         //inicio exibe EditManualForm
-        $('#EditManualForm').on('shown.bs.modal',function(){
-            $('#edit_descricao').focus();
+        $("#EditManualForm").on('shown.bs.modal',function(){
+            $("#edit_descricao").focus();
         });
         $(document).on('click','.edit_manual_btn',function(e){
             e.preventDefault();
+            var linklogo = "{{asset('storage')}}";
             var id = $(this).data("id");
-            $('#editmyform').trigger('reset');
-            $('#EditManualForm').modal('show');
-            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');    
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
+            var nome = $(this).data("descricao");
+            if(admin){
+            $("#editmyform").trigger('reset');
+            $("#EditManualForm").modal('show');
+            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');    
     
             $.ajaxSetup({
                         headers:{
@@ -292,29 +323,51 @@
                 success:function(response){
                     if(response.status==200){
                         var descricaomanual = (response.manual.descricao).trim();
-                        $('.descricao').val(descricaomanual);
+                        $(".descricao").val(descricaomanual);
                         //seta a area de conhecimento no select html
                         var opcao = response.area_conhecimento.id;
-                        $('#edit_area_id option')
+                        $("#edit_area_id option")
                         .removeAttr('selected')
                         .filter('[value='+opcao+']')
                         .attr('selected',true);
                         //fim seta area_conhecimento
                         var objetivomanual = (response.manual.objetivo).trim();
-                        $('.objetivo').text(objetivomanual);
+                        $(".objetivo").text(objetivomanual);
                         var manualmanual = (response.manual.manual).trim();
-                        $('.manual').text(manualmanual);
-                        $('#edit_manual_id').val(response.manual.id);                          
-                        $('#fileupload').attr('data-manualid',response.manual.id);
+                        $(".manual").text(manualmanual);
+                        $("#edit_manual_id").val(response.manual.id);                          
+                        $("#fileupload").attr('data-manualid',response.manual.id);
                     }
                 }
             });
+        }else{
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:nome,
+                text: "Você não pode alterar este registro. Procure um administrador!",
+                imageUrl: linklogo+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            }) 
+        }
         });//fim EditManualForm
     
         //inicio reconfigura o option selected do select html
         $('select[name="edit_area_id"]').on('change',function(){
             var editoptarea = this.value;
-                      $('#edit_area_id option')
+                      $("#edit_area_id option")
                       .removeAttr('selected')
                       .filter('[value='+editoptarea+']')
                       .attr('selected',true);
@@ -323,17 +376,18 @@
     
         //inicio da atualização do registro
         $(document).on('click','.update_manual',function(e){
-            e.preventDefault();                
+            e.preventDefault();               
+            var loading = $("#imgedit");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            $(this).text("Atualizando...");
-            
-            var opt = $('#edit_area_id').val();        
-            var id = $('#edit_manual_id').val();        
+                        
+            var opt = $("#edit_area_id").val();        
+            var id = $("#edit_manual_id").val();        
             var data = {
                 'area_conhecimento_id' : opt,
-                'descricao' : ($('#edit_descricao').val()).trim(),
-                'objetivo' : ($('#edit_objetivo').text()).trim(),
-                'manual' : ($('#edit_manual').text()).trim(),
+                'descricao' : ($("#edit_descricao").val()).trim(),
+                'objetivo' : ($("#edit_objetivo").text()).trim(),
+                'manual' : ($("#edit_manual").text()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             };     
@@ -346,27 +400,27 @@
                 success:function(response){            
                     if(response.status==400){
                     //erros
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                        $('#updateform_errList').addClass('alert alert-danger');
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                    $("#updateform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
-                        $('#updateform_errList').append('<li>'+err_values+'</li>');
+                        $("#updateform_errList").append('<li>'+err_values+'</li>');
                         });  
-                        $('.update_manual').text("Atualizado");
+                        loading.hide();
                     }else if(response.status==404){
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                        $('#success_message').html('<div id="success_message"></div>');
-                        $('#success_message').addClass('alert alert-warning');
-                        $('#success_message').text(response.message);
-                        $('.update_manual').text("Atualizado");
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#success_message").replaceWith('<div id="success_message"></div>');
+                        $("#success_message").addClass('alert alert-warning');
+                        $("#success_message").text(response.message);
+                        loading.hide();
                     }else{
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');          
-                        $('#success_message').html('<div id="success_message"></div>');            
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
-                        $('.update_manual').text("Atualizado");
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');          
+                        $("#success_message").replaceWith('<div id="success_message"></div>');            
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#editmyform').trigger('reset');
-                        $('#EditManualForm').modal('hide');
+                        $("#editmyform").trigger('reset');
+                        $("#EditManualForm").modal('hide');
                             //atualizando a tr da tabela html
                         var tupla = "";
                         var linha1 = "";
@@ -378,9 +432,9 @@
                                     <label id="files'+response.manual.id+'">Files: '+response.uploads.count()+' </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
                                     <ul id="listaarquivos'+response.manual.id+'">';
                                     if(response.uploads){  
-                                        $('#listaarquivos'+response.manual.id).innerHtml = '<ul id="listaarquivos'+response.manual.id+'"></ul>';                                      
+                                        $("#listaarquivos"+response.manual.id).replaceWith = '<ul id="listaarquivos'+response.manual.id+'"></ul>';
                                         $.each(response.uploads,function(key,arq){                                           
-                                            $('#listaarquivos').append('li id="up'+arq.id+'">\
+                                            $("#listaarquivos").append('li id="up'+arq.id+'">\
                                             <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>\
                                             <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="delete_file_btn fas fa-trash"></i>\
                                             '+arq.nome_arquivo+'</li><br>');
@@ -389,8 +443,8 @@
                             linha2 = '</td>\
                                     <td>\
                                     <div class="btn-group">\
-                                    <button type="button" data-id="'+response.manual.id+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.manual.id+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div>\
                                     </td>\
                                     </tr>';   
@@ -403,20 +457,20 @@
         });//fim atualização do registro
     
         //inicio exibição do form AddManualForm
-        $('#AddManualForm').on('shown.bs.modal',function(){
-            $('.descricao').focus();
+        $("#AddManualForm").on('shown.bs.modal',function(){
+            $(".descricao").focus();
         });
         $(document).on('click','.Add_Manual_btn',function(e){
-            e.preventDefault();
-            $('#myform').trigger('reset');
-            $('#AddManualForm').modal('show');
-            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
+            e.preventDefault();            
+            $("#addform").trigger('reset');
+            $("#AddManualForm").modal('show');
+            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
         });//fim exibição do form AddManualForm
 
          //inicio reconfigura o option selected do select html
          $('select[name="add_area_id"]').on('change',function(){
             var addoptarea = this.value;
-                      $('#add_area_id option')
+                      $("#add_area_id option")
                       .removeAttr('selected')
                       .filter('[value='+addoptarea+']')
                       .attr('selected',true);
@@ -425,14 +479,16 @@
     
         //inicio do envio do novo registro para o controller
         $(document).on('click','.add_manual_btn',function(e){
-            e.preventDefault();       
+            e.preventDefault();      
+            var loading = $("#imgadd");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');      
-            var opt = $('#add_area_id').val();
+            var opt = $("#add_area_id").val();
             var dataAdd = {
                 'area_conhecimento_id' : opt,
-                'descricao' : ($('.descricao').val()).trim(),
-                'objetivo' : ($('.objetivo').val()).trim(),
-                'manual' : ($('.manual').val()).trim(),
+                'descricao' : ($(".descricao").val()).trim(),
+                'objetivo' : ($(".objetivo").val()).trim(),
+                'manual' : ($(".manual").val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN
             }   
@@ -445,19 +501,20 @@
                 success:function(response){
                     if(response.status==400){
                         //erros
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                        $('#saveform_errList').addClass('alert alert-danger');
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                        $("#saveform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#saveform_errList').append('<li>'+err_values+'</li>');
-                        });                    
+                            $("#saveform_errList").append('<li>'+err_values+'</li>');
+                        });       
+                        loading.hide();
                     }else{                    
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                        $('#success_message').html('<div id="success_message"></div>');
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
-    
-                        $('#myform').trigger('reset');
-                        $('#AddManualForm').modal('hide');
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                        $("#success_message").html('<div id="success_message"></div>');
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
+                        $("#addform").trigger('reset');
+                        $("#AddManualForm").modal('hide');
     
                         //atualizando a tr da tabela html                                   
                         var tupla = "";
@@ -473,13 +530,13 @@
                                     </td>\
                                     <td>\
                                     <div class="btn-group">\
-                                    <button type="button" data-id="'+response.manual.id+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none;"></button>\
-                                    <button type="button" data-id="'+response.manual.id+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none;"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none;"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none;"></button>\
                                     </div>\
                                     </td>\
                                     </tr>'; 
-                        if(!$('#nadaencontrado').html==""){
-                            $('#nadaencontrado').remove();
+                        if(!$("#nadaencontrado").html==""){
+                            $("#nadaencontrado").remove();
                         }                        
                             tupla = linha0+linha1;                                                       
                          $("#novo").replaceWith(tupla);                                         
@@ -494,6 +551,7 @@
     $(document).on('click','.delete_file_btn',function(e){                                                   
         e.preventDefault();
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        var linklogo = "{{asset('storage')}}";
         var id = $(this).data("id");        
         var vfilename = ($(this).data("filename")).trim();
         Swal.fire({
@@ -505,7 +563,7 @@
                 },
                 title:vfilename,
                 text: "Deseja excluir?",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: linklogo+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -525,15 +583,15 @@
                         },
                         success:function(response){
                             if(response.status==200){                                     
-                                $('#success_message').html('<div id="success_message"></div>');
-                                $('#success_message').addClass('alert alert-success');
-                                $('#success_message').text(response.message);                       
+                                $("#success_message").replaceWith('<div id="success_message"></div>');
+                                $("#success_message").addClass('alert alert-success');
+                                $("#success_message").text(response.message);                       
                                 //atualiza qtd arquivos
                                 var labelhtml = '<label id="files'+response.manualid+'">Files: '+response.totalfiles+' </label>';
                                 $("#files"+response.manualid).replaceWith(labelhtml);                            
                                 //remove li correspondente na td da tabela html
-                                $('#up'+id).remove();    
-                                $('#viewer'+id).remove();
+                                $("#up"+id).remove();    
+                                $("#viewer"+id).remove();
                         }
                     } 
                 });
@@ -581,9 +639,9 @@
             
             var id = $(this).data("manualid");        
     
-            $('#uploadmyform').trigger('reset');
-            $('#uploadPDFModal').modal('show');       
-            $('#uploadform_errList').html('<ul id="uploadform_errList"></ul>');                  
+            $("#uploadmyform").trigger('reset');
+            $("#uploadPDFModal").modal('show');       
+            $("#uploadform_errList").replaceWith('<ul id="uploadform_errList"></ul>');                  
             $.ajaxSetup({
                         headers:{
                             'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
@@ -595,7 +653,7 @@
                 dataType:'json',            
                 success:function(response){
                     if(response.status==200){                                          
-                        $('#arquivo').attr('data-manualid',response.manual.id);                                                            
+                        $("#arquivo").attr('data-manualid',response.manual.id);                                                            
                     }
                 }            
             });
@@ -606,9 +664,9 @@
           //e.preventDefault();
           var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");      
           var formData = new FormData();
-          var id = $('#arquivo').data("manualid");            
-          let TotalFiles = $('#arquivo')[0].files.length;                        
-          let files = $('#arquivo')[0];      
+          var id = $("#arquivo").data("manualid");            
+          let TotalFiles = $("#arquivo")[0].files.length;                        
+          let files = $("#arquivo")[0];      
           
           if(TotalFiles > 0){
           // Append data       
@@ -631,20 +689,20 @@
             async:true,                                                                                   
             success: function(response){                              
                   if(response.status==200){     
-                      $('#uploadform_errList').html('<ul id="uploadform_errList"></ul>');    
-                      $('#success_message').html('<div id="success_message"></div>');                  
-                      $('#success_message').addClass('alert alert-success');
-                      $('#success_message').text(response.message);           
-                      $('#uploadmyform').trigger('reset');
-                      $('#uploadPDFModal').modal('hide');
+                      $("#uploadform_errList").replaceWith('<ul id="uploadform_errList"></ul>');    
+                      $("#success_message").replaceWith('<div id="success_message"></div>');                  
+                      $("#success_message").addClass('alert alert-success');
+                      $("#success_message").text(response.message);           
+                      $("#uploadmyform").trigger('reset');
+                      $("#uploadPDFModal").modal('hide');
                       var labelhtml = '<label id="files'+response.manualid+'">Files: '+response.totalfiles+' </label>';
-                     $('#files'+response.manualid).replaceWith(labelhtml);                                         
+                     $("#files"+response.manualid).replaceWith(labelhtml);                                         
                       $.each(response.arquivos,function(key,arq){
-                      $('#up'+arq.id).remove();
+                      $("#up"+arq.id).remove();
                        var item = '<li id="up'+arq.id+'">\
                                 <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>\
                                 <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="delete_file_btn fas fa-trash"></i>'+arq.nome_arquivo+'</li><br>';                                
-                       $('#listaarquivos'+response.manualid).append(item);                
+                       $("#listaarquivos"+response.manualid).append(item);
                        });     
               } 
             }
@@ -656,11 +714,11 @@
     
     ///tooltip
     $(function(){             
-        $('.Add_Manual_btn').tooltip();
-        $('.pesquisa_btn').tooltip();        
-        $('.upload_files_btn').tooltip();                
-        $('.delete_manual_btn').tooltip();
-        $('.edit_manual_btn').tooltip();    
+        $(".Add_Manual_btn").tooltip();
+        $(".pesquisa_btn").tooltip();        
+        $(".upload_files_btn").tooltip();                
+        $(".delete_manual_btn").tooltip();
+        $(".edit_manual_btn").tooltip();    
     });
     ///fim tooltip
 

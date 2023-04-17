@@ -29,7 +29,7 @@
             </div>
             <div class="modal-footer">
                 <button class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button class="btn btn-primary add_tema">Salvar</button>
+                <button class="btn btn-primary add_tema"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -65,7 +65,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_tema">Atualizar</button>
+                <button type="button" class="btn btn-primary update_tema"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -167,8 +167,8 @@ $(document).ready(function(){
                     if(response.status==200){
                         //remove a linha correspondente
                         $("#tema"+id).remove();
-                        $('#success_message').addClass("alert alert-success");
-                        $('#success_message').text(response.message);
+                        $("#success_message").addClass("alert alert-success");
+                        $("#success_message").text(response.message);
                     }
                 }
             });
@@ -177,13 +177,13 @@ $(document).ready(function(){
     //fim delete Tema
 //Início chamada EditTemaModal
 $('#EditTemaModal').on('shown.bs.modal',function(){
-        $('.titulo').focus();
+        $(".titulo").focus();
     });
     $(document).on('click','.edit_tema_btn',function(e){
         e.preventDefault();
         var id = $(this).data("id");
-        $('#editform').trigger('reset');
-        $('#EditTemaModal').modal('show');
+        $("#editform").trigger('reset');
+        $("#EditTemaModal").modal('show');
 
         $.ajaxSetup({
             headers:{
@@ -196,9 +196,9 @@ $('#EditTemaModal').on('shown.bs.modal',function(){
             url:'edit/'+id,
             success:function(response){
                 if(response.status==200){
-                    $('#edit_tema_id').val(response.tema.id);
-                    $('.titulo').val(response.tema.titulo);
-                    $('.descricao').val(response.tema.descricao);
+                    $("#edit_tema_id").val(response.tema.id);
+                    $(".titulo").val(response.tema.titulo);
+                    $(".descricao").val(response.tema.descricao);
                     //$('.slug').val(response.tema.slug);
                 }
             }
@@ -208,11 +208,12 @@ $('#EditTemaModal').on('shown.bs.modal',function(){
     //Início processo update do tema
     $(document).on('click','.update_tema',function(e){
         e.preventDefault();
-        $(this).text("Atualizando...");
-        var id = $('#edit_tema_id').val();
+        var loading = $("#imgedit");
+            loading.show();
+        var id = $("#edit_tema_id").val();
         var data = {
-            'titulo':$('#edit_titulo').val(),
-            'descricao':$('#edit_descricao').val(),
+            'titulo':$("#edit_titulo").val(),
+            'descricao':$("#edit_descricao").val(),
             //'slug':$('#edit_slug').val(),
         }
         $.ajaxSetup({
@@ -229,26 +230,26 @@ $('#EditTemaModal').on('shown.bs.modal',function(){
             success:function(response){
                 if(response.status==400){
                     //erros
-                    $('#updateform_errList').html("");
-                    $('#updateform_errList').addClass('alert alert-danger');
+                    $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                    $("#updateform_errList").addClass('alert alert-danger');
                     $.each(response.errors,function(key,err_values){
-                        $('#updateform_errList').append('<li>'+err_values+'</li>');
+                        $("#updateform_errList").append('<li>'+err_values+'</li>');
                     });
-                    $(this).text("Atualizado");
+                    loading.hide();
                 }else if(response.status==404){
                     //Não localizado
-                    $('#updateform_errList').html("");
-                    $('#success_message').addClass('alert alert-warning');
-                    $('#success_message').text(response.message);
-                    $(this).text("Atualizado");
+                    $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                    $("#success_message").addClass('alert alert-warning');
+                    $("#success_message").text(response.message);
+                    loading.hide();
                 }else{
                     //Êxito na operação
-                    $('#updateform_errList').html("");
-                    $('#success_message').addClass('alert alert-success');
-                    $('#success_message').text(response.message);
-                    $(this).text("Atualizado");
-                    $('#editform').trigger('reset');
-                    $('#EditTemaModal').modal('hide');
+                    $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                    $("#success_message").addClass('alert alert-success');
+                    $("#success_message").text(response.message);
+                    loading.hide();
+                    $("#editform").trigger('reset');
+                    $("#EditTemaModal").modal('hide');
                     //Atualizando a <tr> identificada na tabela html
              var datacriacao = new Date(response.tema.created_at).toLocaleString('pt-BR');
                     if(datacriacao=="31/12/1969 21:00:00"){
@@ -281,20 +282,22 @@ $('#EditTemaModal').on('shown.bs.modal',function(){
     //Fim processo update do tema
  //Chamar AddTemaModal
  $('#AddTemaModal').on('shown.bs.modal',function(){
-        $('.titulo').focus();
+        $(".titulo").focus();
     });
     $(document).on('click','.AddTemaModal_btn',function(e){
         e.preventDefault();
-        $('#addform').trigger('reset');
-        $('#AddTemaModal').modal('show');
+        $("#addform").trigger('reset');
+        $("#AddTemaModal").modal('show');
     });
     //Fim chamar AddTemaModal
     //Adicionar tema na base
     $(document).on('click','.add_tema',function(e){
         e.preventDefault();
+        var loading = $("#imgadd");
+            loading.show();
         var data = {
-            'titulo':$('.titulo').val(),
-            'descricao':$('.descricao').val(),
+            'titulo':$(".titulo").val(),
+            'descricao':$(".descricao").val(),
             //'slug':$('.slug').val(),
         }
         $.ajaxSetup({
@@ -310,18 +313,20 @@ $('#EditTemaModal').on('shown.bs.modal',function(){
             success:function(response){
                 if(response.status==400){
                     //erros
-                    $('#saveform_errList').html("");
-                    $('#saveform_errList').addClass('alert alert-danger');
+                    $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                    $("#saveform_errList").addClass('alert alert-danger');
                     $.each(response.errors,function(key,err_values){
-                        $('#saveform_errList').append('<li>'+err_values+'</li>');
-                    });                    
+                        $("#saveform_errList").append('<li>'+err_values+'</li>');
+                    });         
+                    loading.hide();
                 }else{
                     //sucesso                    
-                    $('#saveform_errList').html("");
-                    $('#success_message').addClass('alert alert-success');
-                    $('#success_message').text(response.message);
-                    $('#addform').trigger('reset');
-                    $('#AddTemaModal').modal('hide');
+                    $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                    $("#success_message").addClass('alert alert-success');
+                    $("#success_message").text(response.message);
+                    loading.hide();
+                    $("#addform").trigger('reset');
+                    $("#AddTemaModal").modal('hide');
                     //formata data                    
    var datacriacao = new Date(response.tema.created_at).toLocaleString('pt-BR');          
                     if(datacriacao=="31/12/1969 21:00:00"){
@@ -347,11 +352,11 @@ $('#EditTemaModal').on('shown.bs.modal',function(){
                                style="background:transparent;border:none;"></button>\
                                </div></td>\
                                </tr>';
-                    if(!$('#nadaencontrado').html()=="")
+                    if(!$("#nadaencontrado").html()=="")
                     {
-                        $('#nadaencontrado').remove();
+                        $("#nadaencontrado").remove();
                     }
-                    $('#lista_tema').append(linhacriada);
+                    $("#lista_tema").append(linhacriada);
                 }                
             }
         });

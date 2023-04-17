@@ -63,8 +63,10 @@ class ProjetoController extends Controller
                 'nome_projeto' => strtoupper($request->input('nome_projeto')),             
             ];            
             $projeto = $this->projeto->create($data);          
+            $user = auth()->user();
             return response()->json([
                 'projeto' => $projeto,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Projeto adicionado com sucesso!',
             ]);
@@ -81,10 +83,12 @@ class ProjetoController extends Controller
      */
     public function edit(int $id)
     {             
-        $proj = $this->projeto->find($id);                
+        $proj = $this->projeto->find($id);   
+        $user = auth()->user();
 
         return response()->json([
             'projeto' => $proj,
+            'user' => $user,
             'status' => 200,
         ]);
     }
@@ -112,8 +116,10 @@ class ProjetoController extends Controller
                 $projeto->nome_projeto = strtoupper($request->input('nome_projeto'));            
                 $projeto->update();    
                 $proj = Projeto::find($id);
+                $user = auth()->user();
                 return response()->json([
                     'projeto'  => $proj,
+                    'user' => $user,
                     'status' => 200,
                     'message' => 'Projeto atualizado com sucesso!',
                 ]);

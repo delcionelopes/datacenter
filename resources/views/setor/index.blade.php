@@ -10,27 +10,31 @@
 }
 </style>
 
-<!--AddProjetoModal-->
-<div class="modal fade animate__animated animate__bounce animate__faster" id="AddProjetoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<!--AddSetorModal-->
+<div class="modal fade animate__animated animate__bounce animate__faster" id="AddSetorModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
-                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Projeto</h5>
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Setor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
                 </button>
             </div>
             <div class="modal-body form-horizontal">
-                <form id="addform" name="myform" class="form-horizontal" role="form">
+                <form id="addform" name="addform" class="form-horizontal" role="form">
                     <ul id="saveform_errList"></ul>
                     <div class="form-group mb-3">
+                        <label for="">Sigla</label>
+                        <input type="text" class="sigla form-control">
+                    </div>
+                    <div class="form-group mb-3">
                         <label for="">Nome</label>
-                        <input type="text" class="nome_projeto form-control">
+                        <input type="text" class="nome form-control">
                     </div>
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" >Fechar</button>
-                    <button type="button" class="btn btn-primary add_projeto"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                    <button type="button" class="btn btn-primary add_setor"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                 </div>
             </div>
         </div>
@@ -38,37 +42,41 @@
     </div>
 
 </div>
-<!--Fim AddProjetoModal-->
+<!--Fim AddSetorModal-->
 
-<!--EditProjetoModal-->
-<div class="modal fade animate__animated animate__bounce animate__faster" id="EditProjetoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<!--EditSetorModal-->
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EditSetorModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
-                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Projeto</h5>
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Setor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
                 </button>
             </div>
             <div class="modal-body form-horizontal">
-                <form id="editform" name="myform" class="form-horizontal" role="form">
+                <form id="editform" name="editform" class="form-horizontal" role="form">
                     <ul id="updateform_errList"></ul>
-                    <input type="hidden" id="edit_projeto_id">
+                    <input type="hidden" id="edit_setor_id">
+                    <div class="form-group mb-3">
+                        <label for="">Sigla</label>
+                        <input type="text" id="edit_sigla" class="sigla form-control">
+                    </div>
                     <div class="form-group mb-3">
                         <label for="">Nome</label>
-                        <input type="text" id="edit_nome_projeto" class="nome_projeto form-control">
+                        <input type="text" id="edit_nome" class="nome form-control">
                     </div>
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary update_projeto"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                    <button type="button" class="btn btn-primary update_setor"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
     </div>
 
 </div>
-<!--Fim EditProjetoModal-->
+<!--Fim EditSetorModal-->
 
 <!--index-->
 @auth
@@ -76,14 +84,14 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('admin.projeto.index')}}" class="form-search" method="GET">
+                <form action="{{route('admin.setor.index')}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
-                            <input type="text" name="pesquisanome" class="form-control rounded float-left" placeholder="Nome do projeto" aria-label="Search" aria-describedby="search-addon">                            
+                            <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do setor" aria-label="Search" aria-describedby="search-addon">
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                 <i class="fas fa-search"></i>
                             </button>                                                                                                             
-                            <button type="button" class="AddProjetoModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="AddSetorModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></button>
                         </div>                        
                     </div>                    
                 </form>                                
@@ -91,19 +99,21 @@
             <table class="table table-hover">
                 <thead class="sidebar-dark-primary" style="color: white">
                     <tr>
-                        <th>PROJETOS</th>                       
-                        <TH>AÇÕES</TH>
+                        <th>SIGLA</th>                       
+                        <th>NOME</th>                       
+                        <th>AÇÕES</th>
                     </tr>
                 </thead>
-                <tbody id="lista_projeto">
+                <tbody id="lista_setor">
                 <tr id="novo" style="display:none;"></tr>
-                    @forelse($projetos as $projeto)
-                    <tr id="projeto{{$projeto->id}}">
-                        <th scope="row">{{$projeto->nome_projeto}}</th>                       
+                    @forelse($setores as $setor)
+                    <tr id="setor{{$setor->idsetor}}">
+                        <th scope="row">{{$setor->sigla}}</th>                       
+                        <td>{{$setor->nome}}</td>
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$projeto->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeprojeto="{{$projeto->nome_projeto}}" class="edit_projeto fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button type="button" data-id="{{$projeto->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeprojeto="{{$projeto->nome_projeto}}" class="delete_projeto_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button type="button" data-id="{{$setor->idsetor}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-sigla="{{$setor->sigla}}" class="edit_setor fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button type="button" data-id="{{$setor->idsetor}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-sigla="{{$setor->sigla}}" class="delete_setor_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -115,7 +125,7 @@
                 </tbody>
             </table>
             <div class="d-flex hover justify-content-center">
-                {{$projetos->links()}}
+                {{$setores->links()}}
     </div>
 </div>
 @else 
@@ -133,15 +143,15 @@
 <script type="text/javascript">
     //inicio do escopo geral
     $(document).ready(function(){
-        //inicio delete projeto
-        $(document).on('click','.delete_projeto_btn',function(e){
+        //inicio delete
+        $(document).on('click','.delete_setor_btn',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var link = "{{asset('storage')}}";
-            var id = $(this).data("id");
             var admin = $(this).data("admin");
             var setoradmin = $(this).data("setoradmin");
-            var nomeprojeto = ($(this).data("nomeprojeto")).trim();
+            var id = $(this).data("id");
+            var sigla = ($(this).data("sigla")).trim();
             if(admin){
             Swal.fire({
                 showClass: {
@@ -150,7 +160,7 @@
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 },
-                title:nomeprojeto,
+                title:sigla,
                 text: "Deseja excluir?",
                 imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
@@ -162,7 +172,7 @@
              }).then((result)=>{
              if(result.isConfirmed){        
                 $.ajax({
-                    url:'delete-projeto/'+id,
+                    url:'delete-setor/'+id,
                     type:'POST',
                     dataType:'json',
                     data:{
@@ -173,7 +183,7 @@
                     success:function(response){
                         if(response.status==200){
                             //remove a linha correspondente da tabela html
-                            $("#projeto"+id).remove();      
+                            $("#setor"+id).remove();      
                             $("#success_message").replaceWith('<div id="success_message"></div>');
                             $("#success_message").addClass('alert alert-success');
                             $("#success_message").text(response.message);         
@@ -186,7 +196,7 @@
                 });
             }                                       
         
-        });                   
+        });                        
     }else{
         Swal.fire({
                 showClass: {
@@ -195,7 +205,7 @@
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 },
-                title:nomeprojeto,
+                title:sigla,
                 text: "Você não pode excluir este registro. Procure um administrador!",
                 imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
@@ -208,26 +218,25 @@
              if(result.isConfirmed){  
              }
             })
-
-    }     
+    }
         
-        });//fim delete projeto
+        });//fim delete
     
-        //início exibição edit projeto
-        $("#EditProjetoModal").on('shown.bs.modal',function(){
-            $("#edit_nome_projeto").focus();
+        //início exibição edit
+        $("#EditSetorModal").on('shown.bs.modal',function(){
+            $(".sigla").focus();
         });
     
-        $(document).on('click','.edit_projeto',function(e){
+        $(document).on('click','.edit_setor',function(e){
             e.preventDefault();            
-            var id = $(this).data("id");             
+            var id = $(this).data("id");
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
             var setoradmin = $(this).data("setoradmin");
-            var nome = $(this).data("nomeprojeto");
+            var sigla = $(this).data("sigla");
             if(admin){
             $("#editform").trigger('reset');
-            $("#EditProjetoModal").modal('show');
+            $("#EditSetorModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
     
             $.ajaxSetup({
@@ -239,12 +248,14 @@
                 $.ajax({
                     type:'GET',
                     dataType:'json',
-                    url:'edit-projeto/'+id,
+                    url:'edit-setor/'+id,
                     success:function(response){
                         if(response.status==200){  
-                            var vnomeprojeto = (response.projeto.nome_projeto).trim();
-                            $(".nome_projeto").val(vnomeprojeto);
-                            $("#edit_projeto_id").val(response.projeto.id);
+                            var vsigla = (response.setor.sigla).trim();
+                            var vnome = (response.setor.nome).trim();
+                            $(".sigla").val(vsigla);
+                            $(".nome").val(vnome);
+                            $("#edit_setor_id").val(response.setor.idsetor);
                         }
                     }
                 });
@@ -256,7 +267,7 @@
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 },
-                title:nome,
+                title:sigla,
                 text: "Você não pode alterar este registro. Procure um administrador!",
                 imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
@@ -270,16 +281,17 @@
              }
             })
             }
-        });//fim exibição edit projeto
+        });//fim exibição edit
     
-        //inicio da atualização do projeto
-        $(document).on('click','.update_projeto',function(e){            
-            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        //inicio da atualização
+        $(document).on('click','.update_setor',function(e){
             var loading = $("#imgedit");
                 loading.show();
-            var id = $("#edit_projeto_id").val();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var id = $("#edit_setor_id").val();
             var data = {
-                'nome_projeto' : ($("#edit_nome_projeto").val()).trim(),
+                'sigla' : ($("#edit_sigla").val()).trim(),
+                'nome' : ($("#edit_nome").val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }            
@@ -287,7 +299,7 @@
                     type:'POST',
                     data:data,
                     dataType:'json',
-                    url:'update-projeto/'+id,
+                    url:'update-setor/'+id,
                     success:function(response){
                         if(response.status==400){
                             //erros
@@ -311,17 +323,18 @@
                             loading.hide();
     
                             $("#editform").trigger('reset');
-                            $("#EditProjetoModal").modal('hide');    
+                            $("#EditSetorModal").modal('hide');    
                           
     
-                            var linha = '<tr id="projeto'+response.projeto.id+'">\
-                                    <th scope="row">'+response.projeto.nome_projeto+'</th>\
+                            var linha = '<tr id="setor'+response.setor.idsetor+'">\
+                                    <th scope="row">'+response.setor.sigla+'</th>\
+                                    <td>'+response.setor.nome+'</td>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="edit_projeto fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="delete_projeto_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.setor.idsetor+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-sigla="'+response.setor.sigla+'" class="edit_setor fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.setor.idsetor+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-sigla="'+response.setor.sigla+'" class="delete_setor_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';    
-                            $("#projeto"+id).replaceWith(linha); 
+                            $("#setor"+id).replaceWith(linha); 
     
     
                         }
@@ -332,15 +345,15 @@
         });//fim da atualização do projeto
     
     //exibe form de adição de registro
-    $("#AddProjetoModal").on('shown.bs.modal',function(){
-            $(".nome_projeto").focus();
+    $("#AddSetorModal").on('shown.bs.modal',function(){
+            $(".sigla").focus();
         });
     
-    $(document).on('click','.AddProjetoModal_btn',function(e){                  
+    $(document).on('click','.AddSetorModal_btn',function(e){                  
             e.preventDefault();       
             
             $("#addform").trigger('reset');
-            $("#AddProjetoModal").modal('show');               
+            $("#AddSetorModal").modal('show');               
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>'); 
     
         });
@@ -349,19 +362,20 @@
     
     
         //inicio da adição de projeto
-        $(document).on('click','.add_projeto',function(e){
+        $(document).on('click','.add_setor',function(e){
             e.preventDefault();
-            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var loading = $("#imgadd");
                 loading.show();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var data = {
-                'nome_projeto' : ($(".nome_projeto").val()).trim(),
+                'sigla' : ($(".sigla").val()).trim(),
+                'nome' : ($(".nome").val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }    
                 $.ajax({
                     type:'POST',
-                    url:'adiciona-projeto',
+                    url:'adiciona-setor',
                     data:data,
                     dataType:'json',
                     success:function(response){
@@ -380,18 +394,19 @@
                             loading.hide();
     
                             $("#addform").trigger('reset');
-                            $("#AddProjetoModal").modal('hide');
+                            $("#AddSetorModal").modal('hide');
     
                         //adiciona a linha na tabela html                       
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>'; 
-                            linha1 = '<tr id="projeto'+response.projeto.id+'">\
-                                    <th scope="row">'+response.projeto.nome_projeto+'</th>\
+                            linha1 = '<tr id="setor'+response.setor.idsetor+'">\
+                                    <th scope="row">'+response.setor.sigla+'</th>\
+                                    <td>'+response.setor.nome+'</td>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="edit_projeto fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="delete_projeto_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.setor.idsetor+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-sigla="'+response.setor.sigla+'" class="edit_setor fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.setor.idsetor+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-sigla="'+response.setor.sigla+'" class="delete_setor_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';
                         if(!$("#nadaencontrado").html==""){
@@ -402,14 +417,14 @@
                         }
                     }
                 });
-        });//fim da adição de projeto
+        });//fim da adição de registro
     
     ///tooltip
     $(function(){             
-        $(".AddProjetoModal_btn").tooltip();
+        $(".AddSetorModal_btn").tooltip();
         $(".pesquisa_btn").tooltip();        
-        $(".delete_projeto_btn").tooltip();
-        $(".edit_projeto").tooltip();    
+        $(".delete_setor_btn").tooltip();
+        $(".edit_setor").tooltip();    
     });
     ///fim tooltip
     

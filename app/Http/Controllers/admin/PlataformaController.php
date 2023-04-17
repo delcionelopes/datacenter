@@ -61,8 +61,10 @@ class PlataformaController extends Controller
                 'nome_plataforma' => strtoupper($request->input('nome_plataforma')),                           
             ];            
             $plataforma = $this->plataforma->create($data);
+            $user = auth()->user();
             return response()->json([
                 'plataforma' => $plataforma,
+                'user' => $user,
                 'status'  => 200,
                 'message' => 'Plataforma cadastrada com sucesso!',
             ]);
@@ -80,9 +82,11 @@ class PlataformaController extends Controller
     public function edit(int $id)
     {
         $p = $this->plataforma->find($id);
+        $user = auth()->user();
 
         return response()->json([
             'plataforma' => $p,
+            'user' => $user,
             'status' => 200,
         ]);
     }
@@ -111,9 +115,11 @@ class PlataformaController extends Controller
                 $plataforma->update();
                 
                 $p = Plataforma::find($id);
+                $user = auth()->user();
 
                 return response()->json([
                     'plataforma' => $p,
+                    'user' => $user,
                     'status'  => 200,
                     'message' => 'Plataforma atualizada com sucesso!',
                 ]);

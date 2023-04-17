@@ -21,7 +21,7 @@
                 </button>                
             </div>
             <div class="modal-body form-horizontal">
-                <form id="myform" name="myform" class="form-horizontal" role="form">
+                <form id="addform" name="addform" class="form-horizontal" role="form">
                     <ul id="saveform_errList"></ul>
                     <div class="form-group mb-3">
                         <label for="">Nome</label>
@@ -30,7 +30,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" >Fechar</button>
-                    <button type="button" class="btn btn-primary add_plataforma">Salvar</button>
+                    <button type="button" class="btn btn-primary add_plataforma"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                 </div>
             </div>
         </div>
@@ -50,7 +50,7 @@
                 </button>
             </div>
             <div class="modal-body form-horizontal">
-                <form id="myform" name="myform" class="form-horizontal" role="form">
+                <form id="editform" name="editform" class="form-horizontal" role="form">
                     <ul id="updateform_errList"></ul>
                     <input type="hidden" id="edit_plataforma_id">
                     <div class="form-group mb-3">
@@ -60,7 +60,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary update_plataforma">Atualizar</button>
+                    <button type="button" class="btn btn-primary update_plataforma"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
@@ -99,8 +99,8 @@
                         <th scope="row">{{$plataforma->nome_plataforma}}</th>                        
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$plataforma->id}}" class="edit_plataforma fas fa-edit" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button type="button" data-id="{{$plataforma->id}}" data-nomeplataforma="{{$plataforma->nome_plataforma}}" class="delete_plataforma_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button type="button" data-id="{{$plataforma->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeplataforma="{{$plataforma->nome_plataforma}}" class="edit_plataforma fas fa-edit" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button type="button" data-id="{{$plataforma->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeplataforma="{{$plataforma->nome_plataforma}}" class="delete_plataforma_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>  
@@ -134,8 +134,12 @@
         $(document).on('click','.delete_plataforma_btn',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var link = "{{asset('storage')}}";
             var id = $(this).data("id");
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
             var nomeplataforma = ($(this).data("nomeplataforma")).trim();
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -145,7 +149,7 @@
                 },
                 title:nomeplataforma,
                 text: "Deseja excluir?",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -167,30 +171,56 @@
                         if(response.status==200){                        
                             //remove a linha correspondente da tabela html
                             $("#plataforma"+id).remove();         
-                            $('#success_message').html('<div id="success_message"></div>');
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);         
+                            $("#success_message").replaceWith('<div id="success_message"></div>');
+                            $("#success_message").addClass('alert alert-success');
+                            $("#success_message").text(response.message);         
                         }
                     } 
                 });
             }                                       
         
         });                        
-        
+    }else{
+        Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:nomeplataforma,
+                text: "Você não pode excluir este registro. Procure um administrador!",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }
         });//fim delete plataforma
     
         //inicio exibição edit plataforma
-        $('#EditPlataformaModal').on('shown.bs.modal',function(){
-            $('#edit_nome_plataforma').focus();
+        $("#EditPlataformaModal").on('shown.bs.modal',function(){
+            $("#edit_nome_plataforma").focus();
         });
     
         $(document).on('click','.edit_plataforma',function(e){
             e.preventDefault();
     
             var id = $(this).data("id");
-            $('#myform').trigger('reset');
-            $('#EditPlataformaModal').modal('show');
-            $('#updateform_errList').html('<ul id="updateform_errList"></ul>'); 
+            var link = "{{asset('storage')}}";
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
+            var nome = $(this).data("nomeplataforma");
+            if(admin){
+            $("#editform").trigger('reset');
+            $("#EditPlataformaModal").modal('show');
+            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
     
             $.ajaxSetup({
                     headers:{
@@ -205,11 +235,34 @@
                     success:function(response){
                         if(response.status==200){
                             var vnomeplataforma = (response.plataforma.nome_plataforma).trim();
-                            $('.nome_plataforma').val(vnomeplataforma);
-                            $('#edit_plataforma_id').val(response.plataforma.id);
+                            $(".nome_plataforma").val(vnomeplataforma);
+                            $("#edit_plataforma_id").val(response.plataforma.id);
                         }
                     }
                 });
+
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:nome,
+                text: "Você não pode alterar este registro. Procure um administrador!",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
     
         });//fim exibição do edit plataforma
     
@@ -218,12 +271,14 @@
         $(document).on('click','.update_plataforma',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            $(this).text("Atualizando...");
+            
+            var loading = $("#imgedit");
+                loading.show();
     
-            var id = $('#edit_plataforma_id').val();
+            var id = $("#edit_plataforma_id").val();
     
             var data = {
-                'nome_plataforma' : ($('#edit_nome_plataforma').val()).trim(),
+                'nome_plataforma' : ($("#edit_nome_plataforma").val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }    
@@ -235,34 +290,34 @@
                     success:function(response){
                         if(response.status==400){
                             //erros
-                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>'); 
-                            $('#updateform_errList').addClass('alert alert-danger');
+                            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
+                            $("#updateform_errList").addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
-                                $('#updateform_errList').append('<li>'+err_values+'</li>');
+                                $("#updateform_errList").append('<li>'+err_values+'</li>');
                             });
-                            $('#update_plataforma').text("Atualizado");
+                            loading.hide();
                         }else if(response.status==404){
-                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>'); 
-                            $('#success_message').html('<div id="success_message"></div>');                          
-                            $('#success_message').addClass('alert alert-warning');
-                            $('#success_message').text(response.message);
-                            $('.update_plataforma').text("Atualizado");                        
+                            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
+                            $("#success_message").replaceWith('<div id="success_message"></div>');                          
+                            $("#success_message").addClass('alert alert-warning');
+                            $("#success_message").text(response.message);
+                            loading.hide();                        
                         }else{
-                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');        
-                            $('#success_message').html('<div id="success_message"></div>');                   
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);
-                            $('.update_plataforma').text("Atualizado");
+                            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');        
+                            $("#success_message").replaceWith('<div id="success_message"></div>');                   
+                            $("#success_message").addClass('alert alert-success');
+                            $("#success_message").text(response.message);
+                            loading.hide();
     
-                            $('#myform').trigger('reset');
-                            $('#EditPlataformaModal').modal('hide');
+                            $("#editform").trigger('reset');
+                            $("#EditPlataformaModal").modal('hide');
     
                               
                             var linha = '<tr id="plataforma'+response.plataforma.id+'">\
                                     <th scope="row">'+response.plataforma.nome_plataforma+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.plataforma.id+'" class="edit_plataforma fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.plataforma.id+'" data-nomeplataforma="'+response.plataforma.nome_plataforma+'" class="delete_plataforma_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.plataforma.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeplataforma="'+response.plataforma.nome_plataforma+'" class="edit_plataforma fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.plataforma.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeplataforma="'+response.plataforma.nome_plataforma+'" class="delete_plataforma_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';    
                             $("#plataforma"+id).replaceWith(linha); 
@@ -274,16 +329,16 @@
         });//fim da atualização da plataforma
     
     //exibe form de adição de registro
-    $('#AddPlataformaModal').on('shown.bs.modal',function(){
-            $('.nome_plataforma').focus();
+    $("#AddPlataformaModal").on('shown.bs.modal',function(){
+            $(".nome_plataforma").focus();
         });
     
     $(document).on('click','.AddPlataformaModal_btn',function(e){                  
             e.preventDefault();       
                                               
-            $('#myform').trigger('reset');
-            $('#AddPlataformaModal').modal('show');   
-            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');              
+            $("#addform").trigger('reset');
+            $("#AddPlataformaModal").modal('show');   
+            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');              
     
         });
     
@@ -295,8 +350,10 @@
         $(document).on('click','.add_plataforma',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var loading = $("#imgadd");
+                loading.show();
             var data = {
-                'nome_plataforma' : ($('.nome_plataforma').val()).trim(),
+                'nome_plataforma' : ($(".nome_plataforma").val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }        
@@ -308,19 +365,21 @@
                     dataType:'json',
                     success:function(response){
                         if(response.status==400){
-                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>'); 
-                            $('#saveform_errList').addClass('alert alert-danger');
+                            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>'); 
+                            $("#saveform_errList").addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
-                                $('#saveform_errList').append('<li>'+err_values+'</li>');
+                                $("#saveform_errList").append('<li>'+err_values+'</li>');
                             });
+                            loading.hide();
                         }else{
-                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');        
-                            $('#success_message').html('<div id="success_message"></div>');                 
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);
+                            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');        
+                            $("#success_message").replaceWith('<div id="success_message"></div>');                 
+                            $("#success_message").addClass('alert alert-success');
+                            $("#success_message").text(response.message);
+                            loading.hide();
     
-                            $('#myform').trigger('reset');
-                            $('#AddPlataformaModal').modal('hide');
+                            $("#addform").trigger('reset');
+                            $("#AddPlataformaModal").modal('hide');
     
                             //adiciona a linha na tabela html                            
                                              
@@ -331,12 +390,12 @@
                             linha1 = '<tr id="plataforma'+response.plataforma.id+'">\
                                     <th scope="row">'+response.plataforma.nome_plataforma+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.plataforma.id+'" class="edit_plataforma fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.plataforma.id+'" data-nomeplataforma="'+response.plataforma.nome_plataforma+'" class="delete_plataforma_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.plataforma.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeplataforma="'+response.plataforma.nome_plataforma+'" class="edit_plataforma fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.plataforma.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeplataforma="'+response.plataforma.nome_plataforma+'" class="delete_plataforma_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';     
-                        if(!$('#nadaencontrado').html==""){
-                            $('#nadaencontrado').remove();
+                        if(!$("#nadaencontrado").html==""){
+                            $("#nadaencontrado").remove();
                         }                        
                             tupla = linha0+linha1;
                         $("#novo").replaceWith(tupla);   
@@ -347,10 +406,10 @@
         });//fim da adição de plataforma
     ///tooltip
     $(function(){             
-        $('.AddPlataformaModal_btn').tooltip();
-        $('.pesquisa_btn').tooltip();        
-        $('.delete_plataforma_btn').tooltip();
-        $('.edit_plataforma').tooltip();    
+        $(".AddPlataformaModal_btn").tooltip();
+        $(".pesquisa_btn").tooltip();        
+        $(".delete_plataforma_btn").tooltip();
+        $(".edit_plataforma").tooltip();    
     });
     ///fim tooltip
     
