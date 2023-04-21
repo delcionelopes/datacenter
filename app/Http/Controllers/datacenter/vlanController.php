@@ -36,7 +36,12 @@ class vlanController extends Controller
                    ->where('nome_vlan','LIKE','%'.strtoupper($request->pesquisa).'%');
             $vlans = $query->orderByDesc('id')->paginate(6);
         }
-        $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
+        $users = $this->users->query()
+                             ->where('moderador','=','true')
+                             ->where('inativo','=','false')
+                             ->where('setor_idsetor','=',1)
+                             ->orderBy('name')
+                             ->get();
         return view('datacenter.vlan.index',[
             'vlans' => $vlans,
             'users' => $users,
@@ -69,10 +74,12 @@ class vlanController extends Controller
                 'nome_vlan' => strtoupper($request->input('nome_vlan')),                
             ];
             $vlan = $this->vlan->create($data); 
-            $u = $vlan->users;        
+            $u = $vlan->users;  
+            $user = auth()->user();
             return response()->json([
                 'vlan' => $vlan,
                 'users' => $u,
+                'user' => $user,
                 'status' => 200, 
                 'message' => 'Registro criado com sucesso!',
             ]);
@@ -123,9 +130,11 @@ class vlanController extends Controller
                         $vlan->update($data);                      
                         $v = Vlan::find($id);
                         $u = $v->users;
+                        $user = auth()->user();
                         return response()->json([
                             'vlan' => $v,
                             'users' => $u,
+                            'user' => $user,
                             'status' => 200, 
                             'message' => 'Registro alterado com sucesso!',
                         ]);
@@ -220,9 +229,11 @@ class vlanController extends Controller
             ];            
             $rede = $this->rede->create($data);          
             $vlan = $rede->vlan;
+            $user = auth()->user();
             return response()->json([
                 'vlan'  => $vlan,
                 'rede'  => $rede,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -257,6 +268,7 @@ public function storesenhavlan(Request $request, int $id){
                 'user' => $user,              
                 'vlan' => $v,
                 'users' => $u, 
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Senha foi criada com sucesso!',
             ]);
@@ -292,6 +304,7 @@ public function storesenhavlan(Request $request, int $id){
                 'user' => $user,                
                 'vlan' => $v,
                 'users' => $u,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Senha atualizada com sucesso!',
             ]);
@@ -316,9 +329,11 @@ public function editsenhavlan(int $id){
         }                
         $u = $vlan->users; 
         $s = Crypt::decrypt($vlan->senha);
+        $user = auth()->user();
         return response()->json([
             'status' => 200,   
             'senha' => $s,
+            'user' => $user,
             'vlan' => $vlan,
             'criador' => $criador,
             'alterador' => $alterador,
