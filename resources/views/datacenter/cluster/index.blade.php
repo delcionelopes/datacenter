@@ -40,7 +40,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_cluster">Salvar</button>
+                <button type="button" class="btn btn-primary add_cluster"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -82,7 +82,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_host">Salvar</button>
+                <button type="button" class="btn btn-primary add_host"><img id="imgaddhost" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -178,7 +178,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_virtualmachine">Salvar</button>
+                <button type="button" class="btn btn-primary add_virtualmachine"><img id="imgaddvm" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -216,7 +216,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_cluster">Atualizar</button>
+                <button type="button" class="btn btn-primary update_cluster"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -236,7 +236,7 @@
             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                 <i class="fas fa-search"></i>
             </button>        
-            <button type="button" class="AddClusterModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+            <button type="button" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddClusterModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                 <i class="fas fa-plus"></i>
             </button>                
             </div>            
@@ -263,10 +263,10 @@
                                    <div class="btn-group">                                        
                                         @if($cluster->hosts()->count())
                                         <form action="{{route('datacenter.host.index',['id' => $cluster->id])}}" method="get">
-                                        <button type="submit" data-id="{{$cluster->id}}" class="list_host_btn fas fa-server" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista HOSTS"> {{$cluster->hosts->count()}}</button>
+                                        <button type="submit" data-id="{{$cluster->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="list_host_btn fas fa-server" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista HOSTS"> {{$cluster->hosts->count()}}</button>
                                         </form>
                                         @else
-                                        <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Novo HOST"></button>
+                                        <button type="button" data-id="{{$cluster->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Novo HOST"></button>
                                         @endif
                                     </div>
                                 </td>
@@ -274,17 +274,17 @@
                                      <div class="btn-group">                                        
                                         @if($cluster->virtual_machines()->count())
                                         <form action="{{route('datacenter.vm.index',['id' => $cluster->id])}}" method="get">
-                                        <button type="submit" data-id="{{$cluster->id}}" class="list_vm_btn fas fa-network-wired" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista VMs"> {{$cluster->virtual_machines->count()}}</button>
+                                        <button type="submit" data-id="{{$cluster->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="list_vm_btn fas fa-network-wired" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista VMs"> {{$cluster->virtual_machines->count()}}</button>
                                         </form>
                                         @else
-                                        <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Nova VM"></button>
+                                        <button type="button" data-id="{{$cluster->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Nova VM"></button>
                                         @endif
                                     </div> 
                                 </td>                                                            
                                 <td>                                    
                                         <div class="btn-group">                                           
-                                            <button type="button" data-id="{{$cluster->id}}" class="edit_cluster fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar CLUSTER"></button>
-                                            <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="delete_cluster_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir CLUSTER"></button>
+                                            <button type="button" data-id="{{$cluster->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomecluster="{{$cluster->nome_cluster}}" class="edit_cluster fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar CLUSTER"></button>
+                                            <button type="button" data-id="{{$cluster->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomecluster="{{$cluster->nome_cluster}}" class="delete_cluster_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir CLUSTER"></button>
                                         </div>                                    
                                 </td>
                             </tr>                              
@@ -323,7 +323,11 @@ $(document).ready(function(){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
+            var link = "{{asset('storage')}}";
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
             var nomecluster = ($(this).data("nomecluster")).trim();
+            if((admin)&&(setoradmin==1)){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -333,7 +337,7 @@ $(document).ready(function(){
                 },
                 title:nomecluster,
                 text: "Deseja excluir?",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -355,31 +359,57 @@ $(document).ready(function(){
                         if(response.status==200){                        
                             //remove linha correspondente da tabela html
                             $("#cluster"+id).remove();        
-                            $('#success_message').html('<div id="success_message"></div>');
-                            $('#success_message').addClass('alert alert-success');                            
-                            $('#success_message').text(response.message);                             
+                            $("#success_message").replaceWith('<div id="success_message"></div>');
+                            $("#success_message").addClass('alert alert-success');                            
+                            $("#success_message").text(response.message);                             
                         }else{                    
-                            $('#success_message').html('<div id="success_message"></div>');
-                            $('#success_message').addClass('alert alert-danger');
-                            $('#success_message').text(response.message);                           
+                            $("#success_message").replaceWith('<div id="success_message"></div>');
+                            $("#success_message").addClass('alert alert-danger');
+                            $("#success_message").text(response.message);                           
                         }
                     } 
                 });
             }                                       
         
-        });                        
+        });                    
+    }else{
+        Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para excluir este registro. Procure um administrador do setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }    
         
         });  ///fim delete cluster
         $('#EditClusterModal').on('shown.bs.modal',function(){
-            $('#edit_nome_cluster').focus();
+            $("#edit_nome_cluster").focus();
         });
         $(document).on('click','.edit_cluster',function(e){  //início da exibição do form EditClusterModal de ambiente                
             e.preventDefault();
             
-            var id = $(this).data("id");                                   
-            $('#editmyform').trigger('reset');
-            $('#EditClusterModal').modal('show');    
-            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');             
+            var id = $(this).data("id");  
+            var link = "{{asset('storage')}}";
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
+            if((admin)&&(setoradmin==1)){
+            $("#editmyform").trigger('reset');
+            $("#EditClusterModal").modal('show');    
+            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');             
     
             $.ajaxSetup({
                     headers:{
@@ -395,29 +425,52 @@ $(document).ready(function(){
                 success: function(response){           
                     if(response.status==200){    
                         var vnomecluster = (response.cluster.nome_cluster).trim();
-                        $('.nome_cluster').val(vnomecluster);
+                        $(".nome_cluster").val(vnomecluster);
                         var vtotalmemoria = (response.cluster.total_memoria).trim();
-                        $('.total_memoria').val(vtotalmemoria);
+                        $(".total_memoria").val(vtotalmemoria);
                         var vtotalprocessador = (response.cluster.total_processador).trim();
-                        $('.total_processador').val(vtotalprocessador);
-                        $('#edit_cluster_id').val(response.cluster.id);                                                                                                       
+                        $(".total_processador").val(vtotalprocessador);
+                        $("#edit_cluster_id").val(response.cluster.id);                                                                                                       
                     }      
                 }
             });
+        }else{
+             Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para alterar este registro. Procure um administrador do setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+        }
     
         }); //fim da da exibição do form EditClusterModal
     
         $(document).on('click','.update_cluster',function(e){ //inicio da atualização de registro
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            $(this).text("Atualizando...");
+            var loading = $("#imgedit");
+                loading.show();
     
-            var id = $('#edit_cluster_id').val();        
+            var id = $("#edit_cluster_id").val();        
     
             var data = {
-                'nome_cluster' : ($('#edit_nome_cluster').val()).trim(),
-                'total_memoria': ($('#edit_total_memoria').val()).trim(),
-                'total_processador': ($('#edit_total_processador').val()).trim(),
+                'nome_cluster' : ($("#edit_nome_cluster").val()).trim(),
+                'total_memoria': ($("#edit_total_memoria").val()).trim(),
+                'total_processador': ($("#edit_total_processador").val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }    
@@ -430,30 +483,30 @@ $(document).ready(function(){
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                        $('#updateform_errList').addClass('alert alert-danger');
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#updateform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#updateform_errList').append('<li>'+err_values+'</li>');
+                            $("#updateform_errList").append('<li>'+err_values+'</li>');
                         });
     
-                        $('.update_cluster').text("Atualizado");
+                        loading.hide();
     
                     } else if(response.status==404){
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                        $('#success_message').html('<div id="success_message"></div>');                     
-                        $('#success_message').addClass('alert alert-warning');
-                        $('#success_message').text(response.message);
-                        $('.update_cluster').text("Atualizado");
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                     
+                        $("#success_message").addClass('alert alert-warning');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
                     } else {
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>'); 
-                        $('#success_message').html('<div id="success_message"></div>');                    
-                        $('#success_message').addClass("alert alert-success");
-                        $('#success_message').text(response.message);
-                        $('.update_cluster').text("Atualizado");                    
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                    
+                        $("#success_message").addClass("alert alert-success");
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#editmyform').trigger('reset');
-                        $('#EditClusterModal').modal('hide');                  
+                        $("#editmyform").trigger('reset');
+                        $("#EditClusterModal").modal('hide');                  
                         
                         location.reload();
                                     
@@ -468,13 +521,38 @@ $(document).ready(function(){
     
         //exibe form de adição de registro
         $('#AddClusterModal').on('shown.bs.modal',function(){
-            $('#nome_cluster').focus();
+            $("#nome_cluster").focus();
         });
         $(document).on('click','.AddClusterModal_btn',function(e){  //início da exibição do form AddClusterModal
-            e.preventDefault();             
-            $('#addmyform').trigger('reset');        
-            $('#AddClusterModal').modal('show');           
-            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');   
+            e.preventDefault();  
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            if(setoradmin==1){
+            $("#addmyform").trigger('reset');        
+            $("#AddClusterModal").modal('show');           
+            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');   
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para registrar um cluster. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
         });   
     
         //fim exibe form de adição de registro
@@ -482,10 +560,12 @@ $(document).ready(function(){
         $(document).on('click','.add_cluster',function(e){ //início da adição de Registro
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var loading = $("#imgadd");
+                loading.show();
             var data = {
-                'nome_cluster': ($('.nome_cluster').val()).trim(),
-                'total_memoria': ($('.total_memoria').val()).trim(),
-                'total_processador': ($('.total_processador').val()).trim(),
+                'nome_cluster': ($(".nome_cluster").val()).trim(),
+                'total_memoria': ($(".total_memoria").val()).trim(),
+                'total_processador': ($(".total_processador").val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }           
@@ -496,19 +576,21 @@ $(document).ready(function(){
                 data: data,                  
                 success: function(response){
                     if(response.status==400){
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                        $('#saveform_errList').addClass('alert alert-danger');
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                        $("#saveform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#saveform_errList').append('<li>'+err_values+'</li>');
+                            $("#saveform_errList").append('<li>'+err_values+'</li>');
                         });
+                        loading.hide();
                     } else {
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');      
-                        $('#success_message').html('<div id="success_message"></div>');                 
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);                                        
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');      
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                 
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#addmyform').trigger('reset');                    
-                        $('#AddClusterModal').modal('hide');                   
+                        $("#addmyform").trigger('reset');                    
+                        $("#AddClusterModal").modal('hide');                   
                         
                                          
                         var tupla = "";
@@ -519,26 +601,26 @@ $(document).ready(function(){
                                     <th scope="row">'+response.cluster.nome_cluster+'</th>\
                                     <td>\
                                         <div class="btn-group">\
-                                            <button type="button" data-id="'+response.cluster.id+'" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
+                                            <button type="button" data-id="'+response.cluster.id+'" data-setoradmin="'+response.user.setor_idsetor+'" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
                                         </div>\
                                     </td>\
                                     <td>\
                                     <div class="btn-group">\
-                                        <button type="button" data-id="'+response.cluster.id+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
+                                        <button type="button" data-id="'+response.cluster.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
                                     </div>\
                                 </td>\
                                     <td>\
                                             <div class="btn-group">\
-                                                <button type="button" data-id="'+response.cluster.id+'" class="edit_cluster fas fa-edit" style="background:transparent;border:none;"></button>\
-                                                <button type="button" data-id="'+response.cluster.id+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="delete_cluster_btn fas fa-trash" style="background:transparent;border:none;"></button>\
+                                                <button type="button" data-id="'+response.cluster.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="edit_cluster fas fa-edit" style="background:transparent;border:none;"></button>\
+                                                <button type="button" data-id="'+response.cluster.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="delete_cluster_btn fas fa-trash" style="background:transparent;border:none;"></button>\
                                             </div>\
                                     </td>\
                                 </tr>';
-                        if(!$('#nadaencontrado').html==""){
-                            $('#nadaencontrado').remove();
+                        if(!$("#nadaencontrado").html==""){
+                            $("#nadaencontrado").remove();
                         }
                             tupla = linha0+linha1;
-                            $('#novo').replaceWith(tupla);
+                            $("#novo").replaceWith(tupla);
                             
                     }
                     
@@ -549,15 +631,40 @@ $(document).ready(function(){
     
         ///Inicio Novo Host do cluster caso não possua nenhum
         $('#AddHostModal').on('shown.bs.modal',function(){
-            $('#datacenter').focus();
+            $("#datacenter").focus();
         });
         $(document).on('click','.novo_host_btn',function(e){
-            e.preventDefault();        
-            $('#addform').trigger('reset');
-            $('#AddHostModal').modal('show');                                       
-            $('.cluster').val(($(this).data("nomecluster")).trim());
-            $('#add_cluster_id').val($(this).data("id"));
-            $('#saveformHost_errList').html('<ul id="saveformHost_errList"></ul>');
+            e.preventDefault();
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            if(setoradmin==1){
+            $("#addform").trigger('reset');
+            $("#AddHostModal").modal('show');                                       
+            $(".cluster").val(($(this).data("nomecluster")).trim());
+            $("#add_cluster_id").val($(this).data("id"));
+            $("#saveformHost_errList").replaceWith('<ul id="saveformHost_errList"></ul>');
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para registrar um novo host. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
         });
         //Fim Novo Host do cluster caso não possua nenhum
     
@@ -565,12 +672,14 @@ $(document).ready(function(){
         $(document).on('click','.add_host',function(e){                
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var loading = $("#imgaddhost");
+                loading.show();
             var data = {
-                'datacenter': ($('.datacenter').val()).trim(),
+                'datacenter': ($(".datacenter").val()).trim(),
                 'ip': ($('.ip').val()).trim(),
-                'cluster': ($('.cluster').val()).trim(),
-                'obs_host': ($('.obs_host').val()).trim(),
-                'cluster_id': $('#add_cluster_id').val(),
+                'cluster': ($(".cluster").val()).trim(),
+                'obs_host': ($(".obs_host").val()).trim(),
+                'cluster_id': $("#add_cluster_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }              
@@ -582,19 +691,21 @@ $(document).ready(function(){
                 data: data,                  
                 success: function(response){
                     if(response.status==400){
-                        $('#saveformHost_errList').html('<ul id="saveformHost_errList"></ul>');
-                        $('#saveformHost_errList').addClass('alert alert-danger');
+                        $("#saveformHost_errList").replaceWith('<ul id="saveformHost_errList"></ul>');
+                        $("#saveformHost_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#saveformHost_errList').append('<li>'+err_values+'</li>');
+                            $("#saveformHost_errList").append('<li>'+err_values+'</li>');
                         });
+                        loading.hide();
                     } else {
-                        $('#saveformHost_errList').html('<ul id="saveformHost_errList"></ul>');
-                        $('#success_message').html('<div id="success_message"></div>');                   
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);                                        
+                        $("#saveformHost_errList").replaceWith('<ul id="saveformHost_errList"></ul>');
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                   
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);                                        
+                        loading.hide();
     
-                        $('#addform').trigger('reset');                    
-                        $('#AddHostModal').modal('hide');
+                        $("#addform").trigger('reset');                    
+                        $("#AddHostModal").modal('hide');
                         
                         location.reload();
                                    
@@ -608,21 +719,21 @@ $(document).ready(function(){
         //inicio reconfigura o option selected do select html
         $('select[name="vm_projeto_id"]').on('change',function(){
             var optprojeto = this.value;
-            $('#vm_projeto_id option')
+            $("#vm_projeto_id option")
             .removeAttr('selected')
             .filter('[value='+optprojeto+']')
             .attr('selected',true);
         });
         $('select[name="vm_orgao_id"]').on('change',function(){
             var optorgao = this.value;
-            $('#vm_orgao_id option')
+            $("#vm_orgao_id option")
             .removeAttr('selected')
             .filter('[value='+optorgao+']')
             .attr('selected',true);
         });
         $('select[name="vm_ambiente_id"]').on('change',function(){
             var optambiente = this.value;
-            $('#vm_ambiente_id option')
+            $("#vm_ambiente_id option")
             .removeAttr('selected')
             .filter('[value='+optambiente+']')
             .attr('selected',true);
@@ -631,17 +742,42 @@ $(document).ready(function(){
 
         ///Inicio Nova VM do cluster caso não possua nenhuma
         $('#AddVirtualMachineModal').on('shown.bs.modal',function(){
-            $('.vm_nome_vm').focus();
+            $(".vm_nome_vm").focus();
         });
         $(document).on('click','.novo_vm_btn',function(e){
             e.preventDefault();
             var labelHtml = ($(this).data("nomecluster")).trim();
-            $('#vm_addform').trigger('reset');
-            $('#AddVirtualMachineModal').modal('show');
-            $('#vm_add_cluster_id').val($(this).data("id"));
-            $('#vm_nome_cluster').html('<Label id="vm_nome_cluster" style="font-style:italic;">'+labelHtml+'</Label>');
-            $('#input_nome_cluster').val( ($(this).data("nomecluster")).trim());
-            $('#vm_saveform_errList').html('<ul id="vm_saveform_errList"></ul>'); 
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            if(setoradmin==1){
+            $("#vm_addform").trigger('reset');
+            $("#AddVirtualMachineModal").modal('show');
+            $("#vm_add_cluster_id").val($(this).data("id"));
+            $("#vm_nome_cluster").replaceWith('<Label id="vm_nome_cluster" style="font-style:italic;">'+labelHtml+'</Label>');
+            $("#input_nome_cluster").val( ($(this).data("nomecluster")).trim());
+            $("#vm_saveform_errList").replaceWith('<ul id="vm_saveform_errList"></ul>'); 
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para registrar uma VIRTUAL MACHINE. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
 
         });
         ///Fim Nova VM do cluster caso não possua nenhuma
@@ -649,10 +785,11 @@ $(document).ready(function(){
 $(document).on('click','.add_virtualmachine',function(e){
             e.preventDefault();      
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-
-            var vmprojetoid = $('#vm_projeto_id').val();
-            var vmorgaoid = $('#vm_orgao_id').val();
-            var vmambienteid = $('#vm_ambiente_id').val()
+            var loading = $("#imgaddvm");
+                loading.show();
+            var vmprojetoid = $("#vm_projeto_id").val();
+            var vmorgaoid = $("#vm_orgao_id").val();
+            var vmambienteid = $("#vm_ambiente_id").val()
 
             var vlans = new Array;
             $("input[name='vlans[]']:checked").each(function(){
@@ -660,19 +797,19 @@ $(document).on('click','.add_virtualmachine',function(e){
             });    
     
             var data = {
-                'cluster_id': $('#vm_add_cluster_id').val(),
+                'cluster_id': $("#vm_add_cluster_id").val(),
                 'projeto_id': vmprojetoid,
                 'orgao_id': vmorgaoid,
                 'ambiente_id': vmambienteid,
-                'nome_vm': ($('.vm_nome_vm').val()).trim(),
-                'cpu': ($('.vm_cpu').val()).trim(),
-                'memoria': ($('.vm_memoria').val()).trim(),
-                'disco': ($('.vm_disco').val()).trim(),
-                'ip': ($('.vm_ip').val()).trim(),
-                'resource_pool': ($('.vm_resource_pool').val()).trim(),
-                'cluster': ($('#input_nome_cluster').val()).trim(),
-                'sistema_operacional': ($('.vm_sistema_operacional').val()).trim(),
-                'gatway': ($('.vm_gatway').val()).trim(),            
+                'nome_vm': ($(".vm_nome_vm").val()).trim(),
+                'cpu': ($(".vm_cpu").val()).trim(),
+                'memoria': ($(".vm_memoria").val()).trim(),
+                'disco': ($(".vm_disco").val()).trim(),
+                'ip': ($(".vm_ip").val()).trim(),
+                'resource_pool': ($(".vm_resource_pool").val()).trim(),
+                'cluster': ($("#input_nome_cluster").val()).trim(),
+                'sistema_operacional': ($(".vm_sistema_operacional").val()).trim(),
+                'gatway': ($(".vm_gatway").val()).trim(),            
                 'vlans': vlans,
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -686,20 +823,21 @@ $(document).on('click','.add_virtualmachine',function(e){
                 success: function(response){
                     if(response.status==400){
                         //erros
-                        $('#vm_saveform_errList').html('<ul id="vm_saveform_errList"></ul>');
-                        $('#vm_saveform_errList').addClass('alert alert-danger');
+                        $("#vm_saveform_errList").replaceWith('<ul id="vm_saveform_errList"></ul>');
+                        $("#vm_saveform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
-                            $('#vm_saveform_errList').append('<li>'+err_values+'</li>');
+                            $("#vm_saveform_errList").append('<li>'+err_values+'</li>');
                         });
-                        $(this).text("Adicionado!");
+                        loading.hide();
                     }else{
                         //sucesso na operação
-                        $('#vm_saveform_errList').html('<ul id="vm_saveform_errList"></ul>'); 
-                        $('#success_message').html('<div id="success_message"></div>');                   
-                        $('#success_message').addClass("alert alert-success");
-                        $('#success_message').text(response.message);
-                        $('#vm_addform').trigger('reset');
-                        $('#AddVirtualMachineModal').modal('hide');
+                        $("#vm_saveform_errList").replaceWith('<ul id="vm_saveform_errList"></ul>'); 
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                   
+                        $("#success_message").addClass("alert alert-success");
+                        $("#success_message").text(response.message);
+                        loading.hide();
+                        $("#vm_addform").trigger('reset');
+                        $("#AddVirtualMachineModal").modal('hide');
                         
                         location.reload();
     
@@ -712,14 +850,14 @@ $(document).on('click','.add_virtualmachine',function(e){
 
             ///tooltip
     $(function(){      
-        $('.list_host_btn').tooltip();       
-        $('.novo_host_btn').tooltip();        
-        $('.list_vm_btn').tooltip();
-        $('.novo_vm_btn').tooltip();
-        $('.AddClusterModal_btn').tooltip();
-        $('.pesquisa_btn').tooltip();        
-        $('.delete_cluster_btn').tooltip();
-        $('.edit_cluster').tooltip();        
+        $(".list_host_btn").tooltip();       
+        $(".novo_host_btn").tooltip();        
+        $(".list_vm_btn").tooltip();
+        $(".novo_vm_btn").tooltip();
+        $(".AddClusterModal_btn").tooltip();
+        $(".pesquisa_btn").tooltip();        
+        $(".delete_cluster_btn").tooltip();
+        $(".edit_cluster").tooltip();        
     });
     ///fim tooltip
 

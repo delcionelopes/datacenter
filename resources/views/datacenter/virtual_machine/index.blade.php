@@ -98,7 +98,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_virtualmachine">Salvar</button>
+                <button type="button" class="btn btn-primary add_virtualmachine"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -151,7 +151,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_base_btn">Salvar</button>
+                <button type="button" class="btn btn-primary add_base_btn"><img id="imgaddbase" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -248,7 +248,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_virtualmachine">Atualizar</button>
+                <button type="button" class="btn btn-primary update_virtualmachine"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -303,8 +303,14 @@
                                 <legend>Quem tem acesso a esta informação?</legend>
                                 <div class="form-check">
                                     @foreach($users as $user)
-                                    <label class="form-check-label" for="CheckUser{{$user->id}}">
-                                        <input type="checkbox" id="CheckUser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                    <label class="form-check-label" for="check{{$user->id}}">
+                                        <input type="checkbox" id="CheckUser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> 
+                                        @if($user->admin) 
+                                            <i class="fas fa-user" style="color: green "></i> 
+                                        @else 
+                                            <i class="fas fa-user" style="color: gray"></i> 
+                                        @endif 
+                                            {{$user->name}}
                                     </label><br>
                                     @endforeach
                                 </div>
@@ -315,7 +321,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_senhaVM_btn">Salvar</button>
+                <button type="button" class="btn btn-primary add_senhaVM_btn"><img id="imgaddsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -384,7 +390,13 @@
                                 <div class="form-check">
                                     @foreach ($users as $user)
                                     <label class="form-check-label" for="check{{$user->id}}">
-                                        <input type="checkbox" id="checkuser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                        <input type="checkbox" id="checkuser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> 
+                                        @if($user->admin) 
+                                            <i class="fas fa-user" style="color: green "></i> 
+                                        @else 
+                                            <i class="fas fa-user" style="color: gray"></i> 
+                                        @endif 
+                                            {{$user->name}}
                                     </label><br>
                                     @endforeach
                                 </div>
@@ -395,7 +407,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhaVM_btn">Salvar</button>
+                <button type="button" class="btn btn-primary update_senhaVM_btn"><img id="imgeditsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -418,7 +430,7 @@
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" class="AddVMModal_btn input-group-text border-0 animate__animated animate__bounce animate__faster" style="background: transparent;border: none; white-space: white-space:nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                            <button type="button" data-id="{{$id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddVMModal_btn input-group-text border-0 animate__animated animate__bounce animate__faster" style="background: transparent;border: none; white-space: white-space:nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
                             <a href="{{route('datacenter.cluster.index')}}" type="button" data-id="{{$id}}" class="cluster_btn input-group-text border-0" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="CLUSTER">
@@ -445,15 +457,15 @@
                         <th scope="row">{{$vm->nome_vm}}</th>
                         <td id="senha{{$vm->id}}">
                             @if(!$vm->senha)
-                            <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
+                            <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
                             @else
                             @if($vm->users()->count())                           
                             @foreach($vm->users as $user)
                                   @if(($user->id) == (auth()->user()->id))                                  
-                                  <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"></button>
                                   @break
                                   @elseif ($loop->last)
-                                  <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-nomehost="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomehost="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"></button>
                                   @endif                                                        
                             @endforeach                            
                             @endif
@@ -477,17 +489,17 @@
                             <div class="btn-group">
                                 @if($vm->bases->count())
                                 <form action="{{route('datacenter.base.index',['id' => $vm->id])}}" method="get">
-                                    <button type="submit" data-id="{{$vm->id}}" class="list_base_btn fas fa-database" style="background: transparent;border: none; color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista BASE(s)"> {{$vm->bases->count()}}</button>
+                                    <button type="submit" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="list_base_btn fas fa-database" style="background: transparent;border: none; color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista BASE(s)"> {{$vm->bases->count()}}</button>
                                 </form>   
                                 @else
-                                    <button type="button" data-id="{{$vm->id}}" data-nome_vm="{{$vm->nome_vm}}" class="nova_base_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Cadastra nova BASE"></button> 
+                                    <button type="button" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nome_vm="{{$vm->nome_vm}}" class="nova_base_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Cadastra nova BASE"></button> 
                                 @endif                             
                             </div>
                         </td>                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$vm->id}}" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar VM"></button>
-                                <button type="button" data-id="{{$vm->id}}" data-vm="{{$vm->nome_vm}}" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir VM"></button>
+                                <button type="button" data-id="{{$vm->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar VM"></button>
+                                <button type="button" data-id="{{$vm->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-vm="{{$vm->nome_vm}}" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir VM"></button>
                             </div>
                         </td>
                     </tr>
@@ -525,8 +537,12 @@ $(document).ready(function(){
         $(document).on('click','.delete_vm_btn',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var link = "{{asset('storage')}}";
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");            
             var id = $(this).data("id");       
             var nomevm = ($(this).data("vm")).trim();
+            if((admin)&&(setoradmin==1)){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -536,7 +552,7 @@ $(document).ready(function(){
                 },
                 title:nomevm,
                 text: "Deseja excluir?",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -557,35 +573,61 @@ $(document).ready(function(){
                         success:function(response){
                             if(response.status==200){
                                 //remove a linha tr da table html
-                                $('#vm'+id).remove();
-                                $('#success_message').html('<div id="success_message"></div>');
-                                $('#success_message').addClass('alert alert-success');
-                                $('#success_message').text(response.message);
+                                $("#vm"+id).remove();
+                                $("#success_message").replaceWith('<div id="success_message"></div>');
+                                $("#success_message").addClass('alert alert-success');
+                                $("#success_message").text(response.message);
                             }else{
-                                $('#success_message').html('<div id="success_message"></div>');
-                                $('#success_message').addClass('alert alert-danger');
-                                $('#success_message').text(response.message);
+                                $("#success_message").replaceWith('<div id="success_message"></div>');
+                                $("#success_message").addClass('alert alert-danger');
+                                $("#success_message").text(response.message);
                             }
                     } 
                 });
             }                                       
         
         });                        
+    }else{
+         Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para excluir este registro. Procure um administrador do setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }
         
         });
         //fim delete vm
         //Inicio Exibe EditVirtualMachineModal
         $('#EditVirtualMachineModal').on('shown.bs.modal',function(){
-            $('.nome_vm').focus();
+            $(".nome_vm").focus();
         });
     
         $(document).on('click','.edit_vm_btn',function(e){
             e.preventDefault();
-    
+
+            var link = "{{asset('storage')}}";
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
             var id = $(this).data("id");        
-            $('#editform').trigger('reset');
-            $('#EditVirtualMachineModal').modal('show');
-            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
+            if((admin)&&(setoradmin==1)){
+            $("#editform").trigger('reset');
+            $("#EditVirtualMachineModal").modal('show');
+            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
     
             $.ajaxSetup({
                 headers:{
@@ -598,15 +640,15 @@ $(document).ready(function(){
                 url:'/datacenter/edit-vm/'+id,
                 success:function(response){
                     if(response.status==200){                    
-                        $('#edit_vm_id').val(response.virtualmachine.id);
-                        $('#edit_cluster_id').val(response.virtualmachine.cluster_id);
+                        $("#edit_vm_id").val(response.virtualmachine.id);
+                        $("#edit_cluster_id").val(response.virtualmachine.cluster_id);
                         //seta projeto                         
                         if(response.projeto != null){               
                             var opcaoprojeto = response.projeto.id;
                         }else{
                             var opcaoprojeto = response.virtualmachine.projeto_id;
                         }
-                        $('#projeto_id option')
+                        $("#projeto_id option")
                         .removeAttr('selected')
                         .filter('[value='+opcaoprojeto+']')
                         .attr('selected',true);
@@ -617,7 +659,7 @@ $(document).ready(function(){
                         }else{
                             var opcaoorgao = response.virtualmachine.orgao_id;
                         }
-                        $('#orgao_id option')
+                        $("#orgao_id option")
                         .removeAttr('selected')
                         .filter('[value='+opcaoorgao+']')
                         .attr('selected',true);
@@ -628,29 +670,29 @@ $(document).ready(function(){
                         }else{
                             var opcaoambiente = response.virtualmachine.ambiente_id;
                         }
-                        $('#ambiente_id option')
+                        $("#ambiente_id option")
                         .removeAttr('selected')
                         .filter('[value='+opcaoambiente+']')
                         .attr('selected',true);                      
                         //fim seta projeto
                         var vnomevm = (response.virtualmachine.nome_vm).trim();
-                        $('.nome_vm').val(vnomevm);
+                        $(".nome_vm").val(vnomevm);
                         var vcpu = (response.virtualmachine.cpu).trim();
-                        $('.cpu').val(vcpu);     
+                        $(".cpu").val(vcpu);     
                         var vmemoria = (response.virtualmachine.memoria).trim();
-                        $('.memoria').val(vmemoria);
+                        $(".memoria").val(vmemoria);
                         var vdisco = (response.virtualmachine.disco).trim();
-                        $('.disco').val(vdisco);
+                        $(".disco").val(vdisco);
                         var vip = (response.virtualmachine.ip).trim();
-                        $('.ip').val(vip);
+                        $(".ip").val(vip);
                         var vresourcepool = (response.virtualmachine.resource_pool).trim();
-                        $('.resource_pool').val(vresourcepool);
+                        $(".resource_pool").val(vresourcepool);
                         var vsistemaoperacional = (response.virtualmachine.sistema_operacional).trim();
-                        $('.sistema_operacional').val(vsistemaoperacional);
+                        $(".sistema_operacional").val(vsistemaoperacional);
                         var vgatway = (response.virtualmachine.gatway).trim();
-                        $('.gatway').val(vgatway);
+                        $(".gatway").val(vgatway);
                         var vnomecluster = (response.virtualmachine.cluster).trim();
-                        $('#nome_cluster').val(vnomecluster);
+                        $("#nome_cluster").val(vnomecluster);
                         //Atribuindo as vlan relacionadas aos checkboxes
                         $("input[name='vlans[]'").attr('checked',false); //desmarca todos
                         //apenas as vlans relacionadas
@@ -660,27 +702,50 @@ $(document).ready(function(){
                     }
                 }
             });
+
+        }else{
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para alterar este registro. Procure um administrador do setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+        }
     
         });
         //Fim Exibe EditVirtualMachineModal
         //inicio reconfigura o option selected do select html
         $('select[name="projeto_id"]').on('change',function(){
             var optprojeto = this.value;
-            $('#projeto_id option')
+            $("#projeto_id option")
             .removeAttr('selected')
             .filter('[value='+optprojeto+']')
             .attr('selected',true);
         });
         $('select[name="orgao_id"]').on('change',function(){
             var optorgao = this.value;
-            $('#orgao_id option')
+            $("#orgao_id option")
             .removeAttr('selected')
             .filter('[value='+optorgao+']')
             .attr('selected',true);
         });
         $('select[name="ambiente_id"]').on('change',function(){
             var optambiente = this.value;
-            $('#ambiente_id option')
+            $("#ambiente_id option")
             .removeAttr('selected')
             .filter('[value='+optambiente+']')
             .attr('selected',true);
@@ -690,13 +755,14 @@ $(document).ready(function(){
         $(document).on('click','.update_virtualmachine',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-            $(this).text("Atualizando...");        
+            var loading = $("#imgedit");            
+                loading.show();
     
-            var id = $('#edit_vm_id').val();
-            var cluster_id = $('#edit_cluster_id').val();
-            var opt_projeto = $('#projeto_id').val();
-            var opt_orgao = $('#orgao_id').val();
-            var opt_ambiente = $('#ambiente_id').val();
+            var id = $("#edit_vm_id").val();
+            var cluster_id = $("#edit_cluster_id").val();
+            var opt_projeto = $("#projeto_id").val();
+            var opt_orgao = $("#orgao_id").val();
+            var opt_ambiente = $("#ambiente_id").val();
     
             //Array apenas com os checkboxes marcados
             var vlans = new Array;
@@ -709,15 +775,15 @@ $(document).ready(function(){
                 'orgao_id' : opt_orgao,
                 'ambiente_id' : opt_ambiente,
                 'cluster_id' : cluster_id,
-                'nome_vm': ($('#nome_vm').val()).trim(),            
-                'cpu': ($('#cpu').val()).trim(),
-                'memoria' : ($('#memoria').val()).trim(),
-                'disco' : ($('#disco').val()).trim(),
-                'ip' : ($('#ip').val()).trim(),
-                'resource_pool' : ($('#resource_pool').val()).trim(),
-                'cluster' : ($('#nome_cluster').val()).trim(),
-                'gatway' : ($('#gatway').val()).trim(),  
-                'sistema_operacional' : ($('#sistema_operacional').val()).trim(),                      
+                'nome_vm': ($("#nome_vm").val()).trim(),            
+                'cpu': ($("#cpu").val()).trim(),
+                'memoria' : ($("#memoria").val()).trim(),
+                'disco' : ($("#disco").val()).trim(),
+                'ip' : ($("#ip").val()).trim(),
+                'resource_pool' : ($("#resource_pool").val()).trim(),
+                'cluster' : ($("#nome_cluster").val()).trim(),
+                'gatway' : ($("#gatway").val()).trim(),  
+                'sistema_operacional' : ($("#sistema_operacional").val()).trim(),                      
                 'vlans': vlans, //Array
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -731,27 +797,27 @@ $(document).ready(function(){
                 success:function(response){
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                        $('#updateform_errList').addClass('alert alert-danger');
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#updateform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
-                            $('#updateform_errList').append('<li>'+err_values+'</li>');
+                            $("#updateform_errList").append('<li>'+err_values+'</li>');
                         });
-                        $(this).text("Atualizado");
+                        loading.hide();
                     }else if(response.status==404){
-                        $("#updateform_errList").html('<ul id="updateform_errList"></ul>');        
-                        $('#success_message').html('<div id="success_message"></div>');                
-                        $('#success_message').addClass('alert alert-warning');
-                        $('#success_message').text(response.message);
-                        $(this).text("Atualizado");
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');        
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                
+                        $("#success_message").addClass('alert alert-warning');
+                        $("#success_message").text(response.message);
+                        loading.hide();
                     }else{
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');        
-                        $('#success_message').html('<div id="success_message"></div>');                
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
-                        $(this).text("Atualizado");
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');        
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('editform').trigger('reset');
-                        $('#EditVirtualMachineModal').modal('hide');
+                        $("#editform").trigger('reset');
+                        $("#EditVirtualMachineModal").modal('hide');
     
                         //atualizando a tr da table html                                     
     
@@ -766,16 +832,16 @@ $(document).ready(function(){
                             <th scope="row">'+response.virtualmachine.nome_vm+'</th>';
                             var bloqueia = true;                        
                             if((response.virtualmachine.senha)==""){
-                            limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                            limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                             }else{
                                 $.each(response.users,function(key,user_values){
                                     if(user_values.id == response.user.id){                                    
-                                        limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                        limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                         bloqueia = false;                              
                                     }
                                 });                            
                                 if(bloqueia){
-                                limita4 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                                limita4 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                                 }
                             }  
                             limita5 = '<td>\
@@ -803,8 +869,8 @@ $(document).ready(function(){
                             <td>'+response.virtualmachine.ambiente.nome_ambiente+'</td>\
                             <td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.virtualmachine.id+'" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-vm="'+response.virtualmachine.nome_vm+'" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-vm="'+response.virtualmachine.nome_vm+'" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
@@ -818,39 +884,66 @@ $(document).ready(function(){
         //Fim da atualização de VirtualMachine
         //Exibe form de adição de VirtualMachine
         $('#AddVirtualMachineModal').on('shown.bs.modal',function(){
-            $('.nome_vm').focus();
+            $(".nome_vm").focus();
         });
         $(document).on('click','.AddVMModal_btn',function(e){
             e.preventDefault();
-            $('#addform').trigger('reset');
-            $('#AddVirtualMachineModal').modal('show');
-            $('#add_cluster_id').val($(this).data("id"));
-            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            if(setoradmin==1){
+            $("#addform").trigger('reset');
+            $("#AddVirtualMachineModal").modal('show');
+            $("#add_cluster_id").val($(this).data("id"));
+            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para registrar uma nova VM. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
         });
         //fim exibe form de adição da VirtualMachine
         //Início da adição da VirtualMachine
         $(document).on('click','.add_virtualmachine',function(e){
             e.preventDefault();      
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var loading = $("$imgadd");
+                loading.show();
             var vlans = new Array;
             $("input[name='vlans[]']:checked").each(function(){
                 vlans.push($(this).val());
             });    
     
             var data = {
-                'cluster_id': $('#add_cluster_id').val(),
-                'projeto_id': $('.projeto_id').val(),
-                'orgao_id': $('.orgao_id').val(),
-                'ambiente_id': $('.ambiente_id').val(),
-                'nome_vm': ($('.nome_vm').val()).trim(),
-                'cpu': ($('.cpu').val()).trim(),
-                'memoria': ($('.memoria').val()).trim(),
-                'disco': ($('.disco').val()).trim(),
-                'ip': ($('.ip').val()).trim(),
-                'resource_pool': ($('.resource_pool').val()).trim(),
-                'cluster': ($('#nome_cluster').val()).trim(),
-                'sistema_operacional': ($('.sistema_operacional').val()).trim(),
-                'gatway': ($('.gatway').val()).trim(),            
+                'cluster_id': $("#add_cluster_id").val(),
+                'projeto_id': $(".projeto_id").val(),
+                'orgao_id': $(".orgao_id").val(),
+                'ambiente_id': $(".ambiente_id").val(),
+                'nome_vm': ($(".nome_vm").val()).trim(),
+                'cpu': ($(".cpu").val()).trim(),
+                'memoria': ($(".memoria").val()).trim(),
+                'disco': ($(".disco").val()).trim(),
+                'ip': ($(".ip").val()).trim(),
+                'resource_pool': ($(".resource_pool").val()).trim(),
+                'cluster': ($("#nome_cluster").val()).trim(),
+                'sistema_operacional': ($(".sistema_operacional").val()).trim(),
+                'gatway': ($(".gatway").val()).trim(),            
                 'vlans': vlans,
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -864,20 +957,21 @@ $(document).ready(function(){
                 success: function(response){
                     if(response.status==400){
                         //erros
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                        $('#saveform_errList').addClass('alert alert-danger');
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                        $("#saveform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
-                            $('#saveform_errList').append('<li>'+err_values+'</li>');
+                            $("#saveform_errList").append('<li>'+err_values+'</li>');
                         });
-                        $(this).text("Adicionado!");
+                        loading.hide();
                     }else{
                         //sucesso na operação
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                        $('#success_message').html('<div id="success_message"></div>');                    
-                        $('#success_message').addClass("alert alert-success");
-                        $('$success_message').text(response.message);
-                        $('#addform').trigger('reset');
-                        $('#AddVirtualMachineModal').modal('hide');
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                    
+                        $("#success_message").addClass("alert alert-success");
+                        $("$success_message").text(response.message);
+                        loading.hide();
+                        $("#addform").trigger('reset');
+                        $("#AddVirtualMachineModal").modal('hide');
                         //inclui uma linha nova na tabela html                                                          
                         var tupla = "";
                         var limita0 = "";
@@ -893,16 +987,16 @@ $(document).ready(function(){
                             <th scope="row">'+response.virtualmachine.nome_vm+'</th>';
                             var bloqueia = true;                        
                             if((response.virtualmachine.senha)==""){
-                            limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                            limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                             }else{
                                 $.each(response.users,function(key,user_values){
                                     if(user_values.id == response.user.id){                                    
-                                        limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                        limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                         bloqueia = false;                              
                                     }
                                 });                            
                                 if(bloqueia){
-                                limita4 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                                limita4 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'"  data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                                 }
                             }  
                             limita5 = '<td>\
@@ -921,7 +1015,7 @@ $(document).ready(function(){
                                                 meulink = "{{route('datacenter.vm.index_vlanXvm',[':id',':vlid'])}}";
                                                 meulink = meulink.replace(':id',strref);
                                                 meulink = meulink.replace(':vlid',strnum);                                            
-                                            $('#dropdown'+response.virtualmachine.id).append('<li data-id="'+vl.id+'" class="dropdown-item"><a href="'+meulink+'" class="dropdown-item">'+vl.nome_vlan+'</a></li>');
+                                            $("#dropdown"+response.virtualmachine.id).append('<li data-id="'+vl.id+'" class="dropdown-item"><a href="'+meulink+'" class="dropdown-item">'+vl.nome_vlan+'</a></li>');
                                         });                                 
                                         
                             limita6 = '</ul>\
@@ -930,17 +1024,17 @@ $(document).ready(function(){
                             <td>'+response.virtualmachine.ambiente.nome_ambiente+'</td>\
                             <td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.virtualmachine.id+'" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-vm="'+response.virtualmachine.nome_vm+'" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-vm="'+response.virtualmachine.nome_vm+'" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
-                        if(!$('#nadaencontrado').html()=="")
+                        if(!$("#nadaencontrado").html()=="")
                         {
-                            $('#nadaencontrado').remove();
+                            $("#nadaencontrado").remove();
                         }
                         tupla = limita0+limita1+limita2+limita3+limita4+limita5+limita6;
-                        $('#novo').replaceWith(tupla);                    
+                        $("#novo").replaceWith(tupla);                    
     
                     }
                 }
@@ -957,25 +1051,49 @@ $(document).ready(function(){
     //Inicio exibe nova base de dados caso não possua nenhuma
     $('select[name="baseprojeto_id"]').on('change',function(){
             var optbaseprojeto = this.value;
-            $('#baseprojeto_id option')
+            $("#baseprojeto_id option")
             .removeAttr('selected')
             .filter('[value='+optbaseprojeto+']')
             .attr('selected',true);
         });
         
     $('#AddBaseModal').on('shown.bs.modal',function(){
-            $('.nome_rede').focus();
+            $(".nome_rede").focus();
         });
         $(document).on('click','.nova_base_btn',function(e){
             e.preventDefault();
-    
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
             var labelHtml = ($(this).data("nome_vm")).trim();
+            if(setoradmin==1){
     
-            $('#addbaseform').trigger('reset');
-            $('#AddBaseModal').modal('show');
-            $('#add_vm_id').val($(this).data("id"));
-            $('#label_nome_vm').html('<Label id="label_nome_vm" style="font-style:italic;">'+labelHtml+'</Label>');
-            $('#saveformbase_errList').html('<ul id="saveformbase_errList"></ul>');
+            $("#addbaseform").trigger('reset');
+            $("#AddBaseModal").modal('show');
+            $("#add_vm_id").val($(this).data("id"));
+            $("#label_nome_vm").replaceWith('<Label id="label_nome_vm" style="font-style:italic;">'+labelHtml+'</Label>');
+            $("#saveformbase_errList").replaceWith('<ul id="saveformbase_errList"></ul>');
+            }else{
+                  Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para registrar uma base de dados. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
     
         });
         //Fim exibe nova base de dados caso não possua nenhuma
@@ -983,15 +1101,17 @@ $(document).ready(function(){
         $(document).on('click','.add_base_btn',function(e){
             e.preventDefault();   
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-            var baseoptprojeto = $('#baseprojeto_id').val();
+            var loading = $("#imgaddbase");
+                loading.show();
+            var baseoptprojeto = $("#baseprojeto_id").val();
                   
             var data = {
-                'nome_base': ($('.nome_base').val()).trim(),
+                'nome_base': ($(".nome_base").val()).trim(),
                 'projeto_id': baseoptprojeto,
-                'ip': ($('.baseip').val()).trim(),
-                'dono': ($('.dono').val()).trim(),
-                'virtual_machine_id': $('#add_vm_id').val(),
-                'encoding': ($('.encoding').val()).trim(),
+                'ip': ($(".baseip").val()).trim(),
+                'dono': ($(".dono").val()).trim(),
+                'virtual_machine_id': $("#add_vm_id").val(),
+                'encoding': ($(".encoding").val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }
@@ -1003,19 +1123,21 @@ $(document).ready(function(){
                 data:data,
                 success:function(response){
                     if(response.status==400){
-                        $('#saveformbase_errList').html('<ul id="saveformbase_errList"></ul>');
-                        $('#saveformbase_errList').addClass('alert alert-danger');
+                        $("#saveformbase_errList").replaceWith('<ul id="saveformbase_errList"></ul>');
+                        $("#saveformbase_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#saveformbase_errList').append('<li>'+err_values+'</li>');
+                            $("#saveformbase_errList").append('<li>'+err_values+'</li>');
                         });
+                        loading.hide();
                     }else{
-                        $('#saveformbase_errList').html('<ul id="saveformbase_errList"></ul>');    
-                        $('#success_message').html('<div id="success_message"></div>');                  
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);                                        
+                        $("#saveformbase_errList").replaceWith('<ul id="saveformbase_errList"></ul>');    
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                  
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#addbaseform').trigger('reset');
-                        $('#AddBaseModal').modal('hide');
+                        $("#addbaseform").trigger('reset');
+                        $("#AddBaseModal").modal('hide');
     
                         location.reload();
                     }
@@ -1026,28 +1148,54 @@ $(document).ready(function(){
 
     //cadastro de senha
         $('#AddSenhaVM').on('shown.bs.modal',function(){
-            $('.add_senha').focus();
+            $(".add_senha").focus();
         });
 
 
         $(document).on('click','.cadsenha_btn',function(e){
             e.preventDefault();
             var labelHtml = ($(this).data("nomevm")).trim();            
-            var labelclusterip = ($(this).data("clusterip")).trim();            
-            $('#addformsenha').trigger('reset');
-            $('#AddSenhaVM').modal('show');
-            $('#add_VMsenha_id').val($(this).data("id"));
-            $('#nomeVM').html('<Label id="nomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
-            $('#clusterip').html('<Label id="clusterip" style="font-style:italic;">'+labelclusterip+'</Label>');            
-            $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>'); 
+            var labelclusterip = ($(this).data("clusterip")).trim();
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            if(setoradmin==1){
+            $("#addformsenha").trigger('reset');
+            $("#AddSenhaVM").modal('show');
+            $("#add_VMsenha_id").val($(this).data("id"));
+            $("#nomeVM").replaceWith('<Label id="nomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
+            $("#clusterip").replaceWith('<Label id="clusterip" style="font-style:italic;">'+labelclusterip+'</Label>');            
+            $("#saveformsenha_errList").replaceWith('<ul id="saveformsenha_errList"></ul>');
+            }else{
+                  Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
         });
 
          $(document).on('click','.add_senhaVM_btn',function(e){
             e.preventDefault();
-            $(this).text('Salvando...');
+            var loading = $("#imgaddsenha");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
-            var id = $('#add_VMsenha_id').val();
+            var id = $("#add_VMsenha_id").val();
             var val_indefinida = 0;
             $("input[name='add_val_indefinida']:checked").each(function(){
                 val_indefinida = 1;
@@ -1060,8 +1208,8 @@ $(document).ready(function(){
             });            
             
             var data = {
-                'senha':$('.add_senha').val(),
-                'validade':formatDate($('.add_validade').val()),
+                'senha':$(".add_senha").val(),
+                'validade':formatDate($(".add_validade").val()),
                 'val_indefinida':val_indefinida,                
                 'users':users,
                 '_method':'PATCH',
@@ -1076,41 +1224,42 @@ $(document).ready(function(){
                 success:function(response){
                       if(response.status==400){
                            //erros
-                            $('#saveformsenha_errList').html("");
-                            $('#saveformsenha_errList').addClass("alert alert-danger");
+                            $("#saveformsenha_errList").replaceWith('<ul id="saveformsenha_errList"></ul>');
+                            $("#saveformsenha_errList").addClass("alert alert-danger");
                             $.each(response.errors,function(key,err_values){
-                                    $('#saveformsenha_errList').append('<li>'+err_values+'</li>');
+                                    $("#saveformsenha_errList").append('<li>'+err_values+'</li>');
                             });
-          
+                            loading.hide();
                 }else{
-                        $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>');     
-                        $('#success_message').html('<div id="success_message"></div>');              
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);                                        
+                        $("#saveformsenha_errList").replaceWith('<ul id="saveformsenha_errList"></ul>');     
+                        $("#success_message").replaceWith('<div id="success_message"></div>');              
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#addformsenha').trigger('reset');                    
-                        $('#AddSenhaVM').modal('hide');
+                        $("#addformsenha").trigger('reset');                    
+                        $("#AddSenhaVM").modal('hide');
 
                         var limita1 = "";
                         var limita2 = "";
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.virtualmachine.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 
                         var elemento = limita1+limita2+limita3;
-                        $('#botaosenha'+id).replaceWith(elemento);
+                        $("#botaosenha"+id).replaceWith(elemento);
 
                 } 
                 }   
@@ -1124,19 +1273,23 @@ $(document).ready(function(){
     $(document).on('click','.senhabloqueada_btn',function(e){
         e.preventDefault();
 
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
         var opcaosenha = $(this).data("opt");
+
+        if(setoradmin==1){
 
         if(opcaosenha){
     
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomevm")).trim();            
         var labelclusterip = ($(this).data("clusterip")).trim(); 
-        $('#editformsenha').trigger('reset');
-        $('#EditSenhaVM').modal('show');  
-        $('#editnomeVM').html('<Label id="editnomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
-        $('#editclusterip').html('<Label id="editclusterip" style="font-style:italic;">'+labelclusterip+'</Label>');     
-        $('#edit_VMsenha_id').val(id);  
-        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');
+        $("#editformsenha").trigger('reset');
+        $("#EditSenhaVM").modal('show');  
+        $("#editnomeVM").replaceWith('<Label id="editnomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $("#editclusterip").replaceWith('<Label id="editclusterip" style="font-style:italic;">'+labelclusterip+'</Label>');     
+        $("#edit_VMsenha_id").val(id);  
+        $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -1173,16 +1326,16 @@ $(document).ready(function(){
                             alterador = "";
                         }
                     if(new Date(response.virtualmachine.validade)<new Date()){
-                    $('#senhavencida').html('<small id="senhavencida" style="color: red">Senha vencida!</small>');
+                    $("#senhavencida").replaceWith('<small id="senhavencida" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencida').html('<small id="senhavencida" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencida").replaceWith('<small id="senhavencida" style="color: green">Senha na validade. OK!</small>');  
                     }                    
-                    $('#edit_validade').val(datavalidade);
-                    $('#editdatacriacao').html('<label  id="editdatacriacao">'+datacriacao+'</label>');
-                    $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
-                    $('#editcriador').html('<label  id="editcriador">'+criador+'</label>');
-                    $('#editmodificador').html('<label  id="editmodificador">'+alterador+'</label>');                         
-                    $('#edit_senha').val(response.senha);
+                    $("#edit_validade").val(datavalidade);
+                    $("#editdatacriacao").replaceWith('<label  id="editdatacriacao">'+datacriacao+'</label>');
+                    $("#editdatamodificacao").replaceWith('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
+                    $("#editcriador").replaceWith('<label  id="editcriador">'+criador+'</label>');
+                    $("#editmodificador").replaceWith('<label  id="editmodificador">'+alterador+'</label>');                         
+                    $("#edit_senha").val(response.senha);
                     if(response.virtualmachine.val_indefinida){
                       $("input[name='edit_val_indefinida']").attr('checked',true);  
                     }else{
@@ -1209,7 +1362,7 @@ $(document).ready(function(){
                 },
                 title:"Você não tem acesso a esta informação!",
                 text: "Peça sua inclusão a um dos usuários sugeridos na dica!",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -1218,16 +1371,41 @@ $(document).ready(function(){
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
+
+}else{
+     Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+}
+
              
     });
     //fim exibe 
     ///inicio alterar senha
     $(document).on('click','.update_senhaVM_btn',function(e){
             e.preventDefault();
-            $(this).text('Salvando...');
+            var loading = $("#imgeditsenha");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
-            var id = $('#edit_VMsenha_id').val();
+            var id = $("#edit_VMsenha_id").val();
             var val_indefinida = 0;
             $("input[name='edit_val_indefinida']:checked").each(function(){
                 val_indefinida = 1;
@@ -1240,8 +1418,8 @@ $(document).ready(function(){
             });            
             
             var data = {
-                'senha':$('.senha').val(),
-                'validade':formatDate($('.validade').val()),
+                'senha':$(".senha").val(),
+                'validade':formatDate($(".validade").val()),
                 'val_indefinida':val_indefinida,                
                 'users':users,
                 '_method':'PATCH',
@@ -1256,41 +1434,43 @@ $(document).ready(function(){
                 success:function(response){
                       if(response.status==400){
                            //erros
-                            $('#updateformsenha_errList').html("");
+                            $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');
                             $('#updateformsenha_errList').addClass("alert alert-danger");
                             $.each(response.errors,function(key,err_values){
                                     $('#updateformsenha_errList').append('<li>'+err_values+'</li>');
                             });
+                            loading.hide();
           
                 }else{
-                        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');     
-                        $('#success_message').html('<div id="success_message"></div>');              
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);                                        
+                        $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');     
+                        $("#success_message").replaceWith('<div id="success_message"></div>');              
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#editformsenha').trigger('reset');                    
-                        $('#EditSenhaVM').modal('hide');
+                        $("#editformsenha").trigger('reset');                    
+                        $("#EditSenhaVM").modal('hide');
 
                         var limita1 = "";
                         var limita2 = "";
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.virtualmachine.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 
                         var elemento = limita1+limita2+limita3;
-                        $('#botaosenha'+id).replaceWith(elemento);
+                        $("#botaosenha"+id).replaceWith(elemento);
 
                 } 
                 }   
@@ -1311,16 +1491,16 @@ $(document).ready(function(){
 
         ///tooltip
     $(function(){      
-        $('.senhabloqueada_btn').tooltip();       
-        $('.cadsenha_btn').tooltip();                
-        $('.cluster_btn').tooltip();
-        $('.AddVMModal_btn').tooltip();       
-        $('.list_base_btn').tooltip();       
-        $('.nova_base_btn').tooltip();       
-        $('.pesquisa_btn').tooltip();        
-        $('.delete_vm_btn').tooltip();
-        $('.edit_vm_btn').tooltip();
-        $('.voltar_btn').tooltip();        
+        $(".senhabloqueada_btn").tooltip();       
+        $(".cadsenha_btn").tooltip();                
+        $(".cluster_btn").tooltip();
+        $(".AddVMModal_btn").tooltip();       
+        $(".list_base_btn").tooltip();       
+        $(".nova_base_btn").tooltip();       
+        $(".pesquisa_btn").tooltip();        
+        $(".delete_vm_btn").tooltip();
+        $(".edit_vm_btn").tooltip();
+        $(".voltar_btn").tooltip();        
     });
     ///fim tooltip
 

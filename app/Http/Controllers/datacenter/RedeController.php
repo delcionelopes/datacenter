@@ -79,10 +79,12 @@ class RedeController extends Controller
                 'vlan_id'   => $request->input('vlan_id'),            
             ];
             $rede = $this->rede->create($data);           
-            $vl = $rede->vlan;            
+            $vl = $rede->vlan;
+            $user = auth()->user();
             return response()->json([
                 'rede' => $rede,
                 'vlan' => $vl,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Registro criado com sucesso!',
             ]);
@@ -101,8 +103,10 @@ class RedeController extends Controller
     public function edit(int $id)
     {
         $rede = $this->rede->find($id);
+        $user = auth()->user();
         return response()->json([
             'rede' => $rede,
+            'user' => $user,
             'status' => 200,
         ]);
     }
@@ -143,9 +147,11 @@ class RedeController extends Controller
                 ];
                 $rede->update($data);              
                 $r = Rede::find($id);
+                $user = auth()->user();
                 return response()->json([
                     'rede' => $r,
                     'vlan' => $vl,
+                    'user' => $user,
                     'status' => 200,
                     'message' => 'O registro foi atualizado com sucesso!',
                 ]);
@@ -215,9 +221,11 @@ class RedeController extends Controller
             ];
             $cadastroIp = $this->cadastroIp->create($data);
             $rede = $cadastroIp->rede;
+            $user = auth()->user();
             return response()->json([
                 'cadastroIp' => $cadastroIp,
                 'rede'    => $rede,
+                'user' => $user,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);

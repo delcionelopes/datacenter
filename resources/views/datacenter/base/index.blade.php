@@ -686,7 +686,7 @@ $(document).ready(function(){
             $("#nome_vm").replaceWith('<Label id="nome_vm" style="font-style:italic;">'+labelHtml+'</Label>');
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>'); 
             }else{
-                 Swal.fire({
+                Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
                 },

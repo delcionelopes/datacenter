@@ -85,9 +85,11 @@ class ClusterController extends Controller
                 'total_memoria'     => $request->input('total_memoria'),
                 'total_processador' => $request->input('total_processador'),              
             ];            
-            $cluster = $this->cluster->create($data);            
+            $cluster = $this->cluster->create($data);
+            $user = auth()->user();
             return response()->json([
                 'cluster' => $cluster,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Resgistro gravado com sucesso!',
             ]);
@@ -106,8 +108,10 @@ class ClusterController extends Controller
     public function edit(int $id)
     {
         $cluster = $this->cluster->find($id);
+        $user = auth()->user();
         return response()->json([
             'cluster' => $cluster,
+            'user' => $user,
             'status'  => 200,            
         ]);
     }
@@ -142,8 +146,10 @@ class ClusterController extends Controller
                         ];
             $cluster->update($data);           
             $c = Cluster::find($id);
+            $user = auth()->user();
             return response()->json([
                 'cluster' => $c,
+                'user' => $user,
                 'status'  => 200,
                 'message' => 'Resgistro atualizado com sucesso!',
             ]);
@@ -248,9 +254,11 @@ class ClusterController extends Controller
             ];
             $host = $this->host->create($data);
             $cluster = $this->cluster->find($host->cluster_id);
+            $user = auth()->user();
             return response()->json([
                 'cluster' => $cluster,
                 'host'    => $host,
+                'user' => $user,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -321,10 +329,13 @@ class ClusterController extends Controller
             $virtualmachine->vlans()->sync($request->input('vlans'));  //sincronização do relacionamento vlan n:n
 
             $vl = $virtualmachine->vlans;
+
+            $user = auth()->user();
             
             return response()->json([
                 'virtualmachine' => $virtualmachine,
                 'vlans' => $vl,
+                'user' => $user,
                 'status' =>200,
                 'message' => 'O registro foi criado com sucesso!',
             ]);

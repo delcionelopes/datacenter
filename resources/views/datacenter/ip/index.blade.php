@@ -36,7 +36,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_ip">Salvar</button>
+                <button type="button" class="btn btn-primary add_ip"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -69,7 +69,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_ip">Atualizar</button>
+                <button type="button" class="btn btn-primary update_ip"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -88,7 +88,7 @@
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" class="AddIPModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                            <button type="button" data-id="{{$id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddIPModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -111,14 +111,14 @@
                         <th scope="row">{{$ip->ip}}</th>
                         <td><a href="{{route('datacenter.rede.index',['id' => $vlan_id])}}">{{$ip->rede->nome_rede}}</a></td>
                         @if($ip->status=="OCUPADO")
-                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="OCUPADO"></button></td>
+                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="OCUPADO"></button></td>
                         @else
-                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="LIVRE"></button></td>
+                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="LIVRE"></button></td>
                         @endif                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$ip->id}}" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar IP"></button>
-                                <button type="button" data-id="{{$ip->id}}" data-enderecoip="{{$ip->ip}}" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir IP"></button>
+                                <button type="button" data-id="{{$ip->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar IP"></button>
+                                <button type="button" data-id="{{$ip->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-enderecoip="{{$ip->ip}}" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir IP"></button>
                             </div>
                         </td>
                     </tr>
@@ -157,7 +157,11 @@ $(document).ready(function(){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
+            var link = "{{asset('storage')}}";
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
             var enderecoip = ($(this).data("enderecoip")).trim();
+            if((admin)&&(setoradmin==1)){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -167,7 +171,7 @@ $(document).ready(function(){
                 },
                 title:enderecoip,
                 text: "Deseja excluir?",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -188,31 +192,56 @@ $(document).ready(function(){
                         success:function(response){
                             if(response.status==200){
                                 //remove a linha tr da table html
-                                $('#ip'+id).remove();
-                                $('#success_message').html('<div id="success_message"></div>');
-                                $('#success_message').addClass('alert alert-success');
-                                $('#success_message').text(response.message);
+                                $("#ip"+id).remove();
+                                $("#success_message").replaceWith('<div id="success_message"></div>');
+                                $("#success_message").addClass('alert alert-success');
+                                $("#success_message").text(response.message);
                             }
                     } 
                 });
             }                                       
         
         });                        
-        
+    }else{
+        Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para excluir este registro. Procure um administrador do setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }
         }); 
         //fim delete ip
         //Inicio Exibe EditIPModal
         $('#EditIPModal').on('shown.bs.modal',function(){
-            $('#edit_ip').focus();
+            $("#edit_ip").focus();
         });
     
         $(document).on('click','.edit_ip_btn',function(e){
             e.preventDefault();
     
-            var id = $(this).data("id");        
-            $('#editform').trigger('reset');
-            $('#EditIPModal').modal('show');
-            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');   
+            var id = $(this).data("id");
+            var link = "{{asset('storage')}}";
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
+            if((admin)&&(setoradmin==1)){
+            $("#editform").trigger('reset');
+            $("#EditIPModal").modal('show');
+            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');   
     
             $.ajaxSetup({
                 headers:{
@@ -231,30 +260,52 @@ $(document).ready(function(){
                             var corstatus = 'style="color:green;"';                        
                         }
                         var vstatus = (response.cadastroIp.status).trim();
-                        $('#edit_status').replaceWith('<label id="edit_status" class="status"'+corstatus+'>'+vstatus+'</label>');   
+                        $("#edit_status").replaceWith('<label id="edit_status" class="status"'+corstatus+'>'+vstatus+'</label>');   
                         var vip = (response.cadastroIp.ip).trim();
-                        $('#edit_ip').val(vip);                                        
-                        $('#edit_rede_id').val(response.cadastroIp.rede_id);
-                        $('#edit_ip_id').val(response.cadastroIp.id);
+                        $("#edit_ip").val(vip);                                        
+                        $("#edit_rede_id").val(response.cadastroIp.rede_id);
+                        $("#edit_ip_id").val(response.cadastroIp.id);
                     }
                 }
             });
-    
+        }else{
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para alterar este registro. Procure um administrador do setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+        }
         });
         //Fim Exibe EditIPModal
         //inicio da atualização do ip
         $(document).on('click','.update_ip',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-            $(this).text("Atualizando...");
+            var loading = $("#imgedit");
+                loading.show();
     
-            var id = $('#edit_ip_id').val();
+            var id = $("#edit_ip_id").val();
     
             var meulink = "{{route('datacenter.rede.index',['id' => $vlan_id])}}";
     
             var data = {            
-                'ip': ($('#edit_ip').val()).trim(),            
-                'rede_id':$('#edit_rede_id').val(),
+                'ip': ($("#edit_ip").val()).trim(),            
+                'rede_id':$("#edit_rede_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }    
@@ -267,27 +318,27 @@ $(document).ready(function(){
                 success:function(response){
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                        $('#updateform_errList').addClass('alert alert-danger');
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#updateform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
-                            $('#updateform_errList').append('<li>'+err_values+'</li>');
+                            $("#updateform_errList").append('<li>'+err_values+'</li>');
                         });
-                        $(this).text("Atualizado");
+                        loading.hide();
                     }else if(response.status==404){
-                        $("#updateform_errList").html('<ul id="updateform_errList"></ul>');        
-                        $('#success_message').html('<div id="success_message"></div>');                
-                        $('#success_message').addClass('alert alert-warning');
-                        $('#success_message').text(response.message);
-                        $(this).text("Atualizado");
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');        
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                
+                        $("#success_message").addClass('alert alert-warning');
+                        $("#success_message").text(response.message);
+                        loading.hide();
                     }else{
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');         
-                        $('#success_message').html('<div id="success_message"></div>');               
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
-                        $(this).text("Atualizado");
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');         
+                        $("#success_message").replaceWith('<div id="success_message"></div>');               
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('editform').trigger('reset');
-                        $('#EditIPModal').modal('hide');
+                        $("editform").trigger('reset');
+                        $("#EditIPModal").modal('hide');
     
                         //atualizando a tr da table html
                       
@@ -300,15 +351,15 @@ $(document).ready(function(){
                             <td>'+response.cadastroIp.ip+'</td>\
                             <td>'+'<a href="'+meulink+'">'+response.rede.nome_rede+'</a></td>';
                             if(response.cadastroIp.status=="OCUPADO"){
-                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
+                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
                             }else{
-                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
+                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
                             }                    
                            
                             linha4 = '<td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.cadastroIp.id+'" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-enderecoip="'+response.cadastroIp.ip+'" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-enderecoip="'+response.cadastroIp.ip+'" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
@@ -322,25 +373,52 @@ $(document).ready(function(){
         //Fim da atualização do ip
         //Exibe form de adição de ip
         $('#AddIPModal').on('shown.bs.modal',function(){
-            $('.ip').focus();
+            $(".ip").focus();
         });
         $(document).on('click','.AddIPModal_btn',function(e){
             e.preventDefault();
-            $('#addform').trigger('reset');
-            $('#AddIPModal').modal('show');
-            $('#add_rede_id').val($(this).data("id"));
-            $('#saveform_errList').html('<ul id="saveform_errList"></ul>'); 
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            if(setoradmin==1){
+            $("#addform").trigger('reset');
+            $("#AddIPModal").modal('show');
+            $("#add_rede_id").val($(this).data("id"));
+            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>'); 
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para registrar um IP. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
         });
         //fim exibe form de adição de ip
         //inicio da adição de ip
         $(document).on('click','.add_ip',function(e){            
             e.preventDefault();        
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var loading = $("#imgadd");
+                loading.show();
             var meulink = "{{route('datacenter.rede.index',['id' => $vlan_id])}}";
             var data = {            
-                'ip': ($('.ip').val()).trim(),
+                'ip': ($(".ip").val()).trim(),
                 'status': "LIVRE",            
-                'rede_id': $('#add_rede_id').val(),
+                'rede_id': $("#add_rede_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }           
@@ -351,19 +429,21 @@ $(document).ready(function(){
                 data: data,
                 success:function(response){                
                     if(response.status==400){
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                        $('#saveform_errList').addClass('alert alert-danger');
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                        $("#saveform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#saveform_errList').append('<li>'+err_values+'</li>');
-                        });                    
+                            $("#saveform_errList").append('<li>'+err_values+'</li>');
+                        });    
+                        loading.hide();
                     }else{
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');  
-                        $('#success_message').html('<div id="success_message"></div>');                   
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');  
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                   
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#addform').trigger('reset');
-                        $('#AddIPModal').modal('hide');
+                        $("#addform").trigger('reset');
+                        $("#AddIPModal").modal('hide');
     
                         //adiciona a linha na tabela html
                                         
@@ -378,19 +458,19 @@ $(document).ready(function(){
                             <th scope="row">'+response.cadastroIp.ip+'</th>\
                             <td>'+'<a href="'+meulink+'">'+response.rede.nome_rede+'</a></td>';
                             if(response.cadastroIp.status=="OCUPADO"){
-                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
+                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
                             }else{
-                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
+                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
                             }                            
                             linha4 = '<td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.cadastroIp.id+'" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-enderecoip="'+response.cadastroIp.ip+'" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-enderecoip="'+response.cadastroIp.ip+'" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
-                        if(!$('#nadaencontrado').html==""){
-                            $('#nadaencontrado').remove();
+                        if(!$("#nadaencontrado").html==""){
+                            $("#nadaencontrado").remove();
                         }
                         linha0 = linhaalfa+linha1+linha2+linha3+linha4;                    
                         $("#novo").replaceWith(linha0);
@@ -401,10 +481,13 @@ $(document).ready(function(){
         //Fim adição de ip
         //inicio muda o status do ip
         $(document).on('click','.status_btn',function(e){
-            e.preventDefault();
+            e.preventDefault();            
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
-            var vstatus = ($(this).data("status")).trim();        
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            var vstatus = ($(this).data("status")).trim();
+            if(setoradmin==1){
             var data = {
                 'pstatus': vstatus,
                 '_method':'PUT',
@@ -421,26 +504,48 @@ $(document).ready(function(){
                         var limita1 = "";
                         var limita2 = "";
                         if(response.ip.status=="OCUPADO"){
-                            limita1 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
+                            limita1 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
                         }else{
-                            limita2 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
+                            limita2 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
                         }
                         var celula = limita1+limita2;
-                        $('#stipid'+id).replaceWith(celula);
+                        $("#stipid"+id).replaceWith(celula);
                     }
                 }
             });
+        }else{
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para esta operação. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+        }
     
         });
         //fim muda o status do ip
             ///tooltip
     $(function(){             
-        $('.status_btn').tooltip();
-        $('.AddIPModal_btn').tooltip();
-        $('.pesquisa_btn').tooltip();        
-        $('.delete_ip_btn').tooltip();
-        $('.edit_ip_btn').tooltip();
-        $('.voltar_btn').tooltip();
+        $(".status_btn").tooltip();
+        $(".AddIPModal_btn").tooltip();
+        $(".pesquisa_btn").tooltip();        
+        $(".delete_ip_btn").tooltip();
+        $(".edit_ip_btn").tooltip();
+        $(".voltar_btn").tooltip();
     });
     ///fim tooltip
 
