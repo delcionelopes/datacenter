@@ -33,9 +33,22 @@ class SenhaController extends Controller
     }
 
     public function index(){        
-        $date = date("Y-m-d");        
+        $date = date("Y-m-d");       
+        
+        $user = auth()->user(); //usuário logado
 
-        $users = $this->user->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get(); //usuários com perfil
+        $users = $this->user->query()
+                            ->where('moderador','=','true')
+                            ->where('setor_idsetor','=',1)
+                            ->where('inativo','=','false')
+                            ->orderBy('name')
+                            ->get(); //usuários com perfil setor infra
+        $usersdiversos = $this->user->query()
+                            ->where('moderador','=','true')
+                            ->where('setor_idsetor','=',$user->setor_idsetor)
+                            ->where('inativo','=','false')
+                            ->orderBy('name')
+                            ->get(); //usuários com perfil outros setores
 
         $apps = $this->app->where('senha','<>',null)->where('validade','<=',$date)->where('val_indefinida','=',0)->paginate(6);
         $totalapps = $apps->count();
@@ -47,9 +60,7 @@ class SenhaController extends Controller
         $totalbases = $bases->count();
         $vlans = $this->vlan->where('senha','<>',null)->where('validade','<=',$date)->where('val_indefinida','=',0)->get();        
         $totalvlans = $vlans->count();
-        $totalgeral = $totalapps+$totalhosts+$totalvirtualmachines+$totalbases+$totalvlans;
-
-        $user = auth()->user(); //usuário logado
+        $totalgeral = $totalapps+$totalhosts+$totalvirtualmachines+$totalbases+$totalvlans;        
 
         $usersistema = $this->user->find($user->id);
 
@@ -68,6 +79,9 @@ class SenhaController extends Controller
         $totaluservlans = $usersistema->vlan()->count();
         $uservlans = $usersistema->vlan;
 
+        $totaluserequipamentos = $usersistema->equipamento()->count();
+        $userequipamentos = $usersistema->equipamento;
+
 
         return view('datacenter.senha.index',[
             'apps' => $apps,
@@ -82,6 +96,7 @@ class SenhaController extends Controller
             'totalvlans' => $totalvlans,
             'totalgeral' => $totalgeral,            
             'users' => $users,
+            'usersdiversos' => $usersdiversos,
             'totaluserapps' => $totaluserapps,
             'userapps' => $userapps,
             'totaluserhosts' => $totaluserhosts,
@@ -92,6 +107,8 @@ class SenhaController extends Controller
             'uservms' => $uservms,
             'totaluservlans' => $totaluservlans,
             'uservlans' => $uservlans,
+            'totaluserequipamentos' => $totaluserequipamentos,
+            'userequipamentos' => $userequipamentos,
         ]);
     }
 
@@ -105,7 +122,8 @@ class SenhaController extends Controller
         if ($app->alterador_id) {
             $alterador = User::find($app->alterador_id)->name;
         }                
-        $users = $app->users;        
+        $users = $app->users; 
+        $user = auth()->user();
         $s = Crypt::decrypt($app->senha);
         return response()->json([
             'status' => 200,            
@@ -114,6 +132,7 @@ class SenhaController extends Controller
             'criador' => $criador,
             'alterador' => $alterador,
             'users' => $users,
+            'user' => $user,
         ]);
     }
 
@@ -142,10 +161,12 @@ class SenhaController extends Controller
             $a = App::find($id);           
             $a->users()->sync($request->input('users')); //sincronização   
             $u = $app->users;         
+            $user = auth()->user();
             return response()->json([
                 'user' => $user,
                 'app' => $a,
                 'users' => $u,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Senha atualizada com sucesso!',
             ]);
@@ -183,10 +204,12 @@ public function updatesenhahost(Request $request, int $id){
             $h = Host::find($id);            
             $h->users()->sync($request->input('users')); //sincronização            
             $u = $h->users;
+            $user = auth()->user();
             return response()->json([
                 'user' => $user,              
                 'host' => $h,
                 'users' => $u,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Senha atualizada com sucesso!',
             ]);
@@ -211,6 +234,7 @@ public function updatesenhahost(Request $request, int $id){
         }                
         $users = $host->users;   
         $s = Crypt::decrypt($host->senha);    
+        $user = auth()->user();
         return response()->json([
             'status' => 200,            
             'host' => $host,
@@ -218,6 +242,7 @@ public function updatesenhahost(Request $request, int $id){
             'criador' => $criador,
             'alterador' => $alterador,
             'users' => $users,
+            'user' => $user,
         ]);
     }    
 
@@ -247,10 +272,12 @@ public function updatesenhavm(Request $request, int $id){
             $vm = VirtualMachine::find($id);            
             $vm->users()->sync($request->input('users')); //sincronização            
             $u = $vm->users;
+            $user = auth()->user();
             return response()->json([
                 'user' => $user,                
                 'virtualmachine' => $vm,
                 'users' => $u,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Senha atualizada com sucesso!',
             ]);
@@ -274,12 +301,14 @@ public function updatesenhavm(Request $request, int $id){
             $alterador = User::find($virtualmachine->alterador_id)->name;
         }                
         $u = $virtualmachine->users;    
-        $s = Crypt::decrypt($virtualmachine->senha);       
+        $s = Crypt::decrypt($virtualmachine->senha);
+        $user = auth()->user();
         return response()->json([
             'status' => 200,            
             'virtualmachine' => $virtualmachine,
             'senha' => $s,
             'users' => $u,
+            'user' => $user,
             'criador' => $criador,
             'alterador' => $alterador,            
         ]);
@@ -310,6 +339,7 @@ public function updatesenhavm(Request $request, int $id){
             $b = Base::find($id);            
             $b->users()->sync($request->input('users')); //sincronização            
             $u = $b->users;
+            
             return response()->json([
                 'user' => $user,                
                 'base' => $b,
@@ -338,6 +368,7 @@ public function updatesenhavm(Request $request, int $id){
         }                
         $users = $base->users;   
         $s = Crypt::decrypt($base->senha);     
+        $user = auth()->user();
         return response()->json([
             'status' => 200,            
             'base' => $base,
@@ -345,6 +376,7 @@ public function updatesenhavm(Request $request, int $id){
             'criador' => $criador,
             'alterador' => $alterador,
             'users' => $users,
+            'user' => $user,
         ]);
     }
 
@@ -401,6 +433,7 @@ public function editsenhavlan(int $id){
         }                
         $u = $vlan->users; 
         $s = Crypt::decrypt($vlan->senha);
+        $user = auth()->user();
         return response()->json([
             'status' => 200,   
             'senha' => $s,
@@ -408,6 +441,7 @@ public function editsenhavlan(int $id){
             'criador' => $criador,
             'alterador' => $alterador,
             'users' => $u,
+            'user' => $user,
         ]);
     }
 

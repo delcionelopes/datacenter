@@ -201,7 +201,7 @@
                                     @foreach ($users as $user)
                                     <label class="form-check-label" for="CheckUser{{$user->id}}">
                                         <input type="checkbox" id="CheckUser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input">
-                                         @if($user->admin) 
+                                        @if($user->admin) 
                                             <i class="fas fa-user" style="color: green "></i> 
                                         @else 
                                             <i class="fas fa-user" style="color: gray"></i> 

@@ -879,7 +879,7 @@ $(document).ready(function(){
 
     ////fim gravar processo admin
 
-     ///inicio gravar processo admin
+     ///inicio gravar processo individual
     $(document).on('click','.update_senhaindividual_btn',function(e){
             e.preventDefault();
             var loading = $("#imgeditindividual");
@@ -946,7 +946,7 @@ $(document).ready(function(){
             });
     });         
 
-    ////fim gravar processo admin
+    ////fim gravar processo individual
 
     ///mostra senha admin
     $(document).on('click','#mostrasenhaadmin_btn',function(e){

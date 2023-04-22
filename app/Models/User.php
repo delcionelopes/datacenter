@@ -73,12 +73,12 @@ class User extends Authenticatable
     }
 
      public function equipamento():BelongsToMany{
-        return $this->belongsToMany(EquipamentoRede::class,'equipamento_rede_has_users','users_id','equipamento_rede_idequipamento_rede')->withPivot([
-            'users.name',
-            'pass_user_equipamento',            
-            'created_at',
-            'updated_at',
-        ]);
+        return $this->belongsToMany(EquipamentoRede::class,'equipamento_rede_has_users','users_id','equipamento_rede_idequipamento_rede')
+                    ->withPivot([
+                        'pass_user_equipamento',
+                        'created_at',
+                        'updated_at',
+                    ]);
     }
 
     public function setor(){

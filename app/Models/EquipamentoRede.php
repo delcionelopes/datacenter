@@ -24,12 +24,12 @@ class EquipamentoRede extends Model
     ];
 
     public function users():BelongsToMany{
-        return $this->belongsToMany(User::class,'equipamento_rede_has_users','equipamento_rede_idequipamento_rede','users_id')->withPivot([
-            'users.name',
-            'pass_user_equipamento',            
-            'created_at',
-            'updated_at',
-        ]);
+        return $this->belongsToMany(User::class,'equipamento_rede_has_users','equipamento_rede_idequipamento_rede','users_id')
+                    ->withPivot([
+                        'pass_user_equipamento',
+                        'created_at',
+                        'updated_at',
+                    ]);       
     }
 
     public function setor(){
