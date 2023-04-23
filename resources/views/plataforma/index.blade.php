@@ -80,7 +80,7 @@
                         <div class="input-group rounded">
                             <input type="text" name="pesquisanome" class="form-control rounded float-left" placeholder="Nome da plataforma" aria-label="Search" aria-describedby="search-addon">
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER"><i class="fas fa-search"></i></button>
-                            <button type="button" class="AddPlataformaModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></button>
+                            <button type="button" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddPlataformaModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></button>
                         </div>
                     </div>
                 </form>                
@@ -139,7 +139,7 @@
             var admin = $(this).data("admin");
             var setoradmin = $(this).data("setoradmin");
             var nomeplataforma = ($(this).data("nomeplataforma")).trim();
-            if(admin){
+            if((admin)&&(setoradmin==1)){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -189,7 +189,7 @@
                     popup: 'animate__animated animate__fadeOutUp'
                 },
                 title:nomeplataforma,
-                text: "Você não pode excluir este registro. Procure um administrador!",
+                text: "Você não pode excluir este registro. Procure um administrador do setor INFRA !",
                 imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
@@ -217,7 +217,7 @@
             var admin = $(this).data("admin");
             var setoradmin = $(this).data("setoradmin");
             var nome = $(this).data("nomeplataforma");
-            if(admin){
+            if((admin)&&(setoradmin==1)){
             $("#editform").trigger('reset');
             $("#EditPlataformaModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
@@ -250,7 +250,7 @@
                     popup: 'animate__animated animate__fadeOutUp'
                 },
                 title:nome,
-                text: "Você não pode alterar este registro. Procure um administrador!",
+                text: "Você não pode alterar este registro. Procure um administrador de INFRA !",
                 imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
@@ -334,11 +334,37 @@
         });
     
     $(document).on('click','.AddPlataformaModal_btn',function(e){                  
-            e.preventDefault();       
-                                              
+            e.preventDefault();     
+            
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+
+            if(setoradmin==1){                                              
             $("#addform").trigger('reset');
             $("#AddPlataformaModal").modal('show');   
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');              
+            }else{
+                 Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title: "ALERTA INFRA !",
+                text: "Você não pode criar um registro. Pois seu usuário não pertence ao setor de INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
     
         });
     

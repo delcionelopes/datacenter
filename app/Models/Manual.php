@@ -13,6 +13,9 @@ class Manual extends Model
         'objetivo',
         'manual',
         'area_conhecimento_id',
+        'setor_idsetor',
+        'created_at',
+        'updated_at',
     ];
 
     public function area_conhecimento()
@@ -23,5 +26,9 @@ class Manual extends Model
     public function uploads()
     {
         return $this->hasMany(Upload::class,'manual_id');
+    }
+
+    public function setor(){
+        return $this->belongsTo(Setor::class,'setor_idsetor');
     }
 }

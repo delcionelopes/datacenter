@@ -21,7 +21,7 @@
                 </button>
             </div>
             <div class="modal-body form-horizontal">
-                <form id="addform" name="myform" class="form-horizontal" role="form">
+                <form id="addform" name="addform" class="form-horizontal" role="form">
                     <ul id="saveform_errList"></ul>
                     <div class="form-group mb-3">
                         <label for="">Nome</label>
@@ -51,7 +51,7 @@
                 </button>
             </div>
             <div class="modal-body form-horizontal">
-                <form id="editform" name="myform" class="form-horizontal" role="form">
+                <form id="editform" name="editform" class="form-horizontal" role="form">
                     <ul id="updateform_errList"></ul>
                     <input type="hidden" id="edit_projeto_id">
                     <div class="form-group mb-3">
@@ -83,7 +83,7 @@
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                 <i class="fas fa-search"></i>
                             </button>                                                                                                             
-                            <button type="button" class="AddProjetoModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></button>
+                            <button type="button" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddProjetoModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></button>
                         </div>                        
                     </div>                    
                 </form>                                
@@ -142,7 +142,7 @@
             var admin = $(this).data("admin");
             var setoradmin = $(this).data("setoradmin");
             var nomeprojeto = ($(this).data("nomeprojeto")).trim();
-            if(admin){
+            if((admin)&&(setoradmin==1)){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -196,7 +196,7 @@
                     popup: 'animate__animated animate__fadeOutUp'
                 },
                 title:nomeprojeto,
-                text: "Você não pode excluir este registro. Procure um administrador!",
+                text: "Você não pode excluir este registro. Procure um administrador do setor INFRA !",
                 imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
@@ -225,7 +225,7 @@
             var admin = $(this).data("admin");
             var setoradmin = $(this).data("setoradmin");
             var nome = $(this).data("nomeprojeto");
-            if(admin){
+            if((admin)&&(setoradmin==1)){
             $("#editform").trigger('reset');
             $("#EditProjetoModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
@@ -257,7 +257,7 @@
                     popup: 'animate__animated animate__fadeOutUp'
                 },
                 title:nome,
-                text: "Você não pode alterar este registro. Procure um administrador!",
+                text: "Você não pode alterar este registro. Procure um administrador do setor INFRA !",
                 imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
@@ -338,10 +338,34 @@
     
     $(document).on('click','.AddProjetoModal_btn',function(e){                  
             e.preventDefault();       
-            
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            if(setoradmin){
             $("#addform").trigger('reset');
             $("#AddProjetoModal").modal('show');               
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>'); 
+            }else{
+                 Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA INFRA !",
+                text: "Você não pode criar um novo registro. Pois seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
     
         });
     

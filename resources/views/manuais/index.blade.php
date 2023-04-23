@@ -122,7 +122,7 @@
                    <!--fim arquivo pdf-->                                     
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary upload_manual">Enviar</button>
+                    <button type="submit" class="btn btn-primary upload_manual"><img id="imgenviar" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Enviar</button>
                 </div>
                 </form>
             </div>
@@ -167,13 +167,13 @@
                         <th scope="row">{{$manual->descricao}}</th>                        
                         <td>{{$manual->area_conhecimento->descricao}}</td>
                         <td id="uploads{{$manual->id}}">
-                        <label id="files{{$manual->id}}">Files: {{$manual->uploads->count()}} </label><button type="button" id="upload_files_btn" data-manualid="{{$manual->id}}" class="upload_files_btn fas fa-file-pdf" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Enviar ARQUIVOS"></button>    
+                        <label id="files{{$manual->id}}">Files: {{$manual->uploads->count()}} </label><button type="button" id="upload_files_btn" data-manualid="{{$manual->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" class="upload_files_btn fas fa-file-pdf" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Enviar ARQUIVOS"></button>    
                         <ul id="listaarquivos{{$manual->id}}" style="list-style: none;">
                         @if($manual->uploads->count())    
                             @foreach($manual->uploads as $upload)                                                        
                             <li id="up{{$upload->id}}">
                                 <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" class="download_file_btn fas fa-download"></i>
-                                <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" class="delete_file_btn fas fa-trash"></i></li>
+                                <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" class="delete_file_btn fas fa-trash"></i></li>
                                 <iframe id="viewer{{$upload->id}}" src="{{asset('storage/ViewerJS/#../'.$upload->path_arquivo)}}" width="400" height="300" allowfullscreen webkitallowfullscreen></iframe>
                             <br>
                             @endforeach
@@ -182,8 +182,8 @@
                         </td>                       
                         <td>
                             <div class="btn-group">
-                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-descricao="{{$manual->descricao}}" class="edit_manual_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-descricao="{{$manual->descricao}}" class="delete_manual_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" data-descricao="{{$manual->descricao}}" class="edit_manual_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" data-descricao="{{$manual->descricao}}" class="delete_manual_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -220,12 +220,14 @@
         $(document).on('click','.delete_manual_btn',function(e){
             e.preventDefault();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            var linklogo = "{{asset('storage')}}";
+            var link = "{{asset('storage')}}";
             var id = $(this).data("id");  
             var nomemanual = ($(this).data("descricao")).trim();
             var admin = $(this).data("admin");
             var setoradmin = $(this).data("setoradmin");
-            if(admin){
+            var idsetor = $(this).data("idsetor");
+            var setor = $(this).data("setor");
+            if((admin)&&(setoradmin==idsetor)){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -235,7 +237,7 @@
                 },
                 title:nomemanual,
                 text: "Deseja excluir?",
-                imageUrl: linklogo+'./logoprodap.jpg',
+                imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -278,9 +280,9 @@
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 },
-                title:nomemanual,
-                text: "Você não pode excluir este registro. Procure um administrador!",
-                imageUrl: linklogo+'./logoprodap.jpg',
+                title:"ALERTA "+setor+" !",
+                text: "Você não pode excluir este registro, pertence ao setor "+setor+". Procure um administrador do setor "+setor+" !",
+                imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -300,12 +302,14 @@
         });
         $(document).on('click','.edit_manual_btn',function(e){
             e.preventDefault();
-            var linklogo = "{{asset('storage')}}";
+            var link = "{{asset('storage')}}";
             var id = $(this).data("id");
             var admin = $(this).data("admin");
             var setoradmin = $(this).data("setoradmin");
             var nome = $(this).data("descricao");
-            if(admin){
+            var idsetor = $(this).data("idsetor");
+            var setor = $(this).data("setor");
+            if((admin)&&(setoradmin==idsetor)){
             $("#editmyform").trigger('reset');
             $("#EditManualForm").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');    
@@ -348,9 +352,9 @@
                 hideClass: {
                     popup: 'animate__animated animate__fadeOutUp'
                 },
-                title:nome,
-                text: "Você não pode alterar este registro. Procure um administrador!",
-                imageUrl: linklogo+'./logoprodap.jpg',
+                title:"ALERTA "+setor+" !",
+                text: "Você não pode alterar este registro, pois pertence a "+setor+". Procure um administrador do setor "+setor+" !",
+                imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -429,22 +433,22 @@
                                     <th scope="row">'+response.manual.descricao+'</th>\
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td id="uploads'+response.manual.id+'">\
-                                    <label id="files'+response.manual.id+'">Files: '+response.uploads.count()+' </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
+                                    <label id="files'+response.manual.id+'">Files: '+response.uploads.count()+' </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
                                     <ul id="listaarquivos'+response.manual.id+'">';
                                     if(response.uploads){  
                                         $("#listaarquivos"+response.manual.id).replaceWith = '<ul id="listaarquivos'+response.manual.id+'"></ul>';
                                         $.each(response.uploads,function(key,arq){                                           
                                             $("#listaarquivos").append('li id="up'+arq.id+'">\
                                             <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>\
-                                            <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="delete_file_btn fas fa-trash"></i>\
+                                            <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_file_btn fas fa-trash"></i>\
                                             '+arq.nome_arquivo+'</li><br>');
                                     });                                     
                                     }    
                             linha2 = '</td>\
                                     <td>\
                                     <div class="btn-group">\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div>\
                                     </td>\
                                     </tr>';   
@@ -525,13 +529,13 @@
                                     <th scope="row">'+response.manual.descricao+'</th>\
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td id="uploads'+response.manual.id+'">\
-                                    <label id="files'+response.manual.id+'">Files: 0 </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
+                                    <label id="files'+response.manual.id+'">Files: 0 </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
                                     <ul id="listaarquivos'+response.manual.id+'"></ul>\
                                     </td>\
                                     <td>\
                                     <div class="btn-group">\
                                     <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none;"></button>\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none;"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none;"></button>\
                                     </div>\
                                     </td>\
                                     </tr>'; 
@@ -551,9 +555,14 @@
     $(document).on('click','.delete_file_btn',function(e){                                                   
         e.preventDefault();
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        var linklogo = "{{asset('storage')}}";
-        var id = $(this).data("id");        
+        var link = "{{asset('storage')}}";
+        var id = $(this).data("id");
+        var admin = $(this).data("admin");
+        var setoradmin = $(this).data("setoradmin");
+        var idsetor = $(this).data("idsetor");
+        var setor = $(this).data("setor");
         var vfilename = ($(this).data("filename")).trim();
+        if((admin)&&(setoradmin==idsetor)){
         Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -563,7 +572,7 @@
                 },
                 title:vfilename,
                 text: "Deseja excluir?",
-                imageUrl: linklogo+'./logoprodap.jpg',
+                imageUrl: link+'./logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -597,7 +606,29 @@
                 });
             }                                       
         
-        });                        
+        });
+    }else{
+         Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA "+setor+" !",
+                text: "Você não pode excluir este arquivo, pois pertence a "+setor+". Procure um administrador do setor "+setor+" !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            }) 
+    }
         
         });
         
@@ -635,9 +666,15 @@
     
         //inicio exibição do form uploadPDFModal       
         $(document).on('click','#upload_files_btn',function(e){
-            e.preventDefault();
+            e.preventDefault();            
             
-            var id = $(this).data("manualid");        
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            var idsetor = $(this).data("idsetor");
+            var setor = $(this).data("setor");
+            var id = $(this).data("manualid");
+            
+            if(setoradmin==idsetor){
     
             $("#uploadmyform").trigger('reset');
             $("#uploadPDFModal").modal('show');       
@@ -657,12 +694,36 @@
                     }
                 }            
             });
+        }else{
+             Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA "+setor+" !",
+                text: "Registro feito por um usuário pertencente a "+setor+". Somente usuário do setor "+setor+" pode fazer upload!",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            }) 
+        }
         });//fim exibição do form uploadPDFModal
     
     
         $(document).on('change','#arquivo',function(){  
           //e.preventDefault();
           var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");      
+          var loading = $("#imgenviar");
+              loading.show();  
           var formData = new FormData();
           var id = $("#arquivo").data("manualid");            
           let TotalFiles = $("#arquivo")[0].files.length;                        
@@ -692,7 +753,8 @@
                       $("#uploadform_errList").replaceWith('<ul id="uploadform_errList"></ul>');    
                       $("#success_message").replaceWith('<div id="success_message"></div>');                  
                       $("#success_message").addClass('alert alert-success');
-                      $("#success_message").text(response.message);           
+                      $("#success_message").text(response.message); 
+                      loading.hide();          
                       $("#uploadmyform").trigger('reset');
                       $("#uploadPDFModal").modal('hide');
                       var labelhtml = '<label id="files'+response.manualid+'">Files: '+response.totalfiles+' </label>';
@@ -701,7 +763,7 @@
                       $("#up"+arq.id).remove();
                        var item = '<li id="up'+arq.id+'">\
                                 <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>\
-                                <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="delete_file_btn fas fa-trash"></i>'+arq.nome_arquivo+'</li><br>';                                
+                                <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_file_btn fas fa-trash"></i>'+arq.nome_arquivo+'</li><br>';                                
                        $("#listaarquivos"+response.manualid).append(item);
                        });     
               } 

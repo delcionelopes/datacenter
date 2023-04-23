@@ -144,7 +144,7 @@
             var nomedaarea = ($(this).data("descricao")).trim();
             var admin = $(this).data("admin");
             var setoradmin = $(this).data("setoradmin");
-            if(admin==true){
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -227,7 +227,7 @@
             var setoradmin = $(this).data("setoradmin");
             var nome = $(this).data("descricao");
             var id = $(this).data("id");
-            if(admin==true){
+            if(admin){
             $("#editform").trigger('reset');
             $("#EditArea_ConhecimentoModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
