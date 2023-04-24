@@ -312,7 +312,7 @@ $(document).ready(function(){
                 },
                 title:nomeusuario,
                 text: "Deseja excluir?",
-                imageUrl: linklogo+'./logoprodap.jpg',
+                imageUrl: linklogo+'/logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
