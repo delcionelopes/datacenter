@@ -222,7 +222,8 @@
                 <thead class="sidebar-dark-primary" style="color: white">
                     <tr>                        
                         <th scope="col">EQUIPAMENTO(s)</th>
-                        <th scope="col"><i class="fas fa-key"></i> PASS</th>                        
+                        <th scope="col"><i class="fas fa-key"></i> PASS</th>
+                        <th scope="col">SETOR</th>
                         <th scope="col">AÇÕES</th>                       
                     </tr>                    
                 </thead>
@@ -250,7 +251,8 @@
                             @endif
                             @endif
                             @endif                                                                                   
-                        </td>                        
+                        </td>
+                        <td>{{$equipamento->setor->sigla}}</td>
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-id="{{$equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
@@ -510,7 +512,9 @@ $(document).ready(function(){
                             limita5 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="0" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         } 
-                        limita6 = '</td><td>\
+                        limita6 = '</td>\
+                                <td>'+response.setor.sigla+'</td>\
+                                <td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>\
                                     <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_equipamento_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>\
@@ -605,7 +609,9 @@ $(document).ready(function(){
                             limita5 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="0" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                         
-                        limita6 = '</td><td>\
+                        limita6 = '</td>\
+                                <td>'+response.setor.sigla+'</td>\
+                                <td>\
                                 <div class="btn-group">\
                                     <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>\
                                     <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_equipamento_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>\
