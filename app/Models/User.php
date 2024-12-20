@@ -85,6 +85,7 @@ class User extends Authenticatable
         return $this->belongsTo(Setor::class,'setor_idsetor');
     }
 
+
     /**
      * The attributes that should be hidden for serialization.
      *
