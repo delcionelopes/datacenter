@@ -87,7 +87,8 @@
     {{-- Password reset link --}}
     @if($password_reset_url)
         <p class="my-0">
-            <a href="{{ $password_reset_url }}">
+            <!-- <a href="{{ $password_reset_url }}">  -->
+            <a href="{{ route('forget.password.get') }}">    
                 Esqueci a minha senha
             </a>
         </p>
