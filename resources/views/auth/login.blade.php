@@ -86,8 +86,8 @@
 @section('auth_footer')
     {{-- Password reset link --}}
     @if($password_reset_url)
-        <p class="my-0">
-            <a href="{{ $password_reset_url }}">
+        <p class="my-0">            
+            <a href="{{ route('forget.password.get') }}"> 
                 Esqueci a minha senha
             </a>
         </p>
@@ -96,7 +96,7 @@
     {{-- Register link --}}
     @if($register_url)
         <p class="my-0">
-            <a href="{{ $register_url }}">
+            <a href="{{ $register_url }}">            
                 Registre-se
             </a>
         </p>
