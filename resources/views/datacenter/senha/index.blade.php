@@ -26,7 +26,7 @@
                 </div>
                 <div class="ml-3 w-100">                    
                    <h4 class="mb-0 mt-0"><b>{{auth()->user()->name}}</b></h4>
-                   @if($totaluserapps || $totaluserhosts || $totaluservms || $totaluserbases || $totaluservlans)
+                   @if($totaluserapps || $totaluserhosts || $totaluservms || $totaluserbases || $totaluservlans || $totaluserequipamentos)
                    <span>Minhas senhas</span>
                    <div class="container-fluid p-2 mt-2 bg-light d-flex rounded text-white stats halfOpacity">
                     <div class="row">
@@ -37,7 +37,7 @@
                                 </button>                                
                                 <ul class="dropdown-menu" id="dropdown_app{{auth()->user()->id}}">
                                     @foreach($userapps as $u_app)                                                                                                            
-                                    <li class="dropdown-item"><a href="#" class="dropdown-item userapp_item" data-id="{{$u_app->id}}" data-nomeapp="{{$u_app->nome_app}}" 
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item userapp_item" data-id="{{$u_app->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeapp="{{$u_app->nome_app}}" 
                                       data-dominio="{{$u_app->dominio}}">{{$u_app->nome_app}}</a></li>
                                     @endforeach
                                 </ul>                                                                                                  
@@ -50,7 +50,7 @@
                                 </button>                               
                                 <ul class="dropdown-menu" id="dropdown_host{{auth()->user()->id}}">
                                     @foreach($userhosts as $u_host)                                                                                                            
-                                    <li class="dropdown-item"><a href="#" class="dropdown-item userhost_item" data-id="{{$u_host->id}}" data-nomehost="{{$u_host->datacenter}}" data-clusterip="{{$u_host->cluster}}/{{$u_host->ip}}">{{$u_host->datacenter}}</a></li>
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item userhost_item" data-id="{{$u_host->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomehost="{{$u_host->datacenter}}" data-clusterip="{{$u_host->cluster}}/{{$u_host->ip}}">{{$u_host->datacenter}}</a></li>
                                     @endforeach
                                 </ul>                                                                                             
                     </div>
@@ -62,7 +62,7 @@
                                 </button>                               
                                 <ul class="dropdown-menu" id="dropdown_vm{{auth()->user()->id}}">
                                     @foreach($uservms as $u_vm)                                                                                                            
-                                    <li class="dropdown-item"><a href="#" class="dropdown-item uservm_item" data-id="{{$u_vm->id}}" data-nomevm="{{$u_vm->nome_vm}}" data-clusterip="{{$u_vm->cluster}}/{{$u_vm->ip}}">{{$u_vm->nome_vm}}</a></li>
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item uservm_item" data-id="{{$u_vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevm="{{$u_vm->nome_vm}}" data-clusterip="{{$u_vm->cluster}}/{{$u_vm->ip}}">{{$u_vm->nome_vm}}</a></li>
                                     @endforeach
                                 </ul>                                                                             
                     </div>
@@ -74,7 +74,7 @@
                                 </button>                                
                                 <ul class="dropdown-menu" id="dropdown_base{{auth()->user()->id}}">
                                     @foreach($userbases as $u_base)                                                                                                            
-                                    <li class="dropdown-item"><a href="#" class="dropdown-item userbase_item" data-id="{{$u_base->id}}" data-nomebase="{{$u_base->nome_base}}" data-ip="{{$u_base->ip}}">{{$u_base->nome_base}}</a></li>
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item userbase_item" data-id="{{$u_base->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomebase="{{$u_base->nome_base}}" data-ip="{{$u_base->ip}}">{{$u_base->nome_base}}</a></li>
                                     @endforeach
                                 </ul>                                                                   
                     </div>
@@ -86,7 +86,19 @@
                                 </button>                                
                                 <ul class="dropdown-menu" id="dropdown_vlan{{auth()->user()->id}}">
                                     @foreach($uservlans as $u_vlan)                                                                                                            
-                                    <li class="dropdown-item"><a href="#" class="dropdown-item uservlan_item" data-id="{{$u_vlan->id}}" data-nomevlan="{{$u_vlan->nome_vlan}}">{{$u_vlan->nome_vlan}}</a></li>
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item uservlan_item" data-id="{{$u_vlan->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevlan="{{$u_vlan->nome_vlan}}">{{$u_vlan->nome_vlan}}</a></li>
+                                    @endforeach
+                                </ul>                                             
+                    </div>                        
+                    @endif
+                    @if($totaluserequipamentos)
+                    <div class="p-2 mt-2">
+                                <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
+                                Equipamentos(s) <span class="badge badge-light">{{$totaluserequipamentos}}</span><span class="caret"></span>
+                                </button>                                
+                                <ul class="dropdown-menu" id="dropdown_vlan{{auth()->user()->id}}">
+                                    @foreach($userequipamentos as $u_equipamento)                                                                                                            
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item userequipamento_item" data-id="{{$u_equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$u_equipamento->setor_idsetor}}" data-setor="{{$u_equipamento->setor->sigla}}" data-nome="{{$u_equipamento->nome}}">{{$u_equipamento->nome}}</a></li>
                                     @endforeach
                                 </ul>                                             
                     </div>                        
@@ -115,10 +127,10 @@
                                     @foreach($apps as $app)                                         
                                         @foreach($app->users as $user)
                                             @if(($user->id) == (auth()->user()->id))                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadaapp_btn" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadaapp_btn" data-id="{{$app->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeapp="{{$app->nome_app}}" 
                                                 data-dominio="{{$app->dominio}}" data-opt="1" style="white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"><i class="fas fa-lock-open" style="background: transparent; color: green; border: none;"></i> {{$app->nome_app}}</a></li>                                                                              @break
                                             @elseif ($loop->last)                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadaapp_btn" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadaapp_btn" data-id="{{$app->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeapp="{{$app->nome_app}}" 
                                                 data-dominio="{{$app->dominio}}" data-opt="0" style="white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"><i class="fas fa-lock" style="background: transparent; color: red; border: none;"></i> {{$app->nome_app}}</a></li>
                                             @endif               
                                         @endforeach                                         
@@ -143,11 +155,11 @@
                                     @foreach($bases as $base)                                         
                                         @foreach($base->users as $user)
                                             @if(($user->id) == (auth()->user()->id))                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadabase_btn" data-id="{{$base->id}}" data-nomebase="{{$base->nome_base}}" data-ip="{{$base->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadabase_btn" data-id="{{$base->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomebase="{{$base->nome_base}}" data-ip="{{$base->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$base->users->implode('name','<br>')}}"><i class="fas fa-lock-open" style="background: transparent; color: green; border: none;"></i> {{$base->nome_base}}</a></li>
                                                 @break
                                             @elseif ($loop->last)                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadabase_btn" data-id="{{$base->id}}" data-nomebase="{{$base->nome_base}}" data-ip="{{$base->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadabase_btn" data-id="{{$base->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomebase="{{$base->nome_base}}" data-ip="{{$base->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$base->users->implode('name','<br>')}}"><i class="fas fa-lock" style="background: transparent; color: red; border: none;"></i> {{$base->nome_base}}</a></li>
                                             @endif               
                                         @endforeach                                         
@@ -172,11 +184,11 @@
                                     @foreach($virtualmachines as $vm)                                         
                                         @foreach($vm->users as $user)
                                             @if(($user->id) == (auth()->user()->id))                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavm_btn" data-id="{{$vm->id}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavm_btn" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"><i class="fas fa-lock-open" style="background: transparent; color: green; border: none;"></i> {{$vm->nome_vm}}</a></li>
                                                 @break
                                             @elseif ($loop->last)                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavm_btn" data-id="{{$vm->id}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavm_btn" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"><i class="fas fa-lock" style="background: transparent; color: red; border: none;"></i> {{$vm->nome_vm}}</a></li>
                                             @endif               
                                         @endforeach                                         
@@ -201,11 +213,11 @@
                                     @foreach($hosts as $host)                                         
                                         @foreach($host->users as $user)
                                             @if(($user->id) == (auth()->user()->id))                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadahost_btn" data-id="{{$host->id}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadahost_btn" data-id="{{$host->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$host->users->implode('name','<br>')}}"><i class="fas fa-lock-open" style="background: transparent; color: green; border: none;"></i> {{$host->datacenter}}</a></li>
                                                 @break
                                             @elseif ($loop->last)                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadahost_btn" data-id="{{$host->id}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadahost_btn" data-id="{{$host->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$host->users->implode('name','<br>')}}"><i class="fas fa-lock" style="background: transparent; color: red; border: none;"></i> {{$host->datacenter}}</a></li>
                                             @endif               
                                         @endforeach                                         
@@ -230,11 +242,11 @@
                                     @foreach($vlans as $vlan)                                         
                                         @foreach($vlan->users as $user)
                                             @if(($user->id) == (auth()->user()->id))                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavlan_btn" data-id="{{$vlan->id}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavlan_btn" data-id="{{$vlan->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$vlan->users->implode('name','<br>')}}"><i class="fas fa-lock-open" style="background: transparent; color: green; border: none;"></i> {{$vlan->nome_vlan}}</a></li>
                                                 @break
                                             @elseif ($loop->last)                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavlan_btn" data-id="{{$vlan->id}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="0" class="fas fa-lock" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavlan_btn" data-id="{{$vlan->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="0" class="fas fa-lock" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$vlan->users->implode('name','<br>')}}"><i class="fas fa-lock" style="background: transparent; color: red; border: none;"></i> {{$vlan->nome_vlan}}</a></li>
                                             @endif               
                                         @endforeach                                         
@@ -267,6 +279,123 @@
 </div>
 </div>
 
+<!-- início AddSenhaEquipAdmin -->
+   <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaEquipAdmin" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header navbar-dark bg-primary">
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Administrar acesso ao equipamento</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true" style="color: white;">&times</span>
+                </button>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form id="addformsenhaequipadmin" name="addformsenhaequipadmin" class="form-horizontal" role="form">
+                    <input type="hidden" id="add_equipamentosenhaadmin_id">
+                    <ul id="saveformsenha_errList"></ul>   
+                    <div class="card">
+                    <div class="card-body">         
+                     <fieldset>
+                    <legend>Dados de segurança</legend>                    
+                    <div class="form-group mb-3">
+                        <label  for="">Nome do equipamento:</label>
+                        <label  id="nomeequipamento"></label>
+                    </div>                        
+                    <div class="form-group mb-3">
+                        <label  for="">Senha ADMIN:</label><i id="mostrasenhaadmin_btn" class="fas fa-eye" data-status="true" style="border:none;"></i>
+                        <input type="hidden" id="edit_senhaadmin">
+                        <label  id="senhaadmin"></label>
+                    </div>    
+                     <div class="form-group mb-3">
+                        <label  for="">Criação:</label>
+                        <label  id="editdatacriacao"></label><br>
+                        <label  for="">Modificação:</label>
+                        <label  id="editdatamodificacao"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label  for="">Criador:</label>
+                        <label  id="editcriador"></label><br>
+                        <label  for="">Modificador:</label>
+                        <label  id="editmodificador"></label>
+                    </div>                    
+                    <div class="form-group mb-3">
+                        <label for="" id="senhaindividualdeadmin">Sua senha individual de </label>                        
+                        <input type="text" id="edit_senhaindividualequip" class="senhaindividual form-control">
+                    </div>                   
+                    </fieldset>
+                    </div>
+                    </div>
+                     <div class="card">
+                        <div class="card-body">                        
+                            <fieldset>
+                                <legend>Quem tem acesso a este equipamento?</legend>
+                                <div class="form-check">
+                                    @foreach ($usersdiversos as $user)
+                                    <label class="form-check-label" for="CheckUser{{$user->id}}">
+                                        <input type="checkbox" id="CheckUserEquipamento{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input">
+                                        @if($user->admin) 
+                                            <i class="fas fa-user" style="color: green "></i> 
+                                        @else 
+                                            <i class="fas fa-user" style="color: gray"></i> 
+                                        @endif 
+                                            {{$user->name}}
+                                    </label><br>
+                                    @endforeach
+                                </div>
+                            </fieldset>  
+                            </div>
+                     </div>                             
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary add_senhaequipadmin_btn"><img id="imgeaddequipamento" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim AddSenhaEquipAdmin -->
+
+<!-- início EditSenhaEquipIndividual -->
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaEquipIndividual" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header navbar-dark bg-primary">
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Minha senha individual</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true" style="color: white;">&times</span>
+                </button>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form id="editformsenhaindividual" name="editformsenhaindividual" class="form-horizontal" role="form">
+                    <input type="hidden" id="edit_equipamentosenhaindividual_id">
+                    <ul id="updateformsenha_errList"></ul>  
+                    <div class="card">
+                    <div class="card-body"> 
+                    <fieldset>
+                    <legend>Dados da Senha</legend>                 
+                    <div class="form-group mb-3">
+                        <label  for="">Nome do equipamento:</label>
+                        <label  id="editnomeequipamento"></label>
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="" id="nomedousuario">Senha de </label>
+                        <input type="text" id="edit_senhaindividual" class="senha form-control">                       
+                    </div>                                 
+                    </fieldset>    
+                    </div>
+                    </div>                                    
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-primary update_senhaindividual_btn"><img id="imgsenhaindividualequipamento" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- fim EditSenhaEquipIndividual -->
+
 <!--inicio edit senha app usu -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaApp" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -278,7 +407,7 @@
                 </button>
             </div>
             <div class="modal-body form-horizontal">
-                <form id="editformsenha" name="editformsenha" class="form-horizontal" role="form">
+                <form id="editformsenhaapp" name="editformsenhaapp" class="form-horizontal" role="form">
                     <input type="hidden" id="edit_appsenha_id">
                     <ul id="updateformsenha_errList"></ul>  
                     <div class="card">
@@ -329,7 +458,13 @@
                                 <div class="form-check">
                                     @foreach ($users as $user)
                                     <label class="form-check-label" for="check{{$user->id}}">
-                                        <input type="checkbox" id="checkapp{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                        <input type="checkbox" id="checkapp{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> 
+                                        @if($user->admin) 
+                                            <i class="fas fa-user" style="color: green "></i> 
+                                        @else 
+                                            <i class="fas fa-user" style="color: gray"></i> 
+                                        @endif 
+                                            {{$user->name}}
                                     </label><br>
                                     @endforeach
                                 </div>
@@ -340,7 +475,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhaapp_btn">Salvar</button>
+                <button type="button" class="btn btn-primary update_senhaapp_btn"><img id="imgsenhaapp" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -409,7 +544,13 @@
                                 <div class="form-check">
                                     @foreach ($users as $user)
                                     <label class="form-check-label" for="check{{$user->id}}">
-                                        <input type="checkbox" id="checkhost{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                        <input type="checkbox" id="checkhost{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> 
+                                        @if($user->admin) 
+                                            <i class="fas fa-user" style="color: green "></i> 
+                                        @else 
+                                            <i class="fas fa-user" style="color: gray"></i> 
+                                        @endif 
+                                            {{$user->name}}
                                     </label><br>
                                     @endforeach
                                 </div>
@@ -420,7 +561,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhahost_btn">Salvar</button>
+                <button type="button" class="btn btn-primary update_senhahost_btn"><img id="imgsenhahost" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -489,7 +630,13 @@
                                 <div class="form-check">
                                     @foreach ($users as $user)
                                     <label class="form-check-label" for="check{{$user->id}}">
-                                        <input type="checkbox" id="checkvm{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                        <input type="checkbox" id="checkvm{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> 
+                                        @if($user->admin) 
+                                            <i class="fas fa-user" style="color: green "></i> 
+                                        @else 
+                                            <i class="fas fa-user" style="color: gray"></i> 
+                                        @endif 
+                                            {{$user->name}}
                                     </label><br>
                                     @endforeach
                                 </div>
@@ -500,7 +647,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhaVM_btn">Salvar</button>
+                <button type="button" class="btn btn-primary update_senhaVM_btn"><img id="imgsenhavm" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -569,7 +716,13 @@
                                 <div class="form-check">
                                     @foreach ($users as $user)
                                     <label class="form-check-label" for="check{{$user->id}}">
-                                        <input type="checkbox" id="checkbase{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                        <input type="checkbox" id="checkbase{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> 
+                                        @if($user->admin) 
+                                            <i class="fas fa-user" style="color: green "></i> 
+                                        @else 
+                                            <i class="fas fa-user" style="color: gray"></i> 
+                                        @endif 
+                                            {{$user->name}}
                                     </label><br>
                                     @endforeach
                                 </div>
@@ -580,7 +733,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhabase_btn">Salvar</button>
+                <button type="button" class="btn btn-primary update_senhabase_btn"><img id="imgsenhabase" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -645,7 +798,13 @@
                                 <div class="form-check">
                                     @foreach ($users as $user)
                                     <label class="form-check-label" for="check{{$user->id}}">
-                                        <input type="checkbox" id="checkvlan{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                        <input type="checkbox" id="checkvlan{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> 
+                                        @if($user->admin) 
+                                            <i class="fas fa-user" style="color: green "></i> 
+                                        @else 
+                                            <i class="fas fa-user" style="color: gray"></i> 
+                                        @endif 
+                                            {{$user->name}}
                                     </label><br>
                                     @endforeach
                                 </div>
@@ -656,7 +815,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhavlan_btn">Salvar</button>
+                <button type="button" class="btn btn-primary update_senhavlan_btn"><img id="imgsenhavlan" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -677,20 +836,22 @@ $(document).ready(function(){ //início do bloco principal
 
 ////inicio alteração de senha
     $('#EditSenhaApp').on('shown.bs.modal',function(){
-        $('#edit_senha').focus();
+        $("#edit_senha").focus();
     });
     $(document).on('click','.userapp_item',function(e){
         e.preventDefault();      
-    
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
+        if(setoradmin==1){
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomeapp")).trim();            
         var labelDominio = ($(this).data("dominio")).trim(); 
-        $('#editformsenha').trigger('reset');
-        $('#EditSenhaApp').modal('show');  
-        $('#editnomeapp').html('<Label id="editnomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
-        $('#editdominioapp').html('<Label id="editdominioapp" style="font-style:italic;">'+labelDominio+'</Label>');     
-        $('#edit_appsenha_id').val(id);  
-        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');
+        $("#editformsenhaapp").trigger('reset');
+        $("#EditSenhaApp").modal('show');  
+        $("#editnomeapp").replaceWith('<Label id="editnomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $("#editdominioapp").replaceWith('<Label id="editdominioapp" style="font-style:italic;">'+labelDominio+'</Label>');     
+        $("#edit_appsenha_id").val(id);  
+        $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -727,16 +888,16 @@ $(document).ready(function(){ //início do bloco principal
                             alterador = "";
                         }               
                    if(new Date(response.app.validade)<new Date()){
-                    $('#senhavencida').html('<small id="senhavencida" style="color: red">Senha vencida!</small>');
+                    $("#senhavencida").replaceWith('<small id="senhavencida" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencida').html('<small id="senhavencida" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencida").replaceWith('<small id="senhavencida" style="color: green">Senha na validade. OK!</small>');  
                     } 
-                    $('#edit_validade').val(datavalidade);
-                    $('#editdatacriacao').html('<label  id="editdatacriacao">'+datacriacao+'</label>');
-                    $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
-                    $('#editcriador').html('<label  id="editcriador">'+criador+'</label>');
-                    $('#editmodificador').html('<label  id="editmodificador">'+alterador+'</label>');                         
-                    $('#edit_senha').val(response.senha);
+                    $("#edit_validade").val(datavalidade);
+                    $("#editdatacriacao").replaceWith('<label  id="editdatacriacao">'+datacriacao+'</label>');
+                    $("#editdatamodificacao").replaceWith('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
+                    $("#editcriador").replaceWith('<label  id="editcriador">'+criador+'</label>');
+                    $("#editmodificador").replaceWith('<label  id="editmodificador">'+alterador+'</label>');                         
+                    $("#edit_senha").val(response.senha);
                     if(response.app.val_indefinida){
                       $("input[name='edit_val_indefinida']").attr('checked',true);  
                     }else{
@@ -753,16 +914,38 @@ $(document).ready(function(){ //início do bloco principal
             }
         });
   
-             
+    }else{
+          Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }
     });
     //fim exibe EditAppModal
     ///inicio alterar senha
     $(document).on('click','.update_senhaapp_btn',function(e){
             e.preventDefault();
-            $(this).text('Salvando...');
+            var loading = $("#imgsenhaapp");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
-            var id = $('#edit_appsenha_id').val();
+            var id = $("#edit_appsenha_id").val();
             var val_indefinida = 0;
             $("input[name='edit_val_indefinida']:checked").each(function(){
                 val_indefinida = 1;
@@ -775,8 +958,8 @@ $(document).ready(function(){ //início do bloco principal
             });            
             
             var data = {
-                'senha':$('.senha').val(),
-                'validade':formatDate($('.validade').val()),
+                'senha':$(".senha").val(),
+                'validade':formatDate($(".validade").val()),
                 'val_indefinida':val_indefinida,                
                 'users':users,
                 '_method':'PATCH',
@@ -791,16 +974,18 @@ $(document).ready(function(){ //início do bloco principal
                 success:function(response){
                       if(response.status==400){
                            //erros
-                            $('#updateformsenha_errList').html("");
-                            $('#updateformsenha_errList').addClass("alert alert-danger");
+                            $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');
+                            $("#updateformsenha_errList").addClass("alert alert-danger");
                             $.each(response.errors,function(key,err_values){
-                                    $('#updateformsenha_errList').append('<li>'+err_values+'</li>');
+                                    $("#updateformsenha_errList").append('<li>'+err_values+'</li>');
                             });
+                            loading.hide();
           
                 }else{
-                        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');     
-                        $('#editformsenha').trigger('reset');                    
-                        $('#EditSenhaApp').modal('hide');
+                        $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');     
+                        loading.hide();
+                        $("#editformsenhaapp").trigger('reset');                    
+                        $("#EditSenhaApp").modal('hide');
                                                
                         location.reload();
                 } 
@@ -812,20 +997,22 @@ $(document).ready(function(){ //início do bloco principal
 
    ////inicio alteração de senha USER HOST
     $('#EditSenhaHost').on('shown.bs.modal',function(){
-        $('#edit_senhahost').focus();
+        $("#edit_senhahost").focus();
     });
     $(document).on('click','.userhost_item',function(e){
         e.preventDefault();
-        
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
+        if(setoradmin==1){
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomehost")).trim();            
         var labelclusterip = ($(this).data("clusterip")).trim(); 
-        $('#editformsenhahost').trigger('reset');
-        $('#EditSenhaHost').modal('show');  
-        $('#editnomehost').html('<Label id="editnomehost" style="font-style:italic;">'+labelHtml+'</Label>');            
-        $('#editclusteriphost').html('<Label id="editclusteriphost" style="font-style:italic;">'+labelclusterip+'</Label>');     
-        $('#edit_hostsenha_id').val(id);  
-        $('#updateformsenha_errListhost').html('<ul id="updateformsenha_errListhost"></ul>');
+        $("#editformsenhahost").trigger('reset');
+        $("#EditSenhaHost").modal('show');  
+        $("#editnomehost").replaceWith('<Label id="editnomehost" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $("#editclusteriphost").replaceWith('<Label id="editclusteriphost" style="font-style:italic;">'+labelclusterip+'</Label>');     
+        $("#edit_hostsenha_id").val(id);  
+        $("#updateformsenha_errListhost").replaceWith('<ul id="updateformsenha_errListhost"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -862,16 +1049,16 @@ $(document).ready(function(){ //início do bloco principal
                             alterador = "";
                         }    
                     if(new Date(response.host.validade)<new Date()){
-                    $('#senhavencidahost').html('<small id="senhavencidahost" style="color: red">Senha vencida!</small>');
+                    $("#senhavencidahost").replaceWith('<small id="senhavencidahost" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencidahost').html('<small id="senhavencidahost" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencidahost").replaceWith('<small id="senhavencidahost" style="color: green">Senha na validade. OK!</small>');  
                     }                
-                    $('#edit_validadehost').val(datavalidade);
-                    $('#editdatacriacaohost').html('<label  id="editdatacriacaohost">'+datacriacao+'</label>');
-                    $('#editdatamodificacaohost').html('<label  id="editdatamodificacaohost">'+dataatualizacao+'</label>');
-                    $('#editcriadorhost').html('<label  id="editcriadorhost">'+criador+'</label>');
-                    $('#editmodificadorhost').html('<label  id="editmodificadorhost">'+alterador+'</label>');                         
-                    $('#edit_senhahost').val(response.senha);
+                    $("#edit_validadehost").val(datavalidade);
+                    $("#editdatacriacaohost").replaceWith('<label  id="editdatacriacaohost">'+datacriacao+'</label>');
+                    $("#editdatamodificacaohost").replaceWith('<label  id="editdatamodificacaohost">'+dataatualizacao+'</label>');
+                    $("#editcriadorhost").replaceWith('<label  id="editcriadorhost">'+criador+'</label>');
+                    $("#editmodificadorhost").replaceWith('<label  id="editmodificadorhost">'+alterador+'</label>');                         
+                    $("#edit_senhahost").val(response.senha);
                     if(response.host.val_indefinida){
                       $("input[name='edit_val_indefinidahost']").attr('checked',true);  
                     }else{
@@ -887,17 +1074,39 @@ $(document).ready(function(){ //início do bloco principal
                 }
             }
         });
-    
+        }else{
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+        }
              
     });
     //fim exibe 
     ///inicio alterar senha HOST
     $(document).on('click','.update_senhahost_btn',function(e){
             e.preventDefault();
-            $(this).text('Salvando...');
+            var loading = $("#imgsenhahost");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
-            var id = $('#edit_hostsenha_id').val();
+            var id = $("#edit_hostsenha_id").val();
             var val_indefinida = 0;
             $("input[name='edit_val_indefinidahost']:checked").each(function(){
                 val_indefinida = 1;
@@ -910,8 +1119,8 @@ $(document).ready(function(){ //início do bloco principal
             });            
             
             var data = {
-                'senha':$('.senhahost').val(),
-                'validade':formatDate($('.validadehost').val()),
+                'senha':$(".senhahost").val(),
+                'validade':formatDate($(".validadehost").val()),
                 'val_indefinida':val_indefinida,                
                 'users':users,
                 '_method':'PATCH',
@@ -926,17 +1135,19 @@ $(document).ready(function(){ //início do bloco principal
                 success:function(response){
                       if(response.status==400){
                            //erros
-                            $('#updateformsenha_errListhost').html("");
-                            $('#updateformsenha_errListhost').addClass("alert alert-danger");
+                            $("#updateformsenha_errListhost").replaceWith('<ul id="updateformsenha_errListhost"></ul>');
+                            $("#updateformsenha_errListhost").addClass("alert alert-danger");
                             $.each(response.errors,function(key,err_values){
-                                    $('#updateformsenha_errListhost').append('<li>'+err_values+'</li>');
+                                    $("#updateformsenha_errListhost").append('<li>'+err_values+'</li>');
                             });
+                            loading.hide();
           
                 }else{
-                        $('#updateformsenha_errListhost').html('<ul id="updateformsenha_errListhost"></ul>');                                                              
+                        $("#updateformsenha_errListhost").replaceWith('<ul id="updateformsenha_errListhost"></ul>');
+                        loading.hide();
     
-                        $('#editformsenhahost').trigger('reset');                    
-                        $('#EditSenhaHost').modal('hide');
+                        $("#editformsenhahost").trigger('reset');                    
+                        $("#EditSenhaHost").modal('hide');
 
                         location.reload();
                 } 
@@ -948,20 +1159,22 @@ $(document).ready(function(){ //início do bloco principal
 
      ////inicio alteração de senha USER VM
     $('#EditSenhaVM').on('shown.bs.modal',function(){
-        $('#edit_senhavm').focus();
+        $("#edit_senhavm").focus();
     });
     $(document).on('click','.uservm_item',function(e){
         e.preventDefault();
-        
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
+        if(setoradmin==1){
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomevm")).trim();            
         var labelclusterip = ($(this).data("clusterip")).trim(); 
-        $('#editformsenhavm').trigger('reset');
-        $('#EditSenhaVM').modal('show');  
-        $('#editnomeVM').html('<Label id="editnomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
-        $('#editclusteripvm').html('<Label id="editclusteripvm" style="font-style:italic;">'+labelclusterip+'</Label>');     
-        $('#edit_VMsenha_id').val(id);  
-        $('#updateformsenha_errListvm').html('<ul id="updateformsenha_errListvm"></ul>');
+        $("#editformsenhavm").trigger('reset');
+        $("#EditSenhaVM").modal('show');  
+        $("#editnomeVM").replaceWith('<Label id="editnomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $("#editclusteripvm").replaceWith('<Label id="editclusteripvm" style="font-style:italic;">'+labelclusterip+'</Label>');     
+        $("#edit_VMsenha_id").val(id);  
+        $("#updateformsenha_errListvm").replaceWith('<ul id="updateformsenha_errListvm"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -998,16 +1211,16 @@ $(document).ready(function(){ //início do bloco principal
                             alterador = "";
                         }
                     if(new Date(response.virtualmachine.validade)<new Date()){
-                    $('#senhavencidavm').html('<small id="senhavencidavm" style="color: red">Senha vencida!</small>');
+                    $("#senhavencidavm").replaceWith('<small id="senhavencidavm" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencidavm').html('<small id="senhavencidavm" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencidavm").replaceWith('<small id="senhavencidavm" style="color: green">Senha na validade. OK!</small>');  
                     }                    
-                    $('#edit_validadevm').val(datavalidade);
-                    $('#editdatacriacaovm').html('<label  id="editdatacriacaovm">'+datacriacao+'</label>');
-                    $('#editdatamodificacaovm').html('<label  id="editdatamodificacaovm">'+dataatualizacao+'</label>');
-                    $('#editcriadorvm').html('<label  id="editcriadorvm">'+criador+'</label>');
-                    $('#editmodificadorvm').html('<label  id="editmodificadorvm">'+alterador+'</label>');                         
-                    $('#edit_senhavm').val(response.senha);
+                    $("#edit_validadevm").val(datavalidade);
+                    $("#editdatacriacaovm").replaceWith('<label  id="editdatacriacaovm">'+datacriacao+'</label>');
+                    $("#editdatamodificacaovm").replaceWith('<label  id="editdatamodificacaovm">'+dataatualizacao+'</label>');
+                    $("#editcriadorvm").replaceWith('<label  id="editcriadorvm">'+criador+'</label>');
+                    $("#editmodificadorvm").replaceWith('<label  id="editmodificadorvm">'+alterador+'</label>');                         
+                    $("#edit_senhavm").val(response.senha);
                     if(response.virtualmachine.val_indefinida){
                       $("input[name='edit_val_indefinidavm']").attr('checked',true);  
                     }else{
@@ -1023,16 +1236,39 @@ $(document).ready(function(){ //início do bloco principal
                 }
             }
         });   
+    }else{
+          Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }
              
     });
     //fim exibe 
     ///inicio alterar senha VM
     $(document).on('click','.update_senhaVM_btn',function(e){
             e.preventDefault();
-            $(this).text('Salvando...');
+            var loading = $("#imgsenhavm");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
-            var id = $('#edit_VMsenha_id').val();
+            var id = $("#edit_VMsenha_id").val();
             var val_indefinida = 0;
             $("input[name='edit_val_indefinidavm']:checked").each(function(){
                 val_indefinida = 1;
@@ -1045,8 +1281,8 @@ $(document).ready(function(){ //início do bloco principal
             });            
             
             var data = {
-                'senha':$('.senhavm').val(),
-                'validade':formatDate($('.validadevm').val()),
+                'senha':$(".senhavm").val(),
+                'validade':formatDate($(".validadevm").val()),
                 'val_indefinida':val_indefinida,                
                 'users':users,
                 '_method':'PATCH',
@@ -1061,20 +1297,22 @@ $(document).ready(function(){ //início do bloco principal
                 success:function(response){
                       if(response.status==400){
                            //erros
-                            $('#updateformsenha_errListvm').html("");
-                            $('#updateformsenha_errListvm').addClass("alert alert-danger");
+                            $("#updateformsenha_errListvm").replaceWith('<ul id="updateformsenha_errListvm"></ul>');
+                            $("#updateformsenha_errListvm").addClass("alert alert-danger");
                             $.each(response.errors,function(key,err_values){
-                                    $('#updateformsenha_errListvm').append('<li>'+err_values+'</li>');
+                                    $("#updateformsenha_errListvm").append('<li>'+err_values+'</li>');
                             });
+                            loading.hide();
           
                 }else{
-                        $('#updateformsenha_errListvm').html('<ul id="updateformsenha_errListvm"></ul>');     
-                        $('#success_message').html('<div id="success_message"></div>');              
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);                                        
+                        $("#updateformsenha_errListvm").replaceWith('<ul id="updateformsenha_errListvm"></ul>');     
+                        $("#success_message").replaceWith('<div id="success_message"></div>');              
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#editformsenhavm').trigger('reset');                    
-                        $('#EditSenhaVM').modal('hide');
+                        $("#editformsenhavm").trigger('reset');                    
+                        $("#EditSenhaVM").modal('hide');
 
                       location.reload();
                 } 
@@ -1086,20 +1324,25 @@ $(document).ready(function(){ //início do bloco principal
 
   ////inicio alteração de senha USER BASE
     $('#EditSenhaBase').on('shown.bs.modal',function(){
-        $('#edit_senhabase').focus();
+        $("#edit_senhabase").focus();
     });
     $(document).on('click','.userbase_item',function(e){
         e.preventDefault();
 
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
+
+        if(setoradmin==1){
+
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomebase")).trim();            
         var labelip = ($(this).data("ip")).trim(); 
-        $('#editformsenhabase').trigger('reset');
-        $('#EditSenhaBase').modal('show');  
-        $('#editnomebase').html('<Label id="editnomebase" style="font-style:italic;">'+labelHtml+'</Label>');            
-        $('#editipbase').html('<Label id="editipbase" style="font-style:italic;">'+labelip+'</Label>');     
-        $('#edit_basesenha_id').val(id);  
-        $('#updateformsenha_errListbase').html('<ul id="updateformsenha_errListbase"></ul>');
+        $("#editformsenhabase").trigger('reset');
+        $("#EditSenhaBase").modal('show');  
+        $("#editnomebase").replaceWith('<Label id="editnomebase" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $("#editipbase").replaceWith('<Label id="editipbase" style="font-style:italic;">'+labelip+'</Label>');     
+        $("#edit_basesenha_id").val(id);  
+        $("#updateformsenha_errListbase").replaceWith('<ul id="updateformsenha_errListbase"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -1136,16 +1379,16 @@ $(document).ready(function(){ //início do bloco principal
                             alterador = "";
                         }          
                     if(new Date(response.base.validade)<new Date()){
-                    $('#senhavencidabase').html('<small id="senhavencidabase" style="color: red">Senha vencida!</small>');
+                    $("#senhavencidabase").replaceWith('<small id="senhavencidabase" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencidabase').html('<small id="senhavencidabase" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencidabase").replaceWith('<small id="senhavencidabase" style="color: green">Senha na validade. OK!</small>');  
                     }          
-                    $('#edit_validadebase').val(datavalidade);
-                    $('#editdatacriacaobase').html('<label  id="editdatacriacaobase">'+datacriacao+'</label>');
-                    $('#editdatamodificacaobase').html('<label  id="editdatamodificacaobase">'+dataatualizacao+'</label>');
-                    $('#editcriadorbase').html('<label  id="editcriadorbase">'+criador+'</label>');
-                    $('#editmodificadorbase').html('<label  id="editmodificadorbase">'+alterador+'</label>');                         
-                    $('#edit_senhabase').val(response.senha);
+                    $("#edit_validadebase").val(datavalidade);
+                    $("#editdatacriacaobase").replaceWith('<label  id="editdatacriacaobase">'+datacriacao+'</label>');
+                    $("#editdatamodificacaobase").replaceWith('<label  id="editdatamodificacaobase">'+dataatualizacao+'</label>');
+                    $("#editcriadorbase").replaceWith('<label  id="editcriadorbase">'+criador+'</label>');
+                    $("#editmodificadorbase").replaceWith('<label  id="editmodificadorbase">'+alterador+'</label>');                         
+                    $("#edit_senhabase").val(response.senha);
                     if(response.base.val_indefinida){
                       $("input[name='edit_val_indefinidabase']").attr('checked',true);  
                     }else{
@@ -1162,16 +1405,40 @@ $(document).ready(function(){ //início do bloco principal
             }
         });
 
+    }else{
+        Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }
+
                 
     });
     //fim exibe EditBaseModal
     ///inicio alterar senha base
     $(document).on('click','.update_senhabase_btn',function(e){
             e.preventDefault();
-            $(this).text('Salvando...');
+            var loading = $("#imgsenhabase");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
-            var id = $('#edit_basesenha_id').val();
+            var id = $("#edit_basesenha_id").val();
             var val_indefinida = 0;
             $("input[name='edit_val_indefinidabase']:checked").each(function(){
                 val_indefinida = 1;
@@ -1184,8 +1451,8 @@ $(document).ready(function(){ //início do bloco principal
             });            
             
             var data = {
-                'senha':$('.senhabase').val(),
-                'validade':formatDate($('.validadebase').val()),
+                'senha':$(".senhabase").val(),
+                'validade':formatDate($(".validadebase").val()),
                 'val_indefinida':val_indefinida,                
                 'users':users,
                 '_method':'PATCH',
@@ -1200,17 +1467,19 @@ $(document).ready(function(){ //início do bloco principal
                 success:function(response){
                       if(response.status==400){
                            //erros
-                            $('#updateformsenha_errListbase').html("");
-                            $('#updateformsenha_errListbase').addClass("alert alert-danger");
+                            $("#updateformsenha_errListbase").replaceWith('<ul id="updateformsenha_errListbase"></ul>');
+                            $("#updateformsenha_errListbase").addClass("alert alert-danger");
                             $.each(response.errors,function(key,err_values){
-                                    $('#updateformsenha_errListbase').append('<li>'+err_values+'</li>');
+                                    $("#updateformsenha_errListbase").append('<li>'+err_values+'</li>');
                             });
+                            loading.hide();
           
                 }else{
-                        $('#updateformsenha_errListbase').html('<ul id="updateformsenha_errListbase"></ul>');                                                    
+                        $("#updateformsenha_errListbase").replaceWith('<ul id="updateformsenha_errListbase"></ul>');
+                        loading.hide();
     
-                        $('#editformsenhabase').trigger('reset');                    
-                        $('#EditSenhaBase').modal('hide');
+                        $("#editformsenhabase").trigger('reset');                    
+                        $("#EditSenhaBase").modal('hide');
 
                         location.reload();
 
@@ -1223,18 +1492,23 @@ $(document).ready(function(){ //início do bloco principal
 
  ////inicio alteração de senha VLAN USER
     $('#EditSenhaVLAN').on('shown.bs.modal',function(){
-        $('#edit_senha').focus();
+        $("#edit_senha").focus();
     });
     $(document).on('click','.uservlan_item',function(e){
         e.preventDefault();
 
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
+
+        if(setoradmin==1){
+
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomevlan")).trim();                   
-        $('#editformsenhavlan').trigger('reset');
-        $('#EditSenhaVLAN').modal('show');  
-        $('#editnomevlan').html('<Label id="editnomevlan" style="font-style:italic;">'+labelHtml+'</Label>');                    
-        $('#edit_vlansenha_id').val(id);  
-        $('#updateformsenha_errListvlan').html('<ul id="updateformsenha_errListvlan"></ul>');
+        $("#editformsenhavlan").trigger('reset');
+        $("#EditSenhaVLAN").modal('show');  
+        $("#editnomevlan").replaceWith('<Label id="editnomevlan" style="font-style:italic;">'+labelHtml+'</Label>');                    
+        $("#edit_vlansenha_id").val(id);  
+        $("#updateformsenha_errListvlan").replaceWith('<ul id="updateformsenha_errListvlan"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -1271,16 +1545,16 @@ $(document).ready(function(){ //início do bloco principal
                             alterador = "";
                         }           
                     if(new Date(response.vlan.validade)<new Date()){
-                    $('#senhavencidavlan').html('<small id="senhavencidavlan" style="color: red">Senha vencida!</small>');
+                    $("#senhavencidavlan").replaceWith('<small id="senhavencidavlan" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencidavlan').html('<small id="senhavencidavlan" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencidavlan").replaceWith('<small id="senhavencidavlan" style="color: green">Senha na validade. OK!</small>');  
                     }         
-                    $('#edit_validadevlan').val(datavalidade);
-                    $('#editdatacriacaovlan').html('<label  id="editdatacriacaovlan">'+datacriacao+'</label>');
-                    $('#editdatamodificacaovlan').html('<label  id="editdatamodificacaovlan">'+dataatualizacao+'</label>');
-                    $('#editcriadorvlan').html('<label  id="editcriadorvlan">'+criador+'</label>');
-                    $('#editmodificadorvlan').html('<label  id="editmodificadorvlan">'+alterador+'</label>');                         
-                    $('#edit_senhavlan').val(response.senha);
+                    $("#edit_validadevlan").val(datavalidade);
+                    $("#editdatacriacaovlan").replaceWith('<label  id="editdatacriacaovlan">'+datacriacao+'</label>');
+                    $("#editdatamodificacaovlan").replaceWith('<label  id="editdatamodificacaovlan">'+dataatualizacao+'</label>');
+                    $("#editcriadorvlan").replaceWith('<label  id="editcriadorvlan">'+criador+'</label>');
+                    $("#editmodificadorvlan").replaceWith('<label  id="editmodificadorvlan">'+alterador+'</label>');                         
+                    $("#edit_senhavlan").val(response.senha);
                     if(response.vlan.val_indefinida){
                       $("input[name='edit_val_indefinidavlan']").attr('checked',true);  
                     }else{
@@ -1296,16 +1570,39 @@ $(document).ready(function(){ //início do bloco principal
                 }
             }
         });
+    }else{
+         Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }
              
     });
     //fim exibe 
     ///inicio alterar senha
     $(document).on('click','.update_senhavlan_btn',function(e){
             e.preventDefault();
-            $(this).text('Salvando...');
+            var loading = $("#imgsenhavlan");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
-            var id = $('#edit_vlansenha_id').val();
+            var id = $("#edit_vlansenha_id").val();
             var val_indefinida = 0;
             $("input[name='edit_val_indefinidavlan']:checked").each(function(){
                 val_indefinida = 1;
@@ -1318,8 +1615,8 @@ $(document).ready(function(){ //início do bloco principal
             });            
             
             var data = {
-                'senha':$('.senhavlan').val(),
-                'validade':formatDate($('.validadevlan').val()),
+                'senha':$(".senhavlan").val(),
+                'validade':formatDate($(".validadevlan").val()),
                 'val_indefinida':val_indefinida,                
                 'users':users,
                 '_method':'PATCH',
@@ -1334,17 +1631,18 @@ $(document).ready(function(){ //início do bloco principal
                 success:function(response){
                       if(response.status==400){
                            //erros
-                            $('#updateformsenha_errListvlan').html("");
-                            $('#updateformsenha_errListvlan').addClass("alert alert-danger");
+                            $("#updateformsenha_errListvlan").replaceWith('<ul id="updateformsenha_errListvlan"></ul>');
+                            $("#updateformsenha_errListvlan").addClass("alert alert-danger");
                             $.each(response.errors,function(key,err_values){
-                                    $('#updateformsenha_errListvlan').append('<li>'+err_values+'</li>');
+                                    $("#updateformsenha_errListvlan").append('<li>'+err_values+'</li>');
                             });
-          
+                            loading.hide();
                 }else{
-                        $('#updateformsenha_errListvlan').html('<ul id="updateformsenha_errListvlan"></ul>');     
+                        $("#updateformsenha_errListvlan").replaceWith('<ul id="updateformsenha_errListvlan"></ul>');
+                        loading.hide();
                             
-                        $('#editformsenhavlan').trigger('reset');                    
-                        $('#EditSenhaVLAN').modal('hide');
+                        $("#editformsenhavlan").trigger('reset');                    
+                        $("#EditSenhaVLAN").modal('hide');
 
                         location.reload();
 
@@ -1354,28 +1652,259 @@ $(document).ready(function(){ //início do bloco principal
     });         
 
     ////fim alteração de senha VLAN USER    
+
+    //início gestão de senha de equipamento com distinção para o admin e para o usuário comum
+    $(document).on('click','.userequipamento_item',function(e){
+        e.preventDefault();
+        var link = "{{asset('storage')}}";
+        var id = $(this).data("id");
+        var admin = $(this).data("admin");
+        var setor = $(this).data("setor");
+        var setoradmin = $(this).data("setoradmin");
+        var nome = $(this).data("nome");
+        var idsetor = $(this).data("idsetor");
+     
+    if((admin==true)&&(idsetor===setoradmin)){        
+                  
+        $("#addformsenhaequipadmin").trigger('reset');
+        $("#AddSenhaEquipAdmin").modal('show');  
+        $("#add_equipamentosenhaadmin_id").val(id);
+        $("#nomeequipamento").replaceWith('<Label id="nomeequipamento" style="font-style:italic;">'+nome+'</Label>');       
+        $("#saveformsenha_errList").replaceWith('<ul id="saveformsenha_errList"></ul>');
+    
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/datacenter/editsenhaequipamento/'+id,
+            success: function(response){                
+                if(response.status==200){                    
+                    var datacriacao = new Date(response.equipamento.created_at);
+                    datacriacao = datacriacao.toLocaleString("pt-BR");
+                     if(datacriacao=="31/12/1969 21:00:00"){
+                        datacriacao = "";
+                        }                      
+                    var dataatualizacao = new Date(response.equipamento.updated_at);
+                    dataatualizacao = dataatualizacao.toLocaleString("pt-BR");
+                     if(dataatualizacao=="31/12/1969 21:00:00"){
+                        dataatualizacao = "";
+                        }
+                    var criador = response.criador;
+                        if(!response.criador){
+                            criador = "";
+                        }
+                    var alterador = response.alterador;
+                        if(!response.alterador){
+                            alterador = "";
+                        }                                                        
+                    $("#editdatacriacao").replaceWith('<label  id="editdatacriacao">'+datacriacao+'</label>');
+                    $("#editdatamodificacao").replaceWith('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
+                    $("#editcriador").replaceWith('<label  id="editcriador">'+criador+'</label>');
+                    $("#editmodificador").replaceWith('<label  id="editmodificador">'+alterador+'</label>');                         
+                    $("#senhaindividualdeadmin").replaceWith('<label for="" id="senhaindividualdeadmin">Senha individual de '+response.user.name+'</label>');
+                    $("#edit_senhaadmin").val(response.senhaadmin);                    
+                    $(".senhaindividual").val(response.senhaindividual);
+                   
+                     //Atribuindo aos checkboxs
+                    $("input[name='users[]']").attr('checked',false); //desmarca todos
+                       
+                        $.each(response.users,function(key,values){                                                        
+                                $("#CheckUserEquipamento"+values.id).attr('checked',true);  //faz a marcação seletiva                         
+                        });
+                }
+            }
+        });
+
+        }else if((admin==false)&&(idsetor===setoradmin)){        
+                  
+        $("#editformsenhaindividual").trigger('reset');
+        $("#EditSenhaEquipIndividual").modal('show');
+        $("#edit_equipamentosenhaindividual_id").val(id);
+        $("#editnomeequipamento").replaceWith('<Label id="editnomeequipamento" style="font-style:italic;">'+nome+'</Label>');       
+        $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');
+    
+        $.ajaxSetup({
+            headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+            }
+        });
+        $.ajax({
+            type: 'GET',
+            dataType: 'json',
+            url: '/datacenter/editsenhaindividual/'+id,
+            success: function(response){
+                if(response.status==200){                    
+                    $("#nomedousuario").replaceWith('<label  id="nomedousuario"> Senha de '+response.user.name+'</label>');
+                    $(".senha").val(response.senhaindividual);                   
+                }
+            }
+        });
+
+    }else{
+        Swal.fire({
+             showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA "+setor+" !",
+                text: "Você não tem acesso a esta informação. Peça sua inclusão a um administrador do setor "+setor+" !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'Ok, obrigado!',                
+                cancelButtonText: 'Não necessito, obrigado!',
+            });      
+    }
+    });
+
+     ///mostra senha admin
+    $(document).on('click','#mostrasenhaadmin_btn',function(e){
+        e.preventDefault();
+        var status = $(this).data("status");
+        var senhaadmin = $("#edit_senhaadmin").val();
+        if(status==true){
+            $("#mostrasenhaadmin_btn").replaceWith('<i id="mostrasenhaadmin_btn" class="fas fa-ban" data-status="false" style="border:none;"></i>');
+            $("#senhaadmin").replaceWith('<label  id="senhaadmin">'+senhaadmin+'</label>');
+        }else{
+            $("#mostrasenhaadmin_btn").replaceWith('<i id="mostrasenhaadmin_btn" class="fas fa-eye" data-status="true" style="border:none;"></i>');
+            $("#senhaadmin").replaceWith('<label  id="senhaadmin"></label>');
+        }
+    });
+    ///mostra senha admin
+
+    $(document).on('click','.add_senhaequipadmin_btn',function(e){
+            e.preventDefault();
+            var loading = $("#imgeaddequipamento");
+                loading.show();
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+           
+            var id = $("#add_equipamentosenhaadmin_id").val();                   
+
+            //array apenas com os checkboxes marcados
+            var users = new Array;
+            $("input[name='users[]']:checked").each(function(){
+                users.push($(this).val());
+            });            
+            
+            var data = {
+                'senha':$("#edit_senhaindividualequip").val(),                            
+                'users':users,
+                '_method':'PATCH',
+                '_token': CSRF_TOKEN,       
+            };            
+            
+            $.ajax({                
+                type:'POST',                                
+                data:data,
+                dataType: 'json',
+                url:'/datacenter/updatesenhaequipamento/'+id,
+                success:function(response){
+                      if(response.status==400){
+                           //erros
+                            $("#saveformsenha_errList").replaceWith("");
+                            $("#saveformsenha_errList").addClass("alert alert-danger");
+                            $.each(response.errors,function(key,err_values){
+                                    $("#saveformsenha_errList").append('<li>'+err_values+'</li>');
+                            });
+                            loading.hide();
+          
+                }else{
+                        $("#saveformsenha_errList").replaceWith('<ul id="saveformsenha_errList"></ul>');     
+                        $("#success_message").replaceWith('<div id="success_message"></div>');              
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);                                        
+                        loading.hide();
+
+                        $("#addformsenhaequipadmin").trigger('reset');
+                        $("#AddSenhaEquipAdmin").modal('hide');
+    
+                       location.reload();
+
+                } 
+                }   
+            });
+    });  
+
+
+    $(document).on('click','.update_senhaindividual_btn',function(e){
+            e.preventDefault();
+            var loading = $("#imgsenhaindividualequipamento");
+                loading.show();
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');           
+            var id = $("#edit_equipamentosenhaindividual_id").val();                               
+            var data = {
+                'senha':$("#edit_senhaindividual").val(),                
+                '_method':'PATCH',
+                '_token': CSRF_TOKEN,       
+            };            
+            
+            $.ajax({                
+                type:'POST',                                
+                data:data,
+                dataType: 'json',
+                url:'/datacenter/updatesenhaindividual/'+id,
+                success:function(response){
+                      if(response.status==400){
+                           //erros
+                            $("#updateformsenha_errList").replaceWith("");
+                            $("#updateformsenha_errList").addClass("alert alert-danger");
+                            $.each(response.errors,function(key,err_values){
+                                    $("#updateformsenha_errList").append('<li>'+err_values+'</li>');
+                            });
+                            loading.hide();
+          
+                }else{
+                        $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');     
+                        $("#success_message").replaceWith('<div id="success_message"></div>');              
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);                                        
+                        loading.hide();
+    
+                        $('#editformsenhaindividual').trigger('reset');                    
+                        $('#EditSenhaEquipIndividual').modal('hide');
+
+                       location.reload();
+
+                } 
+                }   
+            });
+    });         
+
+    //fim gestão de senha de equipamento com distinção para o admin e para o usuário comum
    
     //Listagem de APPs com senha vencida do alerta          
    
     $(document).on('click','.senhabloqueadaapp_btn',function(e){
         e.preventDefault();
 
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
         var opcaosenha = $(this).data("opt");
+
+        if(setoradmin==1){
 
         if(opcaosenha){
     
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomeapp")).trim();            
         var labelDominio = ($(this).data("dominio")).trim(); 
-        $('#editformsenha').trigger('reset');
-        $('#EditSenhaApp').modal('show');  
-        $('#editnomeapp').html('<Label id="editnomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
-        $('#editdominioapp').html('<Label id="editdominioapp" style="font-style:italic;">'+labelDominio+'</Label>');     
-        $('#edit_appsenha_id').val(id);  
-        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');
+        $("#editformsenha").trigger('reset');
+        $("#EditSenhaApp").modal('show');  
+        $("#editnomeapp").replaceWith('<Label id="editnomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $("#editdominioapp").replaceWith('<Label id="editdominioapp" style="font-style:italic;">'+labelDominio+'</Label>');     
+        $("#edit_appsenha_id").val(id);  
+        $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');
 
-        $('#listaformsenhaapp').trigger('reset');
-        $('#ListaAPPsModal').modal('hide'); 
+        $("#listaformsenhaapp").trigger('reset');
+        $("#ListaAPPsModal").modal('show'); 
     
         $.ajaxSetup({
             headers:{
@@ -1412,16 +1941,16 @@ $(document).ready(function(){ //início do bloco principal
                             alterador = "";
                         }               
                    if(new Date(response.app.validade)<new Date()){
-                    $('#senhavencida').html('<small id="senhavencida" style="color: red">Senha vencida!</small>');
+                    $("#senhavencida").replaceWith('<small id="senhavencida" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencida').html('<small id="senhavencida" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencida").replaceWith('<small id="senhavencida" style="color: green">Senha na validade. OK!</small>');  
                     } 
-                    $('#edit_validade').val(datavalidade);
-                    $('#editdatacriacao').html('<label  id="editdatacriacao">'+datacriacao+'</label>');
-                    $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
-                    $('#editcriador').html('<label  id="editcriador">'+criador+'</label>');
-                    $('#editmodificador').html('<label  id="editmodificador">'+alterador+'</label>');                         
-                    $('#edit_senha').val(response.senha);
+                    $("#edit_validade").val(datavalidade);
+                    $("#editdatacriacao").replaceWith('<label  id="editdatacriacao">'+datacriacao+'</label>');
+                    $("#editdatamodificacao").replaceWith('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
+                    $("#editcriador").replaceWith('<label  id="editcriador">'+criador+'</label>');
+                    $("#editmodificador").replaceWith('<label  id="editmodificador">'+alterador+'</label>');                         
+                    $("#edit_senha").val(response.senha);
                     if(response.app.val_indefinida){
                       $("input[name='edit_val_indefinida']").attr('checked',true);  
                     }else{
@@ -1448,7 +1977,7 @@ $(document).ready(function(){ //início do bloco principal
                 },
                 title:"Você não tem acesso a esta informação!",
                 text: "Peça sua inclusão a um dos usuários sugeridos na dica!",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'/logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -1457,6 +1986,28 @@ $(document).ready(function(){ //início do bloco principal
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
+}else{
+     Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+}
              
     });
     //fim exibe EditAppModal
@@ -1469,6 +2020,11 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.senhabloqueadabase_btn',function(e){
         e.preventDefault();
 
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
+
+        if(setoradmin==1){
+
         var opcaosenha = $(this).data("opt");
 
         if(opcaosenha){
@@ -1476,12 +2032,12 @@ $(document).ready(function(){ //início do bloco principal
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomebase")).trim();            
         var labelip = ($(this).data("ip")).trim(); 
-        $('#editformsenhabase').trigger('reset');
-        $('#EditSenhaBase').modal('show');  
-        $('#editnomebase').html('<Label id="editnomebase" style="font-style:italic;">'+labelHtml+'</Label>');            
-        $('#editipbase').html('<Label id="editipbase" style="font-style:italic;">'+labelip+'</Label>');     
-        $('#edit_basesenha_id').val(id);  
-        $('#updateformsenha_errListbase').html('<ul id="updateformsenha_errListbase"></ul>');
+        $("#editformsenhabase").trigger('reset');
+        $("#EditSenhaBase").modal('show');  
+        $("#editnomebase").replaceWith('<Label id="editnomebase" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $("#editipbase").replaceWith('<Label id="editipbase" style="font-style:italic;">'+labelip+'</Label>');     
+        $("#edit_basesenha_id").val(id);  
+        $("#updateformsenha_errListbase").replaceWith('<ul id="updateformsenha_errListbase"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -1518,16 +2074,16 @@ $(document).ready(function(){ //início do bloco principal
                             alterador = "";
                         }          
                     if(new Date(response.base.validade)<new Date()){
-                    $('#senhavencidabase').html('<small id="senhavencidabase" style="color: red">Senha vencida!</small>');
+                    $("#senhavencidabase").replaceWith('<small id="senhavencidabase" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencidabase').html('<small id="senhavencidabase" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencidabase").replaceWith('<small id="senhavencidabase" style="color: green">Senha na validade. OK!</small>');  
                     }          
-                    $('#edit_validadebase').val(datavalidade);
-                    $('#editdatacriacaobase').html('<label  id="editdatacriacaobase">'+datacriacao+'</label>');
-                    $('#editdatamodificacaobase').html('<label  id="editdatamodificacaobase">'+dataatualizacao+'</label>');
-                    $('#editcriadorbase').html('<label  id="editcriadorbase">'+criador+'</label>');
-                    $('#editmodificadorbase').html('<label  id="editmodificadorbase">'+alterador+'</label>');                         
-                    $('#edit_senhabase').val(response.senha);
+                    $("#edit_validadebase").val(datavalidade);
+                    $("#editdatacriacaobase").replaceWith('<label  id="editdatacriacaobase">'+datacriacao+'</label>');
+                    $("#editdatamodificacaobase").replaceWith('<label  id="editdatamodificacaobase">'+dataatualizacao+'</label>');
+                    $("#editcriadorbase").replaceWith('<label  id="editcriadorbase">'+criador+'</label>');
+                    $("#editmodificadorbase").replaceWith('<label  id="editmodificadorbase">'+alterador+'</label>');                         
+                    $("#edit_senhabase").val(response.senha);
                     if(response.base.val_indefinida){
                       $("input[name='edit_val_indefinidabase']").attr('checked',true);  
                     }else{
@@ -1554,7 +2110,7 @@ $(document).ready(function(){ //início do bloco principal
                 },
                 title:"Você não tem acesso a esta informação!",
                 text: "Peça sua inclusão a um dos usuários sugeridos na dica!",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'/logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -1563,6 +2119,28 @@ $(document).ready(function(){ //início do bloco principal
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
+}else{
+     Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+}
              
     });   
 
@@ -1572,6 +2150,11 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.senhabloqueadavm_btn',function(e){
         e.preventDefault();
 
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
+
+        if(setoradmin==1){
+
         var opcaosenha = $(this).data("opt");
 
         if(opcaosenha){
@@ -1579,12 +2162,12 @@ $(document).ready(function(){ //início do bloco principal
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomevm")).trim();            
         var labelclusterip = ($(this).data("clusterip")).trim(); 
-        $('#editformsenhavm').trigger('reset');
-        $('#EditSenhaVM').modal('show');  
-        $('#editnomeVM').html('<Label id="editnomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
-        $('#editclusteripvm').html('<Label id="editclusteripvm" style="font-style:italic;">'+labelclusterip+'</Label>');     
-        $('#edit_VMsenha_id').val(id);  
-        $('#updateformsenha_errListvm').html('<ul id="updateformsenha_errListvm"></ul>');
+        $("#editformsenhavm").trigger('reset');
+        $("#EditSenhaVM").modal('show');  
+        $("#editnomeVM").replaceWith('<Label id="editnomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $("#editclusteripvm").replaceWith('<Label id="editclusteripvm" style="font-style:italic;">'+labelclusterip+'</Label>');     
+        $("#edit_VMsenha_id").val(id);  
+        $("#updateformsenha_errListvm").replaceWith('<ul id="updateformsenha_errListvm"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -1621,16 +2204,16 @@ $(document).ready(function(){ //início do bloco principal
                             alterador = "";
                         }
                     if(new Date(response.virtualmachine.validade)<new Date()){
-                    $('#senhavencidavm').html('<small id="senhavencidavm" style="color: red">Senha vencida!</small>');
+                    $("#senhavencidavm").replaceWith('<small id="senhavencidavm" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencidavm').html('<small id="senhavencidavm" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencidavm").replaceWith('<small id="senhavencidavm" style="color: green">Senha na validade. OK!</small>');  
                     }                    
-                    $('#edit_validadevm').val(datavalidade);
-                    $('#editdatacriacaovm').html('<label  id="editdatacriacaovm">'+datacriacao+'</label>');
-                    $('#editdatamodificacaovm').html('<label  id="editdatamodificacaovm">'+dataatualizacao+'</label>');
-                    $('#editcriadorvm').html('<label  id="editcriadorvm">'+criador+'</label>');
-                    $('#editmodificadorvm').html('<label  id="editmodificadorvm">'+alterador+'</label>');                         
-                    $('#edit_senhavm').val(response.senha);
+                    $("#edit_validadevm").val(datavalidade);
+                    $("#editdatacriacaovm").replaceWith('<label  id="editdatacriacaovm">'+datacriacao+'</label>');
+                    $("#editdatamodificacaovm").replaceWith('<label  id="editdatamodificacaovm">'+dataatualizacao+'</label>');
+                    $("#editcriadorvm").replaceWith('<label  id="editcriadorvm">'+criador+'</label>');
+                    $("#editmodificadorvm").replaceWith('<label  id="editmodificadorvm">'+alterador+'</label>');                         
+                    $("#edit_senhavm").val(response.senha);
                     if(response.virtualmachine.val_indefinida){
                       $("input[name='edit_val_indefinidavm']").attr('checked',true);  
                     }else{
@@ -1657,7 +2240,7 @@ $(document).ready(function(){ //início do bloco principal
                 },
                 title:"Você não tem acesso a esta informação!",
                 text: "Peça sua inclusão a um dos usuários sugeridos na dica!",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'/logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -1666,6 +2249,28 @@ $(document).ready(function(){ //início do bloco principal
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
+}else{
+     Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+}
              
     });
     //fim edit senhas VM do alerta
@@ -1675,19 +2280,24 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.senhabloqueadahost_btn',function(e){
         e.preventDefault();
 
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
+
+        if(setoradmin==1){
+
         var opcaosenha = $(this).data("opt");
 
         if(opcaosenha){
     
-       var id = $(this).data("id");
+        var id = $(this).data("id");
         var labelHtml = ($(this).data("nomehost")).trim();            
         var labelclusterip = ($(this).data("clusterip")).trim(); 
-        $('#editformsenhahost').trigger('reset');
-        $('#EditSenhaHost').modal('show');  
-        $('#editnomehost').html('<Label id="editnomehost" style="font-style:italic;">'+labelHtml+'</Label>');            
-        $('#editclusteriphost').html('<Label id="editclusteriphost" style="font-style:italic;">'+labelclusterip+'</Label>');     
-        $('#edit_hostsenha_id').val(id);  
-        $('#updateformsenha_errListhost').html('<ul id="updateformsenha_errListhost"></ul>');
+        $("#editformsenhahost").trigger('reset');
+        $("#EditSenhaHost").modal('show');  
+        $("#editnomehost").replaceWith('<Label id="editnomehost" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $("#editclusteriphost").replaceWith('<Label id="editclusteriphost" style="font-style:italic;">'+labelclusterip+'</Label>');     
+        $("#edit_hostsenha_id").val(id);  
+        $("#updateformsenha_errListhost").replaceWith('<ul id="updateformsenha_errListhost"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -1724,16 +2334,16 @@ $(document).ready(function(){ //início do bloco principal
                             alterador = "";
                         }    
                     if(new Date(response.host.validade)<new Date()){
-                    $('#senhavencidahost').html('<small id="senhavencidahost" style="color: red">Senha vencida!</small>');
+                    $("#senhavencidahost").replaceWith('<small id="senhavencidahost" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencidahost').html('<small id="senhavencidahost" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencidahost").replaceWith('<small id="senhavencidahost" style="color: green">Senha na validade. OK!</small>');  
                     }                
-                    $('#edit_validadehost').val(datavalidade);
-                    $('#editdatacriacaohost').html('<label  id="editdatacriacaohost">'+datacriacao+'</label>');
-                    $('#editdatamodificacaohost').html('<label  id="editdatamodificacaohost">'+dataatualizacao+'</label>');
-                    $('#editcriadorhost').html('<label  id="editcriadorhost">'+criador+'</label>');
-                    $('#editmodificadorhost').html('<label  id="editmodificadorhost">'+alterador+'</label>');                         
-                    $('#edit_senhahost').val(response.senha);
+                    $("#edit_validadehost").val(datavalidade);
+                    $("#editdatacriacaohost").replaceWith('<label  id="editdatacriacaohost">'+datacriacao+'</label>');
+                    $("#editdatamodificacaohost").replaceWith('<label  id="editdatamodificacaohost">'+dataatualizacao+'</label>');
+                    $("#editcriadorhost").replaceWith('<label  id="editcriadorhost">'+criador+'</label>');
+                    $("#editmodificadorhost").replaceWith('<label  id="editmodificadorhost">'+alterador+'</label>');                         
+                    $("#edit_senhahost").val(response.senha);
                     if(response.host.val_indefinida){
                       $("input[name='edit_val_indefinidahost']").attr('checked',true);  
                     }else{
@@ -1760,7 +2370,7 @@ $(document).ready(function(){ //início do bloco principal
                 },
                 title:"Você não tem acesso a esta informação!",
                 text: "Peça sua inclusão a um dos usuários sugeridos na dica!",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'/logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -1769,6 +2379,28 @@ $(document).ready(function(){ //início do bloco principal
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
+}else{
+     Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+}
              
     });
     //fim exibe senhas vencidas de HOSTS do alerta
@@ -1777,17 +2409,22 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.senhabloqueadavlan_btn',function(e){
         e.preventDefault();
 
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
+
+        if(setoradmin==1){
+
         var opcaosenha = $(this).data("opt");
 
         if(opcaosenha){
     
        var id = $(this).data("id");
         var labelHtml = ($(this).data("nomevlan")).trim();                   
-        $('#editformsenhavlan').trigger('reset');
-        $('#EditSenhaVLAN').modal('show');  
-        $('#editnomevlan').html('<Label id="editnomevlan" style="font-style:italic;">'+labelHtml+'</Label>');                    
-        $('#edit_vlansenha_id').val(id);  
-        $('#updateformsenha_errListvlan').html('<ul id="updateformsenha_errListvlan"></ul>');
+        $("#editformsenhavlan").trigger('reset');
+        $("#EditSenhaVLAN").modal('show');  
+        $("#editnomevlan").replaceWith('<Label id="editnomevlan" style="font-style:italic;">'+labelHtml+'</Label>');                    
+        $("#edit_vlansenha_id").val(id);  
+        $("#updateformsenha_errListvlan").replaceWith('<ul id="updateformsenha_errListvlan"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -1824,16 +2461,16 @@ $(document).ready(function(){ //início do bloco principal
                             alterador = "";
                         }           
                     if(new Date(response.vlan.validade)<new Date()){
-                    $('#senhavencidavlan').html('<small id="senhavencidavlan" style="color: red">Senha vencida!</small>');
+                    $("#senhavencidavlan").replaceWith('<small id="senhavencidavlan" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencidavlan').html('<small id="senhavencidavlan" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencidavlan").replaceWith('<small id="senhavencidavlan" style="color: green">Senha na validade. OK!</small>');  
                     }         
-                    $('#edit_validadevlan').val(datavalidade);
-                    $('#editdatacriacaovlan').html('<label  id="editdatacriacaovlan">'+datacriacao+'</label>');
-                    $('#editdatamodificacaovlan').html('<label  id="editdatamodificacaovlan">'+dataatualizacao+'</label>');
-                    $('#editcriadorvlan').html('<label  id="editcriadorvlan">'+criador+'</label>');
-                    $('#editmodificadorvlan').html('<label  id="editmodificadorvlan">'+alterador+'</label>');                         
-                    $('#edit_senhavlan').val(response.senha);
+                    $("#edit_validadevlan").val(datavalidade);
+                    $("#editdatacriacaovlan").replaceWith('<label  id="editdatacriacaovlan">'+datacriacao+'</label>');
+                    $("#editdatamodificacaovlan").replaceWith('<label  id="editdatamodificacaovlan">'+dataatualizacao+'</label>');
+                    $("#editcriadorvlan").replaceWith('<label  id="editcriadorvlan">'+criador+'</label>');
+                    $("#editmodificadorvlan").replaceWith('<label  id="editmodificadorvlan">'+alterador+'</label>');                         
+                    $("#edit_senhavlan").val(response.senha);
                     if(response.vlan.val_indefinida){
                       $("input[name='edit_val_indefinidavlan']").attr('checked',true);  
                     }else{
@@ -1860,7 +2497,7 @@ $(document).ready(function(){ //início do bloco principal
                 },
                 title:"Você não tem acesso a esta informação!",
                 text: "Peça sua inclusão a um dos usuários sugeridos na dica!",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'/logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -1869,6 +2506,28 @@ $(document).ready(function(){ //início do bloco principal
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
+}else{
+     Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+}
              
     });
     //fim exibe alteração de senhas VLANS do alerta
@@ -1885,11 +2544,11 @@ $(document).ready(function(){ //início do bloco principal
 
         ///tooltip
     $(function(){      
-        $('.senhabloqueadaapp_btn').tooltip();
-        $('.senhabloqueadabase_btn').tooltip();
-        $('.senhabloqueadavm_btn').tooltip();
-        $('.senhabloqueadahost_btn').tooltip();
-        $('.senhabloqueadavlan_btn').tooltip();
+        $(".senhabloqueadaapp_btn").tooltip();
+        $(".senhabloqueadabase_btn").tooltip();
+        $(".senhabloqueadavm_btn").tooltip();
+        $(".senhabloqueadahost_btn").tooltip();
+        $(".senhabloqueadavlan_btn").tooltip();
     });
     ///fim tooltip
 

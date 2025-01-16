@@ -68,19 +68,23 @@ class ManualController extends Controller
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{                            
+        }else{       
+            $user = auth()->user();
             $data = [
                 'area_conhecimento_id' => $request->input('area_conhecimento_id'),                
                 'descricao' => strtoupper($request->input('descricao')),
                 'objetivo' => strtoupper($request->input('objetivo')),
-                'manual' => strtoupper($request->input('manual')),                            
+                'manual' => strtoupper($request->input('manual')),
+                'setor_idsetor' => $user->setor_idsetor,
+                'created_at' => now(),
             ];
-            $manual = $this->manual->create($data);          
+            $manual = $this->manual->create($data);            
                                                        
             $area = Area_Conhecimento::find($manual->area_conhecimento_id);                    
             return response()->json([
                 'manual' => $manual,
                 'area_conhecimento' => $area,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Registro cadastrado com sucesso!',
             ]);
@@ -99,9 +103,12 @@ class ManualController extends Controller
     {
         $manual = $this->manual->find($id);
         $area = Area_Conhecimento::find($manual->area_conhecimento_id);
-
+        $user = auth()->user();
+        $setor = $manual->setor;
         return response()->json([
             'manual' => $manual,
+            'user' => $user,
+            'setor' => $setor,
             'area_conhecimento' => $area,
             'status' => 200,
         ]);
@@ -132,22 +139,29 @@ class ManualController extends Controller
             ]);
         }else{        
             $manual = $this->manual->find($id);                        
+            $user = auth()->user();
             if($manual){
                 $manual->area_conhecimento_id = $request->input('area_conhecimento_id');
                 $manual->descricao = strtoupper($request->input('descricao'));               
                 $manual->objetivo = strtoupper($request->input('objetivo'));
-                $manual->manual = strtoupper($request->input('manual'));                           
+                $manual->manual = strtoupper($request->input('manual'));
+                $manual->setor_idsetor = $user->setor_idsetor;
+                $manual->updated_at = now();
                 $manual->update();                
                 $ma = Manual::find($id);                
                 $area = Area_Conhecimento::find($ma->area_conhecimento_id);
                 $uploads = Upload::query('upload')
                            ->where('manual_id', $id)
                            ->get();
+                $setor = $ma->setor;
+                
 
                 return response()->json([
                     'manual' => $ma,
                     'uploads' => $uploads,
                     'area_conhecimento' => $area,
+                    'user' => $user,
+                    'setor' => $setor,
                     'status' => 200,
                     'message' => 'Registro atualizado com sucesso!',
                 ]);
@@ -208,7 +222,9 @@ class ManualController extends Controller
     //upload de arquivos anexados do manual
     public function upload(Request $request,int $id)
     {                           
-         $manual = $this->manual->find($id);                  
+         $manual = $this->manual->find($id);
+         $setor = $manual->setor;
+         $user = auth()->user();              
          $TotalFiles = $request->input('TotalFiles');         
          if($TotalFiles>0){
          for($x = 0; $x < $TotalFiles;$x++){
@@ -233,6 +249,9 @@ class ManualController extends Controller
          $totalfiles = $manual->uploads->count();         
          return response()->json([       
              'manualid' => $manualid,
+             'manual' => $manual,
+             'user' => $user,
+             'setor' => $setor,
              'totalfiles' => $totalfiles,
              'arquivos' => $arquivos,
              'status' => 200,

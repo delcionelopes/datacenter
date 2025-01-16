@@ -35,7 +35,12 @@ class HostController extends Controller
             $hosts = $query->orderByDesc('id')->paginate(6);            
         }                    
         $cluster = Cluster::find($id);
-        $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
+        $users = $this->users->query()
+                             ->where('moderador','=','true')
+                             ->where('inativo','=','false')
+                             ->where('setor_idsetor','=',1)
+                             ->orderBy('name')
+                             ->get();
         return view('datacenter.host.index',[
             'hosts' => $hosts,
             'id'    => $id,
@@ -81,10 +86,12 @@ class HostController extends Controller
                 'cluster'    => strtoupper($request->input('cluster')),            
             ];
             $host = $this->host->create($data);     
-            $users = $host->users;     
+            $users = $host->users;  
+            $user = auth()   ->user();
             return response()->json([
                 'host'    => $host,
                 'users' => $users,
+                'user' => $user,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -102,8 +109,10 @@ class HostController extends Controller
     public function edit(int $id)
     {
         $host = $this->host->find($id);
+        $user = auth()->user();
         return response()->json([
             'host'   => $host,
+            'user' => $user,
             'status' => 200,
         ]);
     }
@@ -142,10 +151,12 @@ class HostController extends Controller
                 ];
                 $host->update($data);               
                 $h = Host::find($id);   
-                $users = $h->users;                       
+                $users = $h->users;
+                $user = auth()->user();
                 return response()->json([
                     'host'    => $h,
                     'users' => $users,
+                    'user' => $user,
                     'status'  => 200,
                     'message' => 'Registro atualizado com sucesso!',
                 ]);
@@ -262,7 +273,8 @@ class HostController extends Controller
             $alterador = User::find($host->alterador_id)->name;
         }                
         $users = $host->users;   
-        $s = Crypt::decrypt($host->senha);    
+        $s = Crypt::decrypt($host->senha);
+        $user = auth()->user();
         return response()->json([
             'status' => 200,            
             'host' => $host,
@@ -270,6 +282,7 @@ class HostController extends Controller
             'criador' => $criador,
             'alterador' => $alterador,
             'users' => $users,
+            'user' => $user,
         ]);
     }
 

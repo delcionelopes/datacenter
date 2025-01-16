@@ -4,6 +4,7 @@ namespace App\Http\Controllers\admin;
 
 use App\Http\Controllers\Controller;
 use App\Models\Orgao;
+use App\Models\Setor;
 use App\Models\User;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -24,16 +25,18 @@ class UserController extends Controller
     public function index(Request $request)
     {        
         if(is_null($request->pesquisa)){
-            $users = $this->user->orderByDesc('id')->paginate(5);
+            $users = $this->user->with('setor')->orderByDesc('id')->paginate(5);
         }else{
-            $query = $this->user->query()
+            $query = $this->user->with('setor')->query()
                      ->where('name','LIKE','%'.$request->pesquisa.'%');
             $users = $query->orderByDesc('id')->paginate(5);
         }
         $orgaos = Orgao::all();
+        $setores = Setor::all();
         return view('user.index',[
             'users' => $users,
             'orgaos' => $orgaos,
+            'setores' => $setores,
         ]);
     }
 
@@ -61,6 +64,7 @@ class UserController extends Controller
             'password' => 'required|min:8|max:100',        
             'cpf' => 'required|cpf|unique:users',   
             'orgao_id' => 'required',
+            'setor' => 'required',
         ],[
             'name.required'  => 'O campo NOME é obrigatório!',
             'name.max'       => 'O NOME deve ter no máximo :max caracteres!',
@@ -75,6 +79,7 @@ class UserController extends Controller
             'cpf.cpf'      => 'O CPF é inválido!',
             'cpf.unique'   => 'O CPF já existe!',
             'orgao_id.required' => 'O ÓRGÃO é obrigatório!',
+            'setor.required' => 'O SETOR é obrigatório',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -94,10 +99,12 @@ class UserController extends Controller
             'name' => strtoupper($request->input('name')),
             'email' => strtolower($request->input('email')),
             'password' => bcrypt($request->input('password')),
-            'moderador' => $request->input('moderador'),
+            'moderador' => $request->input('moderador'),            
             'inativo' => false,
             'avatar'  => $filePath,
             'orgao_id' => $request->input('orgao_id'),
+            'setor_idsetor' => $request->input('setor'),
+            'admin' => $request->input('admin'),
             'matricula' => $request->input('matricula'),
             'cpf' => $request->input('cpf'),           
             'link_instagram' => $request->input('link_instagram'),
@@ -105,8 +112,10 @@ class UserController extends Controller
             'link_site' => $request->input('link_site'), 
         ];
         $user = $this->user->create($data);
+        $setor = $user->setor->sigla;
         return response()->json([
             'user' => $user,
+            'setor' => $setor,
             'status' => 200,
             'message'=> 'Registro incluído com sucesso!',
         ]);
@@ -147,25 +156,23 @@ class UserController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request,int $id)
-    {
+    {        
         $validator = Validator::make($request->all(),[
             'name' => 'required|max:100',
-            'email' => 'required|email|max:100',
-            'password' => 'required|min:8|max:100',  
+            'email' => 'required|email|max:100',           
             'cpf' => 'required|cpf',     
             'orgao_id' => 'required',
+            'setor' => 'required',
         ],[
             'name.required'  => 'O campo NOME é obrigatório!',
             'name.max'       => 'O NOME deve ter no máximo :max caracteres!',
             'email.required' => 'O campo EMAIL é obrigatório!',
             'email.email'    => 'O EMAIL é inválido!',
-            'email.max'      => 'O EMAIL deve conter no máximo :max caracteres!',     
-            'password.required' => 'A SENHA é obrigatória!',
-            'password.min' => 'A SENHA deve ter no mínimo :min caracteres!',
-            'password.max' => 'A SENHA deve ter no máximo :max caracteres!',      
+            'email.max'      => 'O EMAIL deve conter no máximo :max caracteres!',                 
             'cpf.required' => 'O CPF é obrigatório!',
             'cpf.cpf'      => 'O CPF é inválido!',  
             'orgao_id.required' => 'O ÓRGÃO é obrigatório!',
+            'setor.required' => 'O SETOR é obrigatório!',
         ]);
         if($validator->fails()){
             return response()->json([
@@ -193,7 +200,9 @@ class UserController extends Controller
         }        
         $data['name'] = strtoupper($request->input('name'));
         $data['email'] = strtolower($request->input('email'));
+        if($request->input('password')!=""){
         $data['password'] = bcrypt($request->input('password'));
+        }
         $data['moderador'] = $request->input('moderador');
         $data['inativo'] = $request->input('inativo');
         if($filePath!=""){
@@ -201,14 +210,19 @@ class UserController extends Controller
         }
         $data['matricula'] = $request->input('matricula');
         $data['cpf'] = $request->input('cpf');
-        $data['orgao_id'] = $request->input('orgao_id');   
+        $data['orgao_id'] = $request->input('orgao_id'); 
+        $data['setor_idsetor'] = $request->input('setor');
+        $data['admin'] = $request->input('admin');
         $data['link_instagram'] = $request->input('link_instagram');
         $data['link_facebook'] = $request->input('link_facebook');
         $data['link_site'] = $request->input('link_site');
         $user->update($data);
         $u = User::find($id);
+        $setor = $u->setor;
+        $setor = $setor->sigla;        
         return response()->json([
             'user' => $u,
+            'setor' => $setor,
             'status' => 200,
             'message'=> 'Registro atualizado com sucesso!',
         ]);
@@ -246,11 +260,26 @@ class UserController extends Controller
     }
 
     /**
-     * Método para mudar o perfil do usuário 
+     * Método para mudar o perfil do usuário quanto ao acesso ao sistema
      */
     public function moderadorUsuario(Request $request,int $id){
         $moderador = $request->input('moderador');
         $data = ['moderador' => $moderador];
+        $user = $this->user->find($id);
+        $user->update($data);
+        $u = User::find($id);
+        return response()->json([
+            'user' => $u,
+            'status'=> 200,
+        ]);
+    }
+
+    /**
+     * Método para mudar o perfil do usuário quanto as permissões
+     */
+    public function adminUsuario(Request $request,int $id){
+        $admin = $request->input('admin');
+        $data = ['admin' => $admin];
         $user = $this->user->find($id);
         $user->update($data);
         $u = User::find($id);

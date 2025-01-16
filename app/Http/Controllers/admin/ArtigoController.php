@@ -13,6 +13,7 @@ use App\Models\User;
 class ArtigoController extends Controller
 {
     private $artigo;                            
+    private $arquivo;                            
 
     public function __construct(Artigo $artigo, Arquivo $arquivo)
     {

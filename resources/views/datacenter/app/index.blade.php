@@ -73,7 +73,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_app_btn">Salvar</button>
+                <button type="button" class="btn btn-primary add_app_btn"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -144,7 +144,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_app_btn">Atualizar</button>
+                <button type="button" class="btn btn-primary update_app_btn"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -200,7 +200,13 @@
                                 <div class="form-check">
                                     @foreach ($users as $user)
                                     <label class="form-check-label" for="CheckUser{{$user->id}}">
-                                        <input type="checkbox" id="CheckUser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                        <input type="checkbox" id="CheckUser{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input">
+                                        @if($user->admin) 
+                                            <i class="fas fa-user" style="color: green "></i> 
+                                        @else 
+                                            <i class="fas fa-user" style="color: gray"></i> 
+                                        @endif 
+                                            {{$user->name}}
                                     </label><br>
                                     @endforeach
                                 </div>
@@ -211,7 +217,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_senhaapp_btn">Salvar</button>
+                <button type="button" class="btn btn-primary add_senhaapp_btn"><img id="imgaddsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -281,7 +287,13 @@
                                 <div class="form-check">
                                     @foreach ($users as $user)
                                     <label class="form-check-label" for="check{{$user->id}}">
-                                        <input type="checkbox" id="check{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input"> {{$user->name}}
+                                        <input type="checkbox" id="check{{$user->id}}" name="users[]" value="{{$user->id}}" class="form-check-input">
+                                         @if($user->admin) 
+                                            <i class="fas fa-user" style="color: green "></i> 
+                                        @else 
+                                            <i class="fas fa-user" style="color: gray"></i> 
+                                        @endif 
+                                            {{$user->name}}
                                     </label><br>
                                     @endforeach
                                 </div>
@@ -292,7 +304,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhaapp_btn">Salvar</button>
+                <button type="button" class="btn btn-primary update_senhaapp_btn"><img id="imgeditsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -314,7 +326,7 @@
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                             <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" data-nome_base="{{$bd->nome_base}}" class="AddApp_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                            <button type="button" data-id="{{$id}}" data-nome_base="{{$bd->nome_base}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddApp_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                             <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -337,29 +349,29 @@
                         <th scope="row">{{$app->nome_app}}</th>                        
                         <td id="senha{{$app->id}}">
                             @if(!$app->senha)
-                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
+                            <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
                             @else
                             @if($app->users()->count())                           
                             @foreach($app->users as $user)
                                   @if(($user->id) == (auth()->user()->id))                                  
-                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"></button>
                                   @break
                                   @elseif ($loop->last)
-                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$app->id}}" type="button" data-id="{{$app->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeapp="{{$app->nome_app}}" data-dominio="{{$app->dominio}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"></button>
                                   @endif                                                        
                             @endforeach                            
                             @endif
                             @endif                                                        
                         </td>
                         @if($app->https)
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} COM certificação HTTPS"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} COM certificação HTTPS"></button></td>
                         @else
-                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} SEM certificação HTTPS"></button></td>
+                        <td id="st_https{{$app->id}}"><button type="button" data-id="{{$app->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="{{$app->nome_app}} SEM certificação HTTPS"></button></td>
                         @endif                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$app->id}}" class="edit_app_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar {{$app->nome_app}}"></button>
-                                <button type="button" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" class="delete_app_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir {{$app->nome_app}}"></button>
+                                <button type="button" data-id="{{$app->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeapp="{{$app->nome_app}}" class="edit_app_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar {{$app->nome_app}}"></button>
+                                <button type="button" data-id="{{$app->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeapp="{{$app->nome_app}}" class="delete_app_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir {{$app->nome_app}}"></button>
                             </div>
                         </td>
                     </tr>
@@ -397,8 +409,12 @@
     $(document).on('click','.delete_app_btn',function(e){
         e.preventDefault();
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+        var link = "{{asset('storage')}}";
+        var admin = $(this).data("admin");
+        var setoradmin = $(this).data("setoradmin");
         var id = $(this).data("id");
         var nomeapp = ($(this).data("nomeapp")).trim();
+        if((admin)&&(setoradmin==1)){
         Swal.fire({
             showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -408,7 +424,7 @@
                 },
                 title:nomeapp,
                 text: "Deseja excluir?",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'/logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -429,31 +445,57 @@
                     success:function(response){
                         if(response.status==200){
                             //remove a tr da table html
-                            $('#app'+id).remove();
-                            $('#success_message').html('<div id="success_message"></div>');
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);
+                            $("#app"+id).remove();
+                            $("#success_message").replaceWith('<div id="success_message"></div>');
+                            $("#success_message").addClass('alert alert-success');
+                            $("#success_message").text(response.message);
                         }
                     } 
                 });
             }                                       
         
-        });                        
+        });                 
+    }else{
+        Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:nomeapp,
+                text: "Você não pode excluir este registro. Procure um administrador do setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }       
         
         });
     ///fim delete app
     
     //inicio exibe EditAppModal
     $('#EditAppModal').on('shown.bs.modal',function(){
-        $('#nome_app').focus();
+        $("#nome_app").focus();
     });
     $(document).on('click','.edit_app_btn',function(e){
         e.preventDefault();
-    
+        var link = "{{asset('storage')}}";
+        var admin = $(this).data("admin");
+        var setoradmin = $(this).data("setoradmin");
+        var nome = $(this).data("nomeapp");
         var id = $(this).data("id");
-        $('#editform').trigger('reset');
-        $('#EditAppModal').modal('show');    
-        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
+        if((admin)&&(setoradmin==1)){
+        $("#editform").trigger('reset');
+        $("#EditAppModal").modal('show');    
+        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -466,34 +508,34 @@
             url: '/datacenter/edit-app/'+id,
             success: function(response){
                 if(response.status==200){ 
-                    $('#edit_app_id').val(id);               
+                    $("#edit_app_id").val(id);               
                     //seta a base
                     var vnomebase = (response.base.nome_base).trim();
-                    $('#edit_nome_base').html('<label id="edit_nome_base" style="font-style: italic;">'+vnomebase+'</label>');
+                    $("#edit_nome_base").replaceWith('<label id="edit_nome_base" style="font-style: italic;">'+vnomebase+'</label>');
                     var vnomevm = (response.vm.nome_vm).trim();
-                    $('#edit_nome_vm').html('<label id="edit_nome_vm" style="font-style: italic;">'+vnomevm+'</label>');
+                    $("#edit_nome_vm").replaceWith('<label id="edit_nome_vm" style="font-style: italic;">'+vnomevm+'</label>');
                     var opcaobase = response.base.id;
-                    $('#edit_selbase_id option')
+                    $("#edit_selbase_id option")
                     .removeAttr('selected')
                     .filter('[value='+opcaobase+']')
                     .attr('selected',true);
                     //fim seta a base
                     //seta o orgão
                     var opcaoorgao = response.orgao.id;
-                    $('#edit_selorgao_id option')
+                    $("#edit_selorgao_id option")
                     .removeAttr('selected')
                     .filter('[value='+opcaoorgao+']')
                     .attr('selected',true);
                     //fim seta o orgao
                     //seta o projeto
                     var opcaoprojeto = response.projeto.id;
-                    $('#edit_selprojeto_id option')
+                    $("#edit_selprojeto_id option")
                     .removeAttr('selected')
                     .filter('[value='+opcaoprojeto+']')
                     .attr('selected',true);
                     //fim seta o projeto
                     var vnomeapp = (response.app.nome_app).trim();
-                    $('#edit_nome_app').val(vnomeapp);
+                    $("#edit_nome_app").val(vnomeapp);
                     var vdominio = (response.app.dominio).trim();
                     $("#edit_dominio").val(vdominio);                               
                     if(response.app.https){
@@ -504,47 +546,70 @@
                 }
             }
         });
+    }else{
+        Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:nome,
+                text: "Você não pode alterar este registro. Procure um administrador do setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    
+    }
     });
     //fim exibe EditAppModal
       //reconfigura o option selected do select html
       $('select[name="edit_selprojeto_id"]').on('change',function(){
             var opteditproj = this.value;
-            $('#edit_selprojeto_id option')
+            $("#edit_selprojeto_id option")
             .removeAttr('selected')
             .filter('[value='+opteditproj+']')
             .attr('selected',true);
         }); 
         $('select[name="edit_selbase_id"]').on('change',function(){
             var opteditbase = this.value;
-            $('#edit_selbase_id option')
+            $("#edit_selbase_id option")
             .removeAttr('selected')
             .filter('[value='+opteditbase+']')
             .attr('selected',true);
         }); 
         $('select[name="edit_selorgao_id"]').on('change',function(){
             var opteditorgao = this.value;
-            $('#edit_selorgao_id option')
+            $("#edit_selorgao_id option")
             .removeAttr('selected')
             .filter('[value='+opteditorgao+']')
             .attr('selected',true);
         }); 
         $('select[name="add_selprojeto_id"]').on('change',function(){
             var optaddproj = this.value;
-            $('#add_selprojeto_id option')
+            $("#add_selprojeto_id option")
             .removeAttr('selected')
             .filter('[value='+optaddproj+']')
             .attr('selected',true);
         }); 
         $('select[name="add_selbase_id"]').on('change',function(){
             var optaddbase = this.value;
-            $('#add_selbase_id option')
+            $("#add_selbase_id option")
             .removeAttr('selected')
             .filter('[value='+optaddbase+']')
             .attr('selected',true);
         }); 
         $('select[name="add_selorgao_id"]').on('change',function(){
             var optaddorgao = this.value;
-            $('#add_selorgao_id option')
+            $("#add_selorgao_id option")
             .removeAttr('selected')
             .filter('[value='+optaddorgao+']')
             .attr('selected',true);
@@ -553,12 +618,13 @@
         //inicio da atualização do registro
         $(document).on('click','.update_app_btn',function(e){
             e.preventDefault();
-            $(this).text('Atualizando...');
+            var loading = $("#imgedit");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            var id = $('#edit_app_id').val();
-            var upd_projeto_id = $('#edit_selprojeto_id').val();
-            var upd_orgao_id = $('#edit_selorgao_id').val();
-            var upd_base_id = $('#edit_selbase_id').val();
+            var id = $("#edit_app_id").val();
+            var upd_projeto_id = $("#edit_selprojeto_id").val();
+            var upd_orgao_id = $("#edit_selorgao_id").val();
+            var upd_base_id = $("#edit_selbase_id").val();
             var edit_https = false;
             $("input[name='edit_https']:checked").each(function(){
                 edit_https = true
@@ -568,8 +634,8 @@
                 'orgao_id': upd_orgao_id,
                 'projetos_id': upd_projeto_id,
                 'bases_id': upd_base_id,
-                'nome_app': ($('.edit_nome_app').val()).trim(),
-                'dominio': ($('.edit_dominio').val()).trim(),
+                'nome_app': ($(".edit_nome_app").val()).trim(),
+                'dominio': ($(".edit_dominio").val()).trim(),
                 'https': edit_https,
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -582,27 +648,27 @@
                 success:function(response){
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                        $('#updateform_errList').addClass('alert alert-danger');
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#updateform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#updateform_errList').append('<li>'+err_values+'</li>');
+                            $("#updateform_errList").append('<li>'+err_values+'</li>');
                         });
-                        $(this).value("Atualizado");
+                        loading.hide();
                     }else if(response.status==404){
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');  
-                        $('#success_message').html('<div id="success_message"></div>');                      
-                        $('#success_message').addClass('alert alert-warning');
-                        $('#success_message').text(response.message);
-                        $(this).text('Atualizado');
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');  
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                      
+                        $("#success_message").addClass('alert alert-warning');
+                        $("#success_message").text(response.message);
+                        loading.hide();
                     }else{
                         //atualizando a tr da table html
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');         
-                        $('#success_message').html('<div id="success_message"></div>');               
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
-                        $(this).text('Atualizado');
-                        $('#editform').trigger('reset');
-                        $('#EditAppModal').modal('hide');
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');         
+                        $("#success_message").replaceWith('<div id="success_message"></div>');               
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
+                        $("#editform").trigger('reset');
+                        $("#EditAppModal").modal('hide');
     
                        
                         var tupla = ""; 
@@ -617,32 +683,32 @@
                             <th scope="row">'+response.app.nome_app+'</th>';
                         var bloqueia = true;                        
                         if((response.app.senha)==""){
-                        limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita2 = '<button id="botaosenha'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita4 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita4 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                   
                             if(response.app.https){
-                               limita5 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
+                               limita5 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
                             }else{
-                               limita6 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
+                               limita6 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
                             }
                             limita7 = '<td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.app.id+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';   
                         tupla = limita1+limita2+limita3+limita4+limita5+limita6+limita7;          
-                        $('#app'+id).replaceWith(tupla);
+                        $("#app"+id).replaceWith(tupla);
                     }
                 }
             });            
@@ -650,29 +716,55 @@
         //fim da atualização do registro
         //inicio exibição do form AddAppModal
         $('#AddAppModal').on('shown.bs.modal',function(){
-            $('.add_nome_app').focus();
+            $(".add_nome_app").focus();
         });
         $(document).on('click','.AddApp_btn',function(e){
             e.preventDefault();
             var labelHtml = ($(this).data("nome_base")).trim();
-            var labelHtmlVm = ($('#vmnome').val()).trim(); 
-            $('#addform').trigger('reset');
-            $('#AddAppModal').modal('show');
-            $('#add_base_id').val($(this).data("id"));
-            $('#add_nome_base').html('<Label id="add_nome_base" style="font-style:italic;">'+labelHtml+'</Label>');
-            $('#add_nome_vm').html('<Label id="add_nome_vm" style="font-style:italic;">'+labelHtmlVm+'</Label>');
-            $('#saveform_errList').html('<ul id="saveform_errList"></ul>'); 
+            var labelHtmlVm = ($("#vmnome").val()).trim(); 
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            if(setoradmin==1){
+            $("#addform").trigger('reset');
+            $("#AddAppModal").modal('show');
+            $("#add_base_id").val($(this).data("id"));
+            $("#add_nome_base").replaceWith('<Label id="add_nome_base" style="font-style:italic;">'+labelHtml+'</Label>');
+            $("#add_nome_vm").replaceWith('<Label id="add_nome_vm" style="font-style:italic;">'+labelHtmlVm+'</Label>');
+            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>'); 
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Você não pode registrar APP. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
         });
         //fim exibição do form AddAppModal
         //inicio do envio novo registro
         $(document).on('click','.add_app_btn',function(e){
             e.preventDefault();
     
-            $(this).text('Salvando...');
+            var loading = $("#imgadd");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            var ins_projeto_id = $('#add_selprojeto_id').val();
-            var ins_orgao_id = $('#add_selorgao_id').val();
-            var ins_base_id = $('#add_selbase_id').val();
+            var ins_projeto_id = $("#add_selprojeto_id").val();
+            var ins_orgao_id = $("#add_selorgao_id").val();
+            var ins_base_id = $("#add_selbase_id").val();
             var add_https = false;
             $("input[name='add_https']:checked").each(function(){
                 add_https = true
@@ -682,8 +774,8 @@
                 'orgao_id': ins_orgao_id,
                 'projetos_id': ins_projeto_id,
                 'bases_id': ins_base_id,
-                'nome_app': $('.add_nome_app').val(),
-                'dominio': $('.add_dominio').val(),
+                'nome_app': $(".add_nome_app").val(),
+                'dominio': $(".add_dominio").val(),
                 'https': add_https,     
                 '_method':'PUT',
                 '_token': CSRF_TOKEN,       
@@ -697,19 +789,21 @@
                 success:function(response){
                     //erros
                     if(response.status==400){
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                        $('#saveform_errList').addClass('alert alert-danger');
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                        $("#saveform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#saveform_errList').append('<li>'+err_values+'</li>');
+                            $("#saveform_errList").append('<li>'+err_values+'</li>');
                         });
+                        loading.hide();
                     }else{
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');     
-                        $('#success_message').html('<div id="success_message"></div>');                   
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');     
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                   
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#addform').trigger('reset');
-                        $('#AddAppModal').modal('hide');
+                        $("#addform").trigger('reset');
+                        $("#AddAppModal").modal('hide');
     
                         //inserindo a tr na table html                       
                         var tupla = "";
@@ -727,35 +821,35 @@
                             <th scope="row">'+response.app.nome_app+'</th>';
                         var bloqueia = true;                        
                         if((response.app.senha)==""){
-                        limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita4 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita4 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }            
                             if(response.app.https){
-                            limita5 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
+                            limita5 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
                              }else{
-                            limita6 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
+                            limita6 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
                             }
                             limita7 = '<td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.app.id+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
-                        if(!$('#nadaencontrado').html==""){
-                            $('#nadaencontrado').remove();
+                        if(!$("#nadaencontrado").html==""){
+                            $("#nadaencontrado").remove();
                         }
                         tupla = limita0+limita1+limita2+limita3+limita4+limita5+limita6+limita7;                           
-                        $('#novo').replaceWith(tupla);
+                        $("#novo").replaceWith(tupla);
                     }
                 }
             });        
@@ -767,6 +861,9 @@
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");        
             var vhttps = false;
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            if(setoradmin==1){
             if($(this).data("https")=="1"){
                 vhttps = true;
             }else{
@@ -787,43 +884,91 @@
                         var limita1 = "";
                         var limita2 = "";
                         if(response.app.https){
-                            limita1 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
+                            limita1 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
                         }else{
-                            limita2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
+                            limita2 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
                         }
                         var celula = limita1+limita2;
-                        $('#st_https'+id).replaceWith(celula);
+                        $("#st_https"+id).replaceWith(celula);
                     }
                 }
             });
+        }else{
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Para alterar o HTTPS o seu usuário deve pertencer ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+        }
     
         });
         //fim muda o https na lista index
 
         //cadastro de senha
         $('#AddSenhaApp').on('shown.bs.modal',function(){
-            $('.add_senha').focus();
+            $(".add_senha").focus();
         });
 
 
         $(document).on('click','.cadsenha_btn',function(e){
             e.preventDefault();
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
             var labelHtml = ($(this).data("nomeapp")).trim();            
             var labelDominio = ($(this).data("dominio")).trim();            
-            $('#addformsenha').trigger('reset');
-            $('#AddSenhaApp').modal('show');
-            $('#add_appsenha_id').val($(this).data("id"));
-            $('#nomeapp').html('<Label id="nomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
-            $('#dominioapp').html('<Label id="dominioapp" style="font-style:italic;">'+labelDominio+'</Label>');            
-            $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>'); 
+            if(setoradmin==1){
+            $("#addformsenha").trigger('reset');
+            $("#AddSenhaApp").modal('show');
+            $("#add_appsenha_id").val($(this).data("id"));
+            $("#nomeapp").replaceWith('<Label id="nomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
+            $("#dominioapp").replaceWith('<Label id="dominioapp" style="font-style:italic;">'+labelDominio+'</Label>');            
+            $("#saveformsenha_errList").replaceWith('<ul id="saveformsenha_errList"></ul>'); 
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Para abrir permissões de senha o seu usuário deve pertencer ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
         });
 
          $(document).on('click','.add_senhaapp_btn',function(e){
             e.preventDefault();
-            $(this).text('Salvando...');
+            var loading = $("#imgaddsenha");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
-            var id = $('#add_appsenha_id').val();
+            var id = $("#add_appsenha_id").val();
             var val_indefinida = 0;
             $("input[name='add_val_indefinida']:checked").each(function(){
                 val_indefinida = 1;
@@ -836,8 +981,8 @@
             });            
             
             var data = {
-                'senha':$('.add_senha').val(),
-                'validade':formatDate($('.add_validade').val()),
+                'senha':$(".add_senha").val(),
+                'validade':formatDate($(".add_validade").val()),
                 'val_indefinida':val_indefinida,                
                 'users':users,
                 '_method':'PATCH',
@@ -852,41 +997,42 @@
                 success:function(response){
                       if(response.status==400){
                            //erros
-                            $('#saveformsenha_errList').html("");
-                            $('#saveformsenha_errList').addClass("alert alert-danger");
+                            $("#saveformsenha_errList").replaceWith("");
+                            $("#saveformsenha_errList").addClass("alert alert-danger");
                             $.each(response.errors,function(key,err_values){
-                                    $('#saveformsenha_errList').append('<li>'+err_values+'</li>');
+                                    $("#saveformsenha_errList").append('<li>'+err_values+'</li>');
                             });
-          
+                            loading.hide();
                 }else{
-                        $('#saveformsenha_errList').html('<ul id="saveformsenha_errList"></ul>');     
-                        $('#success_message').html('<div id="success_message"></div>');              
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);                                        
+                        $("#saveformsenha_errList").replaceWith('<ul id="saveformsenha_errList"></ul>');     
+                        $("#success_message").replaceWith('<div id="success_message"></div>');              
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);                                        
+                        loading.hide();
     
-                        $('#addformsenha').trigger('reset');                    
-                        $('#AddSenhaApp').modal('hide');
+                        $("#addformsenha").trigger('reset');                    
+                        $("#AddSenhaApp").modal('hide');
 
                         var limita1 = "";
                         var limita2 = "";
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.app.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 
                         var elemento = limita1+limita2+limita3;
-                        $('#botaosenha'+id).replaceWith(elemento);
+                        $("#botaosenha"+id).replaceWith(elemento);
 
                 } 
                 }   
@@ -895,24 +1041,28 @@
         //fim cadastro de senha
     ////inicio alteração de senha
     $('#EditSenhaApp').on('shown.bs.modal',function(){
-        $('#edit_senha').focus();
+        $("#edit_senha").focus();
     });
     $(document).on('click','.senhabloqueada_btn',function(e){
         e.preventDefault();
 
         var opcaosenha = $(this).data("opt");
+        var link = "{{asset('storage')}}";
+        var setoradmin = $(this).data("setoradmin");
+
+        if(setoradmin==1){
 
         if(opcaosenha){
     
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomeapp")).trim();            
         var labelDominio = ($(this).data("dominio")).trim(); 
-        $('#editformsenha').trigger('reset');
-        $('#EditSenhaApp').modal('show');  
-        $('#editnomeapp').html('<Label id="editnomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
-        $('#editdominioapp').html('<Label id="editdominioapp" style="font-style:italic;">'+labelDominio+'</Label>');     
-        $('#edit_appsenha_id').val(id);  
-        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');
+        $("#editformsenha").trigger('reset');
+        $("#EditSenhaApp").modal('show');  
+        $("#editnomeapp").replaceWith('<Label id="editnomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
+        $("#editdominioapp").replaceWith('<Label id="editdominioapp" style="font-style:italic;">'+labelDominio+'</Label>');     
+        $("#edit_appsenha_id").val(id);  
+        $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');
     
         $.ajaxSetup({
             headers:{
@@ -949,16 +1099,16 @@
                             alterador = "";
                         }                  
                     if(new Date(response.app.validade)<new Date()){
-                    $('#senhavencida').html('<small id="senhavencida" style="color: red">Senha vencida!</small>');
+                    $("#senhavencida").replaceWith('<small id="senhavencida" style="color: red">Senha vencida!</small>');
                     }else{
-                    $('#senhavencida').html('<small id="senhavencida" style="color: green">Senha na validade. OK!</small>');  
+                    $("#senhavencida").replaceWith('<small id="senhavencida" style="color: green">Senha na validade. OK!</small>');  
                     } 
-                    $('#edit_validade').val(datavalidade);
-                    $('#editdatacriacao').html('<label  id="editdatacriacao">'+datacriacao+'</label>');
-                    $('#editdatamodificacao').html('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
-                    $('#editcriador').html('<label  id="editcriador">'+criador+'</label>');
-                    $('#editmodificador').html('<label  id="editmodificador">'+alterador+'</label>');                         
-                    $('#edit_senha').val(response.senha);
+                    $("#edit_validade").val(datavalidade);
+                    $("#editdatacriacao").replaceWith('<label  id="editdatacriacao">'+datacriacao+'</label>');
+                    $("#editdatamodificacao").replaceWith('<label  id="editdatamodificacao">'+dataatualizacao+'</label>');
+                    $("#editcriador").replaceWith('<label  id="editcriador">'+criador+'</label>');
+                    $("#editmodificador").replaceWith('<label  id="editmodificador">'+alterador+'</label>');                         
+                    $("#edit_senha").val(response.senha);
                     if(response.app.val_indefinida){
                       $("input[name='edit_val_indefinida']").attr('checked',true);  
                     }else{
@@ -985,7 +1135,7 @@
                 },
                 title:"Você não tem acesso a esta informação!",
                 text: "Peça sua inclusão a um dos usuários sugeridos na dica!",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'/logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -994,16 +1144,41 @@
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
+}else{
+
+    Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:'ALERTA SETOR DE INFRA!',
+                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'./logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+
+}
              
     });
     //fim exibe EditAppModal
     ///inicio alterar senha
     $(document).on('click','.update_senhaapp_btn',function(e){
             e.preventDefault();
-            $(this).text('Salvando...');
+            var loading = $("#imgeditsenha");
+                loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             //validade indeterminada
-            var id = $('#edit_appsenha_id').val();
+            var id = $("#edit_appsenha_id").val();
             var val_indefinida = 0;
             $("input[name='edit_val_indefinida']:checked").each(function(){
                 val_indefinida = 1;
@@ -1016,8 +1191,8 @@
             });            
             
             var data = {
-                'senha':$('.senha').val(),
-                'validade':formatDate($('.validade').val()),
+                'senha':$(".senha").val(),
+                'validade':formatDate($(".validade").val()),
                 'val_indefinida':val_indefinida,                
                 'users':users,
                 '_method':'PATCH',
@@ -1032,41 +1207,42 @@
                 success:function(response){
                       if(response.status==400){
                            //erros
-                            $('#updateformsenha_errList').html("");
-                            $('#updateformsenha_errList').addClass("alert alert-danger");
+                            $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');
+                            $("#updateformsenha_errList").addClass("alert alert-danger");
                             $.each(response.errors,function(key,err_values){
-                                    $('#updateformsenha_errList').append('<li>'+err_values+'</li>');
+                                    $("#updateformsenha_errList").append('<li>'+err_values+'</li>');
                             });
-          
+                            loading.hide();
                 }else{
-                        $('#updateformsenha_errList').html('<ul id="updateformsenha_errList"></ul>');     
-                        $('#success_message').html('<div id="success_message"></div>');              
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);                                        
+                        $("#updateformsenha_errList").replaceWith('<ul id="updateformsenha_errList"></ul>');     
+                        $("#success_message").replaceWith('<div id="success_message"></div>');              
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);                                        
+                        loading.hide();
     
-                        $('#editformsenha').trigger('reset');                    
-                        $('#EditSenhaApp').modal('hide');
+                        $("#editformsenha").trigger('reset');                    
+                        $("#EditSenhaApp").modal('hide');
 
                         var limita1 = "";
                         var limita2 = "";
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.app.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 
                         var elemento = limita1+limita2+limita3;
-                        $('#botaosenha'+id).replaceWith(elemento);
+                        $("#botaosenha"+id).replaceWith(elemento);
 
                 } 
                 }   
@@ -1087,14 +1263,14 @@
 
         ///tooltip
     $(function(){      
-        $('.senhabloqueada_btn').tooltip();       
-        $('.cadsenha_btn').tooltip();        
-        $('.https_btn').tooltip();
-        $('.AddApp_btn').tooltip();
-        $('.pesquisa_btn').tooltip();        
-        $('.delete_app_btn').tooltip();
-        $('.edit_app_btn').tooltip();
-        $('.voltar_btn').tooltip();
+        $(".senhabloqueada_btn").tooltip();       
+        $(".cadsenha_btn").tooltip();        
+        $(".https_btn").tooltip();
+        $(".AddApp_btn").tooltip();
+        $(".pesquisa_btn").tooltip();        
+        $(".delete_app_btn").tooltip();
+        $(".edit_app_btn").tooltip();
+        $(".voltar_btn").tooltip();
     });
     ///fim tooltip
 

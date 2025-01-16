@@ -41,7 +41,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_rede">Salvar</button>
+                <button type="button" class="btn btn-primary add_rede"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -73,7 +73,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_ip">Salvar</button>
+                <button type="button" class="btn btn-primary add_ip"><img id="imgaddip" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -110,7 +110,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_rede">Atualizar</button>
+                <button type="button" class="btn btn-primary update_rede"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -129,7 +129,7 @@
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" class="AddRedeModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                            <button type="button" data-id="{{$id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddRedeModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -155,17 +155,17 @@
                             <div class="btn-group">
                                 @if($rede->cadastro_ips->count())
                                 <form action="{{route('datacenter.ip.index',['id' => $rede->id])}}" method="get">
-                                    <button type="submit" data-id="{{$rede->id}}" class="list_ip_btn fas fa-network-wired" style="background: transparent;border: none;color:green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista IPs"> {{$rede->cadastro_ips->count()}}</button>
+                                    <button type="submit" data-id="{{$rede->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="list_ip_btn fas fa-network-wired" style="background: transparent;border: none;color:green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista IPs"> {{$rede->cadastro_ips->count()}}</button>
                                 </form>
                                 @else
-                                <button type="button" data-id="{{$rede->id}}" data-nomerede="{{$rede->nome_rede}}" class="novo_ip_btn fas fa-folder" style="background: transparent;border: none;color: orange; nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Novo IP"></button>
+                                <button type="button" data-id="{{$rede->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomerede="{{$rede->nome_rede}}" class="novo_ip_btn fas fa-folder" style="background: transparent;border: none;color: orange; nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Novo IP"></button>
                                 @endif
                             </div>
                         </td>                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$rede->id}}" class="edit_rede fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar REDE"></button>
-                                <button type="button" data-id="{{$rede->id}}" data-nomerede="{{$rede->nome_rede}}" class="delete_rede_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir REDE"></button>
+                                <button type="button" data-id="{{$rede->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="edit_rede fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar REDE"></button>
+                                <button type="button" data-id="{{$rede->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomerede="{{$rede->nome_rede}}" class="delete_rede_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir REDE"></button>
                             </div>
                         </td>
                     </tr>
@@ -201,7 +201,11 @@ $(document).ready(function(){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
+            var link = "{{asset('storage')}}";
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
             var nomerede = ($(this).data("nomerede")).trim();
+            if((admin)&&(setoradmin==1)){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -211,7 +215,7 @@ $(document).ready(function(){
                 },
                 title:nomerede,
                 text: "Deseja excluir?",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'/logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -232,35 +236,62 @@ $(document).ready(function(){
                         success:function(response){
                             if(response.status==200){
                                 //remove a linha tr da table html
-                                $('#rede'+id).remove();
-                                $('#success_message').html('<div id="success_message"></div>');
-                                $('#success_message').addClass('alert alert-success');
-                                $('#success_message').text(response.message);
+                                $("#rede"+id).remove();
+                                $("#success_message").replaceWith('<div id="success_message"></div>');
+                                $("#success_message").addClass('alert alert-success');
+                                $("#success_message").text(response.message);
                             }else{
-                                $('#success_message').html('<div id="success_message"></div>');
-                                $('#success_message').addClass('alert alert-danger');
-                                $('#success_message').text(response.message);
+                                $("#success_message").replaceWith('<div id="success_message"></div>');
+                                $("#success_message").addClass('alert alert-danger');
+                                $("#success_message").text(response.message);
                             }
                     } 
                 });
             }                                       
         
         });                        
+    }else{
+         Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para excluir este registro. Procure um administrador do setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }
         
         });
         //fim delete rede
         //Inicio Exibe EditRedeModal
         $('#EditRedeModal').on('shown.bs.modal',function(){
-            $('#edit_nome_rede').focus();
+            $("#edit_nome_rede").focus();
         });
     
         $(document).on('click','.edit_rede',function(e){
             e.preventDefault();
+
+            var link = "{{asset('storage')}}";
     
-            var id = $(this).data("id");        
-            $('#editform').trigger('reset');
-            $('#EditRedeModal').modal('show');
-            $("#updateform_errList").html('<ul id="updateform_errList"></ul>'); 
+            var id = $(this).data("id");      
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
+            if((admin)&&(setoradmin==1)){
+            $("#editform").trigger('reset');
+            $("#EditRedeModal").modal('show');
+            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
     
             $.ajaxSetup({
                 headers:{
@@ -274,16 +305,39 @@ $(document).ready(function(){
                 success:function(response){
                     if(response.status==200){    
                         var vnomerede = (response.rede.nome_rede).trim();
-                        $('#edit_nome_rede').val(vnomerede);
+                        $("#edit_nome_rede").val(vnomerede);
                         var vmascara = (response.rede.mascara).trim();
-                        $('#edit_mascara').val(vmascara);
+                        $("#edit_mascara").val(vmascara);
                         var vtiporede = (response.rede.tipo_rede).trim();
-                        $('#edit_tipo_rede').val(vtiporede);                    
-                        $('#edit_rede_id').val(response.rede.id);
-                        $('#edit_vlan_id').val(response.rede.vlan_id);
+                        $("#edit_tipo_rede").val(vtiporede);                    
+                        $("#edit_rede_id").val(response.rede.id);
+                        $("#edit_vlan_id").val(response.rede.vlan_id);
                     }
                 }
             });
+
+        }else{
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para alterar este registro. Procure um administrador do setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+        }
     
         });
         //Fim Exibe EditRedeModal
@@ -291,15 +345,16 @@ $(document).ready(function(){
         $(document).on('click','.update_rede',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-            $(this).text("Atualizando...");
+            var loading = $("#imgedit");
+                loading.show();
     
-            var id = $('#edit_rede_id').val();
+            var id = $("#edit_rede_id").val();
     
             var data = {
-                'nome_rede': ($('#edit_nome_rede').val()).trim(),
-                'mascara': ($('#edit_mascara').val()).trim(),
-                'tipo_rede': ($('#edit_tipo_rede').val()).trim(), 
-                'vlan_id':$('#edit_vlan_id').val(),
+                'nome_rede': ($("#edit_nome_rede").val()).trim(),
+                'mascara': ($("#edit_mascara").val()).trim(),
+                'tipo_rede': ($("#edit_tipo_rede").val()).trim(), 
+                'vlan_id':$("#edit_vlan_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }   
@@ -312,42 +367,29 @@ $(document).ready(function(){
                 success:function(response){
                     if(response.status==400){
                         //erros
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                        $('#updateform_errList').addClass('alert alert-danger');
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#updateform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key, err_values){
-                            $('#updateform_errList').append('<li>'+err_values+'</li>');
+                            $("#updateform_errList").append('<li>'+err_values+'</li>');
                         });
-                        $(this).text("Atualizado");
+                        loading.hide();
                     }else if(response.status==404){
-                        $("#updateform_errList").html('<ul id="updateform_errList"></ul>');  
-                        $('#success_message').html('<div id="success_message"></div>');                      
-                        $('#success_message').addClass('alert alert-warning');
-                        $('#success_message').text(response.message);
-                        $(this).text("Atualizado");
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');  
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                      
+                        $("#success_message").addClass('alert alert-warning');
+                        $("#success_message").text(response.message);
+                        loading.hide();
                     }else{
-                        $('#updateform_errList').html('<ul id="updateform_errList"></ul>');  
-                        $('#success_message').html('<div id="success_message"></div>');                      
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
-                        $(this).text("Atualizado");
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');  
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                      
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('editform').trigger('reset');
-                        $('#EditRedeModal').modal('hide');
+                        $("editform").trigger('reset');
+                        $("#EditRedeModal").modal('hide');
     
-                        //atualizando a tr da table html                        
-    
-                        var linha = '<tr id="rede'+response.rede.id+'">\
-                            <th scope="row">'+response.rede.nome_rede+'</th>\
-                            <td>'+response.vlan.nome_vlan+'</td>\
-                            <td>BTN</td>\
-                            <td>\
-                                <div class="btn-group">\
-                                    <button type="button" data-id="'+response.rede.id+'" class="edit_rede fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.rede.id+'" data-nomerede="'+response.rede.nome_rede+'" class="delete_rede_btn fas fa-trash" style="background: transparent;border: none;"></button>\
-                                </div>\
-                            </td>\
-                        </tr>';
-                        $("#rede"+id).replaceWith(linha);
+                        location.reload();
                     }
                 }
             });
@@ -356,25 +398,53 @@ $(document).ready(function(){
         //Fim da atualização da rede
         //Exibe form de adição da rede
         $('#AddRedeModal').on('shown.bs.modal',function(){
-            $('.nome_rede').focus();
+            $(".nome_rede").focus();
         });
         $(document).on('click','.AddRedeModal_btn',function(e){
             e.preventDefault();
-            $('#addform').trigger('reset');
-            $('#AddRedeModal').modal('show');
-            $('#add_vlan_id').val($(this).data("id"));
-            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
+            var link = "{{asset('storage')}}";
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
+            if((admin)&&(setoradmin==1)){
+            $("#addform").trigger('reset');
+            $("#AddRedeModal").modal('show');
+            $("#add_vlan_id").val($(this).data("id"));
+            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+            }else{
+                 Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para registrar uma rede. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
         });
         //fim exibe form de adição da rede
         //inicio da adição da rede
         $(document).on('click','.add_rede',function(e){
             e.preventDefault(); 
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");       
+            var loading = $("#imgadd");
+                loading.show();
             var data = {
-                'nome_rede': ($('.nome_rede').val()).trim(),
-                'mascara': ($('.mascara').val()).trim(),
-                'tipo_rede': ($('.tipo_rede').val()).trim(),
-                'vlan_id': $('#add_vlan_id').val(),
+                'nome_rede': ($(".nome_rede").val()).trim(),
+                'mascara': ($(".mascara").val()).trim(),
+                'tipo_rede': ($(".tipo_rede").val()).trim(),
+                'vlan_id': $("#add_vlan_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }           
@@ -385,19 +455,21 @@ $(document).ready(function(){
                 data: data,
                 success:function(response){                
                     if(response.status==400){
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                        $('#saveform_errList').addClass('alert alert-danger');
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                        $("#saveform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#saveform_errList').append('<li>'+err_values+'</li>');
+                            $("#saveform_errList").append('<li>'+err_values+'</li>');
                         });                    
+                        loading.hide();
                     }else{
-                        $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                        $('#success_message').html('<div id="success_message"></div>');                     
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
+                        $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                     
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#addform').trigger('reset');
-                        $('#AddRedeModal').modal('hide');                    
+                        $("#addform").trigger('reset');
+                        $("#AddRedeModal").modal('hide');                    
                         //adiciona a linha na tabela html
                       
                         var tupla = "";
@@ -407,19 +479,19 @@ $(document).ready(function(){
                             linha1 = '<tr id="rede'+response.rede.id+'">\
                             <th scope="row">'+response.rede.nome_rede+'</th>\
                             <td>'+response.vlan.nome_vlan+'</td>\
-                            <td>BTN</td>\
+                            <td><button type="button" data-id="'+response.rede.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomerede="'+response.rede.nome_rede+'" class="novo_ip_btn fas fa-folder" style="background: transparent;border: none;color: orange; nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Novo IP"></button></td>\
                             <td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.rede.id+'" class="edit_rede fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.rede.id+'" data-nomerede="'+response.rede.nome_rede+'" class="delete_rede_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.rede.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" class="edit_rede fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.rede.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomerede="'+response.rede.nome_rede+'" class="delete_rede_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
-                        if(!$('#nadaencontrado').html()==""){
-                            $('#nadaencontrado').remove();
+                        if(!$("#nadaencontrado").html()==""){
+                            $("#nadaencontrado").remove();
                         }
                         tupla = linha0+linha1;
-                        $('#novo').replaceWith(tupla);
+                        $("#novo").replaceWith(tupla);
                     }
                 }
             });
@@ -427,24 +499,51 @@ $(document).ready(function(){
         //Fim adição de rede    
     //Exibe form de adição de ip
     $('#AddIPModal').on('shown.bs.modal',function(){
-            $('.ip').focus();
+            $(".ip").focus();
         });
         $(document).on('click','.novo_ip_btn',function(e){
             e.preventDefault();
-            $('#addipform').trigger('reset');
-            $('#AddIPModal').modal('show');
-            $('#add_rede_id').val($(this).data("id"));
-            $('#saveipform_errList').html('<ul id="saveipform_errList"></ul>');
+            var link = "{{asset('storage')}}";
+            var setoradmin = $(this).data("setoradmin");
+            if(setoradmin==1){
+            $("#addipform").trigger('reset');
+            $("#AddIPModal").modal('show');
+            $("#add_rede_id").val($(this).data("id"));
+            $("#saveipform_errList").replaceWith('<ul id="saveipform_errList"></ul>');
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:"ALERTA SETOR DE INFRA!",
+                text: "Você não tem permissão para registrar um novo IP. Pois, o seu usuário não pertence ao setor INFRA !",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
         });
         //fim exibe form de adição de ip
         //inicio da adição de ip
         $(document).on('click','.add_ip',function(e){
             e.preventDefault();    
-            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");    
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var loading = $("#imgaddip");
+                loading.show();
             var data = {            
-                'ip': $('.ip').val(),
-                'status': $('.status').val(),            
-                'rede_id': $('#add_rede_id').val(),
+                'ip': $(".ip").val(),
+                'status': $(".status").val(),            
+                'rede_id': $("#add_rede_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }            
@@ -455,19 +554,21 @@ $(document).ready(function(){
                 data: data,
                 success:function(response){                
                     if(response.status==400){
-                        $('#saveipform_errList').html('<ul id="saveipform_errList"></ul>');
-                        $('#saveipform_errList').addClass('alert alert-danger');
+                        $("#saveipform_errList").replaceWith('<ul id="saveipform_errList"></ul>');
+                        $("#saveipform_errList").addClass('alert alert-danger');
                         $.each(response.errors,function(key,err_values){
-                            $('#saveipform_errList').append('<li>'+err_values+'</li>');
+                            $("#saveipform_errList").append('<li>'+err_values+'</li>');
                         });                    
+                        loading.hide();
                     }else{
-                        $('#saveipform_errList').html('<ul id="saveipform_errList"></ul>');  
-                        $('#success_message').html('<div id="success_message"></div>');                 
-                        $('#success_message').addClass('alert alert-success');
-                        $('#success_message').text(response.message);
+                        $("#saveipform_errList").replaceWith('<ul id="saveipform_errList"></ul>');  
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                 
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
     
-                        $('#addipform').trigger('reset');
-                        $('#AddIPModal').modal('hide');
+                        $("#addipform").trigger('reset');
+                        $("#AddIPModal").modal('hide');
     
                         location.reload();
                     }
@@ -478,12 +579,12 @@ $(document).ready(function(){
 
         ///tooltip
     $(function(){              
-        $('.list_ip_btn').tooltip();        
-        $('.novo_ip_btn').tooltip();
-        $('.AddRedeModal_btn').tooltip();
-        $('.pesquisa_btn').tooltip();        
-        $('.delete_rede_btn').tooltip();
-        $('.edit_rede').tooltip();  
+        $(".list_ip_btn").tooltip();        
+        $(".novo_ip_btn").tooltip();
+        $(".AddRedeModal_btn").tooltip();
+        $(".pesquisa_btn").tooltip();        
+        $(".delete_rede_btn").tooltip();
+        $(".edit_rede").tooltip();  
     });
     ///fim tooltip
 

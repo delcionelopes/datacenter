@@ -46,9 +46,7 @@ class OrgaoController extends Controller
      * Método para gravação de um novo registro
      */
     public function store(Request $request)
-    {      
-        
-
+    {
         $validator = Validator::make($request->all(),[
             'nome' => 'required|max:191',           
         ],[
@@ -66,9 +64,11 @@ class OrgaoController extends Controller
                 'nome' =>strtoupper($request->input('nome')),
                 'telefone' =>$request->input('telefone'),                     
             ];            
-            $orgao = $this->orgao->create($data);                      
+            $orgao = $this->orgao->create($data);
+            $user = auth()->user();
             return response()->json([
                 'orgao'  => $orgao,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Órgão cadastrado com sucesso!',
             ]);
@@ -86,9 +86,11 @@ class OrgaoController extends Controller
     public function edit(int $id)
     {
         $o = $this->orgao->find($id);
+        $user = auth()->user();
 
         return response()->json([
             'orgao' => $o,
+            'user' => $user,
             'status' => 200,
         ]);
     }
@@ -119,9 +121,11 @@ class OrgaoController extends Controller
                 $orgao->update();
                
                 $o = Orgao::find($id);
+                $user = auth()->user();
 
                 return response()->json([
                     'orgao'   => $o,
+                    'user' => $user,
                     'status'  => 200,
                     'message' => 'Órgão atualizado com sucesso!',
                 ]);

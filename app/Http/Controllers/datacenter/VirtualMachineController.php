@@ -54,7 +54,12 @@ class VirtualMachineController extends Controller
         $ambientes = Ambiente::all(); //todos os ambientes
         $vlans = Vlan::all();  //todas as vlans
         $cluster = Cluster::find($id);        
-        $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
+        $users = $this->users->query()
+                             ->where('moderador','=','true')
+                             ->where('inativo','=','false')
+                             ->where('setor_idsetor','=',1)
+                             ->orderBy('name')
+                             ->get();
         return view('datacenter.virtual_machine.index',[            
             'cluster'         => $cluster,
             'id'              => $id,
@@ -139,11 +144,13 @@ class VirtualMachineController extends Controller
             $vl = $virtualmachine->vlans;
 
             $users = $virtualmachine->users;
+            $user = auth()->user();
             
             return response()->json([
                 'virtualmachine' => $virtualmachine,
                 'vlans' => $vl,
                 'users' => $users,
+                'user' => $user,
                 'status' =>200,
                 'message' => 'O registro foi criado com sucesso!',
             ]);
@@ -166,7 +173,8 @@ class VirtualMachineController extends Controller
         $projeto = Projeto::find($virtualmachine->projeto_id);
         $orgao = Orgao::find($virtualmachine->orgao_id);
         $ambiente = Ambiente::find($virtualmachine->ambiente_id);    
-        $users = $virtualmachine->users;    
+        $users = $virtualmachine->users;
+        $user = auth()->user();
         return response()->json([
             'virtualmachine' => $virtualmachine,
             'projeto' => $projeto,
@@ -174,6 +182,7 @@ class VirtualMachineController extends Controller
             'ambiente' => $ambiente,
             'vlans'  => $vlans,
             'users' => $users,
+            'user' => $user,
             'status' => 200,            
         ]);
     }
@@ -240,15 +249,16 @@ class VirtualMachineController extends Controller
                 'projeto_id'  => $request->input('projeto_id'),                
                 'cluster' => $request->input('cluster'),                
             ];
-            $virtualmachine->update($data);           
-            $v = VirtualMachine::find($id);
+            $virtualmachine->update($data);                       
             $v->vlans()->sync($request->input('vlans'));  //sincronização do relacionamento vlan n:n
             $vl = $v->vlans;
             $users = $v->users;
+            $user = auth()->user();
             return response()->json([
                 'virtualmachine' => $v,
                 'vlans' => $vl,
                 'users' => $users,
+                'user' => $user,
                 'status' =>200,
                 'message' => 'O registro foi atualizado com sucesso!',
             ]);
@@ -322,6 +332,7 @@ class VirtualMachineController extends Controller
                 $vlans = Vlan::all();  //todas as vlans
                 $cluster = Cluster::find($id);                
                 $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
+                $user = auth()->user();
                 return view('datacenter.virtual_machine.index_vlanXvm',[
                     'cluster'         => $cluster,
                     'id'              => $id,
@@ -331,6 +342,7 @@ class VirtualMachineController extends Controller
                     'orgaos'          => $orgaos,
                     'ambientes'       => $ambientes,                    
                     'users'           => $users,
+                    'user'            => $user,
                 ]);        
     }
 
@@ -366,9 +378,11 @@ class VirtualMachineController extends Controller
                 'dono'               => strtoupper($request->input('dono')),
                 'encoding'           => strtoupper($request->input('encoding')),               
             ];
-            $base = $this->base->create($data);           
+            $base = $this->base->create($data);
+            $user = auth()->user();
             return response()->json([
-                'base'    => $base,                
+                'base'    => $base,
+                'user' =>  $user,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -399,11 +413,13 @@ class VirtualMachineController extends Controller
             $virtualmachine->update($data); //criação da senha
             $vm = VirtualMachine::find($id);            
             $vm->users()->sync($request->input('users')); //sincronização 
-            $u = $vm->users;          
+            $u = $vm->users;
+            $user = auth()->user();
             return response()->json([
                 'user' => $user,                
                 'virtualmachine' => $vm,
                 'users' => $u,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Senha criada com sucesso!',
             ]);
@@ -462,12 +478,14 @@ class VirtualMachineController extends Controller
             $alterador = User::find($virtualmachine->alterador_id)->name;
         }                
         $u = $virtualmachine->users;    
-        $s = Crypt::decrypt($virtualmachine->senha);       
+        $s = Crypt::decrypt($virtualmachine->senha);
+        $user = auth()->user();
         return response()->json([
             'status' => 200,            
             'virtualmachine' => $virtualmachine,
             'senha' => $s,
             'users' => $u,
+            'user' => $user,
             'criador' => $criador,
             'alterador' => $alterador,            
         ]);

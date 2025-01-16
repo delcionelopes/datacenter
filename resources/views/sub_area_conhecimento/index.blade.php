@@ -21,7 +21,7 @@
             </button>
             </div>
         <div class="modal-body form-horizontal">
-            <form id="myform" name="myform" class="form-horizontal" role="form">
+            <form id="addform" name="addform" class="form-horizontal" role="form">
                 <ul id="saveform_errList"></ul>
                 <div class="form-group mb-3">
                     <label for="">Descrição</label>
@@ -38,7 +38,7 @@
             </form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_sub_area_conhecimento">Salvar</button>
+                <button type="button" class="btn btn-primary add_sub_area_conhecimento"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
         </div>
@@ -57,7 +57,7 @@
                 </button>                
             </div>
             <div class="modal-body form-horizontal">
-                <form id="myform" name="myform" class="form-horizontal" role="form">
+                <form id="editform" name="editform" class="form-horizontal" role="form">
                     <ul id="updateform_errList"></ul>
                     <input type="hidden" id="edit_sub_area_conhecimento_id">
                     <div class="form-group mb-3">
@@ -75,7 +75,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary update_sub_area_conhecimento">Atualizar</button>
+                    <button type="button" class="btn btn-primary update_sub_area_conhecimento"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
@@ -119,8 +119,8 @@
                         <td>{{$sub->area_conhecimento->descricao}}</td>                       
                         <td>
                             <div class="btn-group">
-                                <button data-id="{{$sub->id}}" class="edit_sub_area_conhecimento fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button data-id="{{$sub->id}}" data-descricao="{{$sub->descricao}}" class="delete_area_conhecimento_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button data-id="{{$sub->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-descricao="{{$sub->descricao}}" class="edit_sub_area_conhecimento fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button data-id="{{$sub->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-descricao="{{$sub->descricao}}" class="delete_area_conhecimento_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -156,8 +156,12 @@
         $(document).on('click','.delete_area_conhecimento_btn',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var link = "{{asset('storage')}}";
             var id = $(this).data("id");
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
             var descricao = ($(this).data("descricao")).trim();
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -167,7 +171,7 @@
                 },
                 title:descricao,
                 text: "Deseja excluir?",
-                imageUrl: '../../logoprodap.jpg',
+                imageUrl: link+'/logoprodap.jpg',
                 imageWidth: 400,
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
@@ -188,32 +192,59 @@
                         success:function(response){
                             if(response.status==200){
                             //remove a tr correspondente da tabela html
-                            $('#sub'+id).remove();          
-                            $('#Success_message').html('<div id="success_message"></div>');
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);         
+                            $("#sub"+id).remove();          
+                            $("#Success_message").replaceWith('<div id="success_message"></div>');
+                            $("#success_message").addClass('alert alert-success');
+                            $("#success_message").text(response.message);         
                         }
                     } 
                 });
             }                                       
         
         });                        
+    }else{
+        Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:descricao,
+                text: "Você não pode excluir este registro. Procure um administrador!",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }
         
         });
         //fim delete registro
     
         //início Exibe EditSub_Area_Conhecimento
-        $('#EditSub_area_Conhecimento').on('shown.bs.modal',function(){
-            $('#edit_descricao').focus();
+        $("#EditSub_area_Conhecimento").on('shown.bs.modal',function(){
+            $("#edit_descricao").focus();
         });
     
         $(document).on('click','.edit_sub_area_conhecimento',function(e){
             e.preventDefault();        
             
-            var id = $(this).data("id");                       
-            $('#myform').trigger('reset');
-            $('#EditSub_Area_Conhecimento').modal('show');     
-            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');                   
+            var id = $(this).data("id");        
+            var link = "{{asset('storage')}}";
+            var admin = $(this).data("admin");
+            var setoradmin = $(this).data("setoradmin");
+            var descricao = $(this).data("descricao");
+            if(admin){
+            $("#editform").trigger('reset');
+            $("#EditSub_Area_Conhecimento").modal('show');     
+            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');                   
     
             $.ajaxSetup({
                     headers:{
@@ -228,18 +259,41 @@
                     success:function(response){
                         if(response.status==200){
                             var vdescricao = (response.sub_area_conhecimento.descricao).trim();
-                            $('.descricao').val(vdescricao);
+                            $(".descricao").val(vdescricao);
                             //seta a opção certa no select html
                             var opcao = response.area_conhecimento.id;                        
-                            $('#area_id option')
+                            $("#area_id option")
                             .removeAttr('selected')
                             .filter('[value='+opcao+']')
                             .attr('selected', true);
                             //fim seta area_conhecimento
-                            $('#edit_sub_area_conhecimento_id').val(response.sub_area_conhecimento.id);                        
+                            $("#edit_sub_area_conhecimento_id").val(response.sub_area_conhecimento.id);                        
                         }
                     }
                 });
+
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:descricao,
+                text: "Você não pode alterar este registro. Procure um administrador!",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
     
         });
         //fim Exibe EditSub_Area_Conhecimento    
@@ -247,7 +301,7 @@
         //inicio Reconfigura o option selected do select html
         $('select[name="area_id"]').on('change', function() {
                var opt = this.value; 
-                            $('#area_id option')
+                            $("#area_id option")
                             .removeAttr('selected')
                             .filter('[value='+opt+']')
                             .attr('selected', true);        
@@ -259,13 +313,14 @@
         $(document).on('click','.update_sub_area_conhecimento',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            $(this).text("Atualizando...");                                                                                               
+            var loading = $("#imgedit");
+                loading.show();
             
-            var opt = $('#area_id').val(); 
-            var id = $('#edit_sub_area_conhecimento_id').val();
+            var opt = $("#area_id").val(); 
+            var id = $("#edit_sub_area_conhecimento_id").val();
             var data = {
                 'area_conhecimento_id' : opt,
-                'descricao' : ($('#edit_descricao').val()).trim(),
+                'descricao' : ($("#edit_descricao").val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }           
@@ -277,26 +332,27 @@
                     success:function(response){
                         if(response.status==400){
                             //erros
-                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                            $('#updateform_errList').addClass('alert alert-danger');
+                            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                            $("#updateform_errList").addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
-                                $('#updateform_errList').append('<li>'+err_values+'</li');
-                            });                        
+                                $("#updateform_errList").append('<li>'+err_values+'</li');
+                            });          
+                            loading.hide();
                         }else if(response.status==404){
-                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                            $('#Success_message').html('<div id="success_message"></div>');
-                            $('#success_message').addClass('alert alert-warning');
-                            $('#success_message').text(response.message);
-                            $('.update_sub_area_conhecimento').text("Atualizado");
+                            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                            $("#Success_message").replaceWith('<div id="success_message"></div>');
+                            $("#success_message").addClass('alert alert-warning');
+                            $("#success_message").text(response.message);
+                            loading.hide();
                         }else{
-                            $('#updateform_errList').html('<ul id="updateform_errList"></ul>');
-                            $('#Success_message').html('<div id="success_message"></div>');
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);
-                            $('.update_sub_area_conhecimento').text("Atualizado");
+                            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                            $("#Success_message").replaceWith('<div id="success_message"></div>');
+                            $("#success_message").addClass('alert alert-success');
+                            $("#success_message").text(response.message);
+                            loading.hide();
     
-                            $('#myform').trigger('reset');
-                            $('#EditSub_Area_Conhecimento').modal('hide');
+                            $("#editform").trigger('reset');
+                            $("#EditSub_Area_Conhecimento").modal('hide');
     
                             //atualizando a tr da tabela html
                            
@@ -305,8 +361,8 @@
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td>\
                                     <div class="btn-group">\
-                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" class="edit_sub_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="edit_sub_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div>\
                                     </td>\
                                     </tr>';                             
@@ -320,16 +376,16 @@
         //fim da atualização do registro
     
         //início exibição da adição do novo registro
-        $('#AddSub_Area_Conhecimento').on('shown.bs.modal',function(){
-            $('.descricao').focus();
+        $("#AddSub_Area_Conhecimento").on('shown.bs.modal',function(){
+            $(".descricao").focus();
         });
     
         $(document).on('click','.Add_Sub_Area_Conhecimento_btn',function(e){
             e.preventDefault();
     
-            $('#myform').trigger('reset');
-            $('#AddSub_Area_Conhecimento').modal('show');
-            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
+            $("#addform").trigger('reset');
+            $("#AddSub_Area_Conhecimento").modal('show');
+            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
     
         });
         //fim exibição da adição do novo registro
@@ -338,9 +394,11 @@
         $(document).on('click','.add_sub_area_conhecimento',function(e){
             e.preventDefault();               
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            var loading = $("#imgadd");
+                loading.show();
             var data = {
-                'area_conhecimento_id' : $('#area_id').val(),
-                'descricao' : ($('.descricao').val()).trim(),
+                'area_conhecimento_id' : $("#area_id").val(),
+                'descricao' : ($(".descricao").val()).trim(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }
@@ -352,19 +410,21 @@
                     success:function(response){
                         if(response.status==400){
                             //erros
-                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                            $('#saveform_errList').addClass('alert alert-danger');
+                            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                            $("#saveform_errList").addClass('alert alert-danger');
                             $.each(response.errors,function(key,err_values){
-                                $('#saveform_errList').append('<li>'+err_values+'</li>');
+                                $("#saveform_errList").append('<li>'+err_values+'</li>');
                             });
+                            loading.hide();
                         }else{
-                            $('#saveform_errList').html('<ul id="saveform_errList"></ul>');
-                            $('#Success_message').html('<div id="success_message"></div>');                          
-                            $('#success_message').addClass('alert alert-success');
-                            $('#success_message').text(response.message);
+                            $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
+                            $("#Success_message").replaceWith('<div id="success_message"></div>');                          
+                            $("#success_message").addClass('alert alert-success');
+                            $("#success_message").text(response.message);
+                            loading.hide();
     
-                            $('#myform').trigger('reset');
-                            $('#AddSub_Area_Conhecimento').modal('hide');
+                            $("#addform").trigger('reset');
+                            $("#AddSub_Area_Conhecimento").modal('hide');
     
                             //inserindo a nova tr no corpo da table html                       
                             
@@ -377,13 +437,13 @@
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td>\
                                     <div class="btn-group">\
-                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" class="edit_sub_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="edit_sub_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div>\
                                     </td>\
                                     </tr>';
-                        if(!$('#nadaencontrado').html==""){
-                            $('#nadaencontrado').remove();
+                        if(!$("#nadaencontrado").html==""){
+                            $("#nadaencontrado").remove();
                         }
                                 tupla = linha0+linha1;
                                 $("#novo").replaceWith(tupla); 
@@ -396,10 +456,10 @@
     
     ///tooltip
     $(function(){             
-        $('.Add_Sub_Area_Conhecimento_btn').tooltip();
-        $('.pesquisa_btn').tooltip();        
-        $('.delete_area_conhecimento_btn').tooltip();
-        $('.edit_sub_area_conhecimento').tooltip();    
+        $(".Add_Sub_Area_Conhecimento_btn").tooltip();
+        $(".pesquisa_btn").tooltip();        
+        $(".delete_area_conhecimento_btn").tooltip();
+        $(".edit_sub_area_conhecimento").tooltip();    
     });
     ///fim tooltip
       

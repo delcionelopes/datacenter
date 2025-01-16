@@ -70,9 +70,11 @@ class AmbienteController extends Controller
                 'nome_ambiente' => strtoupper($request->input('nome_ambiente')),              
             ];            
             //cria o ambiente
-            $ambiente = $this->ambiente->create($data);                     
+            $ambiente = $this->ambiente->create($data); 
+            $user = auth()->user();
             return response()->json([                
                 'ambiente' => $ambiente,
+                'user' => $user,
                 'status'  => 200,
                 'message' => 'Ambiente adicionado com sucesso!',
             ]); 
@@ -91,10 +93,12 @@ class AmbienteController extends Controller
     public function edit(int $id)    
     {      
         //localiza o registro        
-        $a = $this->ambiente->find($id);                    
+        $ambiente = $this->ambiente->find($id);                    
+        $user = auth()->user();
         //retorna
         return response()->json([
-            'ambiente'=>$a,
+            'ambiente'=>$ambiente,
+            'user' => $user,
             'status' => 200,]);        
     }
 
@@ -124,10 +128,11 @@ class AmbienteController extends Controller
                      //efetiva a atualização
                      $ambiente->update(); 
                      //retornando o registro atualizado
-                     $a = Ambiente::find($id);                      
-                     
+                     $a = Ambiente::find($id);
+                     $user = auth()->user();
                      return response()->json([             
-                         'ambiente' => $a,                     
+                         'ambiente' => $a,  
+                         'user' => $user,
                          'status'    => 200,
                          'message'   => 'Ambiente atualizado com sucesso!',
                      ]);

@@ -69,9 +69,11 @@ class CadastroIpController extends Controller
             ];
             $cadastroIp = $this->cadastroIp->create($data);                      
             $rede = $cadastroIp->rede;
+            $user = auth()->user();
             return response()->json([
                 'rede' => $rede,
                 'cadastroIp' => $cadastroIp,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -89,8 +91,10 @@ class CadastroIpController extends Controller
     public function edit(int $id)
     {
         $cadastroIp = $this->cadastroIp->find($id);        
+        $user = auth()->user();
         return response()->json([            
             'cadastroIp' => $cadastroIp,
+            'user' => $user,
             'status' => 200,
         ]);
     }
@@ -121,9 +125,11 @@ class CadastroIpController extends Controller
                 $cadastroIp->update($data);               
                 $c = Cadastro_ip::find($id);
                 $rede = $c->rede;
+                $user = auth()->user();
                 return response()->json([
                     'cadastroIp' => $c,
                     'rede' => $rede,
+                    'user' => $user,
                     'status' => 200,
                     'message' => 'Registro atualizado com sucesso!',
                 ]);
@@ -157,9 +163,11 @@ class CadastroIpController extends Controller
         $data = ['status' => $vstatus];
         $cadastroIp = $this->cadastroIp->find($id);
         $cadastroIp->update($data);
-        $ip = Cadastro_ip::find($id);        
+        $ip = Cadastro_ip::find($id);
+        $user = auth()->user();
         return response()->json([
             'ip' => $ip,
+            'user' => $user,
             'status' => 200,
         ]);
     }

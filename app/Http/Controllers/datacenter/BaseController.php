@@ -44,7 +44,12 @@ class BaseController extends Controller
         $orgaos = Orgao::all();
         $bds = $this->base->query()->where('virtual_machine_id','=',$id)->orderByDesc('id')->get();
         $virtual_machines = VirtualMachine::all();
-        $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
+        $users = $this->users->query()
+                             ->where('moderador','=','true')
+                             ->where('inativo','=','false')
+                             ->where('setor_idsetor','=',1)
+                             ->orderBy('name')
+                             ->get();
         return view('datacenter.base.index',[
             'bases' => $bases,
             'id' => $id,
@@ -120,10 +125,12 @@ class BaseController extends Controller
         $base = $this->base->find($id);
         $projeto = Projeto::find($base->projetos_id);
         $vm = VirtualMachine::find($base->virtual_machine_id);  
-        $users = $base->users;      
+        $users = $base->users;
+        $user = auth()->user();
         return response()->json([
             'base'   => $base,
             'users' => $users,
+            'user' => $user,
             'vm' => $vm,
             'projeto' => $projeto,
             'status' => 200,
@@ -167,9 +174,11 @@ class BaseController extends Controller
             $base->update($data);          
             $b = Base::find($id);
             $users = $b->users;
+            $user = auth()->user();
             return response()->json([
                 'base'    => $b,
                 'users' => $users,
+                'user' => $user,
                 'status'  => 200,
                 'message' => 'Registro atualizado com sucesso!',
             ]);
@@ -204,15 +213,15 @@ class BaseController extends Controller
                     $base->users()->detach($usuarios);                    
                 }
                 $status = 200;
-                $message = $base->nome_base.' excluído com sucesso!'; 
+                $message = 'Registro excluído com sucesso!'; 
                 $base->delete();
             }else{
                 $status = 400;
-                $message = $base->nome_base.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';
+                $message = 'Registro não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';
             }
         }else{
             $status = 200;
-            $message = $base->nome_base.' excluído com sucesso!'; 
+            $message = 'Registro excluído com sucesso!'; 
             $base->delete();
         }
         
@@ -255,10 +264,12 @@ class BaseController extends Controller
                 'https'       => $request->input('https'),              
             ];
             $app = $this->app->create($data);    
-            $users = $app->users;        
+            $users = $app->users;
+            $user = auth()->user();
             return response()->json([
                 'app'     => $app,
                 'users' => $users,
+                'user' => $user,
                 'status'  => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -293,6 +304,7 @@ class BaseController extends Controller
                 'user' => $user,                
                 'base' => $b,
                 'users' => $u,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Senha foi criada com sucesso!',
             ]);
@@ -352,6 +364,7 @@ class BaseController extends Controller
         }                
         $users = $base->users;   
         $s = Crypt::decrypt($base->senha);     
+        $user = auth()->user();
         return response()->json([
             'status' => 200,            
             'base' => $base,
@@ -359,6 +372,7 @@ class BaseController extends Controller
             'criador' => $criador,
             'alterador' => $alterador,
             'users' => $users,
+            'user' => $user,
         ]);
     }
 

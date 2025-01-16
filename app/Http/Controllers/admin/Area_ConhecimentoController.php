@@ -62,9 +62,10 @@ class Area_ConhecimentoController extends Controller
                 'descricao' => strtoupper($request->input('descricao')),                             
             ];            
             $area_conhecimento = $this->area_conhecimento->create($data);   
-            
+            $user = auth()->user();
             return response()->json([
                 'area_conhecimento' => $area_conhecimento,
+                'user' => $user,
                 'status' => 200,
                 'message' => 'Registro gravado com sucesso!',
             ]);
@@ -84,9 +85,11 @@ class Area_ConhecimentoController extends Controller
     public function edit(int $id)
     {     
         $area_C = $this->area_conhecimento->find($id);
+        $user = auth()->user();
 
         return response()->json([
             'area_conhecimento' => $area_C,
+            'user' => $user,
             'status' => 200,            
         ]);
     }
@@ -113,8 +116,10 @@ class Area_ConhecimentoController extends Controller
                 $area_conhecimento->descricao = strtoupper($request->input('descricao'));               
                 $area_conhecimento->update();                
                 $area_C = Area_Conhecimento::find($id);
+                $user = auth()->user();
                 return response()->json([
                     'area_conhecimento' => $area_C,
+                    'user' => $user,
                     'status' => 200,
                     'message' => 'Registro atualizado com sucesso!',
                 ]);
