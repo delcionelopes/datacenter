@@ -43,6 +43,7 @@ return [
             'password' => env('MAIL_PASSWORD'),
             'timeout' => null,
             'auth_mode' => null,
+            'pretend' => false,
         ],
 
         'ses' => [
@@ -77,8 +78,13 @@ return [
                 'smtp',
                 'log',
             ],
+        ],    
+        
+        'mailersend' => [
+           'transport' => 'mailersend',
         ],
-    ],
+
+    ],   
 
     /*
     |--------------------------------------------------------------------------
@@ -92,8 +98,8 @@ return [
     */
 
     'from' => [
-        'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
-        'name' => env('MAIL_FROM_NAME', 'Example'),
+        'address' => env('MAIL_FROM_ADDRESS', 'delcionelopes@gmail.com'),
+        'name' => env('MAIL_FROM_NAME', 'Datacenter'),
     ],
 
     /*

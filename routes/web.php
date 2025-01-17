@@ -6,11 +6,8 @@ use App\Http\Controllers\admin\ManualController;
 use App\Http\Controllers\admin\OrgaoController;
 use App\Http\Controllers\admin\PlataformaController;
 use App\Http\Controllers\admin\ProjetoController;
-<<<<<<< HEAD
 use App\Http\Controllers\Auth\ForgotPasswordController;
-=======
 use App\Http\Controllers\admin\SetorController;
->>>>>>> 7d9b10ab1c0fcae0a6e382466991e126812da631
 use App\Http\Controllers\admin\Sub_Area_ConhecimentoController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\datacenter\AppController;

@@ -31,7 +31,6 @@
                     @endif
 
   
-
                       <form action="{{ route('forget.password.post') }}" method="POST">
 
                           @csrf

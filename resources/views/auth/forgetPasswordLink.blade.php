@@ -6,7 +6,7 @@
 
 <main class="login-form">
 
-  <div class="cotainer">
+  <div class="container">
 
       <div class="row justify-content-center">
 
