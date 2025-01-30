@@ -6,6 +6,7 @@ use App\Http\Controllers\admin\ManualController;
 use App\Http\Controllers\admin\OrgaoController;
 use App\Http\Controllers\admin\PlataformaController;
 use App\Http\Controllers\admin\ProjetoController;
+use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\admin\SetorController;
 use App\Http\Controllers\admin\Sub_Area_ConhecimentoController;
 use App\Http\Controllers\admin\UserController;

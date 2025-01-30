@@ -6,7 +6,11 @@
 
 <main class="login-form">
 
+<<<<<<< HEAD
   <div class="cotainer">
+=======
+  <div class="container">
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
       <div class="row justify-content-center">
 
@@ -14,7 +18,11 @@
 
               <div class="card">
 
+<<<<<<< HEAD
                   <div class="card-header">Reset Password</div>
+=======
+                  <div class="card-header">Redefinir a senha</div>
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
                   <div class="card-body">
 
@@ -31,14 +39,21 @@
                     @endif
 
   
+<<<<<<< HEAD
 
+=======
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
                       <form action="{{ route('forget.password.post') }}" method="POST">
 
                           @csrf
 
                           <div class="form-group row">
 
+<<<<<<< HEAD
                               <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+=======
+                              <label for="email_address" class="col-md-4 col-form-label text-md-right">Endereço de E-Mail</label>
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
                               <div class="col-md-6">
 
@@ -58,7 +73,11 @@
 
                               <button type="submit" class="btn btn-primary">
 
+<<<<<<< HEAD
                                   Send Password Reset Link
+=======
+                                  Enviar link de redefinição de senha
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
                               </button>
 

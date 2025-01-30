@@ -100,7 +100,11 @@
 
     <div class="container">
 
+<<<<<<< HEAD
         <a class="navbar-brand" href="#">Laravel</a>
+=======
+        <a class="navbar-brand" href="{{route('page.master')}}">Datacenter</a>
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
 
@@ -118,13 +122,21 @@
 
                     <li class="nav-item">
 
+<<<<<<< HEAD
                         <a class="nav-link" href="{{ route('login') }}">Login</a>
+=======
+                        <a class="nav-link" href="{{ route('login') }}">Entrar</a>
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
                     </li>
 
                     <li class="nav-item">
 
+<<<<<<< HEAD
                         <a class="nav-link" href="{{ route('register') }}">Register</a>
+=======
+                        <a class="nav-link" href="{{ route('register') }}">Registrar</a>
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
                     </li>
 
@@ -132,7 +144,11 @@
 
                     <li class="nav-item">
 
+<<<<<<< HEAD
                         <a class="nav-link" href="{{ route('logout') }}">Logout</a>
+=======
+                        <a class="nav-link" href="{{ route('logout') }}">Sair</a>
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
                     </li>
 

@@ -6,7 +6,11 @@
 
 <main class="login-form">
 
+<<<<<<< HEAD
   <div class="cotainer">
+=======
+  <div class="container">
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
       <div class="row justify-content-center">
 
@@ -14,7 +18,11 @@
 
               <div class="card">
 
+<<<<<<< HEAD
                   <div class="card-header">Reset Password</div>
+=======
+                  <div class="card-header">Redefinir a senha</div>
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
                   <div class="card-body">
 
@@ -30,7 +38,11 @@
 
                           <div class="form-group row">
 
+<<<<<<< HEAD
                               <label for="email_address" class="col-md-4 col-form-label text-md-right">E-Mail Address</label>
+=======
+                              <label for="email_address" class="col-md-4 col-form-label text-md-right">Endereço de E-Mail</label>
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
                               <div class="col-md-6">
 
@@ -50,7 +62,11 @@
 
                           <div class="form-group row">
 
+<<<<<<< HEAD
                               <label for="password" class="col-md-4 col-form-label text-md-right">Password</label>
+=======
+                              <label for="password" class="col-md-4 col-form-label text-md-right">Senha</label>
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
                               <div class="col-md-6">
 
@@ -70,7 +86,11 @@
 
                           <div class="form-group row">
 
+<<<<<<< HEAD
                               <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirm Password</label>
+=======
+                              <label for="password-confirm" class="col-md-4 col-form-label text-md-right">Confirmar senha</label>
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
                               <div class="col-md-6">
 
@@ -92,7 +112,11 @@
 
                               <button type="submit" class="btn btn-primary">
 
+<<<<<<< HEAD
                                   Reset Password
+=======
+                                  Redefinir senha
+>>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
 
                               </button>
 
