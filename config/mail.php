@@ -99,11 +99,7 @@ return [
 
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'delcionelopes@gmail.com'),
-<<<<<<< HEAD
-        'name' => env('MAIL_FROM_NAME', 'Suporte'),
-=======
         'name' => env('MAIL_FROM_NAME', 'Datacenter'),
->>>>>>> 29a04d6d95313463a3e449ba2703c7a815878796
     ],
 
     /*
