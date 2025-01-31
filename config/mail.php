@@ -78,8 +78,8 @@ return [
                 'smtp',
                 'log',
             ],
-        ],    
-        
+        ],   
+                       
         'mailersend' => [
            'transport' => 'mailersend',
         ],
