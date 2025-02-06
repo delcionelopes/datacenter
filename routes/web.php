@@ -10,6 +10,12 @@ use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\admin\SetorController;
 use App\Http\Controllers\admin\Sub_Area_ConhecimentoController;
 use App\Http\Controllers\admin\UserController;
+use App\Http\Controllers\Caos\FuncaoController;
+use App\Http\Controllers\Caos\ModuloController;
+use App\Http\Controllers\Caos\OperacaoController;
+use App\Http\Controllers\Caos\PerfilController;
+use App\Http\Controllers\Caos\PrincipalController;
+use App\Http\Controllers\Caos\SegurancaController;
 use App\Http\Controllers\datacenter\AppController;
 use App\Http\Controllers\datacenter\BaseController;
 use App\Http\Controllers\datacenter\CadastroIpController;
@@ -71,6 +77,73 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::post('/inativo/{id}', 'UserController@inativoUsuario');
       });      
        //fim administração da frontpage
+
+    }); //fim do grupo ADMNIN
+
+    Route::prefix('datacenteradmin')->name('datacenteradmin.')->group(function(){
+
+      Route::prefix('datacenter')->name('datacenter.')->group(function(){
+        Route::get('/index',[HomeController::class,'index'])->name('index');
+      });
+      
+      Route::prefix('modulo')->name('modulo.')->group(function(){
+        Route::get('/index-modulo',[ModuloController::class,'index'])->name('index');
+        Route::get('/create-modulo',[ModuloController::class,'create'])->name('create');
+        Route::delete('/delete-modulo/{id}',[ModuloController::class,'destroy']);
+        Route::get('/edit-modulo/{id}',[ModuloController::class,'edit'])->name('edit');
+        Route::put('/update-modulo/{id}',[ModuloController::class,'update']);
+        Route::put('/store-modulo',[ModuloController::class,'store'])->name('store');
+        Route::put('/moduloimagemtemp-upload',[ModuloController::class,'armazenarImagemTemporaria']);        
+        Route::delete('/delete-imgmodulo',[ModuloController::class,'excluirImagemTemporaria']);
+        Route::get('/modulo-operacao/{operacao_id}',[ModuloController::class,'modulosXoperacoes'])->name('moduloxoperacao');
+      }); 
+
+      Route::prefix('operacao')->name('operacao.')->group(function(){
+        Route::get('/index-operacao',[OperacaoController::class,'index'])->name('index');
+        Route::get('/create-operacao',[OperacaoController::class,'create'])->name('create');
+        Route::delete('/delete-operacao/{id}',[OperacaoController::class,'destroy']);
+        Route::get('/edit-operacao/{id}',[OperacaoController::class,'edit'])->name('edit');
+        Route::put('/update-operacao/{id}',[OperacaoController::class,'update']);
+        Route::put('/store-operacao',[OperacaoController::class,'store'])->name('store');
+        Route::put('/operacaoimagemtemp-upload',[OperacaoController::class,'armazenarImagemTemporaria']);        
+        Route::delete('/delete-imgoperacao',[OperacaoController::class,'excluirImagemTemporaria']);
+        Route::get('/operacao-modulo/{modulo_id}',[OperacaoController::class,'operacoesXmodulos'])->name('operacaoxmodulo');
+      }); 
+
+      Route::prefix('seguranca')->name('seguranca.')->group(function(){
+        Route::get('/index-seguranca',[SegurancaController::class,'index_seguranca'])->name('index');
+      });
+
+      Route::prefix('principal')->name('principal.')->group(function(){   //navegação módulos autorizados
+        Route::get('/index',[PrincipalController::class,'index'])->name('index'); //módulos
+        Route::get('/operacoes/{id}',[PrincipalController::class,'operacoes'])->name('operacoes');  //operações
+      });
+
+      Route::prefix('funcao')->name('funcao.')->group(function(){
+        Route::get('/index-funcao',[FuncaoController::class,'index'])->name('index');        
+        Route::delete('/delete-funcao/{id}',[FuncaoController::class,'destroy']);
+        Route::get('/edit-funcao/{id}',[FuncaoController::class,'edit'])->name('edit');
+        Route::put('/update-funcao/{id}',[FuncaoController::class,'update']);
+        Route::put('/store-funcao',[FuncaoController::class,'store'])->name('store');        
+      }); 
+
+      Route::prefix('setor')->name('setor.')->group(function(){
+        Route::get('/index-setor',[SetorController::class,'index'])->name('index');        
+        Route::delete('/delete-setor/{id}',[SetorController::class,'destroy']);
+        Route::get('/edit-setor/{id}',[SetorController::class,'edit'])->name('edit');
+        Route::put('/update-setor/{id}',[SetorController::class,'update']);
+        Route::put('/store-setor',[SetorController::class,'store'])->name('store');        
+      }); 
+           
+      Route::prefix('perfil')->name('perfil.')->group(function(){
+        Route::get('/index-perfil',[PerfilController::class,'index'])->name('index');        
+        Route::delete('/delete-perfil/{id}',[PerfilController::class,'destroy']);
+        Route::get('/edit-perfil/{id}',[PerfilController::class,'edit'])->name('edit');
+        Route::put('/update-perfil/{id}',[PerfilController::class,'update']);
+        Route::put('/store-perfil',[PerfilController::class,'store'])->name('store');
+        Route::get('/list-authorizations/{id}',[PerfilController::class,'listAuthorizations']);
+        Route::put('/store-authorizations/{id}',[PerfilController::class,'storeAuthorizations']); 
+      }); 
        
         //Rotas para a view index de ambiente    
         Route::get('index-ambientes',[AmbienteController::class,'index'])->name('ambiente.index');

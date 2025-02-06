@@ -33,6 +33,8 @@ class User extends Authenticatable
         'link_instagram',
         'link_facebook',
         'link_site',
+        'funcao_id',
+        'perfil_id',
     ];
 
     public function orgao()

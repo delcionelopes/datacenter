@@ -298,102 +298,18 @@ return [
 
         // Sidebar items:        
         [
-            'text'        => 'Segurança',            
-            'route'         => 'admin.user.index',
-            'icon'        => 'far fa-fw fa-user',
-            'icon_color' => 'orange',            
+            'text' => 'Página principal',
+            'url'  => 'datacenteradmin/principal/index',
+            'icon' => 'fas fa-fw fa-home',
+            'icon_color'  => 'orange',
         ],
-        ['header' => 'Painel principal', 'classes'=>'text-bold'],        
         [
-            'text'    => 'Cadastros básicos',
-            'icon'    => 'fas fa-fw fa-folder',
-            'icon_color' => 'orange',
-            'submenu' => [
-                [
-                    'text' => 'Órgãos',
-                    'route'  => 'admin.orgao.index',
-                    'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'gray',
-                ],
-                [
-                    'text' => 'Setores',
-                    'route'  => 'admin.setor.index',
-                    'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'gray',
-                ],
-                [
-                    'text' => 'Ambientes',
-                    'route'  => 'admin.ambiente.index',
-                    'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'gray',
-                ],
-                [
-                    'text' => 'Plataformas',
-                    'route'  => 'admin.plataforma.index',
-                    'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'gray',
-                ],
-                [
-                    'text' => 'Projetos',
-                    'route'  => 'admin.projeto.index',
-                    'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'gray',
-                ],                
-                [
-                    'text' => 'Áreas',
-                    'route'  => 'admin.areaconhecimento.index',
-                    'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'gray',
-                ],
-                [
-                    'text' => 'Sub-Áreas',
-                    'route'  => 'admin.subareaconhecimento.index',
-                    'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'gray',
-                ],
-                [
-                    'text' => 'Manuais',
-                    'route'  => 'admin.manual.index',
-                    'icon'    => 'fas fa-fw fa-file',
-                    'icon_color' => 'gray',
-                ],                
-            ],
-        ],
-        ['header' => 'Datacenter', 'classes'=>'text-bold'],    
-        [   'text'    => 'Gestão',
-            'icon'    => 'fas fa-fw fa-desktop',
-            'icon_color' => 'orange',
-            'submenu' => [
-                [
-                    'text' => 'Cluster/Host/VM/BD/APP',
-                    'route'  => 'datacenter.cluster.index',
-                    'icon'    => 'fas fa-fw fa-server',
-                    'icon_color' => 'red',
-                ],
-                [
-                    'text' => 'VLAN/Rede/IP',
-                    'route'  => 'datacenter.vlan.index',
-                    'icon'    => 'fas fa-fw fa-network-wired',
-                    'icon_color' => 'yellow',
-                ],    
-                [
-                    'text' => 'Senhas',                    
-                    'route'  => 'datacenter.senha.index',
-                    'icon'    => 'fas fa-fw fa-key',
-                    'icon_color' => 'green',
-                    'label' => 'Novo',
-                    'label_color' => 'primary',
-                ],  
-                [
-                    'text' => 'Equipamentos',                    
-                    'route'  => 'datacenter.equipamento.index',
-                    'icon'    => 'fas fa-fw fa-network-wired',
-                    'icon_color' => 'silver',
-                    'label' => 'Novo',
-                    'label_color' => 'primary',
-                ],                    
-            ],                              
+            'text'        => 'Segurança',
+            'url'         => 'datacenteradmin/seguranca/index-seguranca',
+            'icon'        => 'far fa-fw fa-user',
+            'icon_color'  => 'orange',           
         ],        
+              
     ],
 
     /*
