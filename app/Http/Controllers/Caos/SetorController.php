@@ -24,11 +24,11 @@ class SetorController extends Controller
     public function index(Request $request)
     {
         if(is_null($request->pesquisa)){
-            $setores = $this->setor->orderByDesc('id')->paginate(6);
+            $setores = $this->setor->orderByDesc('idsetor')->paginate(6);
         }else{
             $query = $this->setor->query()
                           ->where('sigla','LIKE','%'.strtoupper($request->pesquisa).'%');
-            $setores = $query->orderByDesc('id')->paginate(6);
+            $setores = $query->orderByDesc('idsetor')->paginate(6);
         }
         return view('caos.setor.index',[
             'setores' => $setores,
@@ -63,7 +63,7 @@ class SetorController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ]);
         }else{
-            $data['id'] = $this->maxId();
+            $data['idsetor'] = $this->maxId();
             $data['nome'] = strtoupper($request->input('nome'));
             $data['sigla'] = strtoupper($request->input('sigla'));
             $data['created_at'] = now();
@@ -168,9 +168,9 @@ class SetorController extends Controller
     }
 
     protected function maxId(){
-        $setor = $this->setor->orderByDesc('id')->first();
+        $setor = $this->setor->orderByDesc('idsetor')->first();
         if($setor){
-            $codigo = $setor->id;
+            $codigo = $setor->idsetor;
         }else{
             $codigo = 0;
         }

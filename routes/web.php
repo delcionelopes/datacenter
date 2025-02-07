@@ -67,15 +67,19 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::delete('/delete/{id}','TemaController@destroy');
       }); 
 
-    Route::prefix('user')->name('user.')->group(function(){
-        Route::get('/index','UserController@index')->name('index');
-        Route::put('/store','UserController@store');
-        Route::get('/edit/{id}','UserController@edit');
-        Route::put('/update/{id}','UserController@update');
-        Route::delete('/delete/{id}','UserController@destroy');
-        Route::post('/moderador/{id}', 'UserController@moderadorUsuario');        
-        Route::post('/inativo/{id}', 'UserController@inativoUsuario');
-      });      
+      Route::prefix('user')->name('user.')->group(function(){
+        Route::get('/index',[UserController::class,'index'])->name('index');
+        Route::get('/create',[UserController::class,'create'])->name('create');
+        Route::put('/store',[UserController::class,'store']);
+        Route::get('/edit/{id}',[UserController::class,'edit'])->name('edit');
+        Route::put('/update/{id}',[UserController::class,'update']);
+        Route::delete('/delete/{id}',[UserController::class,'destroy']);
+        Route::put('/sistema/{id}',[UserController::class,'sistemaUsuario']);
+        Route::put('/inativo/{id}', [UserController::class,'inativoUsuario']);
+        Route::put('/admin/{id}', [UserController::class,'adminUsuario']);
+        Route::put('/armazenar-imgtemp',[UserController::class,'armazenarImgTemp']);
+        Route::delete('/delete-imgtemp',[UserController::class,'deleteImgTemp']);
+      });    
        //fim administração da frontpage
 
     }); //fim do grupo ADMNIN

@@ -36,7 +36,7 @@
                 <thead class="sidebar-dark-primary" style="color: white">
                     <tr>                        
                         <th>USUÁRIOS</th>
-                        <th>CeteaADMIN</th>
+                        <th>DatacenterADMIN</th>
                         <th>ATIVO</th>
                         <th>ADMIN</th>
                         <th>AÇÕES</th>

@@ -45,7 +45,7 @@
 <div class="container-fluid">
  <div class="row">
   @auth
-  @if((auth()->user()->admin) && (auth()->user()->perfil_id==3))  
+  @if((auth()->user()->admin)) <!-- && (auth()->user()->perfil_id==3))  --> 
   <div class="p-2 mt-2">
     <div class="card" style="width: 10rem;">
       <div class="card-header">
@@ -112,7 +112,7 @@
         </div>
       </div>  
 
-  @elseif((auth()->user()->admin) && (auth()->user()->perfil_id!=3))
+  @elseif((auth()->user()->admin)) <!-- && (auth()->user()->perfil_id!=3)) -->
 
         <div class="p-2 mt-2">
         <div class="card" style="width: 10rem;">

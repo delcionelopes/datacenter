@@ -107,7 +107,7 @@ $(document).ready(function(){
                 } else{
                     $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');  
                     loading.hide();
-                     location.replace('/ceteaadmin/operacao/index-operacao');
+                     location.replace('/datacenteradmin/operacao/index-operacao');
                 }  
             }  
         });

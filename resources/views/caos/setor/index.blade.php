@@ -83,7 +83,7 @@
 <div class="container-fluid py-5">   
     <div id="success_message"></div>    
     <section class="border p-4 mb-4 d-flex align-items-left">    
-    <form action="{{route('ceteaadmin.setor.index')}}" class="form-search" method="GET">
+    <form action="{{route('datacenteradmin.setor.index')}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="sigla do setor" aria-label="Search"
@@ -110,12 +110,12 @@
                         <tbody id="lista_setor">
                         <tr id="novo" style="display:none;"></tr>
                         @forelse($setores as $setor)   
-                            <tr id="setor{{$setor->id}}">                                
+                            <tr id="setor{{$setor->idsetor}}">                                
                                 <th scope="row">{{$setor->sigla}}</th>                                
                                 <td>                                    
                                         <div class="btn-group">                                           
-                                            <button type="button" data-id="{{$setor->id}}" data-siglasetor="{{$setor->sigla}}" class="edit_setor fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                            <button type="button" data-id="{{$setor->id}}" data-siglasetor="{{$setor->sigla}}" class="delete_setor_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                            <button type="button" data-id="{{$setor->idsetor}}" data-siglasetor="{{$setor->sigla}}" class="edit_setor fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                            <button type="button" data-id="{{$setor->idsetor}}" data-siglasetor="{{$setor->sigla}}" class="delete_setor_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                                         </div>                                    
                                 </td>
                             </tr>  

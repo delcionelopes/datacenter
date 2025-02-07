@@ -25,9 +25,10 @@ class User extends Authenticatable
         'admin',
         'moderador',
         'inativo',
+        'sistema',
         'avatar',        
         'orgao_id',  
-        'setor_idsetor',
+        'setor_id',
         'cpf',
         'matricula',
         'link_instagram',
@@ -84,7 +85,15 @@ class User extends Authenticatable
     }
 
     public function setor(){
-        return $this->belongsTo(Setor::class,'setor_idsetor');
+        return $this->belongsTo(Setor::class);
+    }
+
+    public function perfil(){
+        return $this->belongsTo(Perfil::class);
+    }
+
+    public function funcao(){
+        return $this->belongsTo(Funcao::class);
     }
 
 

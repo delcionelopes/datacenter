@@ -16,12 +16,13 @@ class Modulo extends Model
         'nome',
         'descricao',
         'ico',
+        'color',
         'created_at',
         'updated_at'
     ];
 
     public function operacoes():BelongsToMany{
-        return $this->belongsToMany(Operacao::class,'modulo_has_operacao','modulo_id','id');
+        return $this->belongsToMany(Operacao::class,'modulo_has_operacao','modulo_id','operacao_id');
     }
     
 }

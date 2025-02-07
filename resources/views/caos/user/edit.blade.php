@@ -105,7 +105,7 @@
                                 <label for="idsetor">Setor</label>
                                 <select name="idsetor" id="idsetor" class="idsetor custom-select" aria-selected="{{$user->setor->sigla}}">
                                     @foreach ($setores as $setor)
-                                    <option value="{{$setor->id}}" {{old('setor_id',$user->setor_id ?? '') === $setor->id ? 'selected' : ''}}>{{$setor->sigla}}</option>
+                                    <option value="{{$setor->idsetor}}" {{old('setor_id',$user->setor_id ?? '') === $setor->idsetor ? 'selected' : ''}}>{{$setor->sigla}}</option>
                                     @endforeach                                    
                                 </select>
                             </div>
