@@ -246,7 +246,8 @@ $(document).ready(function(){
             
             $("#editform").trigger('reset');
             $("#editPerfilModal").modal('show');          
-            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');      
+            $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+            $("#edit_perfil_id").val(id);
     
             $.ajaxSetup({
                     headers:{
@@ -261,8 +262,8 @@ $(document).ready(function(){
                 url: '/datacenteradmin/perfil/edit-perfil/'+id,                                
                 success: function(response){           
                     if(response.status==200){                           
-                        $(".nome_perfil").val(response.perfil.nome);                        
-                        $("#edit_perfil_id").val(response.perfil.id);                                                                                                       
+                        $(".nome_perfil").val(response.perfil.nome);
+                        
                     }      
                 }
             });        
@@ -275,8 +276,8 @@ $(document).ready(function(){
                 loading.show();
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');            
     
-            var id = $("#edit_perfil_id").val();        
-    
+            var id = $("#edit_perfil_id").val();
+                
             var data = {
                 'nome' : $("#edit_nome_perfil").val(),                
                 '_method':'PUT',
@@ -287,8 +288,8 @@ $(document).ready(function(){
                 type: 'POST',                          
                 data: data,
                 dataType: 'json',    
-                url: '/datacenteradmin/perfil/update-perfil/'+id,         
-                success: function(response){                                                    
+                url: '/datacenteradmin/perfil/update-perfil/'+id,
+                success: function(response){
                     if(response.status==400){
                         //erros
                         $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
@@ -314,22 +315,26 @@ $(document).ready(function(){
                         loading.hide();
     
                         $("#editform").trigger('reset');
-                        $("#editPerfilModal").modal('hide');                  
-                        
-                        //atualizando a linha na tabela html                      
-                            var link = "{{asset('')}}"+"storage/ajax-loader.gif"; 
-                            var linha = '<tr id="perfil'+response.perfil.id+'">\
+                        $("#editPerfilModal").modal('hide');
+                        //atualizando a linha na tabela html                        
+                            var link = "";
+                            var linha = ""; 
+                                link = "{{asset('')}}"+"storage/ajax-loader.gif";
+                                
+                                linha = '<tr id="perfil'+response.perfil.id+'">\
                                     <th scope="row">'+response.perfil.nome+'</th>\
                                     <td>\
                                         <div class="btn-group">\
-                                            <button type="button" data-id="'+response.perfil.id+'" data-nome="'+response.perfil.nome+'" class="list_authorizations_btn" style="background:transparent;border:none;"><i id="ico_list'+response.roule.id+'" class="fas fa-list"></i><img id="img_list'+response.perfil.id+'" src="'+link+'" style="display: none;" class="rounded-circle" width="20"></button>\
+                                            <button type="button" data-id="'+response.perfil.id+'" data-nome="'+response.perfil.nome+'" class="list_authorizations_btn" style="background:transparent;border:none;"><i id="ico_list'+response.perfil.id+'" class="fas fa-list"></i><img id="img_list'+response.perfil.id+'" src="'+link+'" style="display: none;" class="rounded-circle" width="20"></button>\
                                         </div>\
                                     </td>\
-                                    <td><div class="btn-group">\
+                                    <td>\
+                                    <div class="btn-group">\
                                     <button type="button" data-id="'+response.perfil.id+'" data-nomeperfil="'+response.perfil.nome+'" class="edit_perfil fas fa-edit" style="background:transparent;border:none"></button>\
                                     <button type="button" data-id="'+response.perfil.id+'" data-nomeperfil="'+response.perfil.nome+'" class="delete_perfil_btn fas fa-trash" style="background:transparent;border:none"></button>\
-                                    </div></td>\
-                                    </tr>';                             
+                                    </div>\
+                                    </td>\
+                                    </tr>';
                         $("#perfil"+id).replaceWith(linha);                                                                                
     
                     }

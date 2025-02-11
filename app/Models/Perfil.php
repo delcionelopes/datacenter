@@ -18,11 +18,11 @@ class Perfil extends Model
     ];
 
     public function users(){
-        return $this->hasMany(user::class);
+        return $this->hasMany(User::class,'perfil_id','id');
     }
 
     public function autorizacoes(){
-        return $this->hasMany(Autorizacao::class);
+        return $this->hasMany(Autorizacao::class,'perfil_id','id');
     }
 
   

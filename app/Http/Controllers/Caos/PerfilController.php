@@ -102,7 +102,7 @@ class PerfilController extends Controller
      */
     public function edit(int $id)
     {
-        $perfil = $this->perfil->find($id);
+        $perfil = $this->perfil->find($id);        
         return response()->json([
             'perfil' => $perfil,
             'status' => 200,
@@ -134,7 +134,7 @@ class PerfilController extends Controller
 
                 $perfil->update($data);
                 $p = Perfil::find($id);
-
+                                
                 return response()->json([
                     'perfil' => $p,
                     'status' => 200,
@@ -159,7 +159,7 @@ class PerfilController extends Controller
     {
         $perfil = $this->perfil->find($id);
         $users = $perfil->users;
-        $autorizacoes = $perfil->autorizacao;                        
+        $autorizacoes = $perfil->autorizacoes;                        
         if($users){
             return response()->json([
                 'status' => 400,
