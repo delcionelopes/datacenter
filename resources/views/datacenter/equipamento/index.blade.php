@@ -204,7 +204,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>        
             <section class="border p-4 mb-4 d-flex align-items-left">
-            <form action="{{route('datacenter.equipamento.index')}}" class="form-search" method="GET">
+            <form action="{{route('datacenter.equipamento.equipamento.index')}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">                                                  
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do equipamento" aria-label="Search" aria-describedby="search-addon">
@@ -319,7 +319,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                 
                     $.ajax({
-                        url: '/datacenter/delete-equipamento/'+id,
+                        url: '/datacenter/equipamento/delete-equipamento/'+id,
                         type: 'POST',
                         dataType: 'json',
                         data:{
@@ -395,7 +395,7 @@ $(document).ready(function(){
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
-                url: '/datacenter/edit-equipamento/'+id,
+                url: '/datacenter/equipamento/edit-equipamento/'+id,
                 success:function(response){
                     if(response.status==200){                         
                         $("#editform").trigger('reset');
@@ -459,7 +459,7 @@ $(document).ready(function(){
                 type: 'POST',
                 data: data,
                 dataType: 'json',
-                url: '/datacenter/update-equipamento/'+id,
+                url: '/datacenter/equipamento/update-equipamento/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros                  
@@ -557,7 +557,7 @@ $(document).ready(function(){
     
             $.ajax({
                 type: 'POST',
-                url: '/datacenter/adiciona-equipamento',
+                url: '/datacenter/equipamento/adiciona-equipamento',
                 data: data,
                 dataType: 'json',
                 success:function(response){
@@ -648,7 +648,7 @@ $(document).ready(function(){
                     $.ajax({
                         type: 'GET',
                         dataType: 'json',
-                        url: '/datacenter/edit-equipamento/'+id,
+                        url: '/datacenter/equipamento/edit-equipamento/'+id,
                         success:function(response){
                             if(response.status==200){                       
                                 $("#editform").trigger('reset');
@@ -721,7 +721,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editsenhaequipamento/'+id,
+            url: '/datacenter/equipamento/editsenhaequipamento/'+id,
             success: function(response){                
                 if(response.status==200){                    
                     var datacriacao = new Date(response.equipamento.created_at);
@@ -776,7 +776,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editsenhaindividual/'+id,
+            url: '/datacenter/equipamento/editsenhaindividual/'+id,
             success: function(response){
                 if(response.status==200){                    
                     $("#nomedousuario").replaceWith('<label  id="nomedousuario"> Senha de '+response.user.name+'</label>');
@@ -833,7 +833,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updatesenhaequipamento/'+id,
+                url:'/datacenter/equipamento/updatesenhaequipamento/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -902,7 +902,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updatesenhaindividual/'+id,
+                url:'/datacenter/equipamento/updatesenhaindividual/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros

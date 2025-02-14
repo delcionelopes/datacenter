@@ -81,7 +81,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>   
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenter.ip.index',['id'=>$id])}}" class="form-search" method="GET">
+                <form action="{{route('datacenter.ip.ip.index',['id'=>$id])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Busca IP" aria-label="Search" aria-describedby="search-addon">
@@ -181,7 +181,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                                                      
                     $.ajax({
-                        url:'/datacenter/delete-ip/'+id,
+                        url:'/datacenter/ip/delete-ip/'+id,
                         type:'POST',                    
                         dataType:'json',
                         data:{
@@ -251,7 +251,7 @@ $(document).ready(function(){
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url:'/datacenter/edit-ip/'+id,
+                url:'/datacenter/ip/edit-ip/'+id,
                 success:function(response){
                     if(response.status==200){                        
                         if(response.cadastroIp.status=="OCUPADO"){
@@ -314,7 +314,7 @@ $(document).ready(function(){
                 type:'POST',
                 data:data,
                 dataType:'json',
-                url:'/datacenter/update-ip/'+id,
+                url:'/datacenter/ip/update-ip/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros
@@ -414,7 +414,7 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var loading = $("#imgadd");
                 loading.show();
-            var meulink = "{{route('datacenter.rede.index',['id' => $vlan_id])}}";
+            var meulink = "{{route('datacenter.rede.rede.index',['id' => $vlan_id])}}";
             var data = {            
                 'ip': ($(".ip").val()).trim(),
                 'status': "LIVRE",            
@@ -423,7 +423,7 @@ $(document).ready(function(){
                 '_token':CSRF_TOKEN,
             }           
             $.ajax({
-                url:'/datacenter/adiciona-ip',
+                url:'/datacenter/ip/adiciona-ip',
                 type:'POST',
                 dataType:'json',
                 data: data,
@@ -498,7 +498,7 @@ $(document).ready(function(){
                 type:'POST',
                 dataType:'json',
                 data:data,            
-                url:'/datacenter/status-ip/'+id,
+                url:'/datacenter/ip/status-ip/'+id,
                 success:function(response){
                     if(response.status==200){
                         var limita1 = "";

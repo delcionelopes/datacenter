@@ -75,7 +75,7 @@
 <div class="container-fluid py-5">   
     <div id="success_message"></div>    
     <section class="border p-4 mb-4 d-flex align-items-left">    
-    <form action="{{route('admin.ambiente.index')}}" class="form-search" method="GET">
+    <form action="{{route('datacenter.ambiente.ambiente.index')}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="nome" class="form-control rounded float-left" placeholder="nome do ambiente" aria-label="Search"
@@ -171,7 +171,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){             
                 $.ajax({
-                    url: 'delete-ambiente/'+id,
+                    url: '/datacenter/ambiente/delete-ambiente/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data:{
@@ -249,7 +249,7 @@ $(document).ready(function(){
             $.ajax({ 
                 type: 'GET',             
                 dataType: 'json',                                    
-                url: 'edit-ambiente/'+id,                                
+                url: '/datacenter/ambiente/edit-ambiente/'+id,                                
                 success: function(response){           
                     if(response.status==200){   
                         var nomeambiente = (response.ambiente.nome_ambiente).trim();                        
@@ -302,7 +302,7 @@ $(document).ready(function(){
                 type: 'POST',                          
                 data: data,
                 dataType: 'json',    
-                url: 'update-ambiente/'+id,         
+                url: '/datacenter/ambiente/update-ambiente/'+id,         
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
@@ -405,7 +405,7 @@ $(document).ready(function(){
             
             $.ajax({
                 type: 'POST',
-                url: 'adiciona-ambiente',
+                url: '/datacenter/ambiente/adiciona-ambiente',
                 data: data,
                 dataType: 'json',
                 success: function(response){

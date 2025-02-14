@@ -257,7 +257,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>   
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenter.host.index',['id'=>$id])}}" class="form-search" method="GET">
+                <form action="{{route('datacenter.host.host.index',['id'=>$id])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do host" aria-label="Search" aria-describedby="search-addon">
@@ -367,7 +367,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                                     
                     $.ajax({
-                        url:'/datacenter/delete-host/'+id,
+                        url:'/datacenter/host/delete-host/'+id,
                         type:'POST',                    
                         dataType:'json',
                         data:{
@@ -442,7 +442,7 @@ $(document).ready(function(){
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url:'/datacenter/edit-host/'+id,
+                url:'/datacenter/host/edit-host/'+id,
                 success:function(response){
                     if(response.status==200){        
                         var vdatacenter = (response.host.datacenter).trim();
@@ -506,7 +506,7 @@ $(document).ready(function(){
                 type:'POST',
                 data:data,
                 dataType:'json',
-                url:'/datacenter/update-host/'+id,
+                url:'/datacenter/host/update-host/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros
@@ -624,7 +624,7 @@ $(document).ready(function(){
                 '_token':CSRF_TOKEN,
             }           
             $.ajax({
-                url:'/datacenter/adiciona-host',
+                url:'/datacenter/host/adiciona-host',
                 type:'POST',
                 dataType:'json',
                 data: data,
@@ -764,7 +764,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/storesenhahost/'+id,
+                url:'/datacenter/host/storesenhahost/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -844,7 +844,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editsenhahost/'+id,
+            url: '/datacenter/host/editsenhahost/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.host.created_at);
@@ -973,7 +973,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updatesenhahost/'+id,
+                url:'/datacenter/host/updatesenhahost/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros

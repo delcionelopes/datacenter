@@ -137,7 +137,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('admin.manual.index')}}" class="form-search" method="GET">                                      
+                <form action="{{route('datacenteradmin.manual.manual.index')}}" class="form-search" method="GET">                                      
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Descrição do manual" aria-label="Search" aria-labelledby="search-addon">
@@ -247,7 +247,7 @@
              }).then((result)=>{
              if(result.isConfirmed){               
                     $.ajax({
-                        url:'delete-manual/'+id,                    
+                        url:'/datacenteradmin/manual/delete-manual/'+id,                    
                         type: 'POST',
                         dataType:'json',
                         data:{
@@ -323,7 +323,7 @@
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url:'edit-manual/'+id,
+                url:'/datacenteradmin/manual/edit-manual/'+id,
                 success:function(response){
                     if(response.status==200){
                         var descricaomanual = (response.manual.descricao).trim();
@@ -400,7 +400,7 @@
                 type:'POST',
                 data:data,
                 dataType:'json',
-                url:'update-manual/'+id,
+                url:'/datacenteradmin/manual/update-manual/'+id,
                 success:function(response){            
                     if(response.status==400){
                     //erros
@@ -499,7 +499,7 @@
            
             $.ajax({
                 type:'POST',
-                url:'adiciona-manual',
+                url:'/datacenteradmin/manual/adiciona-manual',
                 data:dataAdd,
                 dataType:'json',
                 success:function(response){
@@ -582,7 +582,7 @@
              }).then((result)=>{
              if(result.isConfirmed){                  
                     $.ajax({
-                        url:'delete-file/'+id,                    
+                        url:'/datacenteradmin/file/delete-file/'+id,                    
                         type: 'POST',
                         dataType:'json',
                         data:{
@@ -647,7 +647,7 @@
         
             $.ajax({
                 type: 'GET',
-                url: 'download-file/'+id,
+                url: '/datacenteradmin/file/download-file/'+id,
                 cache: false,  
                 data: '',                                           
                 xhrFields: {
@@ -685,7 +685,7 @@
                         }
                     });                
             $.ajax({
-                url:'edit-uploadfile/'+id,
+                url:'/datacenteradmin/file/edit-uploadfile/'+id,
                 type:'get',
                 dataType:'json',            
                 success:function(response){
@@ -740,7 +740,7 @@
           formData.append('_method','put');         
                      
       $.ajax({                              
-            url:'upload-file/'+id,  
+            url:'/datacenteradmin/file/upload-file/'+id,  
             type: 'post',              
             dataType: 'json',            
             data: formData,

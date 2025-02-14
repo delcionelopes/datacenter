@@ -34,8 +34,8 @@
                     </div>
                 </form>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary add_orgao"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                    <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                    <button type="button" data-color="{{$color}}" class="btn btn-primary add_orgao"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                 </div>
             </div>
         </div>
@@ -72,8 +72,8 @@
                     </div>                    
                 </form>
                 <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal" >Fechar</button>
-                    <button type="button" class="btn btn-primary update_orgao"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                    <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal" >Fechar</button>
+                    <button type="button" data-color="{{$color}}" class="btn btn-primary update_orgao"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('admin.orgao.index')}}" class="form-search" method="GET">
+                <form action="{{route('datacenteradmin.orgao.orgao.index')}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisanome" class="form-control rounded float-left" placeholder="Nome do órgão" aria-label="Search"
@@ -105,7 +105,7 @@
                 </form>                
             </section>
             <table class="table table-hover">
-                <thead class="sidebar-dark-primary" style="color: white">
+                <thead class="bg-{{$color}}" style="color: white">
                     <tr>
                         <th scope="col">ÓRGÃOS</th>
                         <th scope="col">TELEFONE</th>                     
@@ -181,7 +181,7 @@
              }).then((result)=>{
              if(result.isConfirmed){       
                 $.ajax({
-                    url:'delete-orgao/'+id,
+                    url:'/datacenteradmin/orgao/delete-orgao/'+id,
                     assync:true,
                     type:'POST',                
                     dataType: 'json',
@@ -259,7 +259,7 @@
                 $.ajax({
                     type: 'GET',
                     dataType: 'json',
-                    url: 'edit-orgao/'+id,
+                    url: '/datacenteradmin/orgao/edit-orgao/'+id,
                     assync: true,
                     success:function(response){
                         if(response.status==200){
@@ -314,7 +314,7 @@
                     type:'POST',
                     data: data,
                     dataType: 'json',
-                    url:'update-orgao/'+id,
+                    url:'/datacenteradmin/orgao/update-orgao/'+id,
                     assync: true,
                     success:function(response){
                         if(response.status==400){
@@ -390,7 +390,7 @@
             '_token':CSRF_TOKEN,
         }            
                 $.ajax({                
-                    url: 'adiciona-orgao',                                                                            
+                    url: '/datacenteradmin/orgao/adiciona-orgao',                                                                            
                     type: 'POST',
                     dataType: 'json',
                     data: data,               

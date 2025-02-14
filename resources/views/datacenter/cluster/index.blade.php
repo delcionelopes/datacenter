@@ -228,7 +228,7 @@
 <div class="container-fluid py-5"> 
     <div id="success_message"></div>  
     <section class="border p-4 mb-4 d-flex align-items-left">    
-    <form action="{{route('datacenter.cluster.index')}}" class="form-search" method="GET">
+    <form action="{{route('datacenter.cluster.cluster.index')}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do cluster" aria-label="Search"
@@ -262,7 +262,7 @@
                                 <td>
                                    <div class="btn-group">                                        
                                         @if($cluster->hosts()->count())
-                                        <form action="{{route('datacenter.host.index',['id' => $cluster->id])}}" method="get">
+                                        <form action="{{route('datacenter.host.host.index',['id' => $cluster->id])}}" method="get">
                                         <button type="submit" data-id="{{$cluster->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="list_host_btn fas fa-server" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista HOSTS"> {{$cluster->hosts->count()}}</button>
                                         </form>
                                         @else
@@ -273,7 +273,7 @@
                                 <td>
                                      <div class="btn-group">                                        
                                         @if($cluster->virtual_machines()->count())
-                                        <form action="{{route('datacenter.vm.index',['id' => $cluster->id])}}" method="get">
+                                        <form action="{{route('datacenter.vm.vm.index',['id' => $cluster->id])}}" method="get">
                                         <button type="submit" data-id="{{$cluster->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="list_vm_btn fas fa-network-wired" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista VMs"> {{$cluster->virtual_machines->count()}}</button>
                                         </form>
                                         @else
@@ -347,7 +347,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                    
                 $.ajax({
-                    url: '/datacenter/delete-cluster/'+id,
+                    url: '/datacenter/cluster/delete-cluster/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data:{
@@ -421,7 +421,7 @@ $(document).ready(function(){
             $.ajax({ 
                 type: 'GET',             
                 dataType: 'json',                                    
-                url: '/datacenter/edit-cluster/'+id,                                
+                url: '/datacenter/cluster/edit-cluster/'+id,                                
                 success: function(response){           
                     if(response.status==200){    
                         var vnomecluster = (response.cluster.nome_cluster).trim();
@@ -479,7 +479,7 @@ $(document).ready(function(){
                 type: 'POST',                          
                 data: data,
                 dataType: 'json',    
-                url: '/datacenter/update-cluster/'+id,         
+                url: '/datacenter/cluster/update-cluster/'+id,         
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
@@ -570,7 +570,7 @@ $(document).ready(function(){
                 '_token':CSRF_TOKEN,
             }           
             $.ajax({            
-                url: '/datacenter/adiciona-cluster',
+                url: '/datacenter/cluster/adiciona-cluster',
                 type: 'POST',
                 dataType: 'json',
                 data: data,                  
@@ -685,7 +685,7 @@ $(document).ready(function(){
             }              
            
             $.ajax({            
-                url: '/datacenter/adiciona-hostcluster',
+                url: '/datacenter/cluster/adiciona-hostcluster',
                 type: 'POST',
                 dataType: 'json',
                 data: data,                  
@@ -816,7 +816,7 @@ $(document).on('click','.add_virtualmachine',function(e){
             }   
                       
             $.ajax({
-                url:'/datacenter/cluster-adiciona-vm',
+                url:'/datacenter/cluster/cluster-adiciona-vm',
                 type:'POST',
                 dataType: 'json',
                 data: data,

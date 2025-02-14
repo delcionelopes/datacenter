@@ -354,7 +354,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>        
             <section class="border p-4 mb-4 d-flex align-items-left">
-            <form action="{{route('datacenter.base.index',['id'=>$id])}}" class="form-search" method="GET">
+            <form action="{{route('datacenter.base.base.index',['id'=>$id])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="hidden" id="vmid" value="{{$id}}">  
@@ -479,7 +479,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                 
                     $.ajax({
-                        url: '/datacenter/delete-base/'+id,
+                        url: '/datacenter/base/delete-base/'+id,
                         type: 'POST',
                         dataType: 'json',
                         data:{
@@ -554,7 +554,7 @@ $(document).ready(function(){
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
-                url: '/datacenter/edit-base/'+id,
+                url: '/datacenter/base/edit-base/'+id,
                 success:function(response){
                     if(response.status==200){
                         //seta projeto
@@ -637,7 +637,7 @@ $(document).ready(function(){
                 type: 'POST',
                 data: data,
                 dataType: 'json',
-                url: '/datacenter/update-base/'+id,
+                url: '/datacenter/base/update-base/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros                  
@@ -730,7 +730,7 @@ $(document).ready(function(){
     
             $.ajax({
                 type: 'POST',
-                url: '/datacenter/adiciona-base',
+                url: '/datacenter/base/adiciona-base',
                 data: data,
                 dataType: 'json',
                 success:function(response){
@@ -889,7 +889,7 @@ $(document).ready(function(){
           
             $.ajax({
                 type: 'POST',
-                url: '/datacenter/armazena-app',
+                url: '/datacenter/base/armazena-app',
                 data: data,
                 dataType: 'json',
                 success:function(response){
@@ -996,7 +996,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/storesenhabase/'+id,
+                url:'/datacenter/base/storesenhabase/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1075,7 +1075,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editsenhabase/'+id,
+            url: '/datacenter/base/editsenhabase/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.base.created_at);
@@ -1204,7 +1204,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updatesenhabase/'+id,
+                url:'/datacenter/base/updatesenhabase/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros

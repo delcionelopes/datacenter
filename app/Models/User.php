@@ -85,7 +85,7 @@ class User extends Authenticatable
     }
 
     public function setor(){
-        return $this->belongsTo(Setor::class);
+        return $this->belongsTo(Setor::class,'setor_id','idsetor');
     }
 
     public function perfil(){
@@ -93,7 +93,7 @@ class User extends Authenticatable
     }
 
     public function funcao(){
-        return $this->belongsTo(Funcao::class);
+        return $this->belongsTo(Funcao::class,'id');
     }
 
 

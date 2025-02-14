@@ -268,7 +268,7 @@
 <div class="container-fluid py-5"> 
     <div id="success_message"></div> 
     <section class="border p-4 mb-4 d-flex align-items-left">    
-    <form action="{{route('datacenter.vlan.index')}}" class="form-search" method="GET">
+    <form action="{{route('datacenter.vlan.vlan.index')}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome da VLAN" aria-label="Search"
@@ -388,7 +388,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){          
                 $.ajax({
-                    url: '/datacenter/delete-vlan/'+id,
+                    url: '/datacenter/vlan/delete-vlan/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data:{
@@ -463,7 +463,7 @@ $(document).ready(function(){
             $.ajax({ 
                 type: 'GET',             
                 dataType: 'json',                                    
-                url: '/datacenter/edit-vlan/'+id,                                
+                url: '/datacenter/vlan/edit-vlan/'+id,                                
                 success: function(response){           
                     if(response.status==200){            
                         $("#edit_nome_vlan").val((response.vlan.nome_vlan).trim());
@@ -514,7 +514,7 @@ $(document).ready(function(){
                 type: 'POST',                          
                 data: data,
                 dataType: 'json',    
-                url: '/datacenter/update-vlan/'+id,         
+                url: '/datacenter/vlan/update-vlan/'+id,         
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
@@ -605,7 +605,7 @@ $(document).ready(function(){
           
             $.ajax({
                 type: 'POST',
-                url: '/datacenter/adiciona-vlan',
+                url: '/datacenter/vlan/adiciona-vlan',
                 data: data,
                 dataType: 'json',
                 success: function(response){
@@ -726,7 +726,7 @@ $(document).ready(function(){
                 '_token':CSRF_TOKEN,
             }          
             $.ajax({
-                url: '/datacenter/adiciona-vlanrede',
+                url: '/datacenter/vlan/adiciona-vlanrede',
                 type: 'POST',
                 dataType:'json',
                 data:data,
@@ -828,7 +828,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/storesenhavlan/'+id,
+                url:'/datacenter/vlan/storesenhavlan/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -905,7 +905,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editsenhavlan/'+id,
+            url: '/datacenter/vlan/editsenhavlan/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.vlan.created_at);
@@ -1034,7 +1034,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updatesenhavlan/'+id,
+                url:'/datacenter/vlan/updatesenhavlan/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros

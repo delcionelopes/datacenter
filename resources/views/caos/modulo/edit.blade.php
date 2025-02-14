@@ -239,7 +239,7 @@ $(document).ready(function(){
                 success: function(response){                              
                     if(response.status==200){
                     $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');                         
-                    location.replace('/ceteaadmin/modulo/index-modulo');
+                    location.replace('/datacenteradmin/modulo/index-modulo');
                 } 
                 }                                  
             });

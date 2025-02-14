@@ -23,7 +23,7 @@ class OrgaoController extends Controller
     /**
      * Método de listagem dos órgãos com opção de pesquisa
      */
-    public function index(Request $request)
+    public function index(Request $request, $color)
     {        
         if(is_null($request->pesquisanome)){
             $orgaos = $this->orgao->orderByDesc('id')->paginate(6);
@@ -33,7 +33,10 @@ class OrgaoController extends Controller
             $orgaos = $query->orderByDesc('id')->paginate(6);
             
         }
-        return view('orgao.index',compact('orgaos'));
+        return view('orgao.index',[
+            'orgaos',
+            'color'
+        ]);
     }
 
     

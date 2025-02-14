@@ -151,14 +151,13 @@ class SetorController extends Controller
      */
     public function destroy(int $id)
     {
-        $setor = $this->setor->find($id);
-        $users = $setor->users;
+        $setor = $this->setor->find($id);        
         if($setor->users->count()){
             return response()->json([
                 'status' => 400,
                 'errors' => 'Este registro não pode ser excluído! Pois há outros que dependem dele!',
             ]);
-        }else{
+        }else{            
             $setor->delete();
             return response()->json([
                 'status' => 200,

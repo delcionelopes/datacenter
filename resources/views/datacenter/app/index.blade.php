@@ -317,7 +317,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>    
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenter.app.index',['id'=>$id])}}" class="form-search" method="GET">
+                <form action="{{route('datacenter.app.app.index',['id'=>$id])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="hidden" id="baseid" value="{{$id}}">
@@ -434,7 +434,7 @@
              }).then((result)=>{
              if(result.isConfirmed){               
                 $.ajax({
-                    url: '/datacenter/delete-app/'+id,
+                    url: '/datacenter/app/delete-app/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -505,7 +505,7 @@
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/edit-app/'+id,
+            url: '/datacenter/app/edit-app/'+id,
             success: function(response){
                 if(response.status==200){ 
                     $("#edit_app_id").val(id);               
@@ -644,7 +644,7 @@
                 type: 'POST',
                 data: data,
                 dataType: 'json',
-                url: '/datacenter/update-app/'+id,
+                url: '/datacenter/app/update-app/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros
@@ -783,7 +783,7 @@
     
             $.ajax({
                 type: 'POST',
-                url: '/datacenter/adiciona-app',
+                url: '/datacenter/app/adiciona-app',
                 data: data,
                 dataType: 'json',
                 success:function(response){
@@ -878,7 +878,7 @@
                 type:'POST',
                 dataType:'json',
                 data:data,            
-                url:'/datacenter/https-app/'+id,
+                url:'/datacenter/app/https-app/'+id,
                 success:function(response){
                     if(response.status==200){
                         var limita1 = "";
@@ -993,7 +993,7 @@
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/storesenhaapp/'+id,
+                url:'/datacenter/app/storesenhaapp/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1072,7 +1072,7 @@
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editsenhaapp/'+id,
+            url: '/datacenter/app/editsenhaapp/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.app.created_at);
@@ -1203,7 +1203,7 @@
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updatesenhaapp/'+id,
+                url:'/datacenter/app/updatesenhaapp/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros

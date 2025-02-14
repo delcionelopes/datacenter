@@ -861,7 +861,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editusersenhaapp/'+id,
+            url: '/datacenter/senhas/editusersenhaapp/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.app.created_at);
@@ -970,7 +970,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updateusersenhaapp/'+id,
+                url:'/datacenter/senhas/updateusersenhaapp/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1022,7 +1022,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editusersenhahost/'+id,
+            url: '/datacenter/senhas/editusersenhahost/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.host.created_at);
@@ -1131,7 +1131,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updateusersenhahost/'+id,
+                url:'/datacenter/senhas/updateusersenhahost/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1184,7 +1184,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editusersenhavm/'+id,
+            url: '/datacenter/senhas/editusersenhavm/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.virtualmachine.created_at);
@@ -1293,7 +1293,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updateusersenhavm/'+id,
+                url:'/datacenter/senhas/updateusersenhavm/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1352,7 +1352,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editusersenhabase/'+id,
+            url: '/datacenter/senhas/editusersenhabase/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.base.created_at);
@@ -1463,7 +1463,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updateusersenhabase/'+id,
+                url:'/datacenter/senhas/updateusersenhabase/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1518,7 +1518,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editusersenhavlan/'+id,
+            url: '/datacenter/senhas/editusersenhavlan/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.vlan.created_at);
@@ -1627,7 +1627,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updateusersenhavlan/'+id,
+                url:'/datacenter/senhas/updateusersenhavlan/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1680,7 +1680,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editsenhaequipamento/'+id,
+            url: '/datacenter/equipamento/editsenhaequipamento/'+id,
             success: function(response){                
                 if(response.status==200){                    
                     var datacriacao = new Date(response.equipamento.created_at);
@@ -1735,7 +1735,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editsenhaindividual/'+id,
+            url: '/datacenter/equipamento/editsenhaindividual/'+id,
             success: function(response){
                 if(response.status==200){                    
                     $("#nomedousuario").replaceWith('<label  id="nomedousuario"> Senha de '+response.user.name+'</label>');
@@ -1805,7 +1805,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updatesenhaequipamento/'+id,
+                url:'/datacenter/equipamento/updatesenhaequipamento/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1850,7 +1850,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updatesenhaindividual/'+id,
+                url:'/datacenter/equipamento/updatesenhaindividual/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -2047,7 +2047,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editusersenhabase/'+id,
+            url: '/datacenter/senhas/editusersenhabase/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.base.created_at);
@@ -2177,7 +2177,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editusersenhavm/'+id,
+            url: '/datacenter/senhas/editusersenhavm/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.virtualmachine.created_at);
@@ -2307,7 +2307,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editusersenhahost/'+id,
+            url: '/datacenter/senhas/editusersenhahost/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.host.created_at);
@@ -2434,7 +2434,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editusersenhavlan/'+id,
+            url: '/datacenter/senhas/editusersenhavlan/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.vlan.created_at);

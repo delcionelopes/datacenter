@@ -259,7 +259,7 @@ $(document).on('click','.admin_user',function(e){
                 type: 'post',
                 dataType: 'json',
                 data:data,
-                url:'inativo/'+id,
+                url:'/admin/user/inativo/'+id,
                 success: function(response){
                     if(response.status==200){                                                                               
                         var limita1 = "";

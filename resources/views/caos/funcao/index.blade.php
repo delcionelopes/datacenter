@@ -83,7 +83,7 @@
 <div class="container-fluid py-5">   
     <div id="success_message"></div>    
     <section class="border p-4 mb-4 d-flex align-items-left">    
-    <form action="{{route('ceteaadmin.funcao.index')}}" class="form-search" method="GET">
+    <form action="{{route('datacenteradmin.funcao.index')}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="nome da função" aria-label="Search"

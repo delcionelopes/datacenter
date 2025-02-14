@@ -53,12 +53,12 @@
       <div class="card-header">
         <b style="background: transparent; color: black; border: none;"><i class="fas fa-desktop"></i> {{$ope->nome}}</b>
       </div>
-      <a href="" data-id="{{$ope->id}}" data-color="{{$aut->modulo->color}}" id="link1" class="abrir">
+      <a href="" data-id="{{$ope->id}}" data-color="{{$aut->modulos->color}}" id="link1" class="abrir">
       <img class="card-img-top" src="{{asset('storage/'.$ope->ico)}}" alt="Imagem de capa do módulo" width="286" height="180">
       </a>
       <div class="card-body">                
         <p class="card-text">{{$ope->descricao}}</p>        
-        <button type="button" id="abrir_btn" data-id="{{$ope->id}}" data-color="{{$aut->modulo->color}}" class="abrir btn btn-{{$aut->modulo->color}}">Abrir</button>
+        <button type="button" id="abrir_btn" data-id="{{$ope->id}}" data-color="{{$aut->modulos->color}}" class="abrir btn btn-{{$aut->modulos->color}}">Abrir</button>
       </div>
     </div>
   </div>
@@ -108,32 +108,14 @@ $(document).ready(function(){
   $(document).on('click','.abrir',function(e){    //aciona pelos elementos img pelo link e pelo button abrir_btn através do atributo comum class .abrir
     e.preventDefault();
     var codoperacao = $(this).data("id");
-    var color = $(this).data("color");    
-
-  /*  switch (codoperacao) {
-      case 1: location.replace('/admin/artigos/index/'+color); ///frontpage/postagens
+    var color = $(this).data("color"); 
+        
+      switch (codoperacao) {
+      case 1: location.replace('/datacenteradmin/orgao/index-orgao/'+color); ///cadastro de orgãos
       break;
-      case 2: location.replace('/admin/tema/index/'+color); //frontpage/temas        
-      break;
-      case 3: location.replace('/ceteaadmin/paciente/index/'+color); //ficha básica do paciente
-      break;
-      case 4: location.replace('/ceteaadmin/tipotratamento/index/'+color); //cadastro de tipos de tratamentos
-      break;
-      case 5: location.replace('/ceteaadmin/tratamento/index/'+color); //cadastro de tratamentos
-      break;
-      case 6: location.replace('/ceteaadmin/medicoterapeuta/index/'+color); //cadastro de médicos terapeutas
-      break;
-      case 7: location.replace('/ceteaadmin/tipoatendimento/index/'+color); //cadastro de tipos de atendimento
-      break;
-      case 8: location.replace('/ceteaadmin/atendimento/index/'+color); //cadastro de atendimentos
-      break;
-      case 9: location.replace('/ceteaadmin/terapia/index/'+color); //atendimento da terapia
-      break;
-      case 10: location.replace('/ceteaadmin/feriado/index/'+color); //cadastro de feriado
-      break;    
       default:
         break;
-    }  */
+    }  
 
   });  
 

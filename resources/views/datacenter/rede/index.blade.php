@@ -122,7 +122,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>   
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenter.rede.index',['id'=>$id])}}" class="form-search" method="GET">
+                <form action="{{route('datacenter.rede.rede.index',['id'=>$id])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome da rede" aria-label="Search" aria-describedby="search-addon">
@@ -150,7 +150,7 @@
                     @forelse($redes as $rede)
                     <tr id="rede{{$rede->id}}">
                         <th scope="row">{{$rede->nome_rede}}</th>
-                        <td><a href="{{route('datacenter.vlan.index')}}">{{$vlan->nome_vlan}}</a></td>
+                        <td><a href="{{route('datacenter.vlan.vlan.index')}}">{{$vlan->nome_vlan}}</a></td>
                         <td>
                             <div class="btn-group">
                                 @if($rede->cadastro_ips->count())
@@ -301,7 +301,7 @@ $(document).ready(function(){
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url:'/datacenter/edit-rede/'+id,
+                url:'/datacenter/rede/edit-rede/'+id,
                 success:function(response){
                     if(response.status==200){    
                         var vnomerede = (response.rede.nome_rede).trim();
@@ -363,7 +363,7 @@ $(document).ready(function(){
                 type:'POST',
                 data:data,
                 dataType:'json',
-                url:'/datacenter/update-rede/'+id,
+                url:'/datacenter/rede/update-rede/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros
@@ -449,7 +449,7 @@ $(document).ready(function(){
                 '_token':CSRF_TOKEN,
             }           
             $.ajax({
-                url:'/datacenter/adiciona-rede',
+                url:'/datacenter/rede/adiciona-rede',
                 type:'POST',
                 dataType:'json',
                 data: data,
@@ -548,7 +548,7 @@ $(document).ready(function(){
                 '_token':CSRF_TOKEN,
             }            
             $.ajax({
-                url:'/datacenter/adiciona-redeip',
+                url:'/datacenter/rede/adiciona-redeip',
                 type:'POST',
                 dataType:'json',
                 data: data,

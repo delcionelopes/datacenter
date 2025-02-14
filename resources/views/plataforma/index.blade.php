@@ -75,7 +75,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('admin.plataforma.index')}}"  class="form-search" method="GET">
+                <form action="{{route('datacenteradmin.plataforma.plataforma.index')}}"  class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisanome" class="form-control rounded float-left" placeholder="Nome da plataforma" aria-label="Search" aria-describedby="search-addon">
@@ -159,7 +159,7 @@
              }).then((result)=>{
              if(result.isConfirmed){                
                 $.ajax({
-                    url:'delete-plataforma/'+id,
+                    url:'/datacenter/plataforma/delete-plataforma/'+id,
                     type:'POST',
                     dataType:'json',
                     data:{
@@ -231,7 +231,7 @@
                 $.ajax({
                     type:'GET',
                     dataType:'json',
-                    url: 'edit-plataforma/'+id,
+                    url: '/datacenter/plataforma/edit-plataforma/'+id,
                     success:function(response){
                         if(response.status==200){
                             var vnomeplataforma = (response.plataforma.nome_plataforma).trim();
@@ -286,7 +286,7 @@
                     type:'POST',
                     data: data,
                     dataType:'json',
-                    url:'update-plataforma/'+id,
+                    url:'/datacenter/plataforma/update-plataforma/'+id,
                     success:function(response){
                         if(response.status==400){
                             //erros
@@ -386,7 +386,7 @@
         
                 $.ajax({
                     type:'POST',
-                    url:'adiciona-plataforma',
+                    url:'/datacenter/plataforma/adiciona-plataforma',
                     data: data,
                     dataType:'json',
                     success:function(response){

@@ -89,7 +89,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('admin.subareaconhecimento.index')}}" class="form-search" method="GET">                    
+                <form action="{{route('datacenteradmin.subareaconhecimento.subareaconhecimento.index')}}" class="form-search" method="GET">                    
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="nomepesquisa" class="form-control rounded float-left" placeholder="Descrição da sub-área" aria-label="Search" aria-describedby="search-addon">
@@ -181,7 +181,7 @@
              }).then((result)=>{
              if(result.isConfirmed){  
                     $.ajax({
-                        url:'delete-subareaconhecimento/'+id,
+                        url:'/datacenteradmin/subareaconhecimento/delete-subareaconhecimento/'+id,
                         type:'POST',
                         dataType:'json',
                         data:{
@@ -255,7 +255,7 @@
                 $.ajax({
                     type:'GET',
                     dataType:'json',
-                    url:'edit-subareaconhecimento/'+id,                                
+                    url:'/datacenteradmin/subareaconhecimento/edit-subareaconhecimento/'+id,                                
                     success:function(response){
                         if(response.status==200){
                             var vdescricao = (response.sub_area_conhecimento.descricao).trim();
@@ -328,7 +328,7 @@
                     type:'POST',
                     data:data,
                     dataType:'json',
-                    url:'update-subareaconhecimento/'+id,
+                    url:'/datacenteradmin/subareaconhecimento/update-subareaconhecimento/'+id,
                     success:function(response){
                         if(response.status==400){
                             //erros
@@ -404,7 +404,7 @@
             }
                 $.ajax({
                     type:'POST',
-                    url:'adiciona-subareaconhecimento',
+                    url:'/datacenteradmin/subareaconhecimento/adiciona-subareaconhecimento',
                     data:data,
                     dataType:'json',
                     success:function(response){

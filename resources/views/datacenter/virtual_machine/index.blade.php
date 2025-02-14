@@ -421,7 +421,7 @@
     <div id="success_message"></div> 
    
             <section class="border p-4 mb-4 d-flex align-items-left">
-            <form action="{{route('datacenter.vm.index',['id'=>$id])}}" class="form-search" method="GET">
+            <form action="{{route('datacenter.vm.vm.index',['id'=>$id])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="hidden" id="clusterid" value="{{$id}}">
@@ -433,7 +433,7 @@
                             <button type="button" data-id="{{$id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddVMModal_btn input-group-text border-0 animate__animated animate__bounce animate__faster" style="background: transparent;border: none; white-space: white-space:nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
-                            <a href="{{route('datacenter.cluster.index')}}" type="button" data-id="{{$id}}" class="cluster_btn input-group-text border-0" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="CLUSTER">
+                            <a href="{{route('datacenter.cluster.cluster.index')}}" type="button" data-id="{{$id}}" class="cluster_btn input-group-text border-0" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="CLUSTER">
                                {{$cluster->nome_cluster}}
                             </a>                            
                         </div>
@@ -479,7 +479,7 @@
                                 </button>
                                 <ul class="dropdown-menu" id="dropdown{{$vm->id}}">
                                     @foreach($vm->vlans as $vl)                                                                                                            
-                                    <li class="dropdown-item"><a href="{{route('datacenter.vm.index_vlanXvm',['id'=>$id,'vlid'=>$vl->id])}}" class="dropdown-item">{{$vl->nome_vlan}}</a></li>
+                                    <li class="dropdown-item"><a href="{{route('datacenter.vm.vm.index_vlanXvm',['id'=>$id,'vlid'=>$vl->id])}}" class="dropdown-item">{{$vl->nome_vlan}}</a></li>
                                     @endforeach
                                 </ul>                                           
                                 @endif                               
@@ -488,7 +488,7 @@
                         <td>
                             <div class="btn-group">
                                 @if($vm->bases->count())
-                                <form action="{{route('datacenter.base.index',['id' => $vm->id])}}" method="get">
+                                <form action="{{route('datacenter.base.base.index',['id' => $vm->id])}}" method="get">
                                     <button type="submit" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="list_base_btn fas fa-database" style="background: transparent;border: none; color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista BASE(s)"> {{$vm->bases->count()}}</button>
                                 </form>   
                                 @else
@@ -562,7 +562,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                                
                     $.ajax({
-                        url:'/datacenter/delete-vm/'+id,
+                        url:'/datacenter/vm/delete-vm/'+id,
                         type:'POST',                    
                         dataType:'json',
                         data:{
@@ -637,7 +637,7 @@ $(document).ready(function(){
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url:'/datacenter/edit-vm/'+id,
+                url:'/datacenter/vm/edit-vm/'+id,
                 success:function(response){
                     if(response.status==200){                    
                         $("#edit_vm_id").val(response.virtualmachine.id);
@@ -793,7 +793,7 @@ $(document).ready(function(){
                 type:'POST',
                 data:data,
                 dataType:'json',
-                url:'/datacenter/update-vm/'+id,
+                url:'/datacenter/vm/update-vm/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros
@@ -950,7 +950,7 @@ $(document).ready(function(){
             }    
            
             $.ajax({
-                url:'/datacenter/adiciona-vm',
+                url:'/datacenter/vm/adiciona-vm',
                 type:'POST',
                 dataType: 'json',
                 data: data,
@@ -1117,7 +1117,7 @@ $(document).ready(function(){
             }
            
             $.ajax({            
-                url: '/datacenter/adiciona-basededados',
+                url: '/datacenter/vm/adiciona-basededados',
                 type: 'POST',
                 dataType:'json',
                 data:data,
@@ -1220,7 +1220,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/storesenhavm/'+id,
+                url:'/datacenter/vm/storesenhavm/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1299,7 +1299,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editsenhavm/'+id,
+            url: '/datacenter/vm/editsenhavm/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.virtualmachine.created_at);
@@ -1430,7 +1430,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/updatesenhavm/'+id,
+                url:'/datacenter/vm/updatesenhavm/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros

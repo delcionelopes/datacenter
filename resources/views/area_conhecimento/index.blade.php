@@ -74,7 +74,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('admin.areaconhecimento.index')}}" class="form-search" method="GET">
+                <form action="{{route('datacenter.areaconhecimento.areaconhecimento.index')}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="nomepesquisa" class="form-control rounded float-left" placeholder="Descrição da área" aria-label="Search" aria-describedby="search-addon">
@@ -164,7 +164,7 @@
              }).then((result)=>{
              if(result.isConfirmed){             
                     $.ajax({
-                    url:'delete-areaconhecimento/'+id,
+                    url:'/datacenter/areaconhecimento/delete-areaconhecimento/'+id,
                     type:'POST',
                     dataType:'json',
                     data:{
@@ -241,7 +241,7 @@
                 $.ajax({
                     type:'GET',
                     dataType:'json',
-                    url:'edit-areaconhecimento/'+id,
+                    url:'/datacenter/areaconhecimento/edit-areaconhecimento/'+id,
                     success:function(response){
                         if(response.status==200){
                             var descricaoarea = (response.area_conhecimento.descricao).trim();
@@ -359,7 +359,7 @@
             }   
             $.ajax({
                     type:'POST',
-                    url:'adiciona-areaconhecimento',
+                    url:'/datacenter/areaconhecimento/adiciona-areaconhecimento',
                     data:data,
                     dataType:'json',
                     success:function(response){

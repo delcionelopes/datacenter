@@ -76,7 +76,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('admin.projeto.index')}}" class="form-search" method="GET">
+                <form action="{{route('datacenteradmin.projeto.projeto.index')}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisanome" class="form-control rounded float-left" placeholder="Nome do projeto" aria-label="Search" aria-describedby="search-addon">                            
@@ -162,7 +162,7 @@
              }).then((result)=>{
              if(result.isConfirmed){        
                 $.ajax({
-                    url:'delete-projeto/'+id,
+                    url:'/datacenteradmin/projeto/delete-projeto/'+id,
                     type:'POST',
                     dataType:'json',
                     data:{
@@ -239,7 +239,7 @@
                 $.ajax({
                     type:'GET',
                     dataType:'json',
-                    url:'edit-projeto/'+id,
+                    url:'/datacenteradmin/projeto/edit-projeto/'+id,
                     success:function(response){
                         if(response.status==200){  
                             var vnomeprojeto = (response.projeto.nome_projeto).trim();
@@ -287,7 +287,7 @@
                     type:'POST',
                     data:data,
                     dataType:'json',
-                    url:'update-projeto/'+id,
+                    url:'/datacenteradmin/projeto/update-projeto/'+id,
                     success:function(response){
                         if(response.status==400){
                             //erros
@@ -385,7 +385,7 @@
             }    
                 $.ajax({
                     type:'POST',
-                    url:'adiciona-projeto',
+                    url:'/datacenteradmin/projeto/adiciona-projeto',
                     data:data,
                     dataType:'json',
                     success:function(response){

@@ -27,11 +27,11 @@ class Autorizacao extends Model
     }
 
     public function modulos(){
-        return $this->belongsTo(Modulo::class,'modulo_has_operacao_modulo_id');
+        return $this->belongsTo(Modulo::class,'modulo_has_operacao_modulo_id','id');
     }
 
     public function operacaos(){
-        return $this->belongsTo(Operacao::class,'modulo_has_operacao_operacao_id');
+        return $this->belongsTo(Operacao::class,'modulo_has_operacao_operacao_id','id');
     }
 
     
