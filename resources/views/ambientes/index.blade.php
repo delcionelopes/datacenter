@@ -31,8 +31,8 @@
             </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_ambiente"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-primary add_ambiente"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -62,8 +62,8 @@
             </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_ambiente"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-primary update_ambiente"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -75,7 +75,7 @@
 <div class="container-fluid py-5">   
     <div id="success_message"></div>    
     <section class="border p-4 mb-4 d-flex align-items-left">    
-    <form action="{{route('datacenter.ambiente.ambiente.index')}}" class="form-search" method="GET">
+    <form action="{{route('datacenteradmin.ambiente.ambiente.index',['color'=>$color])}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="nome" class="form-control rounded float-left" placeholder="nome do ambiente" aria-label="Search"
@@ -93,7 +93,7 @@
     </section>    
             
                     <table class="table table-hover">
-                        <thead class="sidebar-dark-primary" style="color: white">
+                    <thead class="bg-{{$color}}" style="color: white">
                             <tr>                                
                                 <th scope="col">AMBIENTES</th>                    
                                 <th scope="col">AÇÕES</th>
@@ -106,8 +106,8 @@
                                 <th scope="row">{{$ambiente->nome_ambiente}}</th>                                
                                 <td>                                    
                                         <div class="btn-group">                                           
-                                            <button type="button" data-id="{{$ambiente->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeambiente="{{$ambiente->nome_ambiente}}" class="edit_ambiente fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar AMBIENTE"></button>
-                                            <button type="button" data-id="{{$ambiente->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeambiente="{{$ambiente->nome_ambiente}}" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir AMBIENTE"></button>
+                                            <button type="button" data-id="{{$ambiente->id}}" data-admin="{{auth()->user()->admin}}" data-nomeambiente="{{$ambiente->nome_ambiente}}" class="edit_ambiente fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar AMBIENTE"></button>
+                                            <button type="button" data-id="{{$ambiente->id}}" data-admin="{{auth()->user()->admin}}" data-nomeambiente="{{$ambiente->nome_ambiente}}" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir AMBIENTE"></button>
                                         </div>                                    
                                 </td>
                             </tr>  
@@ -148,10 +148,9 @@ $(document).ready(function(){
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
             var id = $(this).data("id");            
             var nome = ($(this).data("nomeambiente")).trim();
-            var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin")
+            var admin = $(this).data("admin");            
         
-            if((admin==true)&&(setoradmin==1)){
+            if(admin==true){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -171,7 +170,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){             
                 $.ajax({
-                    url: '/datacenter/ambiente/delete-ambiente/'+id,
+                    url: '/datacenteradmin/ambiente/delete-ambiente/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data:{
@@ -231,10 +230,9 @@ $(document).ready(function(){
             e.preventDefault();
             var linklogo = "{{asset('storage')}}";
             var id = $(this).data("id");
-            var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
+            var admin = $(this).data("admin");            
             var nome = $(this).data("nomeambiente");
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             $("#editform").trigger('reset');
             $("#editAmbienteModal").modal('show');          
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');      
@@ -249,7 +247,7 @@ $(document).ready(function(){
             $.ajax({ 
                 type: 'GET',             
                 dataType: 'json',                                    
-                url: '/datacenter/ambiente/edit-ambiente/'+id,                                
+                url: '/datacenteradmin/ambiente/edit-ambiente/'+id,                                
                 success: function(response){           
                     if(response.status==200){   
                         var nomeambiente = (response.ambiente.nome_ambiente).trim();                        
@@ -302,7 +300,7 @@ $(document).ready(function(){
                 type: 'POST',                          
                 data: data,
                 dataType: 'json',    
-                url: '/datacenter/ambiente/update-ambiente/'+id,         
+                url: '/datacenteradmin/ambiente/update-ambiente/'+id,         
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
@@ -336,8 +334,8 @@ $(document).ready(function(){
                             var linha = '<tr id="ambiente'+response.ambiente.id+'">\
                                     <th scope="row">'+response.ambiente.nome_ambiente+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';                             
                         $("#ambiente"+id).replaceWith(linha);                                                                                
@@ -358,35 +356,12 @@ $(document).ready(function(){
             e.preventDefault();     
             
             var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
 
-            if(setoradmin==1){
-            
+                      
             $("#addform").trigger('reset');
             $("#AddAmbienteModal").modal('show'); 
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');                       
-            }else{
-                 Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA INFRA !",
-                text: "Você não pode criar um registro. Pois seu usuário não pertence ao setor INFRA !",
-                imageUrl: linklogo+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+          
     
         });
     
@@ -405,7 +380,7 @@ $(document).ready(function(){
             
             $.ajax({
                 type: 'POST',
-                url: '/datacenter/ambiente/adiciona-ambiente',
+                url: '/datacenteradmin/ambiente/adiciona-ambiente',
                 data: data,
                 dataType: 'json',
                 success: function(response){
@@ -434,8 +409,8 @@ $(document).ready(function(){
                             linha1 = '<tr id="ambiente'+response.ambiente.id+'">\
                                     <th scope="row">'+response.ambiente.nome_ambiente+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="edit_ambiente fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.ambiente.id+'" data-admin="'+response.user.admin+'" data-nomeambiente="'+response.ambiente.nome_ambiente+'" class="delete_ambiente_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';
                         if(!$("#nadaencontrado").html==""){

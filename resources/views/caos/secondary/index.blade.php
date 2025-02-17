@@ -113,6 +113,10 @@ $(document).ready(function(){
       switch (codoperacao) {
       case 1: location.replace('/datacenteradmin/orgao/index-orgao/'+color); ///cadastro de orgãos
       break;
+      case 2: location.replace('/datacenteradmin/setor/index-setor/'+color); ///cadastro de setores
+      break;
+      case 3: location.replace('/datacenteradmin/ambiente/index-ambientes/'+color); ///cadastro de ambientes
+      break;
       default:
         break;
     }  

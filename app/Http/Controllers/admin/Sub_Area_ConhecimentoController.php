@@ -20,7 +20,7 @@ class Sub_Area_ConhecimentoController extends Controller
     /**
      * Método para listagem de registro com opção de pesquisa
      *  */ 
-    public function index(Request $request)
+    public function index(Request $request, $color)
     {
         if(is_null($request->nomepesquisa)){
             $sub_areas_conhecimento = $this->sub_area_conhecimento->orderByDesc('id')->paginate(6);
@@ -31,7 +31,11 @@ class Sub_Area_ConhecimentoController extends Controller
         }
             $areas_conhecimento = Area_Conhecimento::all();
             
-        return view('sub_area_conhecimento.index',compact('sub_areas_conhecimento','areas_conhecimento'));
+        return view('sub_area_conhecimento.index',[
+            'sub_areas_conhecimento' => $sub_areas_conhecimento,
+            'areas_conhecimento' => $areas_conhecimento,
+            'color' => $color
+        ]);
     }
 
     

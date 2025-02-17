@@ -132,7 +132,7 @@ Route::group(['middleware'=> ['auth']],function(){
       }); 
 
       Route::prefix('setor')->name('setor.')->group(function(){
-        Route::get('/index-setor',[SetorController::class,'index'])->name('index');        
+        Route::get('/index-setor/{color}',[SetorController::class,'index'])->name('index');        
         Route::delete('/delete-setor/{id}',[SetorController::class,'destroy']);
         Route::get('/edit-setor/{id}',[SetorController::class,'edit'])->name('edit');
         Route::put('/update-setor/{id}',[SetorController::class,'update']);
@@ -151,7 +151,7 @@ Route::group(['middleware'=> ['auth']],function(){
        
         //Rotas para a view index de ambiente
         Route::prefix('ambiente')->name('ambiente.')->group(function(){    
-        Route::get('index-ambientes',[AmbienteController::class,'index'])->name('ambiente.index');
+        Route::get('index-ambientes/{color}',[AmbienteController::class,'index'])->name('ambiente.index');
         Route::delete('delete-ambiente/{id}',[AmbienteController::class,'destroy']);
         Route::get('edit-ambiente/{id}',[AmbienteController::class,'edit']);
         Route::put('update-ambiente/{id}',[AmbienteController::class,'update']);

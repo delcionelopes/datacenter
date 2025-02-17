@@ -22,7 +22,7 @@ class ManualController extends Controller
     /**
      * Método para listagem de manuais com opção de pesquisa
      */
-    public function index(Request $request)
+    public function index(Request $request, $color)
     {        
         if(is_null($request->pesquisa)){
             $manuais = $this->manual->orderByDesc('id')->paginate(6);
@@ -36,7 +36,11 @@ class ManualController extends Controller
         $areas_conhecimento = Area_Conhecimento::all();
         
 
-        return view('manuais.index', compact('manuais','areas_conhecimento'));
+        return view('manuais.index', [
+            'manuais' => $manuais,
+            'areas_conhecimento' => $areas_conhecimento,
+            'color' => $color
+        ]);
         
     }
 

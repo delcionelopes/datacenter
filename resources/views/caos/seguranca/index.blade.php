@@ -100,9 +100,6 @@
                                             </li> 
                                             <li class="dropdown-item"><a href="{{route('datacenteradmin.funcao.index')}}" class="dropdown-item listafuncao_btn"  
                                                 style="white-space: nowrap;"><i class="fas fa-folder" style="background: transparent; color: red; border: none;"></i> Cadastro de Funções</a>
-                                            </li> 
-                                            <li class="dropdown-item"><a href="{{route('datacenteradmin.setor.index')}}" class="dropdown-item listaosetor_btn"  
-                                                style="white-space: nowrap;"><i class="fas fa-folder" style="background: transparent; color: red; border: none;"></i> Cadastro de Setores</a>
                                             </li>
                                             <li class="dropdown-item"><a href="{{route('admin.user.index')}}" class="dropdown-item listaousuarios_btn"  
                                                 style="white-space: nowrap;"><i class="fas fa-user" style="background: transparent; color: red; border: none;"></i> Cadastro de Usuários</a>
@@ -130,10 +127,7 @@
                                             </li> 
                                             <li class="dropdown-item"><a href="{{route('datacenteradmin.funcao.index')}}" class="dropdown-item listafuncao_btn"  
                                                 style="white-space: nowrap;"><i class="fas fa-folder" style="background: transparent; color: red; border: none;"></i> Cadastro de Funções</a>
-                                            </li> 
-                                            <li class="dropdown-item"><a href="{{route('datacenteradmin.setor.index')}}" class="dropdown-item listaosetor_btn"  
-                                                style="white-space: nowrap;"><i class="fas fa-folder" style="background: transparent; color: red; border: none;"></i> Cadastro de Setores</a>
-                                            </li>
+                                            </li>                                             
                                             <li class="dropdown-item"><a href="{{route('admin.user.index')}}" class="dropdown-item listaousuarios_btn"  
                                                 style="white-space: nowrap;"><i class="fas fa-user" style="background: transparent; color: red; border: none;"></i> Cadastro de Usuários</a>
                                             </li> 

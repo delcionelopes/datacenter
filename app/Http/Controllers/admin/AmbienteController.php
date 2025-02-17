@@ -22,7 +22,7 @@ class AmbienteController extends Controller
     /**
      * Lista ambientes com opção de pesquisa por nome do ambiente
      */
-    public function index(Request $request)    
+    public function index(Request $request, $color)    
     {   
         //se não houver parâmetros na pesquisa $request->nome, deve listar todos os ambientes                     
         if(is_null($request->nome)){
@@ -36,7 +36,8 @@ class AmbienteController extends Controller
             
         }                           
         return view('ambientes.index',[
-            'ambientes' => $ambientes,            
+            'ambientes' => $ambientes,
+            'color' => $color
         ]);                
     }
 

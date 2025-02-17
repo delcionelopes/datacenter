@@ -21,7 +21,7 @@ class SetorController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $color)
     {
         if(is_null($request->pesquisa)){
             $setores = $this->setor->orderByDesc('idsetor')->paginate(6);
@@ -32,6 +32,7 @@ class SetorController extends Controller
         }
         return view('caos.setor.index',[
             'setores' => $setores,
+            'color' => $color
         ]);
     }
 

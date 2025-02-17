@@ -34,8 +34,8 @@ class OrgaoController extends Controller
             
         }
         return view('orgao.index',[
-            'orgaos',
-            'color'
+            'orgaos' => $orgaos,
+            'color' => $color
         ]);
     }
 
@@ -94,7 +94,7 @@ class OrgaoController extends Controller
         return response()->json([
             'orgao' => $o,
             'user' => $user,
-            'status' => 200,
+            'status' => 200,            
         ]);
     }
 

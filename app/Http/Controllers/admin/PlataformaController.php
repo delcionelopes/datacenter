@@ -20,7 +20,7 @@ class PlataformaController extends Controller
     /**
      * Método para listar plataformas parametrizada pela pesquisa
      */
-    public function index(Request $request)
+    public function index(Request $request, $color)
     {
         if(is_null($request->pesquisanome)){
             $plataformas = $this->plataforma->orderByDesc('id')->paginate(6);            
@@ -29,7 +29,10 @@ class PlataformaController extends Controller
             ->where('nome_plataforma','LIKE','%'.strtoupper($request->pesquisanome.'%'));
             $plataformas = $query->orderByDesc('id')->paginate(6);
         }
-        return view('plataforma.index',compact('plataformas'));
+        return view('plataforma.index',[
+            'plataformas' => $plataformas,
+            'color' => $color 
+        ]);
     }
 
     
@@ -79,7 +82,7 @@ class PlataformaController extends Controller
     /**
      * Método para edição de registro
      */
-    public function edit(int $id)
+    public function edit(int $id, $color)
     {
         $p = $this->plataforma->find($id);
         $user = auth()->user();
@@ -88,6 +91,7 @@ class PlataformaController extends Controller
             'plataforma' => $p,
             'user' => $user,
             'status' => 200,
+            'color' => $color
         ]);
     }
 

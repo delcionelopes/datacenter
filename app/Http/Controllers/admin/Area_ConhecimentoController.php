@@ -22,7 +22,7 @@ class Area_ConhecimentoController extends Controller
     /**
      * Método de listagem das áreas de conhecimento com opção de pesquisa
      */
-    public function index(Request $request)
+    public function index(Request $request, $color)
     {        
         if(is_null($request->nomepesquisa)){
             $areas_conhecimento = $this->area_conhecimento->orderByDesc('id')->paginate(6);
@@ -31,7 +31,10 @@ class Area_ConhecimentoController extends Controller
             ->where('descricao','LIKE','%'.strtoupper($request->nomepesquisa).'%');
             $areas_conhecimento = $query->orderByDesc('id')->paginate(6);
         }
-        return view('area_conhecimento.index',compact('areas_conhecimento'));
+        return view('area_conhecimento.index',[
+            'areas_conhecimento' => $areas_conhecimento,
+            'color' => $color
+        ]);
     }
 
     

@@ -23,7 +23,7 @@ class ProjetoController extends Controller
     /**
      * Método para listagem de registros com opção de pesquisa
      */
-    public function index(Request $request)
+    public function index(Request $request, $color)
     {
         if(is_null($request->pesquisanome)){
             $projetos = $this->projeto->orderByDesc('id')->paginate(6);
@@ -32,7 +32,10 @@ class ProjetoController extends Controller
             ->where('nome_projeto','LIKE','%'.strtoupper($request->pesquisanome.'%'));
             $projetos = $query->orderByDesc('id')->paginate(6);
         }
-        return view('projeto.index',compact('projetos'));
+        return view('projeto.index',[
+            'projetos' => $projetos,
+            'color' => $color
+        ]);
     }
 
     
@@ -89,7 +92,7 @@ class ProjetoController extends Controller
         return response()->json([
             'projeto' => $proj,
             'user' => $user,
-            'status' => 200,
+            'status' => 200            
         ]);
     }
 

@@ -35,8 +35,8 @@
             </form>            
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_setor"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-primary add_setor"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -70,8 +70,8 @@
             </form>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_setor"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-primary update_setor"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -83,7 +83,7 @@
 <div class="container-fluid py-5">   
     <div id="success_message"></div>    
     <section class="border p-4 mb-4 d-flex align-items-left">    
-    <form action="{{route('datacenteradmin.setor.index')}}" class="form-search" method="GET">
+    <form action="{{route('datacenteradmin.setor.index',['color' => $color])}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="sigla do setor" aria-label="Search"
@@ -101,7 +101,7 @@
     </section>    
             
                     <table class="table table-hover">
-                        <thead class="sidebar-dark-primary" style="color: white">
+                    <thead class="bg-{{$color}}" style="color: white">
                             <tr>                                
                                 <th scope="col">SETORES</th>                    
                                 <th scope="col">AÇÕES</th>
