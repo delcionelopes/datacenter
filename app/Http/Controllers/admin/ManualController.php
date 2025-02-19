@@ -79,7 +79,8 @@ class ManualController extends Controller
                 'descricao' => strtoupper($request->input('descricao')),
                 'objetivo' => strtoupper($request->input('objetivo')),
                 'manual' => strtoupper($request->input('manual')),
-                'setor_idsetor' => $user->setor_idsetor,
+                'setor_id' => $user->setor_id,
+                'usuario' => $user->name,
                 'created_at' => now(),
             ];
             $manual = $this->manual->create($data);            
@@ -149,7 +150,8 @@ class ManualController extends Controller
                 $manual->descricao = strtoupper($request->input('descricao'));               
                 $manual->objetivo = strtoupper($request->input('objetivo'));
                 $manual->manual = strtoupper($request->input('manual'));
-                $manual->setor_idsetor = $user->setor_idsetor;
+                $manual->setor_id = $user->setor_id;
+                $manual->usuario = $user->name;
                 $manual->updated_at = now();
                 $manual->update();                
                 $ma = Manual::find($id);                

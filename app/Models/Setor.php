@@ -27,6 +27,6 @@ class Setor extends Model
     }
 
     public function manual(){
-        return $this->hasMany(Manual::class);
+        return $this->hasMany(Manual::class,'setor_id','idsetor');
     }
 }

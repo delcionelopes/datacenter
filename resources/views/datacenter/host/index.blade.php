@@ -14,7 +14,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddHostModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Host</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -44,7 +44,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_host"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_host"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -54,7 +54,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditHostModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Host</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -85,7 +85,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_host"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_host"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -96,7 +96,7 @@
    <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaHost" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -158,7 +158,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_senhahost_btn"><img id="imgaddsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_senhahost_btn"><img id="imgaddsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -169,7 +169,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaHost" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -244,7 +244,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhahost_btn"><img id="imgeditsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_senhahost_btn"><img id="imgeditsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -257,14 +257,14 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>   
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenter.host.host.index',['id'=>$id])}}" class="form-search" method="GET">
+                <form action="{{route('datacenteradmin.host.host.index',['id'=>$id,'color'=>$color])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do host" aria-label="Search" aria-describedby="search-addon">
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddHostModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                            <button type="button" data-id="{{$id}}" class="AddHostModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -272,7 +272,7 @@
                 </form>
             </section>
             <table class="table table-hover">
-                <thead class="sidebar-dark-primary" style="color: white">
+            <thead class="bg-{{$color}}" style="color: white">
                     <tr>
                         <th scope="col">HOSTS</th>
                         <th scope="col"><i class="fas fa-key"></i> PASS</th>
@@ -286,15 +286,15 @@
                         <th scope="row">{{$host->datacenter}}</th>
                          <td id="senha{{$host->id}}">
                             @if(!$host->senha)
-                            <button id="botaosenha{{$host->id}}" type="button" data-id="{{$host->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
+                            <button id="botaosenha{{$host->id}}" type="button" data-id="{{$host->id}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
                             @else
                             @if($host->users()->count())                           
                             @foreach($host->users as $user)
                                   @if(($user->id) == (auth()->user()->id))                                  
-                                  <button id="botaosenha{{$host->id}}" type="button" data-id="{{$host->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$host->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$host->id}}" type="button" data-id="{{$host->id}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$host->users->implode('name','<br>')}}"></button>
                                   @break
                                   @elseif ($loop->last)
-                                  <button id="botaosenha{{$host->id}}" type="button" data-id="{{$host->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$host->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$host->id}}" type="button" data-id="{{$host->id}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$host->users->implode('name','<br>')}}"></button>
                                   @endif                                                        
                             @endforeach                            
                             @endif
@@ -302,8 +302,8 @@
                         </td>                        
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$host->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomedatacenter="{{$host->datacenter}}" class="edit_host fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar HOST"></button>
-                                <button type="button" data-id="{{$host->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomedatacenter="{{$host->datacenter}}" class="delete_host_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir HOST"></button>
+                                <button type="button" data-color="{{$color}}" data-id="{{$host->id}}" data-admin="{{auth()->user()->admin}}" data-nomedatacenter="{{$host->datacenter}}" class="edit_host fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar HOST"></button>
+                                <button type="button" data-id="{{$host->id}}" data-admin="{{auth()->user()->admin}}" data-nomedatacenter="{{$host->datacenter}}" class="delete_host_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir HOST"></button>
                             </div>
                         </td>
                     </tr>
@@ -314,7 +314,7 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="d-flex hover justify-content-center">
+            <div class="d-flex hover justify-content-center bg-{{$color}}">
                 {{$hosts->links()}}               
             </div>
             <div>
@@ -344,10 +344,9 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
             var link = "{{asset('storage')}}";
-            var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
+            var admin = $(this).data("admin");            
             var nomedatacenter = ($(this).data("nomedatacenter")).trim();
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -367,7 +366,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                                     
                     $.ajax({
-                        url:'/datacenter/host/delete-host/'+id,
+                        url:'/datacenteradmin/host/delete-host/'+id,
                         type:'POST',                    
                         dataType:'json',
                         data:{
@@ -428,8 +427,7 @@ $(document).ready(function(){
             var id = $(this).data("id");        
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             $("#editform").trigger('reset');
             $("#EditHostModal").modal('show');
             $("#updateform_errList").html('<ul id="updateform_errList"></ul>'); 
@@ -442,7 +440,7 @@ $(document).ready(function(){
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url:'/datacenter/host/edit-host/'+id,
+                url:'/datacenteradmin/host/edit-host/'+id,
                 success:function(response){
                     if(response.status==200){        
                         var vdatacenter = (response.host.datacenter).trim();
@@ -489,6 +487,7 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var loading = $("#imgedit");
                 loading.show();
+            var strcolor = $(this).data("color");
     
             var id = $("#edit_host_id").val();
     
@@ -506,7 +505,7 @@ $(document).ready(function(){
                 type:'POST',
                 data:data,
                 dataType:'json',
-                url:'/datacenter/host/update-host/'+id,
+                url:'/datacenteradmin/host/update-host/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros
@@ -544,22 +543,22 @@ $(document).ready(function(){
                             <th scope="row">'+response.host.datacenter+'</th>';
                             var bloqueia = true;                        
                             if((response.host.senha)==""){
-                            limita2 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                            limita2 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                             }else{
                                 $.each(response.users,function(key,user_values){
                                     if(user_values.id == response.user.id){                                    
-                                        limita3 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                        limita3 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                         bloqueia = false;                              
                                     }
                                 });                            
                                 if(bloqueia){
-                                limita4 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                                limita4 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                                 }
                             }  
                             limita5 = '<td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.host.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomedatacenter="'+response.host.datacenter+'" class="edit_host fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.host.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomedatacenter="'+response.host.datacenter+'" class="delete_host_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-color="'+strcolor+'" data-id="'+response.host.id+'" data-admin="'+response.user.admin+'" data-nomedatacenter="'+response.host.datacenter+'" class="edit_host fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.host.id+'" data-admin="'+response.user.admin+'" data-nomedatacenter="'+response.host.datacenter+'" class="delete_host_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
@@ -578,34 +577,12 @@ $(document).ready(function(){
         $(document).on('click','.AddHostModal_btn',function(e){
             e.preventDefault();
             var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+            
             $("#addform").trigger('reset');
             $("#AddHostModal").modal('show');
             $("#add_cluster_id").val($(this).data("id"));
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>'); 
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para registrar um novo HOST. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+            
         });
         //fim exibe form de adição de host
         //inicio da adição de host
@@ -614,6 +591,7 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");      
             var loading = $("#imgadd");
                 loading.show();
+            var strcolor = $(this).data("color");
             var data = {
                 'datacenter': ($(".datacenter").val()).trim(),
                 'ip': ($('.ip').val()).trim(),
@@ -624,7 +602,7 @@ $(document).ready(function(){
                 '_token':CSRF_TOKEN,
             }           
             $.ajax({
-                url:'/datacenter/host/adiciona-host',
+                url:'/datacenteradmin/host/adiciona-host',
                 type:'POST',
                 dataType:'json',
                 data: data,
@@ -660,22 +638,22 @@ $(document).ready(function(){
                             <th scope="row">'+response.host.datacenter+'</th>';
                             var bloqueia = true;                        
                             if((response.host.senha)==""){
-                            limita2 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                            limita2 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                             }else{
                                 $.each(response.users,function(key,user_values){
                                     if(user_values.id == response.user.id){                                    
-                                        limita3 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                        limita3 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                         bloqueia = false;                              
                                     }
                                 });                            
                                 if(bloqueia){
-                                limita4 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                                limita4 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                                 }
                             }  
                             limita5 = '<td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.host.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomedatacenter="'+response.host.datacenter+'" class="edit_host fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.host.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomedatacenter="'+response.host.datacenter+'" class="delete_host_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-color="'+strcolor+'" data-id="'+response.host.id+'" data-admin="'+response.user.admin+'" data-nomedatacenter="'+response.host.datacenter+'" class="edit_host fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.host.id+'" data-admin="'+response.user.admin+'" data-nomedatacenter="'+response.host.datacenter+'" class="delete_host_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
@@ -701,36 +679,14 @@ $(document).ready(function(){
             var labelHtml = ($(this).data("nomehost")).trim();            
             var labelclusterip = ($(this).data("clusterip")).trim();            
             var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+                        
             $("#addformsenha").trigger('reset');
             $("#AddSenhaHost").modal('show');
             $("#add_hostsenha_id").val($(this).data("id"));
             $("#nomehost").replaceWith('<Label id="nomehost" style="font-style:italic;">'+labelHtml+'</Label>');            
             $("#clusterip").replaceWith('<Label id="clusterip" style="font-style:italic;">'+labelclusterip+'</Label>');            
             $("#saveformsenha_errList").replaceWith('<ul id="saveformsenha_errList"></ul>'); 
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+           
         });
 
          $(document).on('click','.add_senhahost_btn',function(e){
@@ -764,7 +720,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/host/storesenhahost/'+id,
+                url:'/datacenteradmin/host/storesenhahost/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -789,16 +745,16 @@ $(document).ready(function(){
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.host.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 
@@ -818,11 +774,8 @@ $(document).ready(function(){
         e.preventDefault();
 
         var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
 
         var opcaosenha = $(this).data("opt");
-
-        if(setoradmin==1){
 
         if(opcaosenha){
     
@@ -844,7 +797,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/host/editsenhahost/'+id,
+            url: '/datacenteradmin/host/editsenhahost/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.host.created_at);
@@ -916,28 +869,7 @@ $(document).ready(function(){
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
-}else{
-    Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-}
+
              
     });
     //fim exibe 
@@ -973,7 +905,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/host/updatesenhahost/'+id,
+                url:'/datacenteradmin/host/updatesenhahost/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -999,16 +931,16 @@ $(document).ready(function(){
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.host.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.host.id+'" type="button" data-id="'+response.host.id+'" data-nomehost="'+response.host.datacenter+'" data-clusterip="'+response.host.cluster+'/'+response.host.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 

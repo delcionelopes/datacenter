@@ -117,6 +117,18 @@ $(document).ready(function(){
       break;
       case 3: location.replace('/datacenteradmin/ambiente/index-ambientes/'+color); ///cadastro de ambientes
       break;
+      case 4: location.replace('/datacenteradmin/plataforma/index-plataforma/'+color); ///cadastro de plataformas
+      break;
+      case 5: location.replace('/datacenteradmin/projeto/index-projeto/'+color); ///cadastro de projetos
+      break;
+      case 6: location.replace('/datacenteradmin/areaconhecimento/index-areaconhecimento/'+color); ///cadastro de areas conhecimento
+      break;
+      case 7: location.replace('/datacenteradmin/subareaconhecimento/index-subareaconhecimento/'+color); ///cadastro de sub-areas conhecimento
+      break;
+      case 8: location.replace('/datacenteradmin/manual/index-manual/'+color); ///cadastro de manuais
+      break;
+      case 9: location.replace('/datacenteradmin/cluster/index-cluster/'+color); ///Gestão de Datacenter
+      break;
       default:
         break;
     }  

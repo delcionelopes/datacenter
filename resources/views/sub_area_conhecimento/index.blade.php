@@ -14,7 +14,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSub_Area_Conhecimento" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
             <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Sub-Área de Conhecimento</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="close">
                 <span aria-hidden="true" style="color: white;">&times;</span>
@@ -38,7 +38,7 @@
             </form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_sub_area_conhecimento"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" class="btn btn-{{$color}} add_sub_area_conhecimento"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
         </div>
@@ -50,7 +50,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSub_Area_Conhecimento" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Sub-Áreas de Conhecimento</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -75,7 +75,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary update_sub_area_conhecimento"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                    <button type="button" class="btn btn-{{$color}} update_sub_area_conhecimento"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
@@ -89,7 +89,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenteradmin.subareaconhecimento.subareaconhecimento.index')}}" class="form-search" method="GET">                    
+                <form action="{{route('datacenteradmin.subareaconhecimento.subareaconhecimento.index',['color'=>$color])}}" class="form-search" method="GET">                    
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="nomepesquisa" class="form-control rounded float-left" placeholder="Descrição da sub-área" aria-label="Search" aria-describedby="search-addon">
@@ -104,7 +104,7 @@
                 </form>
             </section>
             <table class="table table-hover">
-                <thead class="sidebar-dark-primary" style="color: white">
+            <thead class="bg-{{$color}}" style="color: white">
                     <tr>
                         <th scope="col">SUB-AREAS DE CONHECIMENTO</th>
                         <th scope="col">AREAS REF</th>                   
@@ -119,8 +119,8 @@
                         <td>{{$sub->area_conhecimento->descricao}}</td>                       
                         <td>
                             <div class="btn-group">
-                                <button data-id="{{$sub->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-descricao="{{$sub->descricao}}" class="edit_sub_area_conhecimento fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button data-id="{{$sub->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-descricao="{{$sub->descricao}}" class="delete_area_conhecimento_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button data-id="{{$sub->id}}" data-admin="{{auth()->user()->admin}}" data-descricao="{{$sub->descricao}}" class="edit_sub_area_conhecimento fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button data-id="{{$sub->id}}" data-admin="{{auth()->user()->admin}}" data-descricao="{{$sub->descricao}}" class="delete_area_conhecimento_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -131,7 +131,7 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="d-flex hover justify-content-center">
+            <div class="d-flex hover justify-content-center bg-{{$color}}">
             {{$sub_areas_conhecimento->links()}}
     </div>
 </div>
@@ -158,8 +158,7 @@
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var link = "{{asset('storage')}}";
             var id = $(this).data("id");
-            var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
+            var admin = $(this).data("admin");            
             var descricao = ($(this).data("descricao")).trim();
             if(admin){
             Swal.fire({
@@ -239,7 +238,6 @@
             var id = $(this).data("id");        
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
             var descricao = $(this).data("descricao");
             if(admin){
             $("#editform").trigger('reset');
@@ -361,8 +359,8 @@
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td>\
                                     <div class="btn-group">\
-                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="edit_sub_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="edit_sub_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div>\
                                     </td>\
                                     </tr>';                             
@@ -437,8 +435,8 @@
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td>\
                                     <div class="btn-group">\
-                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="edit_sub_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="edit_sub_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.sub_area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-descricao="'+response.sub_area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div>\
                                     </td>\
                                     </tr>';

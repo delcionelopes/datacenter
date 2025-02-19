@@ -15,7 +15,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddAmbienteModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Ambientes</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                 <span aria-hidden="true" style="color: white;">&times;</span>
@@ -32,7 +32,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" data-color="{{$color}}" class="btn btn-primary add_ambiente"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_ambiente"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -45,7 +45,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="editAmbienteModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Ambiente</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -63,7 +63,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" data-color="{{$color}}" class="btn btn-primary update_ambiente"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_ambiente"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -83,7 +83,7 @@
             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                 <i class="fas fa-search"></i>
             </button>        
-            <button type="button" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddAmbienteModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+            <button type="button" class="AddAmbienteModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                 <i class="fas fa-plus"></i>
             </button>                
             </div>            
@@ -118,7 +118,7 @@
                             @endforelse                                                    
                         </tbody>
                     </table> 
-                    <div class="d-flex hover justify-content-center">
+                    <div class="d-flex hover justify-content-center bg-{{$color}}">
                     {{$ambientes->links()}}
                     </div>  
    
@@ -150,7 +150,7 @@ $(document).ready(function(){
             var nome = ($(this).data("nomeambiente")).trim();
             var admin = $(this).data("admin");            
         
-            if(admin==true){
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'

@@ -15,7 +15,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSetorModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Setor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                 <span aria-hidden="true" style="color: white;">&times;</span>
@@ -36,7 +36,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" data-color="{{$color}}" class="btn btn-primary add_setor"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_setor"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -49,7 +49,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="editSetorModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Setor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -71,7 +71,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" data-color="{{$color}}" class="btn btn-primary update_setor"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_setor"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -126,7 +126,7 @@
                             @endforelse                                                    
                         </tbody>
                     </table> 
-                    <div class="d-flex hover justify-content-center">
+                    <div class="d-flex hover justify-content-center bg-{{$color}}">
                     {{$setores->links()}}
                     </div>  
    

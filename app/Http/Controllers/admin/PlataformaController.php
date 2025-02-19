@@ -82,7 +82,7 @@ class PlataformaController extends Controller
     /**
      * Método para edição de registro
      */
-    public function edit(int $id, $color)
+    public function edit(int $id)
     {
         $p = $this->plataforma->find($id);
         $user = auth()->user();
@@ -90,8 +90,7 @@ class PlataformaController extends Controller
         return response()->json([
             'plataforma' => $p,
             'user' => $user,
-            'status' => 200,
-            'color' => $color
+            'status' => 200,            
         ]);
     }
 

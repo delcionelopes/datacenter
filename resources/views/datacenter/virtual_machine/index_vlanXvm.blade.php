@@ -14,7 +14,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddVirtualMachineModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Virtual Machine</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -98,7 +98,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_virtualmachine"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_virtualmachine"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -109,7 +109,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddBaseModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Base de dados</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -151,7 +151,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_base_btn"><img id="imgaddbase" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_base_btn"><img id="imgaddbase" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -163,7 +163,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditVirtualMachineModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Virtual Machine</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -248,7 +248,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_virtualmachine"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_virtualmachine"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -259,7 +259,7 @@
    <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaVM" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -321,7 +321,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_senhaVM_btn"><img id="imgaddsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_senhaVM_btn"><img id="imgaddsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -332,7 +332,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaVM" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -407,7 +407,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhaVM_btn"><img id="imgeditsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_senhaVM_btn"><img id="imgeditsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -421,7 +421,7 @@
     <div id="success_message"></div> 
    
             <section class="border p-4 mb-4 d-flex align-items-left">
-            <form action="{{route('datacenter.vm.vm.index',['id'=>$id])}}" class="form-search" method="GET">
+            <form action="{{route('datacenteradmin.vm.vm.index',['id'=>$id,'color'=>$color])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="hidden" id="clusterid" value="{{$id}}">
@@ -433,7 +433,7 @@
                             <button type="button" data-id="{{$id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddVMModal_btn input-group-text border-0 animate__animated animate__bounce animate__faster" style="background: transparent;border: none; white-space: white-space:nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
-                            <a href="{{route('datacenter.cluster.cluster.index')}}" type="button" data-id="{{$id}}" class="cluster_btn input-group-text border-0" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="CLUSTER">
+                            <a href="{{route('datacenteradmin.cluster.cluster.index',['color'=>$color])}}" type="button" data-id="{{$id}}" class="cluster_btn input-group-text border-0" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="CLUSTER">
                                {{$cluster->nome_cluster}}
                             </a>                            
                         </div>
@@ -441,7 +441,7 @@
             </form>    
             </section>
             <table class="table table-hover">
-                <thead class="sidebar-dark-primary" style="color: white">
+            <thead class="bg-{{$color}}" style="color: white">
                     <tr>                        
                         <th scope="col">VM</th>
                         <th scope="col"><i class="fas fa-key"></i> PASS</th>
@@ -457,15 +457,15 @@
                         <th scope="row">{{$vm->nome_vm}}</th>
                         <td id="senha{{$vm->id}}">
                             @if(!$vm->senha)
-                            <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
+                            <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
                             @else
                             @if($vm->users()->count())                           
                             @foreach($vm->users as $user)
                                   @if(($user->id) == (auth()->user()->id))                                  
-                                  <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"></button>
                                   @break
                                   @elseif ($loop->last)
-                                  <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomehost="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$vm->id}}" type="button" data-id="{{$vm->id}}" data-nomehost="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"></button>
                                   @endif                                                        
                             @endforeach                            
                             @endif
@@ -479,7 +479,7 @@
                                 </button>
                                 <ul class="dropdown-menu" id="dropdown{{$vm->id}}">
                                     @foreach($vm->vlans as $vl)                                                                                                            
-                                    <li class="dropdown-item"><a href="{{route('datacenter.vm.vm.index_vlanXvm',['id'=>$id,'vlid'=>$vl->id])}}" class="dropdown-item">{{$vl->nome_vlan}}</a></li>
+                                    <li class="dropdown-item"><a href="{{route('datacenteradmin.vm.vm.index_vlanXvm',['id'=>$id,'vlid'=>$vl->id,'color'=>$color])}}" class="dropdown-item">{{$vl->nome_vlan}}</a></li>
                                     @endforeach
                                 </ul>                                           
                                 @endif                               
@@ -488,18 +488,18 @@
                         <td>
                             <div class="btn-group">
                                 @if($vm->bases->count())
-                                <form action="{{route('datacenter.base.base.index',['id' => $vm->id])}}" method="get">
-                                    <button type="submit" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="list_base_btn fas fa-database" style="background: transparent;border: none; color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista BASE(s)"> {{$vm->bases->count()}}</button>
+                                <form action="{{route('datacenteradmin.base.base.index',['id' => $vm->id,'color'=>$color])}}" method="get">
+                                    <button type="submit" data-id="{{$vm->id}}" class="list_base_btn fas fa-database" style="background: transparent;border: none; color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista BASE(s)"> {{$vm->bases->count()}}</button>
                                 </form>   
                                 @else
-                                    <button type="button" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nome_vm="{{$vm->nome_vm}}" class="nova_base_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Cadastra nova BASE"></button> 
+                                    <button type="button" data-id="{{$vm->id}}" data-nome_vm="{{$vm->nome_vm}}" class="nova_base_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Cadastra nova BASE"></button> 
                                 @endif                             
                             </div>
                         </td>                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$vm->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar VM"></button>
-                                <button type="button" data-id="{{$vm->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-vm="{{$vm->nome_vm}}" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir VM"></button>
+                                <button type="button" data-color="{{$color}}" data-id="{{$vm->id}}" data-admin="{{auth()->user()->admin}}" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar VM"></button>
+                                <button type="button" data-id="{{$vm->id}}" data-admin="{{auth()->user()->admin}}" data-vm="{{$vm->nome_vm}}" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir VM"></button>
                             </div>
                         </td>
                     </tr>
@@ -510,7 +510,7 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="d-flex hover justify-content-center">
+            <div class="d-flex hover justify-content-center bg-{{$color}}">
                 {{$virtualmachines->links()}}                
             </div>                   
             <div>
@@ -539,10 +539,9 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");            
             var id = $(this).data("id");       
             var nomevm = ($(this).data("vm")).trim();
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -562,7 +561,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                                
                     $.ajax({
-                        url:'/datacenter/vm/delete-vm/'+id,
+                        url:'/datacenteradmin/vm/delete-vm/'+id,
                         type:'POST',                    
                         dataType:'json',
                         data:{
@@ -621,10 +620,10 @@ $(document).ready(function(){
             e.preventDefault();
 
             var link = "{{asset('storage')}}";
-            var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
-            var id = $(this).data("id");        
-            if((admin)&&(setoradmin==1)){
+            var admin = $(this).data("admin");            
+            var id = $(this).data("id");
+               
+            if(admin){
             $("#editform").trigger('reset');
             $("#EditVirtualMachineModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
@@ -637,7 +636,7 @@ $(document).ready(function(){
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url:'/datacenter/vm/edit-vm/'+id,
+                url:'/datacenteradmin/vm/edit-vm/'+id,
                 success:function(response){
                     if(response.status==200){                    
                         $("#edit_vm_id").val(response.virtualmachine.id);
@@ -763,6 +762,7 @@ $(document).ready(function(){
             var opt_projeto = $("#projeto_id").val();
             var opt_orgao = $("#orgao_id").val();
             var opt_ambiente = $("#ambiente_id").val();
+            var strcolor = $(this).data("color");
     
             //Array apenas com os checkboxes marcados
             var vlans = new Array;
@@ -793,7 +793,7 @@ $(document).ready(function(){
                 type:'POST',
                 data:data,
                 dataType:'json',
-                url:'/datacenter/vm/update-vm/'+id,
+                url:'/datacenteradmin/vm/update-vm/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros
@@ -832,16 +832,16 @@ $(document).ready(function(){
                             <th scope="row">'+response.virtualmachine.nome_vm+'</th>';
                             var bloqueia = true;                        
                             if((response.virtualmachine.senha)==""){
-                            limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                            limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                             }else{
                                 $.each(response.users,function(key,user_values){
                                     if(user_values.id == response.user.id){                                    
-                                        limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                        limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                         bloqueia = false;                              
                                     }
                                 });                            
                                 if(bloqueia){
-                                limita4 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                                limita4 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                                 }
                             }  
                             limita5 = '<td>\
@@ -857,9 +857,10 @@ $(document).ready(function(){
                                             var num = vl.id;
                                             var strnum = String(num);                                                                                                       
                                             var meulink = ""; 
-                                                meulink = "{{route('datacenter.vm.index_vlanXvm',[':id',':vlid'])}}";
+                                                meulink = "{{route('datacenteradmin.vm.vm.index_vlanXvm',[':id',':vlid',':color'])}}";
                                                 meulink = meulink.replace(':id',strref);
-                                                meulink = meulink.replace(':vlid',strnum);                                            
+                                                meulink = meulink.replace(':vlid',strnum);
+                                                meulink = meulink.replace(':color',strcolor);
                                             $('#dropdown'+response.virtualmachine.id).append('<li data-id="'+vl.id+'" class="dropdown-item"><a href="'+meulink+'" class="dropdown-item">'+vl.nome_vlan+'</a></li>');
                                         });                                 
                                         
@@ -869,8 +870,8 @@ $(document).ready(function(){
                             <td>'+response.virtualmachine.ambiente.nome_ambiente+'</td>\
                             <td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-vm="'+response.virtualmachine.nome_vm+'" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-color="'+strcolor+'" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" data-vm="'+response.virtualmachine.nome_vm+'" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
@@ -889,40 +890,19 @@ $(document).ready(function(){
         $(document).on('click','.AddVMModal_btn',function(e){
             e.preventDefault();
             var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+            
             $("#addform").trigger('reset');
             $("#AddVirtualMachineModal").modal('show');
             $("#add_cluster_id").val($(this).data("id"));
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para registrar uma nova VM. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+           
         });
         //fim exibe form de adição da VirtualMachine
         //Início da adição da VirtualMachine
         $(document).on('click','.add_virtualmachine',function(e){
             e.preventDefault();      
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var strcolor = $(this).data("color");
             var loading = $("$imgadd");
                 loading.show();
             var vlans = new Array;
@@ -950,7 +930,7 @@ $(document).ready(function(){
             }    
            
             $.ajax({
-                url:'/datacenter/vm/adiciona-vm',
+                url:'/datacenteradmin/vm/adiciona-vm',
                 type:'POST',
                 dataType: 'json',
                 data: data,
@@ -987,16 +967,16 @@ $(document).ready(function(){
                             <th scope="row">'+response.virtualmachine.nome_vm+'</th>';
                             var bloqueia = true;                        
                             if((response.virtualmachine.senha)==""){
-                            limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                            limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                             }else{
                                 $.each(response.users,function(key,user_values){
                                     if(user_values.id == response.user.id){                                    
-                                        limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                        limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                         bloqueia = false;                              
                                     }
                                 });                            
                                 if(bloqueia){
-                                limita4 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'"  data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                                limita4 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'"  data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                                 }
                             }  
                             limita5 = '<td>\
@@ -1012,9 +992,10 @@ $(document).ready(function(){
                                             var num = vl.id;
                                             var strnum = String(num);                                                                                                       
                                             var meulink = ""; 
-                                                meulink = "{{route('datacenter.vm.index_vlanXvm',[':id',':vlid'])}}";
+                                                meulink = "{{route('datacenteradmin.vm.vm.index_vlanXvm',[':id',':vlid',':color'])}}";
                                                 meulink = meulink.replace(':id',strref);
-                                                meulink = meulink.replace(':vlid',strnum);                                            
+                                                meulink = meulink.replace(':vlid',strnum);
+                                                meulink = meulink.replace(':color',strcolor);
                                             $("#dropdown"+response.virtualmachine.id).append('<li data-id="'+vl.id+'" class="dropdown-item"><a href="'+meulink+'" class="dropdown-item">'+vl.nome_vlan+'</a></li>');
                                         });                                 
                                         
@@ -1024,8 +1005,8 @@ $(document).ready(function(){
                             <td>'+response.virtualmachine.ambiente.nome_ambiente+'</td>\
                             <td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-vm="'+response.virtualmachine.nome_vm+'" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-color="'+strcolor+'" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" class="edit_vm_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.virtualmachine.id+'" data-admin="'+response.user.admin+'" data-vm="'+response.virtualmachine.nome_vm+'" class="delete_vm_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
@@ -1062,38 +1043,14 @@ $(document).ready(function(){
         });
         $(document).on('click','.nova_base_btn',function(e){
             e.preventDefault();
-            var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
+            var link = "{{asset('storage')}}";            
             var labelHtml = ($(this).data("nome_vm")).trim();
-            if(setoradmin==1){
-    
+                
             $("#addbaseform").trigger('reset');
             $("#AddBaseModal").modal('show');
             $("#add_vm_id").val($(this).data("id"));
             $("#label_nome_vm").replaceWith('<Label id="label_nome_vm" style="font-style:italic;">'+labelHtml+'</Label>');
             $("#saveformbase_errList").replaceWith('<ul id="saveformbase_errList"></ul>');
-            }else{
-                  Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para registrar uma base de dados. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
     
         });
         //Fim exibe nova base de dados caso não possua nenhuma
@@ -1117,7 +1074,7 @@ $(document).ready(function(){
             }
            
             $.ajax({            
-                url: '/datacenter/vm/adiciona-basededados',
+                url: '/datacenteradmin/vm/adiciona-basededados',
                 type: 'POST',
                 dataType:'json',
                 data:data,
@@ -1157,36 +1114,14 @@ $(document).ready(function(){
             var labelHtml = ($(this).data("nomevm")).trim();            
             var labelclusterip = ($(this).data("clusterip")).trim();
             var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+            
             $("#addformsenha").trigger('reset');
             $("#AddSenhaVM").modal('show');
             $("#add_VMsenha_id").val($(this).data("id"));
             $("#nomeVM").replaceWith('<Label id="nomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
             $("#clusterip").replaceWith('<Label id="clusterip" style="font-style:italic;">'+labelclusterip+'</Label>');            
             $("#saveformsenha_errList").replaceWith('<ul id="saveformsenha_errList"></ul>');
-            }else{
-                  Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+          
         });
 
          $(document).on('click','.add_senhaVM_btn',function(e){
@@ -1220,7 +1155,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/vm/storesenhavm/'+id,
+                url:'/datacenteradmin/vm/storesenhavm/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1245,16 +1180,16 @@ $(document).ready(function(){
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.virtualmachine.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 
@@ -1274,11 +1209,8 @@ $(document).ready(function(){
         e.preventDefault();
 
         var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
         var opcaosenha = $(this).data("opt");
-
-        if(setoradmin==1){
-
+        
         if(opcaosenha){
     
         var id = $(this).data("id");
@@ -1299,7 +1231,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/vm/editsenhavm/'+id,
+            url: '/datacenteradmin/vm/editsenhavm/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.virtualmachine.created_at);
@@ -1367,33 +1299,11 @@ $(document).ready(function(){
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
                 showCancelButton: false,
-                confirmButtonText: 'Ok, obrigado!',                
+                confirmButtonText: 'Ok!',                
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
 
-}else{
-     Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-}
 
              
     });
@@ -1430,7 +1340,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/vm/updatesenhavm/'+id,
+                url:'/datacenteradmin/vm/updatesenhavm/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1456,16 +1366,16 @@ $(document).ready(function(){
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.virtualmachine.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.virtualmachine.id+'" type="button" data-id="'+response.virtualmachine.id+'" data-nomevm="'+response.virtualmachine.nome_vm+'" data-clusterip="'+response.virtualmachine.cluster+'/'+response.virtualmachine.ip+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 

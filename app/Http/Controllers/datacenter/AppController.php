@@ -30,7 +30,7 @@ class AppController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, int $id)
+    public function index(Request $request, int $id, $color)
     {
         if(is_null($request->pesquisa)){
             $apps = $this->app->query()->where('base_id','=',$id)->orderByDesc('id')->paginate(6);
@@ -47,9 +47,9 @@ class AppController extends Controller
         $projetos = Projeto::all();
         $bases = $this->base->query()->where('virtual_machine_id','=',$bd->virtual_machine_id)->orderByDesc('id')->get();
         $users = $this->users->query()
-                             ->where('moderador','=','true')
+                             ->where('admin','=','true')
                              ->where('inativo','=','false')
-                             ->where('setor_idsetor','=',1)
+                             ->where('setor_id','=',1)
                              ->orderBy('name')
                              ->get();
         return view('datacenter.app.index',[
@@ -60,7 +60,8 @@ class AppController extends Controller
             'projetos' => $projetos,
             'bases' => $bases,
             'vm' => $vm,
-            'users' => $users,                   
+            'users' => $users,
+            'color' =>$color
         ]);
     }
 

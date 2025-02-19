@@ -34,7 +34,7 @@ class VirtualMachineController extends Controller
     /**
      * Método para listagem de registros com opção de pesquisa
      */
-    public function index(Request $request,int $id)
+    public function index(Request $request,int $id, $color)
     {      
         if(is_null($request->pesquisa)){                    
             $virtualmachines = $this->virtualmachine->query()->where('cluster_id','=',$id)->orderByDesc('id')->paginate(6);        
@@ -55,9 +55,9 @@ class VirtualMachineController extends Controller
         $vlans = Vlan::all();  //todas as vlans
         $cluster = Cluster::find($id);        
         $users = $this->users->query()
-                             ->where('moderador','=','true')
+                             ->where('admin','=','true')
                              ->where('inativo','=','false')
-                             ->where('setor_idsetor','=',1)
+                             ->where('setor_id','=',1)
                              ->orderBy('name')
                              ->get();
         return view('datacenter.virtual_machine.index',[            
@@ -69,6 +69,7 @@ class VirtualMachineController extends Controller
             'orgaos'          => $orgaos,
             'ambientes'       => $ambientes,
             'users'           => $users,
+            'color'           => $color 
         ]);
     }
 
@@ -280,7 +281,7 @@ class VirtualMachineController extends Controller
         $vl = $virtualmachine->vlans; //todos as vlans relacionadas
         $bases = $virtualmachine->bases;
         if(($virtualmachine->vlans()->count())||($virtualmachine->bases()->count())||($virtualmachine->users()->count())){
-            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+            if((auth()->user()->admin)&&(!(auth()->user()->inativo))){
                 if($virtualmachine->vlans()->count){
                     $virtualmachine->vlans()->detach($vl); //exclui o relacionamento n:n
                 }
@@ -323,7 +324,7 @@ class VirtualMachineController extends Controller
     /**
      * Método para mostrar as vlans relacionadas às vms
      */
-    public function VlanXVm(int $id,int $vlid){                   
+    public function VlanXVm(int $id,int $vlid, $color){                   
                 $vlan = $this->vlan->whereId($vlid)->first();                
                 $virtualmachines = $vlan->virtual_machines()->paginate(5);                
                 $projetos = Projeto::all(); //todos os projetos        
@@ -331,7 +332,7 @@ class VirtualMachineController extends Controller
                 $ambientes = Ambiente::all(); //todos os ambientes
                 $vlans = Vlan::all();  //todas as vlans
                 $cluster = Cluster::find($id);                
-                $users = $this->users->query()->where('moderador','=','true')->where('inativo','=','false')->orderBy('name')->get();
+                $users = $this->users->query()->where('admin','=','true')->where('inativo','=','false')->orderBy('name')->get();
                 $user = auth()->user();
                 return view('datacenter.virtual_machine.index_vlanXvm',[
                     'cluster'         => $cluster,
@@ -343,6 +344,7 @@ class VirtualMachineController extends Controller
                     'ambientes'       => $ambientes,                    
                     'users'           => $users,
                     'user'            => $user,
+                    'color'           => $color
                 ]);        
     }
 

@@ -14,7 +14,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddAppModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar APP</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -73,7 +73,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_app_btn"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_app_btn"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -84,7 +84,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditAppModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar APP</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close"> 
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -144,7 +144,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_app_btn"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_app_btn"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -155,7 +155,7 @@
    <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaApp" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -217,7 +217,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_senhaapp_btn"><img id="imgaddsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_senhaapp_btn"><img id="imgaddsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -228,7 +228,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaApp" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -304,7 +304,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhaapp_btn"><img id="imgeditsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_senhaapp_btn"><img id="imgeditsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -317,7 +317,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>    
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenter.app.app.index',['id'=>$id])}}" class="form-search" method="GET">
+                <form action="{{route('datacenteradmin.app.app.index',['id'=>$id,'color'=>$color])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="hidden" id="baseid" value="{{$id}}">
@@ -326,7 +326,7 @@
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                             <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" data-nome_base="{{$bd->nome_base}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddApp_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                            <button type="button" data-id="{{$id}}" data-nome_base="{{$bd->nome_base}}" class="AddApp_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                             <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -334,7 +334,7 @@
                 </form>
             </section>
             <table class="table table-hover">
-                <thead class="sidebar-dark-primary" style="color: white">
+            <thead class="bg-{{$color}}" style="color: white">
                     <tr>
                         <th scope="col">APP</th>
                         <th scope="col"><i class="fas fa-key"></i> PASS</th>
@@ -382,7 +382,7 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="d-flex hover justify-content-center">
+            <div class="d-flex hover justify-content-center bg-{{$color}}">
                 {{$apps->links()}}                
             </div>
             <div>
@@ -411,10 +411,9 @@
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var link = "{{asset('storage')}}";
         var admin = $(this).data("admin");
-        var setoradmin = $(this).data("setoradmin");
         var id = $(this).data("id");
         var nomeapp = ($(this).data("nomeapp")).trim();
-        if((admin)&&(setoradmin==1)){
+        if(admin){
         Swal.fire({
             showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -434,7 +433,7 @@
              }).then((result)=>{
              if(result.isConfirmed){               
                 $.ajax({
-                    url: '/datacenter/app/delete-app/'+id,
+                    url: '/datacenteradmin/app/delete-app/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data: {
@@ -489,10 +488,9 @@
         e.preventDefault();
         var link = "{{asset('storage')}}";
         var admin = $(this).data("admin");
-        var setoradmin = $(this).data("setoradmin");
         var nome = $(this).data("nomeapp");
         var id = $(this).data("id");
-        if((admin)&&(setoradmin==1)){
+        if(admin){
         $("#editform").trigger('reset');
         $("#EditAppModal").modal('show');    
         $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
@@ -505,7 +503,7 @@
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/app/edit-app/'+id,
+            url: '/datacenteradmin/app/edit-app/'+id,
             success: function(response){
                 if(response.status==200){ 
                     $("#edit_app_id").val(id);               
@@ -626,6 +624,7 @@
             var upd_orgao_id = $("#edit_selorgao_id").val();
             var upd_base_id = $("#edit_selbase_id").val();
             var edit_https = false;
+            var strcolor = $(this).data("color");
             $("input[name='edit_https']:checked").each(function(){
                 edit_https = true
             });
@@ -644,7 +643,7 @@
                 type: 'POST',
                 data: data,
                 dataType: 'json',
-                url: '/datacenter/app/update-app/'+id,
+                url: '/datacenteradmin/app/update-app/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros
@@ -683,27 +682,27 @@
                             <th scope="row">'+response.app.nome_app+'</th>';
                         var bloqueia = true;                        
                         if((response.app.senha)==""){
-                        limita2 = '<button id="botaosenha'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita4 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita4 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                   
                             if(response.app.https){
-                               limita5 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
+                               limita5 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
                             }else{
-                               limita6 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
+                               limita6 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
                             }
                             limita7 = '<td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-color="'+strcolor+'" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-nomeapp="'+response.app.nome_app+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';   
@@ -722,37 +721,15 @@
             e.preventDefault();
             var labelHtml = ($(this).data("nome_base")).trim();
             var labelHtmlVm = ($("#vmnome").val()).trim(); 
-            var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+            var link = "{{asset('storage')}}";            
+            
             $("#addform").trigger('reset');
             $("#AddAppModal").modal('show');
             $("#add_base_id").val($(this).data("id"));
             $("#add_nome_base").replaceWith('<Label id="add_nome_base" style="font-style:italic;">'+labelHtml+'</Label>');
             $("#add_nome_vm").replaceWith('<Label id="add_nome_vm" style="font-style:italic;">'+labelHtmlVm+'</Label>');
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>'); 
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Você não pode registrar APP. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+           
         });
         //fim exibição do form AddAppModal
         //inicio do envio novo registro
@@ -765,6 +742,7 @@
             var ins_projeto_id = $("#add_selprojeto_id").val();
             var ins_orgao_id = $("#add_selorgao_id").val();
             var ins_base_id = $("#add_selbase_id").val();
+            var strcolor = $(this).data("color");
             var add_https = false;
             $("input[name='add_https']:checked").each(function(){
                 add_https = true
@@ -783,7 +761,7 @@
     
             $.ajax({
                 type: 'POST',
-                url: '/datacenter/app/adiciona-app',
+                url: '/datacenteradmin/app/adiciona-app',
                 data: data,
                 dataType: 'json',
                 success:function(response){
@@ -821,27 +799,27 @@
                             <th scope="row">'+response.app.nome_app+'</th>';
                         var bloqueia = true;                        
                         if((response.app.senha)==""){
-                        limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita4 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita4 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }            
                             if(response.app.https){
-                            limita5 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
+                            limita5 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="0" class="https_btn fas fa-lock" style="background: transparent; color: green; border: none;"></button></td>';
                              }else{
-                            limita6 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
+                            limita6 = '<td id="st_https'+response.app.id+'"><button type="button" data-id="'+response.app.id+'" data-https="1" class="https_btn fas fa-lock-open" style="background: transparent; color: red; border: none;"></button></td>';
                             }
                             limita7 = '<td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-color="'+strcolor+'" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-nomeapp="'+response.app.nome_app+'" class="edit_app_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.app.id+'" data-admin="'+response.user.admin+'" data-nomeapp="'+response.app.nome_app+'" class="delete_app_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
@@ -862,8 +840,7 @@
             var id = $(this).data("id");        
             var vhttps = false;
             var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+
             if($(this).data("https")=="1"){
                 vhttps = true;
             }else{
@@ -878,7 +855,7 @@
                 type:'POST',
                 dataType:'json',
                 data:data,            
-                url:'/datacenter/app/https-app/'+id,
+                url:'/datacenteradmin/app/https-app/'+id,
                 success:function(response){
                     if(response.status==200){
                         var limita1 = "";
@@ -893,29 +870,7 @@
                     }
                 }
             });
-        }else{
-            Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Para alterar o HTTPS o seu usuário deve pertencer ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-        }
-    
+            
         });
         //fim muda o https na lista index
 
@@ -927,39 +882,17 @@
 
         $(document).on('click','.cadsenha_btn',function(e){
             e.preventDefault();
-            var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
+            var link = "{{asset('storage')}}";            
             var labelHtml = ($(this).data("nomeapp")).trim();            
             var labelDominio = ($(this).data("dominio")).trim();            
-            if(setoradmin==1){
+            
             $("#addformsenha").trigger('reset');
             $("#AddSenhaApp").modal('show');
             $("#add_appsenha_id").val($(this).data("id"));
             $("#nomeapp").replaceWith('<Label id="nomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
             $("#dominioapp").replaceWith('<Label id="dominioapp" style="font-style:italic;">'+labelDominio+'</Label>');            
             $("#saveformsenha_errList").replaceWith('<ul id="saveformsenha_errList"></ul>'); 
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Para abrir permissões de senha o seu usuário deve pertencer ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+           
         });
 
          $(document).on('click','.add_senhaapp_btn',function(e){
@@ -993,7 +926,7 @@
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/app/storesenhaapp/'+id,
+                url:'/datacenteradmin/app/storesenhaapp/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1018,16 +951,16 @@
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.app.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 
@@ -1047,10 +980,7 @@
         e.preventDefault();
 
         var opcaosenha = $(this).data("opt");
-        var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
-
-        if(setoradmin==1){
+        var link = "{{asset('storage')}}";        
 
         if(opcaosenha){
     
@@ -1072,7 +1002,7 @@
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/app/editsenhaapp/'+id,
+            url: '/datacenteradmin/app/editsenhaapp/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.app.created_at);
@@ -1140,34 +1070,11 @@
                 imageHeight: 200,
                 imageAlt: 'imagem do prodap',
                 showCancelButton: false,
-                confirmButtonText: 'Ok, obrigado!',                
+                confirmButtonText: 'Ok!',                
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
-}else{
 
-    Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'./logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-
-}
              
     });
     //fim exibe EditAppModal
@@ -1203,7 +1110,7 @@
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/app/updatesenhaapp/'+id,
+                url:'/datacenteradmin/app/updatesenhaapp/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1228,16 +1135,16 @@
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.app.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.app.id+'" type="button" data-id="'+response.app.id+'" data-nomeapp="'+response.app.nome_app+'" data-dominio="'+response.app.dominio+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 

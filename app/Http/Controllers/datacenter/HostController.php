@@ -24,7 +24,7 @@ class HostController extends Controller
     /**
      * Método para listagem de registros com a opção de pesquisa
      */
-    public function index(Request $request,int $id)
+    public function index(Request $request,int $id, $color)
     {             
         if(is_null($request->pesquisa)){            
             $hosts = $this->host->query()->where('cluster_id','=',$id)->orderByDesc('id')->paginate(6);
@@ -36,9 +36,9 @@ class HostController extends Controller
         }                    
         $cluster = Cluster::find($id);
         $users = $this->users->query()
-                             ->where('moderador','=','true')
+                             ->where('admin','=','true')
                              ->where('inativo','=','false')
-                             ->where('setor_idsetor','=',1)
+                             ->where('setor_id','=',1)
                              ->orderBy('name')
                              ->get();
         return view('datacenter.host.index',[
@@ -46,6 +46,7 @@ class HostController extends Controller
             'id'    => $id,
             'cluster' => $cluster,
             'users'  => $users,
+            'color' => $color
         ]);
     }
 

@@ -15,7 +15,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddClusterModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Cluster</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                 <span aria-hidden="true" style="color: white;">&times;</span>
@@ -40,7 +40,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_cluster"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_cluster"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -52,7 +52,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddHostModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Host</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -82,7 +82,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_host"><img id="imgaddhost" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_host"><img id="imgaddhost" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -93,7 +93,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddVirtualMachineModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Virtual Machine</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -178,7 +178,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_virtualmachine"><img id="imgaddvm" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_virtualmachine"><img id="imgaddvm" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -189,7 +189,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditClusterModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Cluster</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -216,7 +216,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_cluster"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_cluster"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -228,7 +228,7 @@
 <div class="container-fluid py-5"> 
     <div id="success_message"></div>  
     <section class="border p-4 mb-4 d-flex align-items-left">    
-    <form action="{{route('datacenter.cluster.cluster.index')}}" class="form-search" method="GET">
+    <form action="{{route('datacenteradmin.cluster.cluster.index',['color'=>$color])}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do cluster" aria-label="Search"
@@ -236,7 +236,7 @@
             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                 <i class="fas fa-search"></i>
             </button>        
-            <button type="button" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddClusterModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+            <button type="button" class="AddClusterModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                 <i class="fas fa-plus"></i>
             </button>                
             </div>            
@@ -246,7 +246,7 @@
     </section>    
             
                     <table class="table table-hover">
-                        <thead class="sidebar-dark-primary" style="color: white">
+                    <thead class="bg-{{$color}}" style="color: white">
                             <tr>                                
                                 <th scope="col">CLUSTERS</th>
                                 <th scope="col">HOSTS</th>
@@ -262,29 +262,29 @@
                                 <td>
                                    <div class="btn-group">                                        
                                         @if($cluster->hosts()->count())
-                                        <form action="{{route('datacenter.host.host.index',['id' => $cluster->id])}}" method="get">
-                                        <button type="submit" data-id="{{$cluster->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="list_host_btn fas fa-server" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista HOSTS"> {{$cluster->hosts->count()}}</button>
+                                        <form action="{{route('datacenteradmin.host.host.index',['id' => $cluster->id,'color'=>$color])}}" method="get">
+                                        <button type="submit" data-id="{{$cluster->id}}" class="list_host_btn fas fa-server" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista HOSTS"> {{$cluster->hosts->count()}}</button>
                                         </form>
                                         @else
-                                        <button type="button" data-id="{{$cluster->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Novo HOST"></button>
+                                        <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Novo HOST"></button>
                                         @endif
                                     </div>
                                 </td>
                                 <td>
                                      <div class="btn-group">                                        
                                         @if($cluster->virtual_machines()->count())
-                                        <form action="{{route('datacenter.vm.vm.index',['id' => $cluster->id])}}" method="get">
-                                        <button type="submit" data-id="{{$cluster->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="list_vm_btn fas fa-network-wired" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista VMs"> {{$cluster->virtual_machines->count()}}</button>
+                                        <form action="{{route('datacenteradmin.vm.vm.index',['id' => $cluster->id,'color'=>$color])}}" method="get">
+                                        <button type="submit" data-id="{{$cluster->id}}" class="list_vm_btn fas fa-network-wired" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista VMs"> {{$cluster->virtual_machines->count()}}</button>
                                         </form>
                                         @else
-                                        <button type="button" data-id="{{$cluster->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Nova VM"></button>
+                                        <button type="button" data-id="{{$cluster->id}}" data-nomecluster="{{$cluster->nome_cluster}}" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Nova VM"></button>
                                         @endif
                                     </div> 
                                 </td>                                                            
                                 <td>                                    
                                         <div class="btn-group">                                           
-                                            <button type="button" data-id="{{$cluster->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomecluster="{{$cluster->nome_cluster}}" class="edit_cluster fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar CLUSTER"></button>
-                                            <button type="button" data-id="{{$cluster->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomecluster="{{$cluster->nome_cluster}}" class="delete_cluster_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir CLUSTER"></button>
+                                            <button type="button" data-color="{{$color}}" data-id="{{$cluster->id}}" data-admin="{{auth()->user()->admin}}" data-nomecluster="{{$cluster->nome_cluster}}" class="edit_cluster fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar CLUSTER"></button>
+                                            <button type="button" data-id="{{$cluster->id}}" data-admin="{{auth()->user()->admin}}" data-nomecluster="{{$cluster->nome_cluster}}" class="delete_cluster_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir CLUSTER"></button>
                                         </div>                                    
                                 </td>
                             </tr>                              
@@ -295,7 +295,7 @@
                             @endforelse                                                    
                         </tbody>
                     </table> 
-                    <div class="d-flex hover justify-content-center">
+                    <div class="d-flex hover justify-content-center bg-{{$color}}">
                     {{$clusters->links()}}
                     </div>  
             </div>     
@@ -324,10 +324,9 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
             var link = "{{asset('storage')}}";
-            var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
+            var admin = $(this).data("admin");            
             var nomecluster = ($(this).data("nomecluster")).trim();
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -347,7 +346,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                    
                 $.ajax({
-                    url: '/datacenter/cluster/delete-cluster/'+id,
+                    url: '/datacenteradmin/cluster/delete-cluster/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data:{
@@ -405,8 +404,7 @@ $(document).ready(function(){
             var id = $(this).data("id");  
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             $("#editmyform").trigger('reset');
             $("#EditClusterModal").modal('show');    
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');             
@@ -421,7 +419,7 @@ $(document).ready(function(){
             $.ajax({ 
                 type: 'GET',             
                 dataType: 'json',                                    
-                url: '/datacenter/cluster/edit-cluster/'+id,                                
+                url: '/datacenteradmin/cluster/edit-cluster/'+id,                                
                 success: function(response){           
                     if(response.status==200){    
                         var vnomecluster = (response.cluster.nome_cluster).trim();
@@ -479,7 +477,7 @@ $(document).ready(function(){
                 type: 'POST',                          
                 data: data,
                 dataType: 'json',    
-                url: '/datacenter/cluster/update-cluster/'+id,         
+                url: '/datacenteradmin/cluster/update-cluster/'+id,         
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
@@ -526,33 +524,11 @@ $(document).ready(function(){
         $(document).on('click','.AddClusterModal_btn',function(e){  //início da exibição do form AddClusterModal
             e.preventDefault();  
             var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+            
             $("#addmyform").trigger('reset');        
             $("#AddClusterModal").modal('show');           
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');   
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para registrar um cluster. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+            
         });   
     
         //fim exibe form de adição de registro
@@ -562,6 +538,7 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var loading = $("#imgadd");
                 loading.show();
+            var strcolor = $(this).data("color");
             var data = {
                 'nome_cluster': ($(".nome_cluster").val()).trim(),
                 'total_memoria': ($(".total_memoria").val()).trim(),
@@ -570,7 +547,7 @@ $(document).ready(function(){
                 '_token':CSRF_TOKEN,
             }           
             $.ajax({            
-                url: '/datacenter/cluster/adiciona-cluster',
+                url: '/datacenteradmin/cluster/adiciona-cluster',
                 type: 'POST',
                 dataType: 'json',
                 data: data,                  
@@ -601,18 +578,18 @@ $(document).ready(function(){
                                     <th scope="row">'+response.cluster.nome_cluster+'</th>\
                                     <td>\
                                         <div class="btn-group">\
-                                            <button type="button" data-id="'+response.cluster.id+'" data-setoradmin="'+response.user.setor_idsetor+'" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
+                                            <button type="button" data-color="'+strcolor+'" data-id="'+response.cluster.id+'" class="novo_host_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
                                         </div>\
                                     </td>\
                                     <td>\
                                     <div class="btn-group">\
-                                        <button type="button" data-id="'+response.cluster.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
+                                        <button type="button" data-color="'+strcolor+'" data-id="'+response.cluster.id+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="novo_vm_btn fas fa-folder" style="background: transparent;border:none;color: orange;"></button>\
                                     </div>\
                                 </td>\
                                     <td>\
                                             <div class="btn-group">\
-                                                <button type="button" data-id="'+response.cluster.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="edit_cluster fas fa-edit" style="background:transparent;border:none;"></button>\
-                                                <button type="button" data-id="'+response.cluster.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="delete_cluster_btn fas fa-trash" style="background:transparent;border:none;"></button>\
+                                                <button type="button" data-color="'+strcolor+'" data-id="'+response.cluster.id+'" data-admin="'+response.user.admin+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="edit_cluster fas fa-edit" style="background:transparent;border:none;"></button>\
+                                                <button type="button" data-id="'+response.cluster.id+'" data-admin="'+response.user.admin+'" data-nomecluster="'+response.cluster.nome_cluster+'" class="delete_cluster_btn fas fa-trash" style="background:transparent;border:none;"></button>\
                                             </div>\
                                     </td>\
                                 </tr>';
@@ -636,35 +613,13 @@ $(document).ready(function(){
         $(document).on('click','.novo_host_btn',function(e){
             e.preventDefault();
             var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+            
             $("#addform").trigger('reset');
             $("#AddHostModal").modal('show');                                       
             $(".cluster").val(($(this).data("nomecluster")).trim());
             $("#add_cluster_id").val($(this).data("id"));
             $("#saveformHost_errList").replaceWith('<ul id="saveformHost_errList"></ul>');
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para registrar um novo host. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+            
         });
         //Fim Novo Host do cluster caso não possua nenhum
     
@@ -685,7 +640,7 @@ $(document).ready(function(){
             }              
            
             $.ajax({            
-                url: '/datacenter/cluster/adiciona-hostcluster',
+                url: '/datacenteradmin/cluster/adiciona-hostcluster',
                 type: 'POST',
                 dataType: 'json',
                 data: data,                  
@@ -748,37 +703,14 @@ $(document).ready(function(){
             e.preventDefault();
             var labelHtml = ($(this).data("nomecluster")).trim();
             var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+            
             $("#vm_addform").trigger('reset');
             $("#AddVirtualMachineModal").modal('show');
             $("#vm_add_cluster_id").val($(this).data("id"));
             $("#vm_nome_cluster").replaceWith('<Label id="vm_nome_cluster" style="font-style:italic;">'+labelHtml+'</Label>');
             $("#input_nome_cluster").val( ($(this).data("nomecluster")).trim());
             $("#vm_saveform_errList").replaceWith('<ul id="vm_saveform_errList"></ul>'); 
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para registrar uma VIRTUAL MACHINE. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
-
+           
         });
         ///Fim Nova VM do cluster caso não possua nenhuma
 //Início da adição da VirtualMachine
@@ -816,7 +748,7 @@ $(document).on('click','.add_virtualmachine',function(e){
             }   
                       
             $.ajax({
-                url:'/datacenter/cluster/cluster-adiciona-vm',
+                url:'/datacenteradmin/cluster/cluster-adiciona-vm',
                 type:'POST',
                 dataType: 'json',
                 data: data,

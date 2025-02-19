@@ -15,7 +15,7 @@
  <div class="modal fade animate__animated animate__bounce animate__faster" id="AddManualForm" tabindex="-1" role="dialog" aria-labelledby="titleModaLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Manual</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -47,7 +47,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" >Fechar</button>
-                    <button type="button" class="btn btn-primary add_manual_btn"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                    <button type="button" class="btn btn-{{$color}} add_manual_btn"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                 </div>
             </div>
         </div>
@@ -59,7 +59,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditManualForm" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Manual</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -91,7 +91,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary update_manual"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                    <button type="button" class="btn btn-{{$color}} update_manual"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
@@ -103,7 +103,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="uploadPDFModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Upload de Manual PDF</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -122,7 +122,7 @@
                    <!--fim arquivo pdf-->                                     
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="submit" class="btn btn-primary upload_manual"><img id="imgenviar" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Enviar</button>
+                    <button type="submit" class="btn btn-{{$color}} upload_manual"><img id="imgenviar" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Enviar</button>
                 </div>
                 </form>
             </div>
@@ -137,7 +137,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenteradmin.manual.manual.index')}}" class="form-search" method="GET">                                      
+                <form action="{{route('datacenteradmin.manual.manual.index',['color'=>$color])}}" class="form-search" method="GET">                                      
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Descrição do manual" aria-label="Search" aria-labelledby="search-addon">
@@ -152,7 +152,7 @@
                 </form>
             </section>
             <table class="table table-hover">
-                <thead class="sidebar-dark-primary" style="color: white">
+            <thead class="bg-{{$color}}" style="color: white">
                     <tr>
                         <th scope="col">MANUAIS</th>
                         <th scope="col">AREAS REF</th>
@@ -182,8 +182,8 @@
                         </td>                       
                         <td>
                             <div class="btn-group">
-                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" data-descricao="{{$manual->descricao}}" class="edit_manual_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" data-descricao="{{$manual->descricao}}" class="delete_manual_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" data-descricao="{{$manual->descricao}}" class="edit_manual_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" data-descricao="{{$manual->descricao}}" class="delete_manual_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -194,7 +194,7 @@
                     @endforelse 
                 </tbody>
             </table>
-            <div class="d-flex hover justify-content-center">
+            <div class="d-flex hover justify-content-center bg-{{$color}}">
             {{$manuais->links()}}   
     </div>
 </div>
@@ -224,10 +224,9 @@
             var id = $(this).data("id");  
             var nomemanual = ($(this).data("descricao")).trim();
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
             var idsetor = $(this).data("idsetor");
             var setor = $(this).data("setor");
-            if((admin)&&(setoradmin==idsetor)){
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -305,11 +304,10 @@
             var link = "{{asset('storage')}}";
             var id = $(this).data("id");
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
             var nome = $(this).data("descricao");
             var idsetor = $(this).data("idsetor");
             var setor = $(this).data("setor");
-            if((admin)&&(setoradmin==idsetor)){
+            if(admin){
             $("#editmyform").trigger('reset');
             $("#EditManualForm").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');    
@@ -447,8 +445,8 @@
                             linha2 = '</td>\
                                     <td>\
                                     <div class="btn-group">\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div>\
                                     </td>\
                                     </tr>';   
@@ -534,8 +532,8 @@
                                     </td>\
                                     <td>\
                                     <div class="btn-group">\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none;"></button>\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none;"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none;"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none;"></button>\
                                     </div>\
                                     </td>\
                                     </tr>'; 
@@ -558,7 +556,6 @@
         var link = "{{asset('storage')}}";
         var id = $(this).data("id");
         var admin = $(this).data("admin");
-        var setoradmin = $(this).data("setoradmin");
         var idsetor = $(this).data("idsetor");
         var setor = $(this).data("setor");
         var vfilename = ($(this).data("filename")).trim();
@@ -669,13 +666,10 @@
             e.preventDefault();            
             
             var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
             var idsetor = $(this).data("idsetor");
             var setor = $(this).data("setor");
             var id = $(this).data("manualid");
-            
-            if(setoradmin==idsetor){
-    
+                            
             $("#uploadmyform").trigger('reset');
             $("#uploadPDFModal").modal('show');       
             $("#uploadform_errList").replaceWith('<ul id="uploadform_errList"></ul>');                  
@@ -694,28 +688,7 @@
                     }
                 }            
             });
-        }else{
-             Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA "+setor+" !",
-                text: "Registro feito por um usuário pertencente a "+setor+". Somente usuário do setor "+setor+" pode fazer upload!",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            }) 
-        }
+        
         });//fim exibição do form uploadPDFModal
     
     
@@ -763,7 +736,7 @@
                       $("#up"+arq.id).remove();
                        var item = '<li id="up'+arq.id+'">\
                                 <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>\
-                                <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_file_btn fas fa-trash"></i>'+arq.nome_arquivo+'</li><br>';                                
+                                <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_file_btn fas fa-trash"></i>'+arq.nome_arquivo+'</li><br>';                                
                        $("#listaarquivos"+response.manualid).append(item);
                        });     
               } 

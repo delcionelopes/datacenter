@@ -14,7 +14,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddProjetoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Projeto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -30,7 +30,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal" >Fechar</button>
-                    <button type="button" class="btn btn-primary add_projeto"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                    <button type="button" class="btn btn-{{$color}} add_projeto"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                 </div>
             </div>
         </div>
@@ -44,7 +44,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditProjetoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Projeto</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -61,7 +61,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary update_projeto"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                    <button type="button" class="btn btn-{{$color}} update_projeto"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
@@ -76,20 +76,20 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenteradmin.projeto.projeto.index')}}" class="form-search" method="GET">
+                <form action="{{route('datacenteradmin.projeto.projeto.index',['color'=>$color])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisanome" class="form-control rounded float-left" placeholder="Nome do projeto" aria-label="Search" aria-describedby="search-addon">                            
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                 <i class="fas fa-search"></i>
                             </button>                                                                                                             
-                            <button type="button" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddProjetoModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></button>
+                            <button type="button" class="AddProjetoModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></button>
                         </div>                        
                     </div>                    
                 </form>                                
             </section>
             <table class="table table-hover">
-                <thead class="sidebar-dark-primary" style="color: white">
+            <thead class="bg-{{$color}}" style="color: white">
                     <tr>
                         <th>PROJETOS</th>                       
                         <TH>AÇÕES</TH>
@@ -102,8 +102,8 @@
                         <th scope="row">{{$projeto->nome_projeto}}</th>                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$projeto->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeprojeto="{{$projeto->nome_projeto}}" class="edit_projeto fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button type="button" data-id="{{$projeto->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeprojeto="{{$projeto->nome_projeto}}" class="delete_projeto_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button type="button" data-id="{{$projeto->id}}" data-admin="{{auth()->user()->admin}}" data-nomeprojeto="{{$projeto->nome_projeto}}" class="edit_projeto fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button type="button" data-id="{{$projeto->id}}" data-admin="{{auth()->user()->admin}}" data-nomeprojeto="{{$projeto->nome_projeto}}" class="delete_projeto_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -114,7 +114,7 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="d-flex hover justify-content-center">
+            <div class="d-flex hover justify-content-center bg-{{$color}}">
                 {{$projetos->links()}}
     </div>
 </div>
@@ -140,9 +140,8 @@
             var link = "{{asset('storage')}}";
             var id = $(this).data("id");
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
             var nomeprojeto = ($(this).data("nomeprojeto")).trim();
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -223,9 +222,8 @@
             var id = $(this).data("id");             
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
             var nome = $(this).data("nomeprojeto");
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             $("#editform").trigger('reset');
             $("#EditProjetoModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
@@ -317,8 +315,8 @@
                             var linha = '<tr id="projeto'+response.projeto.id+'">\
                                     <th scope="row">'+response.projeto.nome_projeto+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="edit_projeto fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="delete_projeto_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="edit_projeto fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="delete_projeto_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';    
                             $("#projeto"+id).replaceWith(linha); 
@@ -339,33 +337,10 @@
     $(document).on('click','.AddProjetoModal_btn',function(e){                  
             e.preventDefault();       
             var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin){
+            
             $("#addform").trigger('reset');
             $("#AddProjetoModal").modal('show');               
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>'); 
-            }else{
-                 Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA INFRA !",
-                text: "Você não pode criar um novo registro. Pois seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
     
         });
     
@@ -414,8 +389,8 @@
                             linha1 = '<tr id="projeto'+response.projeto.id+'">\
                                     <th scope="row">'+response.projeto.nome_projeto+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="edit_projeto fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="delete_projeto_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="edit_projeto fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.projeto.id+'" data-admin="'+response.user.admin+'" data-nomeprojeto="'+response.projeto.nome_projeto+'" class="delete_projeto_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';
                         if(!$("#nadaencontrado").html==""){

@@ -145,7 +145,7 @@ class ProjetoController extends Controller
         $vms = $projeto->virtual_machines;
         $apps = $projeto->apps;
         if(($projeto->bases()->count())||($projeto->virtual_machines()->count())||($projeto->apps()->count())){
-            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+            if((auth()->user()->admin)&&(!(auth()->user()->inativo))){
                 if($projeto->bases()->count()){
                     foreach ($bases as $base) {
                         $b = Base::find($base->id);

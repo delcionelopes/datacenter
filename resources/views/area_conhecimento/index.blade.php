@@ -15,7 +15,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddArea_ConhecimentoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Área de Conhecimento</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -31,7 +31,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary add_area_conhecimento"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                    <button type="button" class="btn btn-{{$color}} add_area_conhecimento"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                 </div>
             </div>
         </div>
@@ -43,7 +43,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditArea_ConhecimentoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Área do Conhecimento</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                      <span aria-hidden="true" style="color: white;">&times;</span>
@@ -60,7 +60,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-primary update_area_conhecimento"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                    <button type="button" class="btn btn-{{$color}} update_area_conhecimento"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
@@ -74,7 +74,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenter.areaconhecimento.areaconhecimento.index')}}" class="form-search" method="GET">
+                <form action="{{route('datacenteradmin.areaconhecimento.areaconhecimento.index',['color'=>$color])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="nomepesquisa" class="form-control rounded float-left" placeholder="Descrição da área" aria-label="Search" aria-describedby="search-addon">
@@ -89,7 +89,7 @@
                 </form>
             </section>
             <table class="table table-hover">
-                <thead class="sidebar-dark-primary" style="color: white">
+            <thead class="bg-{{$color}}" style="color: white">
                     <tr>
                         <th scope="col">ÁREAS DE CONHECIMENTO</th>                    
                         <th scope="col">AÇÕES</th>
@@ -102,8 +102,8 @@
                         <th scope="row">{{$area_conhecimento->descricao}}</th>                        
                         <td>
                             <div class="btn-group">
-                                <button data-id="{{$area_conhecimento->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-descricao="{{$area_conhecimento->descricao}}" class="edit_area_conhecimento fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar ÁREA"></button>
-                                <button data-id="{{$area_conhecimento->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-descricao="{{$area_conhecimento->descricao}}" class="delete_area_conhecimento_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir ÁREA"></button>
+                                <button data-id="{{$area_conhecimento->id}}" data-admin="{{auth()->user()->admin}}" data-descricao="{{$area_conhecimento->descricao}}" class="edit_area_conhecimento fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar ÁREA"></button>
+                                <button data-id="{{$area_conhecimento->id}}" data-admin="{{auth()->user()->admin}}" data-descricao="{{$area_conhecimento->descricao}}" class="delete_area_conhecimento_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir ÁREA"></button>
                             </div>
                         </td>
                     </tr>
@@ -114,7 +114,7 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="d-flex hover justify-content-center">
+            <div class="d-flex hover justify-content-center bg-{{$color}}">
             {{$areas_conhecimento->links()}}
       
     </div>
@@ -142,8 +142,7 @@
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");           
             var nomedaarea = ($(this).data("descricao")).trim();
-            var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
+            var admin = $(this).data("admin");            
             if(admin){
             Swal.fire({
                 showClass: {
@@ -164,7 +163,7 @@
              }).then((result)=>{
              if(result.isConfirmed){             
                     $.ajax({
-                    url:'/datacenter/areaconhecimento/delete-areaconhecimento/'+id,
+                    url:'/datacenteradmin/areaconhecimento/delete-areaconhecimento/'+id,
                     type:'POST',
                     dataType:'json',
                     data:{
@@ -223,8 +222,7 @@
             e.preventDefault();
             
             var linklogo = "{{asset('storage')}}";
-            var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
+            var admin = $(this).data("admin");            
             var nome = $(this).data("descricao");
             var id = $(this).data("id");
             if(admin){
@@ -241,7 +239,7 @@
                 $.ajax({
                     type:'GET',
                     dataType:'json',
-                    url:'/datacenter/areaconhecimento/edit-areaconhecimento/'+id,
+                    url:'/datacenteradmin/areaconhecimento/edit-areaconhecimento/'+id,
                     success:function(response){
                         if(response.status==200){
                             var descricaoarea = (response.area_conhecimento.descricao).trim();
@@ -291,7 +289,7 @@
                     type:'POST',
                     data:data,
                     dataType:'json',
-                    url:'update-areaconhecimento/'+id,
+                    url:'/datacenteradmin/areaconhecimento/update-areaconhecimento/'+id,
                     success:function(response){
                         if(response.status==400){
                             //erros
@@ -320,8 +318,8 @@
                             var linha = '<tr id="area'+response.area_conhecimento.id+'">\
                                     <th scope="row">'+response.area_conhecimento.descricao+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.area_conhecimento.descricao+'" class="edit_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-descricao="'+response.area_conhecimento.descricao+'" class="edit_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-descricao="'+response.area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';                             
                              $("#area"+id).replaceWith(linha);                                                                                                        
@@ -359,7 +357,7 @@
             }   
             $.ajax({
                     type:'POST',
-                    url:'/datacenter/areaconhecimento/adiciona-areaconhecimento',
+                    url:'/datacenteradmin/areaconhecimento/adiciona-areaconhecimento',
                     data:data,
                     dataType:'json',
                     success:function(response){
@@ -395,8 +393,8 @@
                                 linha1 = '<tr id="area'+response.area_conhecimento.id+'">\
                                     <th scope="row">'+response.area_conhecimento.descricao+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.area_conhecimento.descricao+'" class="edit_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-descricao="'+response.area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-descricao="'+response.area_conhecimento.descricao+'" class="edit_area_conhecimento fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.area_conhecimento.id+'" data-admin="'+response.user.admin+'" data-descricao="'+response.area_conhecimento.descricao+'" class="delete_area_conhecimento_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';        
                         if(!$("#nadaencontrado").html==""){

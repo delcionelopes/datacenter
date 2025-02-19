@@ -145,7 +145,7 @@ class Area_ConhecimentoController extends Controller
         $sub_areas = $area_conhecimento->sub_area_conhecimento;
         $manuais = $area_conhecimento->manual;
         if(($area_conhecimento->sub_area_conhecimento()->count())||($area_conhecimento->manual()->count())){
-            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){                
+            if((auth()->user()->admin)&&(!(auth()->user()->inativo))){                
                 if($area_conhecimento->sub_area_conhecimento()->count()){                                        
                     foreach ($sub_areas as $sub_area) {
                         $s = Sub_Area_Conhecimento::find($sub_area->id);

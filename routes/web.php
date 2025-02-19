@@ -169,7 +169,7 @@ Route::group(['middleware'=> ['auth']],function(){
     
         //Rotas para a view index de plataforma    
         Route::prefix('plataforma')->name('plataforma.')->group(function(){
-        Route::get('index-plataforma',[PlataformaController::class,'index'])->name('plataforma.index');
+        Route::get('index-plataforma/{color}',[PlataformaController::class,'index'])->name('plataforma.index');
         Route::delete('delete-plataforma/{id}',[PlataformaController::class,'destroy']);
         Route::get('edit-plataforma/{id}',[PlataformaController::class,'edit']);
         Route::put('update-plataforma/{id}',[PlataformaController::class,'update']);
@@ -178,7 +178,7 @@ Route::group(['middleware'=> ['auth']],function(){
     
         //Rotas para a view index de projeto
         Route::prefix('projeto')->name('projeto.')->group(function(){    
-        Route::get('index-projeto',[ProjetoController::class,'index'])->name('projeto.index');
+        Route::get('index-projeto/{color}',[ProjetoController::class,'index'])->name('projeto.index');
         Route::delete('delete-projeto/{id}',[ProjetoController::class,'destroy']);
         Route::get('edit-projeto/{id}',[ProjetoController::class,'edit']);
         Route::put('update-projeto/{id}',[ProjetoController::class,'update']);
@@ -187,7 +187,7 @@ Route::group(['middleware'=> ['auth']],function(){
 
         //Rotas para a view index de area_conhecimento
         Route::prefix('areaconhecimento')->name('areaconhecimento.')->group(function(){
-        Route::get('index-areaconhecimento',[Area_ConhecimentoController::class,'index'])->name('areaconhecimento.index');
+        Route::get('index-areaconhecimento/{color}',[Area_ConhecimentoController::class,'index'])->name('areaconhecimento.index');
         Route::delete('delete-areaconhecimento/{id}',[Area_ConhecimentoController::class,'destroy']);
         Route::get('edit-areaconhecimento/{id}',[Area_ConhecimentoController::class,'edit']);
         Route::put('update-areaconhecimento/{id}',[Area_ConhecimentoController::class,'update']);
@@ -196,7 +196,7 @@ Route::group(['middleware'=> ['auth']],function(){
     
         //Rotas para a view index de sub_area_conhecimento
         Route::prefix('subareaconhecimento')->name('subareaconhecimento.')->group(function(){
-        Route::get('index-subareaconhecimento',[Sub_Area_ConhecimentoController::class,'index'])->name('subareaconhecimento.index');
+        Route::get('index-subareaconhecimento/{color}',[Sub_Area_ConhecimentoController::class,'index'])->name('subareaconhecimento.index');
         Route::delete('delete-subareaconhecimento/{id}',[Sub_Area_ConhecimentoController::class,'destroy']);
         Route::get('edit-subareaconhecimento/{id}',[Sub_Area_ConhecimentoController::class,'edit']);
         Route::put('update-subareaconhecimento/{id}',[Sub_Area_ConhecimentoController::class,'update']);
@@ -205,7 +205,7 @@ Route::group(['middleware'=> ['auth']],function(){
 
         //Rotas para a view index de manuais
         Route::prefix('manual')->name('manual.')->group(function(){
-        Route::get('index-manual',[ManualController::class,'index'])->name('manual.index');
+        Route::get('index-manual/{color}',[ManualController::class,'index'])->name('manual.index');
         Route::delete('delete-manual/{id}',[ManualController::class,'destroy']);
         Route::get('edit-manual/{id}',[ManualController::class,'edit']);
         Route::put('update-manual/{id}',[ManualController::class,'update']);
@@ -231,137 +231,132 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::put('admin-user/{id}', [UserController::class,'adminUsuario']);
         Route::put('inativo-user/{id}', [UserController::class,'inativoUsuario']);   */
 
-        });                
-
-        ///DATACENTER
-        
-        Route::prefix('datacenter')->name('datacenter.')->group(function(){
-
-          //Rotas para a view index de clusters
+        //Rotas para a view index de clusters
         Route::prefix('cluster')->name('cluster.')->group(function(){  
-        Route::get('index-cluster',[ClusterController::class,'index'])->name('cluster.index');
-        Route::delete('delete-cluster/{id}',[ClusterController::class,'destroy']);
-        Route::get('edit-cluster/{id}',[ClusterController::class,'edit']);
-        Route::put('update-cluster/{id}',[ClusterController::class,'update']);
-        Route::put('adiciona-cluster',[ClusterController::class,'store']);    
-        Route::put('adiciona-hostcluster',[ClusterController::class,'storehost']);
-        Route::put('cluster-adiciona-vm',[ClusterController::class,'storeVM']);
+          Route::get('index-cluster/{color}',[ClusterController::class,'index'])->name('cluster.index');
+          Route::delete('delete-cluster/{id}',[ClusterController::class,'destroy']);
+          Route::get('edit-cluster/{id}',[ClusterController::class,'edit']);
+          Route::put('update-cluster/{id}',[ClusterController::class,'update']);
+          Route::put('adiciona-cluster',[ClusterController::class,'store']);    
+          Route::put('adiciona-hostcluster',[ClusterController::class,'storehost']);
+          Route::put('cluster-adiciona-vm',[ClusterController::class,'storeVM']);
+          });
+  
+          //Rotas para a view index de hosts
+          Route::prefix('host')->name('host.')->group(function(){
+          Route::get('index-host/{id}/{color}',[HostController::class,'index'])->name('host.index');
+          Route::delete('delete-host/{id}',[HostController::class,'destroy']);
+          Route::get('edit-host/{id}',[HostController::class,'edit']);
+          Route::put('update-host/{id}',[HostController::class,'update']);
+          Route::put('adiciona-host',[HostController::class,'store']);
+          Route::patch('storesenhahost/{id}',[HostController::class,'storesenhahost']);
+          Route::get('editsenhahost/{id}',[HostController::class,'editsenhahost']);
+          Route::patch('updatesenhahost/{id}',[HostController::class,'updatesenhahost']);
+          });        
+  
+          //Rotas para a view index de vlan
+          Route::prefix('vlan')->name('vlan.')->group(function(){
+          Route::get('index-vlan',[vlanController::class,'index'])->name('vlan.index');
+          Route::delete('delete-vlan/{id}',[vlanController::class,'destroy']);
+          Route::get('edit-vlan/{id}',[vlanController::class,'edit']);
+          Route::put('update-vlan/{id}',[vlanController::class,'update']);
+          Route::put('adiciona-vlan',[vlanController::class,'store']);    
+          Route::put('adiciona-vlanrede',[vlanController::class,'storerede']);
+          Route::patch('storesenhavlan/{id}',[vlanController::class,'storesenhavlan']);
+          Route::get('editsenhavlan/{id}',[vlanController::class,'editsenhavlan']);
+          Route::patch('updatesenhavlan/{id}',[vlanController::class,'updatesenhavlan']);  
+          });
+  
+          //Rotas para a view index de rede
+          Route::prefix('rede')->name('rede.')->group(function(){
+          Route::get('index-rede/{id}',[RedeController::class,'index'])->name('rede.index');
+          Route::delete('delete-rede/{id}',[RedeController::class,'destroy']);
+          Route::get('edit-rede/{id}',[RedeController::class,'edit']);
+          Route::put('update-rede/{id}',[RedeController::class,'update']);
+          Route::put('adiciona-rede',[RedeController::class,'store']);
+          Route::put('adiciona-redeip',[RedeController::class,'storeip']);
+          });
+  
+          //Rotas para a view index de cadastro_ip
+          Route::prefix('ip')->name('ip.')->group(function(){
+          Route::get('index-ip/{id}',[CadastroIpController::class,'index'])->name('ip.index');
+          Route::delete('delete-ip/{id}',[CadastroIpController::class,'destroy']);
+          Route::get('edit-ip/{id}',[CadastroIpController::class,'edit']);
+          Route::put('update-ip/{id}',[CadastroIpController::class,'update']);
+          Route::put('adiciona-ip',[CadastroIpController::class,'store']);
+          Route::put('status-ip/{id}',[CadastroIpController::class,'status']);
+          });
+  
+           //Rotas para a view index de VirtualMachine
+          Route::prefix('vm')->name('vm.')->group(function(){
+          Route::get('index-vm/{id}/{color}',[VirtualMachineController::class,'index'])->name('vm.index');
+          Route::delete('delete-vm/{id}',[VirtualMachineController::class,'destroy']);
+          Route::get('edit-vm/{id}',[VirtualMachineController::class,'edit']);
+          Route::put('update-vm/{id}',[VirtualMachineController::class,'update']);
+          Route::put('adiciona-vm',[VirtualMachineController::class,'store']);
+          Route::get('vlan-vm/{id}/{vlid}/{color}',[VirtualMachineController::class,'VlanXVm'])->name('vm.index_vlanXvm');
+          Route::put('adiciona-basededados',[VirtualMachineController::class,'storeBase']);
+          Route::patch('storesenhavm/{id}',[VirtualMachineController::class,'storesenhavm']);
+          Route::get('editsenhavm/{id}',[VirtualMachineController::class,'editsenhavm']);
+          Route::patch('updatesenhavm/{id}',[VirtualMachineController::class,'updatesenhavm']);
+          });
+  
+           //Rotas para a view index de Bases
+           Route::prefix('base')->name('base.')->group(function(){
+           Route::get('index-base/{id}/{color}',[BaseController::class,'index'])->name('base.index');
+           Route::delete('delete-base/{id}',[BaseController::class,'destroy']);
+           Route::get('edit-base/{id}',[BaseController::class,'edit']);
+           Route::put('update-base/{id}',[BaseController::class,'update']);
+           Route::put('adiciona-base',[BaseController::class,'store']);         
+           Route::put('armazena-app',[BaseController::class,'storeApp']);
+           Route::patch('storesenhabase/{id}',[BaseController::class,'storesenhabase']);
+           Route::get('editsenhabase/{id}',[BaseController::class,'editsenhabase']);
+           Route::patch('updatesenhabase/{id}',[BaseController::class,'updatesenhabase']);
+           });
+  
+          //Rotas para a view index de App
+           Route::prefix('app')->name('app.')->group(function(){ 
+           Route::get('index-app/{id}/{color}',[AppController::class,'index'])->name('app.index');
+           Route::delete('delete-app/{id}',[AppController::class,'destroy']);
+           Route::get('edit-app/{id}',[AppController::class,'edit']);
+           Route::put('update-app/{id}',[AppController::class,'update']);
+           Route::put('adiciona-app',[AppController::class,'store']);
+           Route::put('https-app/{id}',[AppController::class,'httpsApp']);     
+           Route::patch('storesenhaapp/{id}',[AppController::class,'storesenhaapp']);
+           Route::get('editsenhaapp/{id}',[AppController::class,'editsenhaapp']);
+           Route::patch('updatesenhaapp/{id}',[AppController::class,'updatesenhaapp']);
+           });
+  
+           //Rotas para painel de senhas no menu principal
+           Route::prefix('senhas')->name('senhas.')->group(function(){
+           Route::get('index-senhas',[SenhaController::class,'index'])->name('senha.index');
+           Route::get('editusersenhaapp/{id}',[SenhaController::class,'editsenhaapp']);
+           Route::patch('updateusersenhaapp/{id}',[SenhaController::class,'updatesenhaapp']);
+           Route::get('editusersenhahost/{id}',[SenhaController::class,'editsenhahost']);
+           Route::patch('updateusersenhahost/{id}',[SenhaController::class,'updatesenhahost']);
+           Route::get('editusersenhavm/{id}',[SenhaController::class,'editsenhavm']);
+           Route::patch('updateusersenhavm/{id}',[SenhaController::class,'updatesenhavm']);
+           Route::get('editusersenhabase/{id}',[SenhaController::class,'editsenhabase']);
+           Route::patch('updateusersenhabase/{id}',[SenhaController::class,'updatesenhabase']);
+           Route::get('editusersenhavlan/{id}',[SenhaController::class,'editsenhavlan']);
+           Route::patch('updateusersenhavlan/{id}',[SenhaController::class,'updatesenhavlan']);  
+           });
+  
+           //Rotas para a view index de Equipamentos
+           Route::prefix('equipamento')->name('equipamento.')->group(function(){
+           Route::get('index-equipamento',[EquipamentoController::class,'index'])->name('equipamento.index');
+           Route::delete('delete-equipamento/{id}',[EquipamentoController::class,'destroy']);
+           Route::get('edit-equipamento/{id}',[EquipamentoController::class,'edit']);
+           Route::put('update-equipamento/{id}',[EquipamentoController::class,'update']);
+           Route::put('adiciona-equipamento',[EquipamentoController::class,'store']);                           
+           Route::get('editsenhaequipamento/{id}',[EquipamentoController::class,'editsenhaEquipamento']);
+           Route::get('editsenhaindividual/{id}',[EquipamentoController::class,'editsenhaIndividual']);
+           Route::patch('updatesenhaequipamento/{id}',[EquipamentoController::class,'updatesenhaEquipamento']);
+           Route::patch('updatesenhaindividual/{id}',[EquipamentoController::class,'updatesenhaIndividual']);
+           });
+
         });
-
-        //Rotas para a view index de hosts
-        Route::prefix('host')->name('host.')->group(function(){
-        Route::get('index-host/{id}',[HostController::class,'index'])->name('host.index');
-        Route::delete('delete-host/{id}',[HostController::class,'destroy']);
-        Route::get('edit-host/{id}',[HostController::class,'edit']);
-        Route::put('update-host/{id}',[HostController::class,'update']);
-        Route::put('adiciona-host',[HostController::class,'store']);
-        Route::patch('storesenhahost/{id}',[HostController::class,'storesenhahost']);
-        Route::get('editsenhahost/{id}',[HostController::class,'editsenhahost']);
-        Route::patch('updatesenhahost/{id}',[HostController::class,'updatesenhahost']);
-        });        
-
-        //Rotas para a view index de vlan
-        Route::prefix('vlan')->name('vlan.')->group(function(){
-        Route::get('index-vlan',[vlanController::class,'index'])->name('vlan.index');
-        Route::delete('delete-vlan/{id}',[vlanController::class,'destroy']);
-        Route::get('edit-vlan/{id}',[vlanController::class,'edit']);
-        Route::put('update-vlan/{id}',[vlanController::class,'update']);
-        Route::put('adiciona-vlan',[vlanController::class,'store']);    
-        Route::put('adiciona-vlanrede',[vlanController::class,'storerede']);
-        Route::patch('storesenhavlan/{id}',[vlanController::class,'storesenhavlan']);
-        Route::get('editsenhavlan/{id}',[vlanController::class,'editsenhavlan']);
-        Route::patch('updatesenhavlan/{id}',[vlanController::class,'updatesenhavlan']);  
-        });
-
-        //Rotas para a view index de rede
-        Route::prefix('rede')->name('rede.')->group(function(){
-        Route::get('index-rede/{id}',[RedeController::class,'index'])->name('rede.index');
-        Route::delete('delete-rede/{id}',[RedeController::class,'destroy']);
-        Route::get('edit-rede/{id}',[RedeController::class,'edit']);
-        Route::put('update-rede/{id}',[RedeController::class,'update']);
-        Route::put('adiciona-rede',[RedeController::class,'store']);
-        Route::put('adiciona-redeip',[RedeController::class,'storeip']);
-        });
-
-        //Rotas para a view index de cadastro_ip
-        Route::prefix('ip')->name('ip.')->group(function(){
-        Route::get('index-ip/{id}',[CadastroIpController::class,'index'])->name('ip.index');
-        Route::delete('delete-ip/{id}',[CadastroIpController::class,'destroy']);
-        Route::get('edit-ip/{id}',[CadastroIpController::class,'edit']);
-        Route::put('update-ip/{id}',[CadastroIpController::class,'update']);
-        Route::put('adiciona-ip',[CadastroIpController::class,'store']);
-        Route::put('status-ip/{id}',[CadastroIpController::class,'status']);
-        });
-
-         //Rotas para a view index de VirtualMachine
-        Route::prefix('vm')->name('vm.')->group(function(){
-        Route::get('index-vm/{id}',[VirtualMachineController::class,'index'])->name('vm.index');
-        Route::delete('delete-vm/{id}',[VirtualMachineController::class,'destroy']);
-        Route::get('edit-vm/{id}',[VirtualMachineController::class,'edit']);
-        Route::put('update-vm/{id}',[VirtualMachineController::class,'update']);
-        Route::put('adiciona-vm',[VirtualMachineController::class,'store']);
-        Route::get('vlan-vm/{id}/{vlid}',[VirtualMachineController::class,'VlanXVm'])->name('vm.index_vlanXvm');
-        Route::put('adiciona-basededados',[VirtualMachineController::class,'storeBase']);
-        Route::patch('storesenhavm/{id}',[VirtualMachineController::class,'storesenhavm']);
-        Route::get('editsenhavm/{id}',[VirtualMachineController::class,'editsenhavm']);
-        Route::patch('updatesenhavm/{id}',[VirtualMachineController::class,'updatesenhavm']);
-        });
-
-         //Rotas para a view index de Bases
-         Route::prefix('base')->name('base.')->group(function(){
-         Route::get('index-base/{id}',[BaseController::class,'index'])->name('base.index');
-         Route::delete('delete-base/{id}',[BaseController::class,'destroy']);
-         Route::get('edit-base/{id}',[BaseController::class,'edit']);
-         Route::put('update-base/{id}',[BaseController::class,'update']);
-         Route::put('adiciona-base',[BaseController::class,'store']);         
-         Route::put('armazena-app',[BaseController::class,'storeApp']);
-         Route::patch('storesenhabase/{id}',[BaseController::class,'storesenhabase']);
-         Route::get('editsenhabase/{id}',[BaseController::class,'editsenhabase']);
-         Route::patch('updatesenhabase/{id}',[BaseController::class,'updatesenhabase']);
-         });
-
-        //Rotas para a view index de App
-         Route::prefix('app')->name('app.')->group(function(){ 
-         Route::get('index-app/{id}',[AppController::class,'index'])->name('app.index');
-         Route::delete('delete-app/{id}',[AppController::class,'destroy']);
-         Route::get('edit-app/{id}',[AppController::class,'edit']);
-         Route::put('update-app/{id}',[AppController::class,'update']);
-         Route::put('adiciona-app',[AppController::class,'store']);
-         Route::put('https-app/{id}',[AppController::class,'httpsApp']);     
-         Route::patch('storesenhaapp/{id}',[AppController::class,'storesenhaapp']);
-         Route::get('editsenhaapp/{id}',[AppController::class,'editsenhaapp']);
-         Route::patch('updatesenhaapp/{id}',[AppController::class,'updatesenhaapp']);
-         });
-
-         //Rotas para painel de senhas no menu principal
-         Route::prefix('senhas')->name('senhas.')->group(function(){
-         Route::get('index-senhas',[SenhaController::class,'index'])->name('senha.index');
-         Route::get('editusersenhaapp/{id}',[SenhaController::class,'editsenhaapp']);
-         Route::patch('updateusersenhaapp/{id}',[SenhaController::class,'updatesenhaapp']);
-         Route::get('editusersenhahost/{id}',[SenhaController::class,'editsenhahost']);
-         Route::patch('updateusersenhahost/{id}',[SenhaController::class,'updatesenhahost']);
-         Route::get('editusersenhavm/{id}',[SenhaController::class,'editsenhavm']);
-         Route::patch('updateusersenhavm/{id}',[SenhaController::class,'updatesenhavm']);
-         Route::get('editusersenhabase/{id}',[SenhaController::class,'editsenhabase']);
-         Route::patch('updateusersenhabase/{id}',[SenhaController::class,'updatesenhabase']);
-         Route::get('editusersenhavlan/{id}',[SenhaController::class,'editsenhavlan']);
-         Route::patch('updateusersenhavlan/{id}',[SenhaController::class,'updatesenhavlan']);  
-         });
-
-         //Rotas para a view index de Equipamentos
-         Route::prefix('equipamento')->name('equipamento.')->group(function(){
-         Route::get('index-equipamento',[EquipamentoController::class,'index'])->name('equipamento.index');
-         Route::delete('delete-equipamento/{id}',[EquipamentoController::class,'destroy']);
-         Route::get('edit-equipamento/{id}',[EquipamentoController::class,'edit']);
-         Route::put('update-equipamento/{id}',[EquipamentoController::class,'update']);
-         Route::put('adiciona-equipamento',[EquipamentoController::class,'store']);                           
-         Route::get('editsenhaequipamento/{id}',[EquipamentoController::class,'editsenhaEquipamento']);
-         Route::get('editsenhaindividual/{id}',[EquipamentoController::class,'editsenhaIndividual']);
-         Route::patch('updatesenhaequipamento/{id}',[EquipamentoController::class,'updatesenhaEquipamento']);
-         Route::patch('updatesenhaindividual/{id}',[EquipamentoController::class,'updatesenhaIndividual']);
-         });
-
-        });           
+                        
 
     }); //fim do escopo do middleware auth
     

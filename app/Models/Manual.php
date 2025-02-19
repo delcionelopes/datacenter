@@ -13,7 +13,8 @@ class Manual extends Model
         'objetivo',
         'manual',
         'area_conhecimento_id',
-        'setor_idsetor',
+        'setor_id',
+        'usuario',
         'created_at',
         'updated_at',
     ];
@@ -29,6 +30,6 @@ class Manual extends Model
     }
 
     public function setor(){
-        return $this->belongsTo(Setor::class,'setor_idsetor');
+        return $this->belongsTo(Setor::class,'setor_id');
     }
 }

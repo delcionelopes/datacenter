@@ -31,7 +31,7 @@ class ClusterController extends Controller
     /**
      * Método para listar os registros com opção de pesquisa
      */
-    public function index(Request $request)
+    public function index(Request $request, $color)
     {
         if(is_null($request->pesquisa)){
             $clusters = $this->cluster->orderByDesc('id')->paginate(6);
@@ -50,6 +50,7 @@ class ClusterController extends Controller
             'projetos'        => $projetos,            
             'orgaos'          => $orgaos,
             'ambientes'       => $ambientes,
+            'color'           => $color
         ]);
     }
 
@@ -172,7 +173,7 @@ class ClusterController extends Controller
         $hosts = $cluster->hosts;
         $vms = $cluster->virtual_machines;
         if(($cluster->hosts()->count())||($cluster->virtual_machines()->count())){
-            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+            if((auth()->user()->admin)&&(!(auth()->user()->inativo))){
                 if($cluster->hosts()->count()){
                     foreach ($hosts as $host) {
                         $h = Host::find($host->id);

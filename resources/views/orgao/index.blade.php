@@ -14,7 +14,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddOrgaoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Órgão</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -35,7 +35,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" data-color="{{$color}}" class="btn btn-primary add_orgao"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                    <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_orgao"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                 </div>
             </div>
         </div>
@@ -51,7 +51,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditOrgaoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Órgão</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -73,7 +73,7 @@
                 </form>
                 <div class="modal-footer">
                     <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal" >Fechar</button>
-                    <button type="button" data-color="{{$color}}" class="btn btn-primary update_orgao"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                    <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_orgao"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
@@ -120,8 +120,8 @@
                         <td>{{$orgao->telefone}}</td>                        
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$orgao->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeorgao="{{$orgao->nome}}" class="edit_orgao fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button type="button" data-id="{{$orgao->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeorgao="{{$orgao->nome}}" class="delete_orgao_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button type="button" data-id="{{$orgao->id}}" data-admin="{{auth()->user()->admin}}" data-nomeorgao="{{$orgao->nome}}" class="edit_orgao fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button type="button" data-id="{{$orgao->id}}" data-admin="{{auth()->user()->admin}}" data-nomeorgao="{{$orgao->nome}}" class="delete_orgao_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -132,7 +132,7 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="d-flex hover justify-content-center">
+            <div class="d-flex hover justify-content-center bg-{{$color}}">
                 {{$orgaos->links()}}
     </div>
 </div>
@@ -159,9 +159,8 @@
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
             var nomedoorgao = ($(this).data("nomeorgao")).trim();
-            if(admin){
+            if(admin=true){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -242,10 +241,9 @@
         e.preventDefault();
         var link = "{{asset('storage')}}";
         var id = $(this).data("id");
-        var admin = $(this).data("admin");
-        var setoradmin = $(this).data("setoradmin");
+        var admin = $(this).data("admin");        
         var nome = $(this).data("nomeorgao");
-        if(admin){
+        if(admin=true){
         $("#editform").trigger('reset');
         $("#EditOrgaoModal").modal('show');
         $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');     

@@ -29,7 +29,7 @@ class BaseController extends Controller
     /**
      * Método para listagem dos registros com opção de pesquisa
      */
-    public function index(Request $request,int $id)
+    public function index(Request $request,int $id, $color)
     {
         if(is_null($request->pesquisa)){
             $bases = $this->base->query()->where('virtual_machine_id','=',$id)->orderByDesc('id')->paginate(6);
@@ -45,9 +45,9 @@ class BaseController extends Controller
         $bds = $this->base->query()->where('virtual_machine_id','=',$id)->orderByDesc('id')->get();
         $virtual_machines = VirtualMachine::all();
         $users = $this->users->query()
-                             ->where('moderador','=','true')
+                             ->where('admin','=','true')
                              ->where('inativo','=','false')
-                             ->where('setor_idsetor','=',1)
+                             ->where('setor_id','=',1)
                              ->orderBy('name')
                              ->get();
         return view('datacenter.base.index',[
@@ -59,6 +59,7 @@ class BaseController extends Controller
             'bds' => $bds,
             'virtual_machines' => $virtual_machines,
             'users' => $users,
+            'color' => $color
         ]);
     }
 
@@ -199,7 +200,7 @@ class BaseController extends Controller
         $base = $this->base->find($id);        
         $apps = $base->apps;
         if(($base->apps()->count())||($base->users()->count())){
-            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){             
+            if((auth()->user()->admin)&&(!(auth()->user()->inativo))){             
                 if($base->apps()->count()){
                     foreach ($apps as $app) {
                         $a = App::find($app->id);
