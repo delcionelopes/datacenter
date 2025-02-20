@@ -15,7 +15,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddVlanModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar VLAN</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                 <span aria-hidden="true" style="color: white;">&times;</span>
@@ -34,7 +34,7 @@
             </form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_vlan"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_vlan"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddRedeModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar REDE</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -72,7 +72,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_rede"><img id="imgaddrede" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_rede"><img id="imgaddrede" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -85,7 +85,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditVlanModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar VLAN</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -104,7 +104,7 @@
             </form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_vlan"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_vlan"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -115,7 +115,7 @@
    <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaVLAN" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -173,7 +173,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_senhavlan_btn"><img id="imgaddsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_senhavlan_btn"><img id="imgaddsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -184,7 +184,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaVLAN" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -255,7 +255,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhavlan_btn"><img id="imgeditsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_senhavlan_btn"><img id="imgeditsenha" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -268,7 +268,7 @@
 <div class="container-fluid py-5"> 
     <div id="success_message"></div> 
     <section class="border p-4 mb-4 d-flex align-items-left">    
-    <form action="{{route('datacenter.vlan.vlan.index')}}" class="form-search" method="GET">
+    <form action="{{route('datacenteradmin.vlan.vlan.index',['color'=>$color])}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome da VLAN" aria-label="Search"
@@ -284,7 +284,7 @@
     </section>    
             
                     <table class="table table-hover">
-                        <thead class="sidebar-dark-primary" style="color: white">
+                    <thead class="bg-{{$color}}" style="color: white">
                             <tr>                                
                                 <th scope="col">VLAN</th>
                                 <th scope="col"><i class="fas fa-key"></i> PASS</th>
@@ -299,15 +299,15 @@
                                 <th scope="row">{{$vlan->nome_vlan}}</th>
                                  <td id="senha{{$vlan->id}}">
                                     @if(!$vlan->senha)
-                                    <button id="botaosenha{{$vlan->id}}" type="button" data-id="{{$vlan->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevlan="{{$vlan->nome_vlan}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
+                                    <button id="botaosenha{{$vlan->id}}" type="button" data-id="{{$vlan->id}}" data-nomevlan="{{$vlan->nome_vlan}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha e dar<br>permissões de visualização"></button>
                                     @else
                                     @if($vlan->users()->count())                           
                                     @foreach($vlan->users as $user)
                                         @if(($user->id) == (auth()->user()->id))                                  
-                                        <button id="botaosenha{{$vlan->id}}" type="button" data-id="{{$vlan->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vlan->users->implode('name','<br>')}}"></button>
+                                        <button id="botaosenha{{$vlan->id}}" type="button" data-id="{{$vlan->id}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vlan->users->implode('name','<br>')}}"></button>
                                         @break
                                         @elseif ($loop->last)
-                                        <button id="botaosenha{{$vlan->id}}" type="button" data-id="{{$vlan->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vlan->users->implode('name','<br>')}}"></button>
+                                        <button id="botaosenha{{$vlan->id}}" type="button" data-id="{{$vlan->id}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$vlan->users->implode('name','<br>')}}"></button>
                                         @endif                                                        
                                     @endforeach                            
                                     @endif
@@ -315,17 +315,17 @@
                                 </td>
                                 <td>
                                     @if($vlan->redes()->count())
-                                    <form action="{{route('datacenter.rede.index',['id' => $vlan->id])}}" method="get">
+                                    <form action="{{route('datacenteradmin.rede.rede.index',['id' => $vlan->id,'color'=>$color])}}" method="get">
                                         <button type="submit" data-id="{{$vlan->id}}" class="list_rede_btn fas fa-network-wired" style="background: transparent;border:none;color:green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista REDE(s)"> {{$vlan->redes()->count()}}</button>
                                     </form>
                                     @else
-                                        <button type="button" data-id="{{$vlan->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="nova_rede_btn fas fa-folder" style="background: transparent;border:none;color:orange; nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Cadastra nova REDE"></button>
+                                        <button type="button" data-id="{{$vlan->id}}" class="nova_rede_btn fas fa-folder" style="background: transparent;border:none;color:orange; nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Cadastra nova REDE"></button>
                                     @endif    
                                 </td>                               
                                 <td>                                    
                                         <div class="btn-group">                                           
-                                            <button type="button" data-id="{{$vlan->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="edit_vlan fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar VLAN"></button>
-                                            <button type="button" data-id="{{$vlan->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevlan="{{$vlan->nome_vlan}}" class="delete_vlan_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir VLAN"></button>
+                                            <button type="button" data-id="{{$vlan->id}}" data-admin="{{auth()->user()->admin}}" class="edit_vlan fas fa-edit" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar VLAN"></button>
+                                            <button type="button" data-id="{{$vlan->id}}" data-admin="{{auth()->user()->admin}}" data-nomevlan="{{$vlan->nome_vlan}}" class="delete_vlan_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir VLAN"></button>
                                         </div>                                    
                                 </td>
                             </tr>  
@@ -336,7 +336,7 @@
                             @endforelse                                                    
                         </tbody>
                     </table> 
-                    <div class="d-flex hover justify-content-center">
+                    <div class="d-flex hover justify-content-center bg-{{$color}}">
                     {{$vlans->links()}}
                     </div>  
             </div>          
@@ -366,9 +366,8 @@ $(document).ready(function(){
             var id = $(this).data("id");
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
             var nomevlan = ($(this).data("nomevlan")).trim();
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -388,7 +387,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){          
                 $.ajax({
-                    url: '/datacenter/vlan/delete-vlan/'+id,
+                    url: '/datacenteradmin/vlan/delete-vlan/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data:{
@@ -446,9 +445,8 @@ $(document).ready(function(){
             e.preventDefault();
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
             var id = $(this).data("id");                
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             $("editform").trigger('reset');
             $("#EditVlanModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');                   
@@ -463,7 +461,7 @@ $(document).ready(function(){
             $.ajax({ 
                 type: 'GET',             
                 dataType: 'json',                                    
-                url: '/datacenter/vlan/edit-vlan/'+id,                                
+                url: '/datacenteradmin/vlan/edit-vlan/'+id,                                
                 success: function(response){           
                     if(response.status==200){            
                         $("#edit_nome_vlan").val((response.vlan.nome_vlan).trim());
@@ -514,7 +512,7 @@ $(document).ready(function(){
                 type: 'POST',                          
                 data: data,
                 dataType: 'json',    
-                url: '/datacenter/vlan/update-vlan/'+id,         
+                url: '/datacenteradmin/vlan/update-vlan/'+id,         
                 success: function(response){                                                    
                     if(response.status==400){
                         //erros
@@ -558,35 +556,11 @@ $(document).ready(function(){
             $(".nome_vlan").focus();
         });
         $(document).on('click','.AddVlanModal_btn',function(e){  //início da exibição do form AddVlanModal
-            e.preventDefault();       
-            var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+            e.preventDefault();          
             $("#addform").trigger('reset');
             $("#AddVlanModal").modal('show');  
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
-            }else{
-                  Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Você não pode registrar VLAN. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+          
     
         });
     
@@ -605,7 +579,7 @@ $(document).ready(function(){
           
             $.ajax({
                 type: 'POST',
-                url: '/datacenter/vlan/adiciona-vlan',
+                url: '/datacenteradmin/vlan/adiciona-vlan',
                 data: data,
                 dataType: 'json',
                 success: function(response){
@@ -641,24 +615,24 @@ $(document).ready(function(){
                                     <th scope="row">'+response.vlan.nome_vlan+'</th>';
                                     var bloqueia = true;                        
                                     if((response.vlan.senha)==""){
-                                    limita2 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevlan="'+response.vlan.nome_vlan+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                                     }else{
                                         $.each(response.users,function(key,user_values){
                                             if(user_values.id == response.user.id){                                    
-                                                limita3 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                                limita3 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                                 bloqueia = false;                              
                                             }
                                         });                            
                                         if(bloqueia){
-                                        limita4 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                                        limita4 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                                         }
                                     }  
                             limita5 = '<td>\
                                     <button type="button" data-id="'+response.vlan.id+'" class="nova_rede_btn fas fa-folder" style="background: transparent;border:none;color:orange;"></button>\
                                     </td>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.vlan.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" class="edit_vlan fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.vlan.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevlan="'+response.vlan.nome_vlan+'" class="delete_vlan_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.vlan.id+'" data-admin="'+response.user.admin+'" class="edit_vlan fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.vlan.id+'" data-admin="'+response.user.admin+'" data-nomevlan="'+response.vlan.nome_vlan+'" class="delete_vlan_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';                             
                         if(!$("#nadaencontrado")==""){
@@ -679,36 +653,11 @@ $(document).ready(function(){
             $(".nome_rede").focus();
         });
         $(document).on('click','.nova_rede_btn',function(e){
-            e.preventDefault();
-            var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+            e.preventDefault();            
             $("#addredeform").trigger('reset');
             $("#AddRedeModal").modal('show');
             $("#add_vlan_id").val($(this).data("id"));
             $("#saveformrede_errList").replaceWith('<ul id="saveformrede_errList"></ul>');
-            }else{
-                  Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Você não pode registrar REDE. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
         });
         //Fim exibe nova rede do VLAN caso não possua nenhuma
         //Inicio adiciona nova rede no vlan
@@ -726,7 +675,7 @@ $(document).ready(function(){
                 '_token':CSRF_TOKEN,
             }          
             $.ajax({
-                url: '/datacenter/vlan/adiciona-vlanrede',
+                url: '/datacenteradmin/vlan/adiciona-vlanrede',
                 type: 'POST',
                 dataType:'json',
                 data:data,
@@ -762,38 +711,14 @@ $(document).ready(function(){
 
 
         $(document).on('click','.cadsenha_btn',function(e){
-            e.preventDefault();
-            var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            var labelHtml = ($(this).data("nomevlan")).trim();
-            if(setoradmin==1){
+            e.preventDefault();            
+            var labelHtml = ($(this).data("nomevlan")).trim();            
             $("#addformsenha").trigger('reset');
             $("#AddSenhaVLAN").modal('show');
             $("#add_vlansenha_id").val($(this).data("id"));
             $("#nomevlan").replaceWith('<Label id="nomevlan" style="font-style:italic;">'+labelHtml+'</Label>');                        
             $("#saveformsenha_errList").replaceWith('<ul id="saveformsenha_errList"></ul>'); 
-            }else{
-                 Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+          
         });
 
          $(document).on('click','.add_senhavlan_btn',function(e){
@@ -828,7 +753,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/vlan/storesenhavlan/'+id,
+                url:'/datacenteradmin/vlan/storesenhavlan/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -854,16 +779,16 @@ $(document).ready(function(){
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.vlan.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevlan="'+response.vlan.nome_vlan+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 
@@ -881,11 +806,8 @@ $(document).ready(function(){
     });
     $(document).on('click','.senhabloqueada_btn',function(e){
         e.preventDefault();
-        var link = "{{asset('storage')}}";
-        var opcaosenha = $(this).data("opt");
-        var setoradmin = $(this).data("setoradmin");
-
-        if(setoradmin==1){
+        var opcaosenha = $(this).data("opt");  
+        var link = "{{asset('storage')}}";      
 
         if(opcaosenha){
     
@@ -905,7 +827,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/vlan/editsenhavlan/'+id,
+            url: '/datacenteradmin/vlan/editsenhavlan/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.vlan.created_at);
@@ -977,28 +899,6 @@ $(document).ready(function(){
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
-}else{
-     Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-}
              
     });
     //fim exibe 
@@ -1034,7 +934,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/vlan/updatesenhavlan/'+id,
+                url:'/datacenteradmin/vlan/updatesenhavlan/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1060,16 +960,16 @@ $(document).ready(function(){
                         var limita3 = "";
                         var bloqueia = true;                        
                         if((response.vlan.senha)==""){
-                        limita1 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevlan="'+response.vlan.nome_vlan+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
+                        limita1 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none;"></button>';
                         }else{
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita2 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita2 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="1" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita3 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita3 = '<button id="botaosenha'+response.vlan.id+'" type="button" data-id="'+response.vlan.id+'" data-nomevlan="'+response.vlan.nome_vlan+'" data-opt="0" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                       
 

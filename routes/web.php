@@ -256,7 +256,7 @@ Route::group(['middleware'=> ['auth']],function(){
   
           //Rotas para a view index de vlan
           Route::prefix('vlan')->name('vlan.')->group(function(){
-          Route::get('index-vlan',[vlanController::class,'index'])->name('vlan.index');
+          Route::get('index-vlan/{color}',[vlanController::class,'index'])->name('vlan.index');
           Route::delete('delete-vlan/{id}',[vlanController::class,'destroy']);
           Route::get('edit-vlan/{id}',[vlanController::class,'edit']);
           Route::put('update-vlan/{id}',[vlanController::class,'update']);
@@ -269,7 +269,7 @@ Route::group(['middleware'=> ['auth']],function(){
   
           //Rotas para a view index de rede
           Route::prefix('rede')->name('rede.')->group(function(){
-          Route::get('index-rede/{id}',[RedeController::class,'index'])->name('rede.index');
+          Route::get('index-rede/{id}/{color}',[RedeController::class,'index'])->name('rede.index');
           Route::delete('delete-rede/{id}',[RedeController::class,'destroy']);
           Route::get('edit-rede/{id}',[RedeController::class,'edit']);
           Route::put('update-rede/{id}',[RedeController::class,'update']);
@@ -279,7 +279,7 @@ Route::group(['middleware'=> ['auth']],function(){
   
           //Rotas para a view index de cadastro_ip
           Route::prefix('ip')->name('ip.')->group(function(){
-          Route::get('index-ip/{id}',[CadastroIpController::class,'index'])->name('ip.index');
+          Route::get('index-ip/{id}/{color}',[CadastroIpController::class,'index'])->name('ip.index');
           Route::delete('delete-ip/{id}',[CadastroIpController::class,'destroy']);
           Route::get('edit-ip/{id}',[CadastroIpController::class,'edit']);
           Route::put('update-ip/{id}',[CadastroIpController::class,'update']);

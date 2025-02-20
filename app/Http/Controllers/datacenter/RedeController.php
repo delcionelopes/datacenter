@@ -22,7 +22,7 @@ class RedeController extends Controller
     /**
      * Método para listagem de registros com opção de pesquisa
      */
-    public function index(Request $request,int $id)
+    public function index(Request $request,int $id, $color)
     {        
         if(is_null($request->pesquisa)){
             $redes = $this->rede->query()->where('vlan_id','=',$id)->orderByDesc('id')->paginate(6);
@@ -38,6 +38,7 @@ class RedeController extends Controller
             'redes' => $redes,
             'id'    => $id,     
             'vlan'  => $vlan,
+            'color' => $color
         ]);
     }
 
@@ -173,7 +174,7 @@ class RedeController extends Controller
         $rede = $this->rede->find($id);
         $ips = $rede->cadastro_ips;
         if($rede->cadastro_ips()->count()){
-            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+            if((auth()->user()->admin)&&(!(auth()->user()->inativo))){
                 foreach ($ips as $ip) {
                     $i = Cadastro_ip::find($ip->id);
                     $i->delete();

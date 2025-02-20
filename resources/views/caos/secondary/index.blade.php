@@ -129,6 +129,8 @@ $(document).ready(function(){
       break;
       case 9: location.replace('/datacenteradmin/cluster/index-cluster/'+color); ///Gestão de Datacenter
       break;
+      case 10: location.replace('/datacenteradmin/vlan/index-vlan/'+color); ///Gestão de Redes
+      break;
       default:
         break;
     }  

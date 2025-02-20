@@ -14,7 +14,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddIPModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar IP</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -36,7 +36,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_ip"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_ip"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -46,7 +46,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditIPModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar IP</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -69,7 +69,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_ip"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_ip"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -81,14 +81,14 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>   
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenter.ip.ip.index',['id'=>$id])}}" class="form-search" method="GET">
+                <form action="{{route('datacenteradmin.ip.ip.index',['id'=>$id,'color'=>$color])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Busca IP" aria-label="Search" aria-describedby="search-addon">
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddIPModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                            <button type="button" data-id="{{$id}}" class="AddIPModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
                         </div>
@@ -96,7 +96,7 @@
                 </form>
             </section>
             <table class="table table-hover">
-                <thead class="sidebar-dark-primary" style="color: white">
+            <thead class="bg-{{$color}}" style="color: white">
                     <tr>                        
                         <th scope="col">IP</th>
                         <th scope="col">REDE</th>
@@ -109,16 +109,16 @@
                     @forelse($cadastroIps as $ip)
                     <tr id="ip{{$ip->id}}">                        
                         <th scope="row">{{$ip->ip}}</th>
-                        <td><a href="{{route('datacenter.rede.index',['id' => $vlan_id])}}">{{$ip->rede->nome_rede}}</a></td>
+                        <td><a href="{{route('datacenteradmin.rede.rede.index',['id' => $vlan_id,'color'=>$color])}}">{{$ip->rede->nome_rede}}</a></td>
                         @if($ip->status=="OCUPADO")
-                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="OCUPADO"></button></td>
+                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="OCUPADO"></button></td>
                         @else
-                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="LIVRE"></button></td>
+                        <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="LIVRE"></button></td>
                         @endif                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$ip->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar IP"></button>
-                                <button type="button" data-id="{{$ip->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-enderecoip="{{$ip->ip}}" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir IP"></button>
+                                <button type="button" data-id="{{$ip->id}}" data-admin="{{auth()->user()->admin}}" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar IP"></button>
+                                <button type="button" data-id="{{$ip->id}}" data-admin="{{auth()->user()->admin}}" data-enderecoip="{{$ip->ip}}" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir IP"></button>
                             </div>
                         </td>
                     </tr>
@@ -129,7 +129,7 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="d-flex hover justify-content-center">
+            <div class="d-flex hover justify-content-center bg-{{$color}}">
                 {{$cadastroIps->links()}}                
             </div>  
             <div>
@@ -159,9 +159,8 @@ $(document).ready(function(){
             var id = $(this).data("id");
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
             var enderecoip = ($(this).data("enderecoip")).trim();
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -181,7 +180,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                                                      
                     $.ajax({
-                        url:'/datacenter/ip/delete-ip/'+id,
+                        url:'/datacenteradmin/ip/delete-ip/'+id,
                         type:'POST',                    
                         dataType:'json',
                         data:{
@@ -237,8 +236,7 @@ $(document).ready(function(){
             var id = $(this).data("id");
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
-            var setoradmin = $(this).data("setoradmin");
-            if((admin)&&(setoradmin==1)){
+            if(admin){
             $("#editform").trigger('reset');
             $("#EditIPModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');   
@@ -251,7 +249,7 @@ $(document).ready(function(){
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url:'/datacenter/ip/edit-ip/'+id,
+                url:'/datacenteradmin/ip/edit-ip/'+id,
                 success:function(response){
                     if(response.status==200){                        
                         if(response.cadastroIp.status=="OCUPADO"){
@@ -301,7 +299,7 @@ $(document).ready(function(){
     
             var id = $("#edit_ip_id").val();
     
-            var meulink = "{{route('datacenter.rede.index',['id' => $vlan_id])}}";
+            var meulink = "{{route('datacenteradmin.rede.rede.index',['id' => $vlan_id,'color'=>$color])}}";
     
             var data = {            
                 'ip': ($("#edit_ip").val()).trim(),            
@@ -314,7 +312,7 @@ $(document).ready(function(){
                 type:'POST',
                 data:data,
                 dataType:'json',
-                url:'/datacenter/ip/update-ip/'+id,
+                url:'/datacenteradmin/ip/update-ip/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros
@@ -351,15 +349,15 @@ $(document).ready(function(){
                             <td>'+response.cadastroIp.ip+'</td>\
                             <td>'+'<a href="'+meulink+'">'+response.rede.nome_rede+'</a></td>';
                             if(response.cadastroIp.status=="OCUPADO"){
-                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
+                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
                             }else{
-                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
+                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
                             }                    
                            
                             linha4 = '<td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-enderecoip="'+response.cadastroIp.ip+'" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" data-enderecoip="'+response.cadastroIp.ip+'" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
@@ -376,36 +374,11 @@ $(document).ready(function(){
             $(".ip").focus();
         });
         $(document).on('click','.AddIPModal_btn',function(e){
-            e.preventDefault();
-            var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
-            if(setoradmin==1){
+            e.preventDefault();            
             $("#addform").trigger('reset');
             $("#AddIPModal").modal('show');
             $("#add_rede_id").val($(this).data("id"));
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>'); 
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para registrar um IP. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
         });
         //fim exibe form de adição de ip
         //inicio da adição de ip
@@ -414,7 +387,7 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var loading = $("#imgadd");
                 loading.show();
-            var meulink = "{{route('datacenter.rede.rede.index',['id' => $vlan_id])}}";
+            var meulink = "{{route('datacenteradmin.rede.rede.index',['id' => $vlan_id,'color'=>$color])}}";
             var data = {            
                 'ip': ($(".ip").val()).trim(),
                 'status': "LIVRE",            
@@ -423,7 +396,7 @@ $(document).ready(function(){
                 '_token':CSRF_TOKEN,
             }           
             $.ajax({
-                url:'/datacenter/ip/adiciona-ip',
+                url:'/datacenteradmin/ip/adiciona-ip',
                 type:'POST',
                 dataType:'json',
                 data: data,
@@ -458,14 +431,14 @@ $(document).ready(function(){
                             <th scope="row">'+response.cadastroIp.ip+'</th>\
                             <td>'+'<a href="'+meulink+'">'+response.rede.nome_rede+'</a></td>';
                             if(response.cadastroIp.status=="OCUPADO"){
-                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
+                            linha2 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
                             }else{
-                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
+                            linha3 ='<td id="stipid'+response.cadastroIp.id+'"><button type="button" data-id="'+response.cadastroIp.id+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
                             }                            
                             linha4 = '<td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none;"></button>\
-                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" data-setoradmin="'+response.user.setor_idsetor+'" data-enderecoip="'+response.cadastroIp.ip+'" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none;"></button>\
+                                    <button type="button" data-id="'+response.cadastroIp.id+'" data-admin="'+response.user.admin+'" data-enderecoip="'+response.cadastroIp.ip+'" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none;"></button>\
                                 </div>\
                             </td>\
                         </tr>';
@@ -483,11 +456,8 @@ $(document).ready(function(){
         $(document).on('click','.status_btn',function(e){
             e.preventDefault();            
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-            var id = $(this).data("id");
-            var link = "{{asset('storage')}}";
-            var setoradmin = $(this).data("setoradmin");
+            var id = $(this).data("id");            
             var vstatus = ($(this).data("status")).trim();
-            if(setoradmin==1){
             var data = {
                 'pstatus': vstatus,
                 '_method':'PUT',
@@ -498,43 +468,21 @@ $(document).ready(function(){
                 type:'POST',
                 dataType:'json',
                 data:data,            
-                url:'/datacenter/ip/status-ip/'+id,
+                url:'/datacenteradmin/ip/status-ip/'+id,
                 success:function(response){
                     if(response.status==200){
                         var limita1 = "";
                         var limita2 = "";
                         if(response.ip.status=="OCUPADO"){
-                            limita1 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
+                            limita1 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button></td>';
                         }else{
-                            limita2 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
+                            limita2 = '<td id="stipid'+response.ip.id+'"><button type="button" data-id="'+response.ip.id+'" data-status="OCUPADO" class="status_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button></td>';
                         }
                         var celula = limita1+limita2;
                         $("#stipid"+id).replaceWith(celula);
                     }
                 }
             });
-        }else{
-            Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para esta operação. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-        }
     
         });
         //fim muda o status do ip

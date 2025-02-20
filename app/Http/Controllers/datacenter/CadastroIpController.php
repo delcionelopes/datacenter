@@ -19,7 +19,7 @@ class CadastroIpController extends Controller
     /**
      * Método para listagem de registros com a opção de pesquisa
      */
-    public function index(Request $request, int $id)
+    public function index(Request $request, int $id, $color)
     {
         if(is_null($request->pesquisa)){
             $cadastroIps = $this->cadastroIp->query()
@@ -38,6 +38,7 @@ class CadastroIpController extends Controller
             'cadastroIps' => $cadastroIps,
             'id' => $id,
             'vlan_id' => $vlan_id,
+            'color' => $color
         ]);
     }
  

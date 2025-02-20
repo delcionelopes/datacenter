@@ -27,7 +27,7 @@ class vlanController extends Controller
     /**
      * Método para listagem com opção de pesquisa
      */
-    public function index(Request $request)
+    public function index(Request $request, $color)
     {
         if(is_null($request->pesquisa)){
             $vlans = $this->vlan->orderByDesc('id')->paginate(6);
@@ -37,14 +37,15 @@ class vlanController extends Controller
             $vlans = $query->orderByDesc('id')->paginate(6);
         }
         $users = $this->users->query()
-                             ->where('moderador','=','true')
+                             ->where('admin','=','true')
                              ->where('inativo','=','false')
-                             ->where('setor_idsetor','=',1)
+                             ->where('setor_id','=',1)
                              ->orderBy('name')
                              ->get();
         return view('datacenter.vlan.index',[
             'vlans' => $vlans,
             'users' => $users,
+            'color' => $color
         ]);
     }
 
@@ -157,7 +158,7 @@ class vlanController extends Controller
         $vms = $vlan->virtual_machines;
         $redes = $vlan->redes;
         if(($vlan->virtual_machines()->count())||($vlan->redes()->count())||($vlan->users()->count())){
-            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
+            if((auth()->user()->admin)&&(!(auth()->user()->inativo))){
                 if($vlan->virtual_machines()->count()){
                     $vlan->virtual_machines()->detach($vms); //exclusão da relação n:n
                 }
