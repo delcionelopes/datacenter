@@ -329,7 +329,7 @@ Route::group(['middleware'=> ['auth']],function(){
   
            //Rotas para painel de senhas no menu principal
            Route::prefix('senhas')->name('senhas.')->group(function(){
-           Route::get('index-senhas',[SenhaController::class,'index'])->name('senha.index');
+           Route::get('index-senhas/{color}',[SenhaController::class,'index'])->name('senha.index');
            Route::get('editusersenhaapp/{id}',[SenhaController::class,'editsenhaapp']);
            Route::patch('updateusersenhaapp/{id}',[SenhaController::class,'updatesenhaapp']);
            Route::get('editusersenhahost/{id}',[SenhaController::class,'editsenhahost']);
@@ -344,7 +344,7 @@ Route::group(['middleware'=> ['auth']],function(){
   
            //Rotas para a view index de Equipamentos
            Route::prefix('equipamento')->name('equipamento.')->group(function(){
-           Route::get('index-equipamento',[EquipamentoController::class,'index'])->name('equipamento.index');
+           Route::get('index-equipamento/{color}',[EquipamentoController::class,'index'])->name('equipamento.index');
            Route::delete('delete-equipamento/{id}',[EquipamentoController::class,'destroy']);
            Route::get('edit-equipamento/{id}',[EquipamentoController::class,'edit']);
            Route::put('update-equipamento/{id}',[EquipamentoController::class,'update']);

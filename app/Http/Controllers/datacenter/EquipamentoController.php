@@ -25,20 +25,22 @@ class EquipamentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index(Request $request, $color)
     {
+        $useradmin = auth()->user();
         if(is_null($request->pesquisa)){
-            $equipamentos = $this->equipamento->orderByDesc('idequipamento_rede')->paginate(10);
+            $equipamentos = $this->equipamento->query()->where('setor_idsetor','=',$useradmin->setor_id)->orderByDesc('idequipamento_rede')->paginate(10);
         }else{
             $query = $this->equipamento->query()
+                          ->where('setor_idsetor','=',$useradmin->setor_id)
                           ->where('nome','LIKE','%'.strtoupper($request->pesquisa).'%');
             $equipamentos = $query->orderByDesc('idequipamento_rede')->paginate(10);
-        }
-        $useradmin = auth()->user();
-        $users = $this->user->where('setor_idsetor','=',$useradmin->setor_idsetor)->get();
+        }        
+        $users = $this->user->where('setor_id','=',$useradmin->setor_id)->get();
         return view('datacenter.equipamento.index',[
             'equipamentos' => $equipamentos,
             'users' => $users,
+            'color' => $color
         ]);
     }
 
@@ -71,7 +73,7 @@ class EquipamentoController extends Controller
             ]);
         }else{
             $user = auth()->user();
-            $setorid = $user->setor_idsetor;
+            $setorid = $user->setor_id;
             $data = [
                 'idequipamento_rede' => $this->maxid(),
                 'nome' => strtoupper($request->input('nome')),
@@ -154,7 +156,7 @@ class EquipamentoController extends Controller
             $equipamento = $this->equipamento->find($id);
             if($equipamento){
             $user = auth()->user();
-            $setorid = $user->setor_idsetor;
+            $setorid = $user->setor_id;
             $data = [                
                 'nome' => strtoupper($request->input('nome')),
                 'descricao' => strtoupper($request->input('descricao')),                
@@ -270,7 +272,7 @@ class EquipamentoController extends Controller
     public function updatesenhaequipamento(Request $request, int $id){
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
-            'users' => ['required','array','min:2'],
+            'users' => ['required','array','min:1'],
         ]);
         if($validator->fails()){
             return response()->json([

@@ -14,7 +14,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddEquipamentoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Equipamento</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -35,7 +35,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_equipamento_btn"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_equipamento_btn"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -47,7 +47,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditEquipamentoModal" tabindex="-1" role="dialog" aria-labelledby="edittitleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="edittitleModalLabel" style="color: white;">Editar e atualizar Equipamento</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -73,7 +73,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_equipamento_btn"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_equipamento_btn"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -85,7 +85,7 @@
    <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaEquipAdmin" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Administrar acesso ao equipamento</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -151,7 +151,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_senhaequipadmin_btn"><img id="imgeaddequipamento" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_senhaequipadmin_btn"><img id="imgeaddequipamento" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -162,7 +162,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaIndividual" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Minha senha individual</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -191,7 +191,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhaindividual_btn"><img id="imgeditindividual" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_senhaindividual_btn"><img id="imgeditindividual" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -204,7 +204,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>        
             <section class="border p-4 mb-4 d-flex align-items-left">
-            <form action="{{route('datacenter.equipamento.equipamento.index')}}" class="form-search" method="GET">
+            <form action="{{route('datacenteradmin.equipamento.equipamento.index',['color'=>$color])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">                                                  
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do equipamento" aria-label="Search" aria-describedby="search-addon">
@@ -219,7 +219,7 @@
             </form>    
             </section>
             <table class="table table-hover">
-                <thead class="sidebar-dark-primary" style="color: white">
+            <thead class="bg-{{$color}}" style="color: white">
                     <tr>                        
                         <th scope="col">EQUIPAMENTO(s)</th>
                         <th scope="col"><i class="fas fa-key"></i> PASS</th>
@@ -234,18 +234,18 @@
                         <th scope="row">{{$equipamento->nome}}</th>
                         <td id="senha{{$equipamento->idequipamento_rede}}">
                             @if(!$equipamento->pass_admin)
-                            <button id="botaosenha{{$equipamento->idequipamento_rede}}" type="button" data-id="{{$equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>
+                            <button id="botaosenha{{$equipamento->idequipamento_rede}}" type="button" data-id="{{$equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>
                             @else
-                            @if((!$equipamento->users()->count())&&((auth()->user()->admin==true)&&($equipamento->setor_idsetor==auth()->user()->setor_idsetor)))
-                                 <button id="botaosenha{{$equipamento->idequipamento_rede}}" type="button" data-id="{{$equipamento->idequipamento_rede}}" data-nome="{{$equipamento->nome}}" data-opt="1" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Primeira autorização"></button>
+                            @if((!$equipamento->users()->count())&&((auth()->user()->admin==true)&&($equipamento->setor_idsetor==auth()->user()->setor_id)))
+                                 <button id="botaosenha{{$equipamento->idequipamento_rede}}" type="button" data-id="{{$equipamento->idequipamento_rede}}" data-nome="{{$equipamento->nome}}" data-opt="1" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Primeira autorização"></button>
                             @else     
                             @if($equipamento->users()->count())                           
                             @foreach($equipamento->users as $user)
                                   @if($user->id == auth()->user()->id)
-                                  <button id="botaosenha{{$equipamento->idequipamento_rede}}" type="button" data-id="{{$equipamento->idequipamento_rede}}" data-nome="{{$equipamento->nome}}" data-opt="1" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$equipamento->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$equipamento->idequipamento_rede}}" type="button" data-id="{{$equipamento->idequipamento_rede}}" data-nome="{{$equipamento->nome}}" data-opt="1" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$equipamento->users->implode('name','<br>')}}"></button>
                                   @break
                                   @elseif ($loop->last)
-                                  <button id="botaosenha{{$equipamento->idequipamento_rede}}" type="button" data-id="{{$equipamento->idequipamento_rede}}" data-nome="{{$equipamento->nome}}" data-opt="0" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$equipamento->users->implode('name','<br>')}}"></button>
+                                  <button id="botaosenha{{$equipamento->idequipamento_rede}}" type="button" data-id="{{$equipamento->idequipamento_rede}}" data-nome="{{$equipamento->nome}}" data-opt="0" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$equipamento->users->implode('name','<br>')}}"></button>
                                   @endif                                                        
                             @endforeach                            
                             @endif
@@ -255,8 +255,8 @@
                         <td>{{$equipamento->setor->sigla}}</td>
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button type="button" data-id="{{$equipamento->idequipamento_rede}}" data-nome="{{$equipamento->nome}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="delete_equipamento_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button type="button" data-id="{{$equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button type="button" data-id="{{$equipamento->idequipamento_rede}}" data-nome="{{$equipamento->nome}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="delete_equipamento_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -267,7 +267,7 @@
                     @endforelse
                 </tbody>
             </table>
-            <div class="d-flex hover justify-content-center">
+            <div class="d-flex hover justify-content-center bg-{{$color}}">
                 {{$equipamentos->links()}}               
             </div>     
 </div>
@@ -299,7 +299,7 @@ $(document).ready(function(){
             var idsetor = $(this).data("idsetor");
             var useridsetor = $(this).data("useridsetor");
             var nome = ($(this).data("nome")).trim();
-            if((admin==true)&&(idsetor===useridsetor)){ 
+            if(admin==true){ 
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -319,7 +319,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                 
                     $.ajax({
-                        url: '/datacenter/equipamento/delete-equipamento/'+id,
+                        url: '/datacenteradmin/equipamento/delete-equipamento/'+id,
                         type: 'POST',
                         dataType: 'json',
                         data:{
@@ -385,7 +385,7 @@ $(document).ready(function(){
             var useridsetor = $(this).data("useridsetor");
             var nome = $(this).data("nome");
 
-            if((admin==true)&&(idsetor===useridsetor)){ 
+            if(admin==true){ 
 
             $.ajaxSetup({
                 headers:{
@@ -395,7 +395,7 @@ $(document).ready(function(){
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
-                url: '/datacenter/equipamento/edit-equipamento/'+id,
+                url: '/datacenteradmin/equipamento/edit-equipamento/'+id,
                 success:function(response){
                     if(response.status==200){                         
                         $("#editform").trigger('reset');
@@ -459,7 +459,7 @@ $(document).ready(function(){
                 type: 'POST',
                 data: data,
                 dataType: 'json',
-                url: '/datacenter/equipamento/update-equipamento/'+id,
+                url: '/datacenteradmin/equipamento/update-equipamento/'+id,
                 success:function(response){
                     if(response.status==400){
                         //erros                  
@@ -498,26 +498,26 @@ $(document).ready(function(){
                             <td id="senha'+response.equipamento.idequipamento_rede+'">';
                         var bloqueia = true;
                         if(!response.equipamento.pass_admin){                        
-                        limita2 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>';
-                        }else if((!response.users.count)&&(response.user.admin==true)&&(response.equipamento.setor_idsetor==response.user.setor_idsetor)){
-                        limita3 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Primeira autorização"></button>';     
+                        limita2 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>';
+                        }else if((!response.users.count)&&(response.user.admin==true)&&(response.equipamento.setor_idsetor==response.user.setor_id)){
+                        limita3 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Primeira autorização"></button>';     
                         }else if(response.users.count){
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita4 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita4 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita5 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="0" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita5 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="0" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         } 
                         limita6 = '</td>\
                                 <td>'+response.setor.sigla+'</td>\
                                 <td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>\
-                                    <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_equipamento_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>\
+                                    <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>\
+                                    <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_equipamento_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>\
                                 </div>\
                             </td>\
                         </tr>';    
@@ -557,7 +557,7 @@ $(document).ready(function(){
     
             $.ajax({
                 type: 'POST',
-                url: '/datacenter/equipamento/adiciona-equipamento',
+                url: '/datacenteradmin/equipamento/adiciona-equipamento',
                 data: data,
                 dataType: 'json',
                 success:function(response){
@@ -595,26 +595,26 @@ $(document).ready(function(){
                             <td id="senha'+response.equipamento.idequipamento_rede+'">';
                         var bloqueia = true;                        
                         if(!response.equipamento.pass_admin){                        
-                        limita2 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>';
-                        }else if((!response.users.count)&&(response.user.admin)&&(response.equipamento.setor_idsetor==response.user.setor_idsetor)){
-                        limita3 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Primeira autorização"></button>';     
+                        limita2 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>';
+                        }else if((!response.users.count)&&(response.user.admin)&&(response.equipamento.setor_idsetor==response.user.setor_id)){
+                        limita3 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Primeira autorização"></button>';     
                         }else if(response.users.count){
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita4 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita4 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita5 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="0" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita5 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="0" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                         
                         limita6 = '</td>\
                                 <td>'+response.setor.sigla+'</td>\
                                 <td>\
                                 <div class="btn-group">\
-                                    <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>\
-                                    <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_equipamento_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>\
+                                    <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>\
+                                    <button type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_equipamento_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>\
                                 </div>\
                             </td>\
                         </tr>';
@@ -639,7 +639,7 @@ $(document).ready(function(){
             var idsetor = $(this).data("idsetor");
             var useridsetor = $(this).data("useridsetor");
             var nome = $(this).data("nome");
-            if((admin==true)&&(idsetor===useridsetor)){            
+            if(admin==true){            
                     $.ajaxSetup({
                         headers:{
                             'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
@@ -648,7 +648,7 @@ $(document).ready(function(){
                     $.ajax({
                         type: 'GET',
                         dataType: 'json',
-                        url: '/datacenter/equipamento/edit-equipamento/'+id,
+                        url: '/datacenteradmin/equipamento/edit-equipamento/'+id,
                         success:function(response){
                             if(response.status==200){                       
                                 $("#editform").trigger('reset');
@@ -705,7 +705,7 @@ $(document).ready(function(){
         var setor = $(this).data("setor");
         var opcaosenha = $(this).data("opt");
 
-        if((admin==true)&&(idsetor===useridsetor)&&(opcaosenha=="1")){        
+        if((admin==true)&&(opcaosenha=="1")){        
                   
         $("#addformsenha").trigger('reset');
         $("#AddSenhaEquipAdmin").modal('show');  
@@ -721,7 +721,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/equipamento/editsenhaequipamento/'+id,
+            url: '/datacenteradmin/equipamento/editsenhaequipamento/'+id,
             success: function(response){                
                 if(response.status==200){                    
                     var datacriacao = new Date(response.equipamento.created_at);
@@ -760,7 +760,7 @@ $(document).ready(function(){
             }
         });
 
-    }else if((admin==false)&&(idsetor===useridsetor)&&(opcaosenha=="1")){        
+    }else if((admin==false)&&(opcaosenha=="1")){        
                   
         $("#editformsenha").trigger('reset');
         $("#EditSenhaIndividual").modal('show');
@@ -776,7 +776,7 @@ $(document).ready(function(){
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/equipamento/editsenhaindividual/'+id,
+            url: '/datacenteradmin/equipamento/editsenhaindividual/'+id,
             success: function(response){
                 if(response.status==200){                    
                     $("#nomedousuario").replaceWith('<label  id="nomedousuario"> Senha de '+response.user.name+'</label>');
@@ -833,7 +833,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/equipamento/updatesenhaequipamento/'+id,
+                url:'/datacenteradmin/equipamento/updatesenhaequipamento/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -860,18 +860,18 @@ $(document).ready(function(){
                         var limita4 = "";                        
                         var bloqueia = true;                        
                        if(!response.equipamento.pass_admin){                        
-                        limita1 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>';
-                        }else if((!response.users.count)&&(response.user.admin)&&(response.equipamento.setor_idsetor==response.user.setor_idsetor)){
-                        limita2 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Primeira autorização"></button>';     
+                        limita1 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>';
+                        }else if((!response.users.count)&&(response.user.admin)&&(response.equipamento.setor_idsetor==response.user.setor_id)){
+                        limita2 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Primeira autorização"></button>';     
                         }else if(response.users.count){
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita3 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita3 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita4 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="0" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita4 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="0" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         }                      
 
@@ -902,7 +902,7 @@ $(document).ready(function(){
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/equipamento/updatesenhaindividual/'+id,
+                url:'/datacenteradmin/equipamento/updatesenhaindividual/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -929,18 +929,18 @@ $(document).ready(function(){
                         var limita4 = "";
                         var bloqueia = true;                        
                         if(!response.equipamento.pass_admin){                        
-                        limita1 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>';
-                        }else if((!response.users.count)&&(response.user.admin)&&(response.equipamento.setor_idsetor==response.user.setor_idsetor)){
-                        limita2 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Primeira autorização"></button>';     
+                        limita1 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>';
+                        }else if((!response.users.count)&&(response.user.admin)&&(response.equipamento.setor_idsetor==response.user.setor_id)){
+                        limita2 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Primeira autorização"></button>';     
                         }else if(response.users.count){
                             $.each(response.users,function(key,user_values){
                                 if(user_values.id == response.user.id){                                    
-                                    limita3 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
+                                    limita3 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="1" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock-open" style="background: transparent; color: green; border: none;"></button>';
                                     bloqueia = false;                              
                                 }
                             });                            
                             if(bloqueia){
-                            limita4 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="0" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_idsetor+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
+                            limita4 = '<button id="botaosenha'+response.equipamento.idequipamento_rede+'" type="button" data-id="'+response.equipamento.idequipamento_rede+'" data-nome="'+response.equipamento.nome+'" data-opt="0" data-admin="'+response.user.admin+'" data-useridsetor="'+response.user.setor_id+'" data-idsetor="'+response.equipamento.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="senhabloqueada_btn fas fa-lock" style="background: transparent; color: red; border: none;"></button>';
                             }
                         } 
 

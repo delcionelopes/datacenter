@@ -32,20 +32,20 @@ class SenhaController extends Controller
         $this->user = $user;
     }
 
-    public function index(){        
+    public function index($color){        
         $date = date("Y-m-d");       
         
         $user = auth()->user(); //usuário logado
 
         $users = $this->user->query()
-                            ->where('moderador','=','true')
-                            ->where('setor_idsetor','=',1)
+                            ->where('admin','=','true')
+                            ->where('setor_id','=',1)
                             ->where('inativo','=','false')
                             ->orderBy('name')
                             ->get(); //usuários com perfil setor infra
         $usersdiversos = $this->user->query()
-                            ->where('moderador','=','true')
-                            ->where('setor_idsetor','=',$user->setor_idsetor)
+                            ->where('admin','=','true')
+                            ->where('setor_id','=',$user->setor_idsetor)
                             ->where('inativo','=','false')
                             ->orderBy('name')
                             ->get(); //usuários com perfil outros setores
@@ -109,6 +109,7 @@ class SenhaController extends Controller
             'uservlans' => $uservlans,
             'totaluserequipamentos' => $totaluserequipamentos,
             'userequipamentos' => $userequipamentos,
+            'color' => $color
         ]);
     }
 

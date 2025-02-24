@@ -131,6 +131,10 @@ $(document).ready(function(){
       break;
       case 10: location.replace('/datacenteradmin/vlan/index-vlan/'+color); ///Gestão de Redes
       break;
+      case 11: location.replace('/datacenteradmin/senhas/index-senhas/'+color); ///Gestão de senhas
+      break;
+      case 12: location.replace('/datacenteradmin/equipamento/index-equipamento/'+color); ///Gestão de senhas
+      break;
       default:
         break;
     }  

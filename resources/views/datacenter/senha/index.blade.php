@@ -37,7 +37,7 @@
                                 </button>                                
                                 <ul class="dropdown-menu" id="dropdown_app{{auth()->user()->id}}">
                                     @foreach($userapps as $u_app)                                                                                                            
-                                    <li class="dropdown-item"><a href="#" class="dropdown-item userapp_item" data-id="{{$u_app->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeapp="{{$u_app->nome_app}}" 
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item userapp_item" data-id="{{$u_app->id}}" data-nomeapp="{{$u_app->nome_app}}" 
                                       data-dominio="{{$u_app->dominio}}">{{$u_app->nome_app}}</a></li>
                                     @endforeach
                                 </ul>                                                                                                  
@@ -50,7 +50,7 @@
                                 </button>                               
                                 <ul class="dropdown-menu" id="dropdown_host{{auth()->user()->id}}">
                                     @foreach($userhosts as $u_host)                                                                                                            
-                                    <li class="dropdown-item"><a href="#" class="dropdown-item userhost_item" data-id="{{$u_host->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomehost="{{$u_host->datacenter}}" data-clusterip="{{$u_host->cluster}}/{{$u_host->ip}}">{{$u_host->datacenter}}</a></li>
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item userhost_item" data-id="{{$u_host->id}}" data-nomehost="{{$u_host->datacenter}}" data-clusterip="{{$u_host->cluster}}/{{$u_host->ip}}">{{$u_host->datacenter}}</a></li>
                                     @endforeach
                                 </ul>                                                                                             
                     </div>
@@ -62,7 +62,7 @@
                                 </button>                               
                                 <ul class="dropdown-menu" id="dropdown_vm{{auth()->user()->id}}">
                                     @foreach($uservms as $u_vm)                                                                                                            
-                                    <li class="dropdown-item"><a href="#" class="dropdown-item uservm_item" data-id="{{$u_vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevm="{{$u_vm->nome_vm}}" data-clusterip="{{$u_vm->cluster}}/{{$u_vm->ip}}">{{$u_vm->nome_vm}}</a></li>
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item uservm_item" data-id="{{$u_vm->id}}" data-nomevm="{{$u_vm->nome_vm}}" data-clusterip="{{$u_vm->cluster}}/{{$u_vm->ip}}">{{$u_vm->nome_vm}}</a></li>
                                     @endforeach
                                 </ul>                                                                             
                     </div>
@@ -74,7 +74,7 @@
                                 </button>                                
                                 <ul class="dropdown-menu" id="dropdown_base{{auth()->user()->id}}">
                                     @foreach($userbases as $u_base)                                                                                                            
-                                    <li class="dropdown-item"><a href="#" class="dropdown-item userbase_item" data-id="{{$u_base->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomebase="{{$u_base->nome_base}}" data-ip="{{$u_base->ip}}">{{$u_base->nome_base}}</a></li>
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item userbase_item" data-id="{{$u_base->id}}" data-nomebase="{{$u_base->nome_base}}" data-ip="{{$u_base->ip}}">{{$u_base->nome_base}}</a></li>
                                     @endforeach
                                 </ul>                                                                   
                     </div>
@@ -86,7 +86,7 @@
                                 </button>                                
                                 <ul class="dropdown-menu" id="dropdown_vlan{{auth()->user()->id}}">
                                     @foreach($uservlans as $u_vlan)                                                                                                            
-                                    <li class="dropdown-item"><a href="#" class="dropdown-item uservlan_item" data-id="{{$u_vlan->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevlan="{{$u_vlan->nome_vlan}}">{{$u_vlan->nome_vlan}}</a></li>
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item uservlan_item" data-id="{{$u_vlan->id}}" data-nomevlan="{{$u_vlan->nome_vlan}}">{{$u_vlan->nome_vlan}}</a></li>
                                     @endforeach
                                 </ul>                                             
                     </div>                        
@@ -98,7 +98,7 @@
                                 </button>                                
                                 <ul class="dropdown-menu" id="dropdown_vlan{{auth()->user()->id}}">
                                     @foreach($userequipamentos as $u_equipamento)                                                                                                            
-                                    <li class="dropdown-item"><a href="#" class="dropdown-item userequipamento_item" data-id="{{$u_equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$u_equipamento->setor_idsetor}}" data-setor="{{$u_equipamento->setor->sigla}}" data-nome="{{$u_equipamento->nome}}">{{$u_equipamento->nome}}</a></li>
+                                    <li class="dropdown-item"><a href="#" class="dropdown-item userequipamento_item" data-id="{{$u_equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-idsetor="{{$u_equipamento->setor_idsetor}}" data-setor="{{$u_equipamento->setor->sigla}}" data-nome="{{$u_equipamento->nome}}">{{$u_equipamento->nome}}</a></li>
                                     @endforeach
                                 </ul>                                             
                     </div>                        
@@ -127,10 +127,10 @@
                                     @foreach($apps as $app)                                         
                                         @foreach($app->users as $user)
                                             @if(($user->id) == (auth()->user()->id))                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadaapp_btn" data-id="{{$app->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeapp="{{$app->nome_app}}" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadaapp_btn" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" 
                                                 data-dominio="{{$app->dominio}}" data-opt="1" style="white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"><i class="fas fa-lock-open" style="background: transparent; color: green; border: none;"></i> {{$app->nome_app}}</a></li>                                                                              @break
                                             @elseif ($loop->last)                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadaapp_btn" data-id="{{$app->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomeapp="{{$app->nome_app}}" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadaapp_btn" data-id="{{$app->id}}" data-nomeapp="{{$app->nome_app}}" 
                                                 data-dominio="{{$app->dominio}}" data-opt="0" style="white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="{{$app->users->implode('name','<br>')}}"><i class="fas fa-lock" style="background: transparent; color: red; border: none;"></i> {{$app->nome_app}}</a></li>
                                             @endif               
                                         @endforeach                                         
@@ -155,11 +155,11 @@
                                     @foreach($bases as $base)                                         
                                         @foreach($base->users as $user)
                                             @if(($user->id) == (auth()->user()->id))                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadabase_btn" data-id="{{$base->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomebase="{{$base->nome_base}}" data-ip="{{$base->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadabase_btn" data-id="{{$base->id}}" data-nomebase="{{$base->nome_base}}" data-ip="{{$base->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$base->users->implode('name','<br>')}}"><i class="fas fa-lock-open" style="background: transparent; color: green; border: none;"></i> {{$base->nome_base}}</a></li>
                                                 @break
                                             @elseif ($loop->last)                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadabase_btn" data-id="{{$base->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomebase="{{$base->nome_base}}" data-ip="{{$base->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadabase_btn" data-id="{{$base->id}}" data-nomebase="{{$base->nome_base}}" data-ip="{{$base->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$base->users->implode('name','<br>')}}"><i class="fas fa-lock" style="background: transparent; color: red; border: none;"></i> {{$base->nome_base}}</a></li>
                                             @endif               
                                         @endforeach                                         
@@ -184,11 +184,11 @@
                                     @foreach($virtualmachines as $vm)                                         
                                         @foreach($vm->users as $user)
                                             @if(($user->id) == (auth()->user()->id))                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavm_btn" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavm_btn" data-id="{{$vm->id}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"><i class="fas fa-lock-open" style="background: transparent; color: green; border: none;"></i> {{$vm->nome_vm}}</a></li>
                                                 @break
                                             @elseif ($loop->last)                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavm_btn" data-id="{{$vm->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavm_btn" data-id="{{$vm->id}}" data-nomevm="{{$vm->nome_vm}}" data-clusterip="{{$vm->cluster}}/{{$vm->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$vm->users->implode('name','<br>')}}"><i class="fas fa-lock" style="background: transparent; color: red; border: none;"></i> {{$vm->nome_vm}}</a></li>
                                             @endif               
                                         @endforeach                                         
@@ -213,11 +213,11 @@
                                     @foreach($hosts as $host)                                         
                                         @foreach($host->users as $user)
                                             @if(($user->id) == (auth()->user()->id))                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadahost_btn" data-id="{{$host->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadahost_btn" data-id="{{$host->id}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$host->users->implode('name','<br>')}}"><i class="fas fa-lock-open" style="background: transparent; color: green; border: none;"></i> {{$host->datacenter}}</a></li>
                                                 @break
                                             @elseif ($loop->last)                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadahost_btn" data-id="{{$host->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadahost_btn" data-id="{{$host->id}}" data-nomehost="{{$host->datacenter}}" data-clusterip="{{$host->cluster}}/{{$host->ip}}" data-opt="0" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$host->users->implode('name','<br>')}}"><i class="fas fa-lock" style="background: transparent; color: red; border: none;"></i> {{$host->datacenter}}</a></li>
                                             @endif               
                                         @endforeach                                         
@@ -242,11 +242,11 @@
                                     @foreach($vlans as $vlan)                                         
                                         @foreach($vlan->users as $user)
                                             @if(($user->id) == (auth()->user()->id))                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavlan_btn" data-id="{{$vlan->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavlan_btn" data-id="{{$vlan->id}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="1" class="fas fa-lock-open" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$vlan->users->implode('name','<br>')}}"><i class="fas fa-lock-open" style="background: transparent; color: green; border: none;"></i> {{$vlan->nome_vlan}}</a></li>
                                                 @break
                                             @elseif ($loop->last)                                  
-                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavlan_btn" data-id="{{$vlan->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="0" class="fas fa-lock" style="white-space: nowrap;" 
+                                            <li class="dropdown-item"><a href="#" class="dropdown-item senhabloqueadavlan_btn" data-id="{{$vlan->id}}" data-nomevlan="{{$vlan->nome_vlan}}" data-opt="0" class="fas fa-lock" style="white-space: nowrap;" 
                                                 data-html="true" data-placement="left" data-toggle="popover" title="{{$vlan->users->implode('name','<br>')}}"><i class="fas fa-lock" style="background: transparent; color: red; border: none;"></i> {{$vlan->nome_vlan}}</a></li>
                                             @endif               
                                         @endforeach                                         
@@ -283,7 +283,7 @@
    <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaEquipAdmin" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Administrar acesso ao equipamento</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -349,7 +349,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary add_senhaequipadmin_btn"><img id="imgeaddequipamento" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} add_senhaequipadmin_btn"><img id="imgeaddequipamento" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -360,7 +360,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaEquipIndividual" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Minha senha individual</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -389,7 +389,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhaindividual_btn"><img id="imgsenhaindividualequipamento" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_senhaindividual_btn"><img id="imgsenhaindividualequipamento" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -400,7 +400,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaApp" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">APP - Editar e atualizar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -475,7 +475,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhaapp_btn"><img id="imgsenhaapp" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_senhaapp_btn"><img id="imgsenhaapp" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -486,7 +486,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaHost" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">HOST - Editar e atualizar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -561,7 +561,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhahost_btn"><img id="imgsenhahost" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_senhahost_btn"><img id="imgsenhahost" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -572,7 +572,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaVM" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">VM - Editar e atualizar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -647,7 +647,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhaVM_btn"><img id="imgsenhavm" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_senhaVM_btn"><img id="imgsenhavm" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -658,7 +658,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaBase" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">BASE - Editar e atualizar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -733,7 +733,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhabase_btn"><img id="imgsenhabase" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_senhabase_btn"><img id="imgsenhabase" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -744,7 +744,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaVLAN" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-primary">
+            <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">VLAN - Editar e atualizar Senha</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times</span>
@@ -815,7 +815,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_senhavlan_btn"><img id="imgsenhavlan" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_senhavlan_btn"><img id="imgsenhavlan" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -839,10 +839,7 @@ $(document).ready(function(){ //início do bloco principal
         $("#edit_senha").focus();
     });
     $(document).on('click','.userapp_item',function(e){
-        e.preventDefault();      
-        var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
-        if(setoradmin==1){
+        e.preventDefault();               
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomeapp")).trim();            
         var labelDominio = ($(this).data("dominio")).trim(); 
@@ -861,7 +858,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/senhas/editusersenhaapp/'+id,
+            url: '/datacenteradmin/senhas/editusersenhaapp/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.app.created_at);
@@ -912,30 +909,8 @@ $(document).ready(function(){ //início do bloco principal
                         });
                 }
             }
-        });
-  
-    }else{
-          Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }
+        });  
+   
     });
     //fim exibe EditAppModal
     ///inicio alterar senha
@@ -970,7 +945,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/senhas/updateusersenhaapp/'+id,
+                url:'/datacenteradmin/senhas/updateusersenhaapp/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1001,9 +976,6 @@ $(document).ready(function(){ //início do bloco principal
     });
     $(document).on('click','.userhost_item',function(e){
         e.preventDefault();
-        var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
-        if(setoradmin==1){
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomehost")).trim();            
         var labelclusterip = ($(this).data("clusterip")).trim(); 
@@ -1022,7 +994,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/senhas/editusersenhahost/'+id,
+            url: '/datacenteradmin/senhas/editusersenhahost/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.host.created_at);
@@ -1074,28 +1046,6 @@ $(document).ready(function(){ //início do bloco principal
                 }
             }
         });
-        }else{
-            Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-        }
              
     });
     //fim exibe 
@@ -1131,7 +1081,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/senhas/updateusersenhahost/'+id,
+                url:'/datacenteradmin/senhas/updateusersenhahost/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1163,9 +1113,6 @@ $(document).ready(function(){ //início do bloco principal
     });
     $(document).on('click','.uservm_item',function(e){
         e.preventDefault();
-        var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
-        if(setoradmin==1){
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomevm")).trim();            
         var labelclusterip = ($(this).data("clusterip")).trim(); 
@@ -1235,29 +1182,7 @@ $(document).ready(function(){ //início do bloco principal
                         });
                 }
             }
-        });   
-    }else{
-          Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }
+        });
              
     });
     //fim exibe 
@@ -1293,7 +1218,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/senhas/updateusersenhavm/'+id,
+                url:'/datacenteradmin/senhas/updateusersenhavm/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1328,12 +1253,6 @@ $(document).ready(function(){ //início do bloco principal
     });
     $(document).on('click','.userbase_item',function(e){
         e.preventDefault();
-
-        var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
-
-        if(setoradmin==1){
-
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomebase")).trim();            
         var labelip = ($(this).data("ip")).trim(); 
@@ -1352,7 +1271,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/senhas/editusersenhabase/'+id,
+            url: '/datacenteradmin/senhas/editusersenhabase/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.base.created_at);
@@ -1405,29 +1324,6 @@ $(document).ready(function(){ //início do bloco principal
             }
         });
 
-    }else{
-        Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }
-
                 
     });
     //fim exibe EditBaseModal
@@ -1463,7 +1359,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/senhas/updateusersenhabase/'+id,
+                url:'/datacenteradmin/senhas/updateusersenhabase/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1496,12 +1392,6 @@ $(document).ready(function(){ //início do bloco principal
     });
     $(document).on('click','.uservlan_item',function(e){
         e.preventDefault();
-
-        var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
-
-        if(setoradmin==1){
-
         var id = $(this).data("id");
         var labelHtml = ($(this).data("nomevlan")).trim();                   
         $("#editformsenhavlan").trigger('reset');
@@ -1518,7 +1408,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/senhas/editusersenhavlan/'+id,
+            url: '/datacenteradmin/senhas/editusersenhavlan/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.vlan.created_at);
@@ -1570,28 +1460,6 @@ $(document).ready(function(){ //início do bloco principal
                 }
             }
         });
-    }else{
-         Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }
              
     });
     //fim exibe 
@@ -1627,7 +1495,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/senhas/updateusersenhavlan/'+id,
+                url:'/datacenteradmin/senhas/updateusersenhavlan/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1660,11 +1528,10 @@ $(document).ready(function(){ //início do bloco principal
         var id = $(this).data("id");
         var admin = $(this).data("admin");
         var setor = $(this).data("setor");
-        var setoradmin = $(this).data("setoradmin");
         var nome = $(this).data("nome");
         var idsetor = $(this).data("idsetor");
      
-    if((admin==true)&&(idsetor===setoradmin)){        
+    if(admin==true){        
                   
         $("#addformsenhaequipadmin").trigger('reset');
         $("#AddSenhaEquipAdmin").modal('show');  
@@ -1680,7 +1547,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/equipamento/editsenhaequipamento/'+id,
+            url: '/datacenteradmin/equipamento/editsenhaequipamento/'+id,
             success: function(response){                
                 if(response.status==200){                    
                     var datacriacao = new Date(response.equipamento.created_at);
@@ -1719,7 +1586,7 @@ $(document).ready(function(){ //início do bloco principal
             }
         });
 
-        }else if((admin==false)&&(idsetor===setoradmin)){        
+        }else if(admin==false){        
                   
         $("#editformsenhaindividual").trigger('reset');
         $("#EditSenhaEquipIndividual").modal('show');
@@ -1735,7 +1602,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/equipamento/editsenhaindividual/'+id,
+            url: '/datacenteradmin/equipamento/editsenhaindividual/'+id,
             success: function(response){
                 if(response.status==200){                    
                     $("#nomedousuario").replaceWith('<label  id="nomedousuario"> Senha de '+response.user.name+'</label>');
@@ -1805,7 +1672,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/equipamento/updatesenhaequipamento/'+id,
+                url:'/datacenteradmin/equipamento/updatesenhaequipamento/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1850,7 +1717,7 @@ $(document).ready(function(){ //início do bloco principal
                 type:'POST',                                
                 data:data,
                 dataType: 'json',
-                url:'/datacenter/equipamento/updatesenhaindividual/'+id,
+                url:'/datacenteradmin/equipamento/updatesenhaindividual/'+id,
                 success:function(response){
                       if(response.status==400){
                            //erros
@@ -1885,11 +1752,8 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.senhabloqueadaapp_btn',function(e){
         e.preventDefault();
 
-        var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
+        var link = "{{asset('storage')}}";        
         var opcaosenha = $(this).data("opt");
-
-        if(setoradmin==1){
 
         if(opcaosenha){
     
@@ -1914,7 +1778,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/editusersenhaapp/'+id,
+            url: '/datacenteradmin/editusersenhaapp/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.app.created_at);
@@ -1986,28 +1850,6 @@ $(document).ready(function(){ //início do bloco principal
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
-}else{
-     Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-}
              
     });
     //fim exibe EditAppModal
@@ -2021,10 +1863,7 @@ $(document).ready(function(){ //início do bloco principal
         e.preventDefault();
 
         var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
-
-        if(setoradmin==1){
-
+       
         var opcaosenha = $(this).data("opt");
 
         if(opcaosenha){
@@ -2047,7 +1886,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/senhas/editusersenhabase/'+id,
+            url: '/datacenteradmin/senhas/editusersenhabase/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.base.created_at);
@@ -2119,28 +1958,6 @@ $(document).ready(function(){ //início do bloco principal
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
-}else{
-     Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-}
              
     });   
 
@@ -2150,10 +1967,7 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.senhabloqueadavm_btn',function(e){
         e.preventDefault();
 
-        var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
-
-        if(setoradmin==1){
+        var link = "{{asset('storage')}}";       
 
         var opcaosenha = $(this).data("opt");
 
@@ -2249,28 +2063,6 @@ $(document).ready(function(){ //início do bloco principal
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
-}else{
-     Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-}
              
     });
     //fim edit senhas VM do alerta
@@ -2281,10 +2073,7 @@ $(document).ready(function(){ //início do bloco principal
         e.preventDefault();
 
         var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
-
-        if(setoradmin==1){
-
+       
         var opcaosenha = $(this).data("opt");
 
         if(opcaosenha){
@@ -2379,28 +2168,7 @@ $(document).ready(function(){ //início do bloco principal
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
-}else{
-     Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-}
+
              
     });
     //fim exibe senhas vencidas de HOSTS do alerta
@@ -2409,10 +2177,7 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.senhabloqueadavlan_btn',function(e){
         e.preventDefault();
 
-        var link = "{{asset('storage')}}";
-        var setoradmin = $(this).data("setoradmin");
-
-        if(setoradmin==1){
+        var link = "{{asset('storage')}}";       
 
         var opcaosenha = $(this).data("opt");
 
@@ -2434,7 +2199,7 @@ $(document).ready(function(){ //início do bloco principal
         $.ajax({
             type: 'GET',
             dataType: 'json',
-            url: '/datacenter/senhas/editusersenhavlan/'+id,
+            url: '/datacenteradmin/senhas/editusersenhavlan/'+id,
             success: function(response){
                 if(response.status==200){                                                       
                     var datacriacao = new Date(response.vlan.created_at);
@@ -2506,28 +2271,7 @@ $(document).ready(function(){ //início do bloco principal
                 cancelButtonText: 'Não necessito, obrigado!',
             });      
     }
-}else{
-     Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:'ALERTA SETOR DE INFRA!',
-                text: "Acesso proibido, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-}
+
              
     });
     //fim exibe alteração de senhas VLANS do alerta
