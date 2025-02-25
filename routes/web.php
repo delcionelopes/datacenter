@@ -27,6 +27,7 @@ use App\Http\Controllers\datacenter\SenhaController;
 use App\Http\Controllers\datacenter\VirtualMachineController;
 use App\Http\Controllers\datacenter\vlanController;
 use App\Http\Controllers\HomeController;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -353,6 +354,11 @@ Route::group(['middleware'=> ['auth']],function(){
            Route::get('editsenhaindividual/{id}',[EquipamentoController::class,'editsenhaIndividual']);
            Route::patch('updatesenhaequipamento/{id}',[EquipamentoController::class,'updatesenhaEquipamento']);
            Route::patch('updatesenhaindividual/{id}',[EquipamentoController::class,'updatesenhaIndividual']);
+           });
+
+           //Relatórios
+           Route::prefix('relatorios')->name('relatorios.')->group(function(){            
+            Route::get('relatorio-ambientes',[AmbienteController::class,'relatorioAmbiente'])->name('relatorio.ambientes');
            });
 
         });

@@ -8,6 +8,7 @@ use App\Models\Ambiente;
 use App\Models\App;
 use App\Models\Base;
 use App\Models\VirtualMachine;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Validator;
 
 class AmbienteController extends Controller
@@ -205,5 +206,15 @@ class AmbienteController extends Controller
             'status'  => $status,
             'message' => $message,
         ]);
+    }
+    
+    //relatórios
+    public function relatorioAmbiente(){
+        $ambientes = $this->ambiente->all();
+        $date = now();
+        return Pdf::loadView('relatorios.datacenter.ambientes',[
+            'ambientes' => $ambientes,
+            'date' => $date
+        ])->stream('ambientes.pdf');
     }
 }

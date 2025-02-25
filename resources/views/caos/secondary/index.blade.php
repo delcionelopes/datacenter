@@ -135,6 +135,8 @@ $(document).ready(function(){
       break;
       case 12: location.replace('/datacenteradmin/equipamento/index-equipamento/'+color); ///Gestão de senhas
       break;
+      case 13: location.replace('/datacenteradmin/relatorios/relatorio-ambientes'); ///Relatorio de ambientes
+      break;
       default:
         break;
     }  
