@@ -211,8 +211,7 @@ class AmbienteController extends Controller
     //relatórios
     public function relatorioAmbiente(){
         $ambientes = $this->ambiente->all();
-        $date = now();
-        Pdf::setOption(['dpi' => 150, 'defaultFont' => 'sans-serif']);
+        $date = now();        
         return Pdf::loadView('relatorios.datacenter.ambientes',[
             'ambientes' => $ambientes,
             'date' => $date
