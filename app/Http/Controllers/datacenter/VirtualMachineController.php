@@ -13,6 +13,7 @@ use App\Models\User;
 use Illuminate\Http\Request;
 use App\Models\VirtualMachine;
 use App\Models\Vlan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
@@ -491,6 +492,24 @@ class VirtualMachineController extends Controller
             'criador' => $criador,
             'alterador' => $alterador,            
         ]);
+    }
+
+    //relatórios
+    public function relatorioVM(){
+        $virtualmachines = $this->virtualmachine->query()->whereId('1594')->get();
+        $date = now();
+        //$num_linhas_impressas = $virtualmachines->count();        
+        //$num_linhas_total = 35;
+        //$num_paginas = round(($num_linhas_total + $num_linhas_impressas)/$num_linhas_total);        
+        $setor = auth()->user()->setor->nome;
+        return Pdf::loadView('relatorios.datacenter.maquinasvirtuais',[
+            'maquinasvirtuais' => $virtualmachines,
+            'date' => $date,
+          //  'num_linhas_impressas' => $num_linhas_impressas,
+            //'num_linhas_total' => $num_linhas_total,
+           // 'num_paginas' => $num_paginas,
+            'setor' => $setor,
+        ])->setPaper('a4','landscape')->stream('maquinas_virtuais.pdf');        
     }
 
 }

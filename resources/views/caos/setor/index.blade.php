@@ -233,7 +233,7 @@ $(document).ready(function(){
                     if(response.status==200){                           
                         $(".sigla_setor").val(response.setor.sigla);
                         $(".nome_setor").val(response.setor.nome);
-                        $("#edit_setor_id").val(response.setor.id);                                                                                                       
+                        $("#edit_setor_id").val(response.setor.idsetor);                                                                                                       
                     }      
                 }
             });        
@@ -293,8 +293,8 @@ $(document).ready(function(){
                             var linha = '<tr id="setor'+response.setor.id+'">\
                                     <th scope="row">'+response.setor.sigla+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.setor.id+'" data-siglasetor="'+response.setor.sigla+'" class="edit_setor fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.setor.id+'" data-siglasetor="'+response.setor.nome+'" class="delete_setor_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.setor.idsetor+'" data-siglasetor="'+response.setor.sigla+'" class="edit_setor fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.setor.idsetor+'" data-siglasetor="'+response.setor.nome+'" class="delete_setor_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';                             
                         $("#setor"+id).replaceWith(linha);                                                                                
@@ -363,11 +363,11 @@ $(document).ready(function(){
                         var linha0 = "";
                         var linha1 = "";
                             linha0 = '<tr id="novo" style="display:none;"></tr>';
-                            linha1 = '<tr id="setor'+response.setor.id+'">\
+                            linha1 = '<tr id="setor'+response.setor.idsetor+'">\
                                     <th scope="row">'+response.setor.sigla+'</th>\
                                     <td><div class="btn-group">\
-                                    <button type="button" data-id="'+response.setor.id+'" data-siglasetor="'+response.setor.sigla+'" class="edit_setor fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.setor.id+'" data-siglasetor="'+response.setor.sigla+'" class="delete_setor_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.setor.idsetor+'" data-siglasetor="'+response.setor.sigla+'" class="edit_setor fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.setor.idsetor+'" data-siglasetor="'+response.setor.sigla+'" class="delete_setor_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div></td>\
                                     </tr>';
                         if(!$("#nadaencontrado").html==""){

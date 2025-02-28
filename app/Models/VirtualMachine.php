@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class VirtualMachine extends Model
@@ -28,17 +29,17 @@ class VirtualMachine extends Model
         'criador_id',
         'alterador_id',
     ];
-    public function cluster(){
-        return $this->belongsTo(Cluster::class,'cluster_id');
+    public function clusterref():BelongsTo{
+        return $this->belongsTo(Cluster::class,'cluster_id','id');
     }    
-    public function ambiente(){
-        return $this->belongsTo(Ambiente::class,'ambiente_id');
+    public function ambiente():BelongsTo{
+        return $this->belongsTo(Ambiente::class,'ambiente_id','id');
     }
-    public function orgao(){
-        return $this->belongsTo(Orgao::class,'orgao_id');
+    public function orgao():BelongsTo{
+        return $this->belongsTo(Orgao::class,'orgao_id','id');
     }
-    public function projeto(){
-        return $this->belongsTo(Projeto::class,'projeto_id');
+    public function projeto():BelongsTo{
+        return $this->belongsTo(Projeto::class,'projeto_id','id');
     }
     public function vlans():BelongsToMany{
         return $this->belongsToMany(Vlan::class,'vm_vlan','virtual_machine_id','vlan_id');

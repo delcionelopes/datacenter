@@ -137,6 +137,8 @@ $(document).ready(function(){
       break;
       case 13: location.replace('/datacenteradmin/relatorios/relatorio-ambientes'); ///Relatorio de ambientes
       break;
+      case 17: location.replace('/datacenteradmin/relatorios/relatorio-maquinasvirtuais'); ///Relatorio de máquinas virtuais
+      break;
       default:
         break;
     }  

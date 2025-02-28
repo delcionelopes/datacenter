@@ -359,6 +359,7 @@ Route::group(['middleware'=> ['auth']],function(){
            //Relatórios
            Route::prefix('relatorios')->name('relatorios.')->group(function(){            
             Route::get('relatorio-ambientes',[AmbienteController::class,'relatorioAmbiente'])->name('relatorio.ambientes');
+            Route::get('relatorio-maquinasvirtuais',[VirtualMachineController::class,'relatorioVM'])->name('relatorio.maquinasvirtuais');
            });
 
         });

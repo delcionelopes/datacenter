@@ -211,10 +211,18 @@ class AmbienteController extends Controller
     //relatórios
     public function relatorioAmbiente(){
         $ambientes = $this->ambiente->all();
-        $date = now();        
+        $date = now();
+        $num_linhas_impressas = $ambientes->count();
+        $num_linhas_total = 35;
+        $num_paginas = round(($num_linhas_total + $num_linhas_impressas)/$num_linhas_total);
+        $setor = auth()->user()->setor->nome;
         return Pdf::loadView('relatorios.datacenter.ambientes',[
             'ambientes' => $ambientes,
-            'date' => $date
+            'date' => $date,
+            'num_linhas_impressas' => $num_linhas_impressas,
+            'num_linhas_total' => $num_linhas_total,
+            'num_paginas' => $num_paginas,
+            'setor' => $setor,
         ])->stream('ambientes.pdf');
     }
 }

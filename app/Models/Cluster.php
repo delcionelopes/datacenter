@@ -8,7 +8,7 @@ use Illuminate\Database\Eloquent\Relations\HasMany;
 class Cluster extends Model
 {    
     protected $table = 'cluster';   
-    protected $fillable = [
+    protected $fillable = [        
         'nome_cluster',
         'total_memoria',
         'total_processador',      
@@ -18,6 +18,6 @@ class Cluster extends Model
         return $this->hasMany(Host::class);
     }
     public function virtual_machines():HasMany{
-        return $this->hasMany(VirtualMachine::class);
+        return $this->hasMany(VirtualMachine::class,'id','cluster_id');
     }
 }
