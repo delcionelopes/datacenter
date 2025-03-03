@@ -16,7 +16,7 @@
        flex-wrap: wrap;
        justify-items: center;
        text-align: center;
-       position: relative;
+       position: relative;       
      }
 </style>
 
@@ -41,76 +41,68 @@
     <h3 style="text-align: center; text-decoration-style: solid">RELATÓRIO DE MÁQUINAS VIRTUAIS</h3>
     </nav>    
     <div>    
-    </div>
-    {{--@for ($pagina = 1; $pagina <= $num_paginas; $pagina++) --}}
+    </div>    
     <table class="table table-sm">    
     <thead>        
         <tr>
-            <th>NOME</th>
-            <th>CPU</th>
-            <th>MEM</th>
-            <th>DISCO</th>
-            <th>IP</th>
-            <th>SISTEMA OPERACIONAL</th>
-            {{--<th>AMBIENTE</th>
-            <th>ORGÃO</th>
-            <th>CLUSTER</th>
-            <th>PROJETO</th>  --}}
+            <th scope="row" style="text-align: justify">NOME</th>            
+            <th scope="row" style="text-align: justify">IP</th>
+            <th scope="row" style="text-align: justify">SISTEMA OPERACIONAL</th>
         </tr>       
     </thead>
     <tbody>
-            @foreach($maquinasvirtuais as $vm)
+           {{$pagina=1}}
+           {{$linha=0}}
+            @foreach($maquinasvirtuais as $vm)            
             <tr>
-                <td>{{$vm->nome_vm}}</td>                 
-                <td>{{$vm->cpu}}</td>
-                <td>{{$vm->memoria}}</td>
-                <td>{{$vm->disco}}</td>
+                <td>{{$vm->nome_vm}}</td>                
                 <td>{{$vm->ip}}</td>
                 <td>{{$vm->sistema_operacional}}</td>
-                {{--@if($vm->ambiente_id)
-                <td>{{$vm->ambiente->nome_ambiente}}</td>
-                @else
-                <td></td>    
-                @endif
-                @if($vm->orgao_id)
-                <td>{{$vm->orgao->nome_orgao}}</td>
-                @else
-                <td></td>
-                @endif
-                @if($vm->cluster_id)
-                <td>{{$vm->clusterref->nome_cluster}}</td>
-                @else
-                <td></td>
-                @endif
-                @if($vm->projeto_id)
-                <td>{{$vm->projeto->nome_projeto}}</td>
-                @else
-                <td></td>  
-                @endif  --}}
-            </tr>               
-            @endforeach
-            {{--@if($num_linhas_impressas+1<$num_linhas_total)
-            @for ($i = $num_linhas_impressas+1; $i <= $num_linhas_total; $i++)            
-            <tr>
-                <td style="color: white">$i</td>
-                <td> </td>
-                <td> </td>
-            </tr>            
-            @endfor            
-            @endif  --}}
-    </tbody>
-    </table>
-     <!-- Rodapé-->
-        {{--<footer class="border-top">
-            <div class="container px-4 px-lg-5">
+            </tr>
+            {{$linha++}}
+            @if(($linha==21)&&($linha % 21==0)&&($pagina<2))
+           <!-- Rodapé-->
+            <footer class="border-top">
+               <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">                        
-                        <div class="small text-center text-muted fst-italic">copyright &copy; prodap / gerado em {{date('d/m/Y H:i:s',strtotime($date))}} <br> Página {{$pagina}} de {{$num_paginas}}</div>
+                        <div class="small text-center text-muted fst-italic">copyright &copy; prodap / gerado em {{date('d/m/Y H:i:s',strtotime($date))}} / Página {{$pagina}}</div>
                     </div>
                 </div>
-            </div>
-        </footer>  
-    @endfor  --}}
+             </div>
+           </footer>
+            {{$pagina++}}
+            {{$linha=0}}            
+           @endif            
+           @if(($linha>=28)&&($linha % 28==0)&&($pagina>1))
+            <!-- Rodapé-->
+            <footer class="border-top">
+               <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">                        
+                        <div class="small text-center text-muted fst-italic">copyright &copy; prodap / gerado em {{date('d/m/Y H:i:s',strtotime($date))}} / Página {{$pagina}}</div>
+                    </div>
+                </div>
+             </div>
+           </footer>
+            {{$pagina++}}                        
+            @endif            
+            @if($loop->last)
+            <!-- Rodapé-->
+            <footer class="border-top">
+               <div class="container px-4 px-lg-5">
+                <div class="row gx-4 gx-lg-5 justify-content-center">
+                    <div class="col-md-10 col-lg-8 col-xl-7">                        
+                        <div class="small text-center text-muted fst-italic">copyright &copy; prodap / gerado em {{date('d/m/Y H:i:s',strtotime($date))}} / Página {{$pagina}}</div>
+                    </div>
+                </div>
+             </div>
+           </footer>
+            @endif
+            @endforeach            
+    </tbody>    
+    </table>     
+     
     </div>
             
 </body>

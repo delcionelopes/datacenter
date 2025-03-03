@@ -46,9 +46,9 @@
     <table class="table table-sm">    
     <thead>        
         <tr>
-            <th>NOME</th>
-            <th>CRIAÇÃO</th>
-            <th>ALTERAÇÃO</th>
+            <th scope="row" style="text-align: justify">NOME</th>
+            <th scope="row" style="text-align: justify">CRIAÇÃO</th>
+            <th scope="row" style="text-align: justify">ALTERAÇÃO</th>
         </tr>       
     </thead>
     <tbody>

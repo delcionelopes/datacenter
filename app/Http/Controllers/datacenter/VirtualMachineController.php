@@ -496,18 +496,18 @@ class VirtualMachineController extends Controller
 
     //relatórios
     public function relatorioVM(){
-        $virtualmachines = $this->virtualmachine->query()->whereId('1594')->get();
+        $virtualmachines = $this->virtualmachine->all();
         $date = now();
-        //$num_linhas_impressas = $virtualmachines->count();        
-        //$num_linhas_total = 35;
-        //$num_paginas = round(($num_linhas_total + $num_linhas_impressas)/$num_linhas_total);        
+        $num_linhas_impressas = $virtualmachines->count();        
+        $num_linhas_total = 10; //linhas por página
+        $num_paginas = round(($num_linhas_total + $num_linhas_impressas)/$num_linhas_total);        
         $setor = auth()->user()->setor->nome;
         return Pdf::loadView('relatorios.datacenter.maquinasvirtuais',[
             'maquinasvirtuais' => $virtualmachines,
             'date' => $date,
-          //  'num_linhas_impressas' => $num_linhas_impressas,
-            //'num_linhas_total' => $num_linhas_total,
-           // 'num_paginas' => $num_paginas,
+            'num_linhas_impressas' => $num_linhas_impressas,
+            'num_linhas_total' => $num_linhas_total,
+            'num_paginas' => $num_paginas,
             'setor' => $setor,
         ])->setPaper('a4','landscape')->stream('maquinas_virtuais.pdf');        
     }
