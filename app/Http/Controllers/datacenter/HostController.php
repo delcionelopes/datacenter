@@ -8,6 +8,7 @@ use App\Models\Host;
 use Illuminate\Support\Facades\Validator;
 use App\Models\Cluster;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Crypt;
 
 class HostController extends Controller
@@ -285,6 +286,18 @@ class HostController extends Controller
             'users' => $users,
             'user' => $user,
         ]);
+    }
+
+    //relatórios
+    public function relatorioHosts(){
+        $hosts = $this->host->all();
+        $date = now();
+        $setor = auth()->user()->setor->nome;
+        return Pdf::loadView('relatorios.datacenter.hosts',[
+            'hosts' => $hosts,
+            'date' => $date,
+            'setor' => $setor,
+        ])->setPaper('a4','landscape')->stream('hosts.pdf');        
     }
 
 }

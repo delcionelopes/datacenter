@@ -23,11 +23,11 @@ class Base extends Model
     ];
 
     public function virtualmachine(){
-        return $this->belongsTo(VirtualMachine::class);
+        return $this->belongsTo(VirtualMachine::class,'virtual_machine_id','id');
     }
 
     public function projeto(){
-        return $this->belongsTo(Projeto::class);
+        return $this->belongsTo(Projeto::class,'projetos_id','id');
     }
 
     public function apps()

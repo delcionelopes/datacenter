@@ -5,6 +5,7 @@ namespace App\Http\Controllers\admin;
 use App\Http\Controllers\Controller;
 use Illuminate\Http\Request;
 use App\Models\Plataforma;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Validator;
 
 class PlataformaController extends Controller
@@ -147,4 +148,17 @@ class PlataformaController extends Controller
             'message' => 'Plataforma excluída com sucesso!',
         ]);
     }
+
+     //relatórios
+     public function relatorioPlataforma(){
+        $plataformas = $this->plataforma->all();
+        $date = now();
+        $setor = auth()->user()->setor->nome;
+        return Pdf::loadView('relatorios.datacenter.plataforma',[
+            'plataformas' => $plataformas,
+            'date' => $date,
+            'setor' => $setor,
+        ])->setPaper('a4','landscape')->stream('plataformas.pdf');        
+    }
+
 }

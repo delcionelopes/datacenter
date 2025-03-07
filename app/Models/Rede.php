@@ -3,6 +3,7 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class Rede extends Model
 {    
@@ -14,7 +15,7 @@ class Rede extends Model
         'vlan_id',     
     ];
 
-    public function vlan(){
+    public function vlan():BelongsTo{
         return $this->belongsTo(Vlan::class,'vlan_id','id');
     }
     public function cadastro_ips(){

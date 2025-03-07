@@ -16,17 +16,17 @@ class Projeto extends Model
 
     public function bases()
     {
-        return $this->hasMany(Base::class);
+        return $this->hasMany(Base::class,'id','projetos_id');
     }
 
     public function virtual_machines()
     {
-        return $this->hasMany(VirtualMachine::class);
+        return $this->hasMany(VirtualMachine::class,'id','virtual_machine_id');
     }
 
     public function apps()
     {
-        return $this->hasMany(App::class);
+        return $this->hasMany(App::class,'id','projeto_id');
     }   
 
 }

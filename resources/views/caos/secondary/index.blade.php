@@ -137,8 +137,20 @@ $(document).ready(function(){
       break;
       case 13: location.replace('/datacenteradmin/relatorios/relatorio-ambientes'); ///Relatorio de ambientes
       break;
-      case 17: location.replace('/datacenteradmin/relatorios/relatorio-maquinasvirtuais'); ///Relatorio de máquinas virtuais
+      case 16: location.replace('/datacenteradmin/relatorios/relatorio-plataformas'); ///Relatorio de plataformas
       break;
+      case 17: location.replace('/datacenteradmin/relatorios/relatorio-bases'); ///Relatorio de bases de dados
+      break;
+      case 18: location.replace('/datacenteradmin/relatorios/relatorio-maquinasvirtuais'); ///Relatorio de máquinas virtuais
+      break; 
+      case 19: location.replace('/datacenteradmin/relatorios/relatorio-redes'); ///Relatorio de redes
+      break; 
+      case 20: location.replace('/datacenteradmin/relatorios/relatorio-setores'); ///Relatorio de setores
+      break; 
+      case 21: location.replace('/datacenteradmin/relatorios/relatorio-hosts'); ///Relatorio de hosts
+      break; 
+      case 22: location.replace('/datacenteradmin/relatorios/relatorio-clusters'); ///Relatorio de clusters
+      break; 
       default:
         break;
     }  

@@ -21,7 +21,7 @@ class Host extends Model
         'alterador_id',
     ];
 
-    public function cluster(){
+    public function clusterref(){
         return $this->belongsTo(Cluster::class,'cluster_id','id');
     }
 

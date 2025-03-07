@@ -15,7 +15,7 @@ class Ambiente extends Model
     
     
     public function virtual_machine(){
-        return $this->hasMany(VirtualMachine::class);
+        return $this->hasMany(VirtualMachine::class,'id','ambiente_id');
     } 
 
 }

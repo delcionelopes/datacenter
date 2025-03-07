@@ -21,7 +21,7 @@ class Vlan extends Model
         return $this->belongsToMany(VirtualMachine::class,'vm_vlan','vlan_id','virtual_machine_id');
     }    
     public function redes(){
-        return $this->hasMany(Rede::class);
+        return $this->hasMany(Rede::class,'id','vlan_id');
     }
 
     public function users():BelongsToMany{

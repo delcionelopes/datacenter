@@ -4,6 +4,7 @@ namespace App\Http\Controllers\Caos;
 
 use App\Http\Controllers\Controller;
 use App\Models\Setor;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -176,4 +177,17 @@ class SetorController extends Controller
         }
         return $codigo+1;
     }
+
+    //relatórios
+  public function relatorioSetores(){
+    $setores = $this->setor->all();
+    $date = now();
+    $setor = auth()->user()->setor->nome;
+    return Pdf::loadView('relatorios.datacenter.setores',[
+        'setores' => $setores,
+        'date' => $date,
+        'setor' => $setor,
+    ])->setPaper('a4','landscape')->stream('setores.pdf');        
+}
+
 }

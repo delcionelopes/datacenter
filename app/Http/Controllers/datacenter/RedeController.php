@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Cadastro_ip;
 use App\Models\Rede;
 use App\Models\Vlan;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Validator;
 
 class RedeController extends Controller
@@ -232,5 +233,17 @@ class RedeController extends Controller
             ]);
         }
     }
+
+    //relatórios
+  public function relatorioRedes(){
+    $redes = $this->rede->all();
+    $date = now();
+    $setor = auth()->user()->setor->nome;
+    return Pdf::loadView('relatorios.datacenter.redes',[
+        'redes' => $redes,
+        'date' => $date,
+        'setor' => $setor,
+    ])->setPaper('a4','landscape')->stream('redes.pdf');        
+}
 
 }

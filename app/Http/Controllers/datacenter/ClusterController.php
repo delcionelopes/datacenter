@@ -14,6 +14,7 @@ use App\Models\Orgao;
 use App\Models\Projeto;
 use App\Models\VirtualMachine;
 use App\Models\Vlan;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 class ClusterController extends Controller
 {
@@ -341,6 +342,18 @@ class ClusterController extends Controller
                 'message' => 'O registro foi criado com sucesso!',
             ]);
         }
+    }
+
+    //relatórios
+    public function relatorioClusters(){
+        $clusters = $this->cluster->all();
+        $date = now();
+        $setor = auth()->user()->setor->nome;
+        return Pdf::loadView('relatorios.datacenter.clusters',[
+            'clusters' => $clusters,
+            'date' => $date,
+            'setor' => $setor,
+        ])->setPaper('a4','landscape')->stream('clusters.pdf');        
     }
 
 

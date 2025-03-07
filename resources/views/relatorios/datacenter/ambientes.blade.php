@@ -58,12 +58,12 @@
                 @if($ambiente->created_at==null)
                 <td> </td>
                 @else
-                <td>{{date('d/m/Y',strtotime($ambiente->created_at))}}</td>
+                <td>{{date('d/m/Y H:i:s',strtotime($ambiente->created_at))}}</td>
                 @endif
                 @if($ambiente->updated_at==null)
                 <td> </td>
                 @else
-                <td>{{date('d/m/Y',strtotime($ambiente->updated_at))}}</td>
+                <td>{{date('d/m/Y H:i:s',strtotime($ambiente->updated_at))}}</td>
                 @endif
             </tr>               
             @endforeach

@@ -360,6 +360,12 @@ Route::group(['middleware'=> ['auth']],function(){
            Route::prefix('relatorios')->name('relatorios.')->group(function(){            
             Route::get('relatorio-ambientes',[AmbienteController::class,'relatorioAmbiente'])->name('relatorio.ambientes');
             Route::get('relatorio-maquinasvirtuais',[VirtualMachineController::class,'relatorioVM'])->name('relatorio.maquinasvirtuais');
+            Route::get('relatorio-bases',[BaseController::class,'relatorioBD'])->name('relatorio.bases');
+            Route::get('relatorio-plataformas',[PlataformaController::class,'relatorioPlataforma'])->name('relatorio.plataforma');
+            Route::get('relatorio-redes',[RedeController::class,'relatorioRedes'])->name('relatorio.redes');
+            Route::get('relatorio-setores',[SetorController::class,'relatorioSetores'])->name('relatorio.setores');
+            Route::get('relatorio-hosts',[HostController::class,'relatorioHosts'])->name('relatorio.hosts');
+            Route::get('relatorio-clusters',[ClusterController::class,'relatorioClusters'])->name('relatorio.clusters');
            });
 
         });

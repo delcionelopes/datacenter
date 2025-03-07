@@ -10,6 +10,7 @@ use App\Models\Orgao;
 use App\Models\Projeto;
 use App\Models\User;
 use App\Models\VirtualMachine;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\Validator;
 
@@ -376,5 +377,17 @@ class BaseController extends Controller
             'user' => $user,
         ]);
     }
+
+  //relatórios
+  public function relatorioBD(){
+    $bases = $this->base->all();
+    $date = now();
+    $setor = auth()->user()->setor->nome;
+    return Pdf::loadView('relatorios.datacenter.bases',[
+        'bases' => $bases,
+        'date' => $date,
+        'setor' => $setor,
+    ])->setPaper('a4','landscape')->stream('bases_de_dados.pdf');        
+}
 
 }
