@@ -137,7 +137,8 @@ $(document).ready(function(){
                     type: 'POST',
                     dataType: 'json',
                     data:{
-                        'id': id,                                         
+                        'id': id,
+                        '_method':'DELETE',
                         '_token':CSRF_TOKEN,
                     },
                     success:function(response){

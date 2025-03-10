@@ -9,6 +9,7 @@ use Illuminate\Http\Request;
 use App\Models\Orgao;
 use App\Models\User;
 use App\Models\VirtualMachine;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Validator;
 
 class OrgaoController extends Controller
@@ -202,6 +203,19 @@ class OrgaoController extends Controller
         return response()->json([
             'status'  =>  $status,
             'message' => $message,
-        ]);
+        ]);        
     }
+
+     //relatórios
+     public function relatorioOrgaos(){
+        $orgaos = $this->orgao->all();
+        $date = now();
+        $setor = auth()->user()->setor->nome;
+        return Pdf::loadView('relatorios.datacenter.orgao',[
+            'orgaos' => $orgaos,
+            'date' => $date,
+            'setor' => $setor,
+        ])->setPaper('a4','landscape')->stream('orgaos.pdf');        
+    }
+
 }

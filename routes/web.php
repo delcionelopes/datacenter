@@ -27,7 +27,6 @@ use App\Http\Controllers\datacenter\SenhaController;
 use App\Http\Controllers\datacenter\VirtualMachineController;
 use App\Http\Controllers\datacenter\vlanController;
 use App\Http\Controllers\HomeController;
-use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 
@@ -222,16 +221,7 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::get('download-file/{id}',[ManualController::class,'downloadFile'])->name('download.file');            
         });
         
-        ///Rotas para administração do usuário   
-       /* Route::get('index-user', [UserController::class,'index'])->name('user.index');
-        Route::put('store-user',[UserController::class,'store']);
-        Route::get('edit-user/{id}',[UserController::class,'edit']);
-        Route::put('update-user/{id}',[UserController::class,'update']);
-        Route::delete('delete-user/{id}',[UserController::class,'destroy']);
-        Route::put('moderador-user/{id}', [UserController::class,'moderadorUsuario']);
-        Route::put('admin-user/{id}', [UserController::class,'adminUsuario']);
-        Route::put('inativo-user/{id}', [UserController::class,'inativoUsuario']);   */
-
+       
         //Rotas para a view index de clusters
         Route::prefix('cluster')->name('cluster.')->group(function(){  
           Route::get('index-cluster/{color}',[ClusterController::class,'index'])->name('cluster.index');
@@ -366,6 +356,8 @@ Route::group(['middleware'=> ['auth']],function(){
             Route::get('relatorio-setores',[SetorController::class,'relatorioSetores'])->name('relatorio.setores');
             Route::get('relatorio-hosts',[HostController::class,'relatorioHosts'])->name('relatorio.hosts');
             Route::get('relatorio-clusters',[ClusterController::class,'relatorioClusters'])->name('relatorio.clusters');
+            Route::get('relatorio-orgaos',[OrgaoController::class,'relatorioOrgaos'])->name('relatorio.orgaos');
+            Route::get('relatorio-areas',[Area_ConhecimentoController::class,'relatorioAreas'])->name('relatorio.areas');
            });
 
         });

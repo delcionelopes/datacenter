@@ -137,6 +137,8 @@ $(document).ready(function(){
       break;
       case 13: location.replace('/datacenteradmin/relatorios/relatorio-ambientes'); ///Relatorio de ambientes
       break;
+      case 14: location.replace('/datacenteradmin/relatorios/relatorio-orgaos'); ///Relatorio de orgãos
+      break;
       case 16: location.replace('/datacenteradmin/relatorios/relatorio-plataformas'); ///Relatorio de plataformas
       break;
       case 17: location.replace('/datacenteradmin/relatorios/relatorio-bases'); ///Relatorio de bases de dados
@@ -150,6 +152,8 @@ $(document).ready(function(){
       case 21: location.replace('/datacenteradmin/relatorios/relatorio-hosts'); ///Relatorio de hosts
       break; 
       case 22: location.replace('/datacenteradmin/relatorios/relatorio-clusters'); ///Relatorio de clusters
+      break; 
+      case 23: location.replace('/datacenteradmin/relatorios/relatorio-areas'); ///Relatorio de areas
       break; 
       default:
         break;

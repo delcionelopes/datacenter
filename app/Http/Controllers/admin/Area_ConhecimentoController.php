@@ -8,6 +8,7 @@ use App\Models\Area_Conhecimento;
 use App\Models\Manual;
 use App\Models\Sub_Area_Conhecimento;
 use App\Models\Upload;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Validator;
 
 class Area_ConhecimentoController extends Controller
@@ -188,4 +189,17 @@ class Area_ConhecimentoController extends Controller
             'message' => $message,
         ]);
     }
+
+    //relatórios
+    public function relatorioAreas(){
+        $areas = $this->area_conhecimento->all();
+        $date = now();
+        $setor = auth()->user()->setor->nome;
+        return Pdf::loadView('relatorios.datacenter.area_subarea',[
+            'areas' => $areas,
+            'date' => $date,
+            'setor' => $setor,
+        ])->setPaper('a4','landscape')->stream('area_subarea.pdf');        
+    }
+
 }

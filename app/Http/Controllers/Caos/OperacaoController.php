@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\Caos;
 
 use App\Http\Controllers\Controller;
+use App\Models\Autorizacao;
 use App\Models\Modulo;
 use App\Models\Operacao;
 use Illuminate\Http\Request;
@@ -12,11 +13,13 @@ class OperacaoController extends Controller
 {
     private $operacao;
     private $modulo;
+    private $autorizacao;
 
-    public function __construct(Operacao $operacao, Modulo $modulo)
+    public function __construct(Operacao $operacao, Modulo $modulo, Autorizacao $autorizacao)
     {
         $this->operacao = $operacao;
         $this->modulo = $modulo;
+        $this->autorizacao = $autorizacao;
     }
     /**
      * Display a listing of the resource.
@@ -177,10 +180,8 @@ class OperacaoController extends Controller
 
                 $operacao->update($data);
 
-                $o = Operacao::find($id);
-
-                return response()->json([
-                    'status' => 200,
+                return response()->json([                    
+                    'status' => 200,                    
                 ]);
             }else{
                 return response()->json([
@@ -201,12 +202,12 @@ class OperacaoController extends Controller
     {        
         $operacao = $this->operacao->find($id);
         $modulos = $operacao->modulos;
-        $autorizacoes = $operacao->autorizacao;
+        $autorizacoes = $this->autorizacao->query()->where('modulo_has_operacao_operacao_id',$id)->get();
 
-        if($autorizacoes){
+        if($autorizacoes->count()){
             return response()->json([
                 'status' => 400,
-                'errors' => 'Esta operação não pode ser excluída! Pois há autorizações que dependem dela.',
+                'errors' => 'Esta operação possui autorizações!',
             ]);
         }
         

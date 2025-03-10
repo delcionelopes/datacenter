@@ -23,4 +23,5 @@ class Operacao extends Model
     public function modulos():BelongsToMany{
         return $this->belongsToMany(Modulo::class,'modulo_has_operacao','operacao_id','modulo_id');
     }
+    
 }
