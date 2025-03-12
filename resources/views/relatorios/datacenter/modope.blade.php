@@ -8,7 +8,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
     
-    <title>Relatório de Máquinas Virtuais</title>  
+    <title>Relatório de Módulos e Operações do Sistema</title>  
     
     <style>
      .child  {
@@ -25,7 +25,7 @@
 <body>   
     <div class="container-fluid py-5">
    <nav>
-    <div class="container-fluid" style="align-content: center; padding-left: 22%">
+    <div class="container-fluid" style="align-content: center; padding-left: 7%">
     <div class="child">
         <img src="brazao_amapa.png" alt="" width="80" height="80">
     </div>
@@ -38,26 +38,48 @@
         <img src="logo_prodap.png" alt="" width="80" height="80">
     </div>        
     </div>
-    <h3 style="text-align: center; text-decoration-style: solid">RELATÓRIO DE MÁQUINAS VIRTUAIS</h3>
+    <h3 style="text-align: center; text-decoration-style: solid">RELATÓRIO DE MÓDULOS E OPERAÇÕES DO SISTEMA</h3>
     </nav>    
     <div>    
     </div>    
     <table class="table table-sm">    
     <thead>        
         <tr>
-            <th scope="row" style="text-align: justify">NOME</th>            
-            <th scope="row" style="text-align: justify">IP</th>
-            <th scope="row" style="text-align: justify">SISTEMA OPERACIONAL</th>
+            <th scope="row" style="text-align: justify">MÓDULO</th>
+            <th scope="row" style="text-align: justify">CRIAÇÃO</th>
+            <th scope="row" style="text-align: justify">ATUALIZAÇÃO</th>
         </tr>       
     </thead>
     <tbody>
            {{$pagina=1}}
            {{$linha=0}}
-            @foreach($maquinasvirtuais as $vm)            
+            @foreach($modulos as $modulo)            
             <tr>
-                <td>{{$vm->nome_vm}}</td>                
-                <td>{{$vm->ip}}</td>
-                <td>{{$vm->sistema_operacional}}</td>
+                <td><span>&#8226;</span> {{$modulo->nome}}</td>
+                @if($modulo->created_at==null)
+                <td></td>
+                @else
+                <td>{{date('d/m/Y H:i:s',strtotime($modulo->created_at))}}</td>
+                @endif
+                @if($modulo->updated_at==null)
+                <td></td>
+                @else
+                <td>{{date('d/m/Y H:i:s',strtotime($modulo->updated_at))}}</td>
+                @endif
+                @if($modulo->operacoes->count()>0)
+                <tr>
+                   <th scope="row" style="text-align: justify">&nbsp;&nbsp;OPERAÇÕES</th>
+                   <th scope="row" style="text-align: justify"></th>
+                   <th scope="row" style="text-align: justify"></th>
+                </tr>
+                @endif
+                @foreach($modulo->operacoes as $operacao)
+                <tr>
+                <td>&nbsp;&nbsp;{{$operacao->nome}}</td>
+                <td></td>
+                <td></td>
+                </tr>
+                @endforeach
             </tr>
             {{$linha++}}
             @if(($linha==21)&&($linha % 21==0)&&($pagina<2))

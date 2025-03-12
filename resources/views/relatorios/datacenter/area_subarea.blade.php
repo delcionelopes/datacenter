@@ -25,7 +25,7 @@
 <body>   
     <div class="container-fluid py-5">
    <nav>
-    <div class="container-fluid" style="align-content: center; padding-left: 22%">
+    <div class="container-fluid" style="align-content: center; padding-left: 7%">
     <div class="child">
         <img src="brazao_amapa.png" alt="" width="80" height="80">
     </div>
@@ -45,7 +45,7 @@
     <table class="table table-sm">    
     <thead>        
         <tr>
-            <th scope="row" style="text-align: justify">DESCRICAO</th>
+            <th scope="row" style="text-align: justify">ÁREAS</th>
             <th scope="row" style="text-align: justify">CRIAÇÃO</th>
             <th scope="row" style="text-align: justify">ATUALIZAÇÃO</th>
         </tr>       
@@ -66,6 +66,13 @@
                 @else
                 <td>{{date('d/m/Y H:i:s',strtotime($area->updated_at))}}</td>
                 @endif
+                @if($area->sub_area_conhecimento->count()>0)
+                <tr>
+                   <th scope="row" style="text-align: justify">&nbsp;&nbsp;SUB-ÁREAS</th>
+                   <th scope="row" style="text-align: justify"></th>
+                   <th scope="row" style="text-align: justify"></th>
+                </tr>
+                @endif
                 @foreach($area->sub_area_conhecimento as $subarea)
                 <tr>
                 <td>&nbsp;&nbsp;{{$subarea->descricao}}</td>
@@ -81,7 +88,7 @@
                <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">                        
-                        <div class="small text-center text-muted fst-italic">copyright &copy; prodap / gerado em {{date('d/m/Y H:i:s',strtotime($date))}} / Página {{$pagina}}</div>
+                        <div class="small text-center text-muted fst-italic">Gerado em {{date('d/m/Y H:i:s',strtotime($date))}} - Página {{$pagina}}</div>
                     </div>
                 </div>
              </div>
@@ -95,7 +102,7 @@
                <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">                        
-                        <div class="small text-center text-muted fst-italic">copyright &copy; prodap / gerado em {{date('d/m/Y H:i:s',strtotime($date))}} / Página {{$pagina}}</div>
+                        <div class="small text-center text-muted fst-italic">Gerado em {{date('d/m/Y H:i:s',strtotime($date))}} - Página {{$pagina}}</div>
                     </div>
                 </div>
              </div>
@@ -108,7 +115,7 @@
                <div class="container px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">                        
-                        <div class="small text-center text-muted fst-italic">copyright &copy; prodap / gerado em {{date('d/m/Y H:i:s',strtotime($date))}} / Página {{$pagina}}</div>
+                        <div class="small text-center text-muted fst-italic">Gerado em {{date('d/m/Y H:i:s',strtotime($date))}} - Página {{$pagina}}</div>
                     </div>
                 </div>
              </div>

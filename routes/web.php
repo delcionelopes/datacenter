@@ -358,6 +358,7 @@ Route::group(['middleware'=> ['auth']],function(){
             Route::get('relatorio-clusters',[ClusterController::class,'relatorioClusters'])->name('relatorio.clusters');
             Route::get('relatorio-orgaos',[OrgaoController::class,'relatorioOrgaos'])->name('relatorio.orgaos');
             Route::get('relatorio-areas',[Area_ConhecimentoController::class,'relatorioAreas'])->name('relatorio.areas');
+            Route::get('relatorio-modope',[ModuloController::class,'relatorioModope'])->name('relatorio.modope');
            });
 
         });

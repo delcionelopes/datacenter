@@ -199,7 +199,7 @@ class Area_ConhecimentoController extends Controller
             'areas' => $areas,
             'date' => $date,
             'setor' => $setor,
-        ])->setPaper('a4','landscape')->stream('area_subarea.pdf');        
+        ])->stream('area_subarea.pdf');        
     }
 
 }

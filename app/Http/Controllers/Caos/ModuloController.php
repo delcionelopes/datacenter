@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Caos;
 use App\Http\Controllers\Controller;
 use App\Models\Modulo;
 use App\Models\Operacao;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -300,5 +301,16 @@ class ModuloController extends Controller
         ]);
     }
 
+  //relatórios
+  public function relatorioModope(){
+    $modulos = $this->modulo->all();
+    $date = now();
+    $setor = auth()->user()->setor->nome;
+    return Pdf::loadView('relatorios.datacenter.modope',[
+        'modulos' => $modulos,
+        'date' => $date,
+        'setor' => $setor,
+    ])->stream('modulosXoperacoes.pdf');        
+}
 
 }

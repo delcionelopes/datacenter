@@ -155,6 +155,8 @@ $(document).ready(function(){
       break; 
       case 23: location.replace('/datacenteradmin/relatorios/relatorio-areas'); ///Relatorio de areas
       break; 
+      case 24: location.replace('/datacenteradmin/relatorios/relatorio-modope'); ///Relatorio de módulos X operações
+      break; 
       default:
         break;
     }  
