@@ -120,7 +120,7 @@ class UserController extends Controller
                $data['cpf'] = $this->deixaSomenteDigitos($request->input('cpf'));
                $data['sistema'] = $request->input('sistema');
                $data['inativo'] = false;
-               $data['admin'] = false;
+               $data['admin'] = $request->input('admin');
                if($filePath){
                $data['avatar']  = $filePath;
                }

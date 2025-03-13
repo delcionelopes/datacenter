@@ -104,7 +104,7 @@
                                 <label for="idsetor">Setor</label>
                                 <select name="idsetor" id="idsetor" class="idsetor custom-select">
                                     @foreach ($setores as $setor)
-                                    <option value="{{$setor->id}}">{{$setor->sigla}}</option>
+                                    <option value="{{$setor->idsetor}}">{{$setor->sigla}}</option>
                                     @endforeach                                    
                                 </select>
                             </div>

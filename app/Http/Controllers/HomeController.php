@@ -48,7 +48,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        if(auth()->user()->moderador){       
+        if(auth()->user()->admin){       
         return view('home');
         }else{
             return $this->master;

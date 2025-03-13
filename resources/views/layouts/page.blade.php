@@ -20,7 +20,7 @@
         <link href="https://fonts.googleapis.com/css?family=Lora:400,700,400italic,700italic" rel="stylesheet" type="text/css" />
         <link href="https://fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800" rel="stylesheet" type="text/css" />
 
-        <link rel="stylesheet" href="{{asset('//cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css')}}">
+        <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css">
         
         <link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
         <link href="{{asset('css/menu_estilo.css')}}" rel="stylesheet"/>
@@ -53,7 +53,7 @@
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('register')}}">Registre-se</a></li>
                 @endguest
                 @auth
-                @if((auth()->user()->moderador) && (auth()->user()->inativo!=1))
+                @if((auth()->user()->admin) && (auth()->user()->inativo!=1))
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('sistema.index')}}">DATACENTER</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('admin.artigos.index')}}">Artigos</a></li>
                 <li class="nav-item"><a class="nav-link px-lg-3 py-3 py-lg-4" href="{{route('admin.tema.index')}}">Temas</a></li>                                                        
