@@ -48,13 +48,7 @@
                                 <label for="cpf">CPF</label>
                                 <input type="text" required class="form-control" name="cpf" id="cpf" placeholder="000.000.000-00" data-mask="000.000.000-00" data-mask-reverse="true">
                             </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="form-group">
-                                <label for="rg">RG</label>
-                                <input type="text" class="form-control" name="rg" id="rg">
-                            </div>
-                        </div>   
+                        </div>                        
                     </div>                                        
                 </fieldset>               
 
@@ -91,6 +85,16 @@
                                 <select name="idfuncao" id="idfuncao" class="idfuncao custom-select">
                                     @foreach ($funcoes as $funcao)
                                     <option value="{{$funcao->id}}">{{$funcao->nome}}</option>
+                                    @endforeach                                    
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-2">
+                            <div class="form-group">
+                                <label for="orgaoid">Setor</label>
+                                <select name="orgaoid" id="orgaoid" class="orgaoid custom-select">
+                                    @foreach ($orgaos as $orgao)
+                                    <option value="{{$orgao->id}}">{{$orgao->nome}}</option>
                                     @endforeach                                    
                                 </select>
                             </div>
@@ -178,15 +182,15 @@ $(document).ready(function(){
 
             data.append('perfil_id',$('#idperfil').val());
             data.append('funcao_id',$('#idfuncao').val());
-            data.append('setor_id',$('#idsetor').val());                        
+            data.append('orgao_id',$('#orgaoid').val());
+            data.append('setor_id',$('#idsetor').val());
             data.append('name',$('#nome').val());            
             data.append('imagem',$('#upimagem')[0].files[0]);
             data.append('inativo', 'false'); //$('#inativo').is(":checked")?'true':'false');
             data.append('sistema',$('#sistema').is(":checked")?'true':'false');
             data.append('admin',$('#admin').is(":checked")?'true':'false');
             data.append('matricula',$('#matricula').val());
-            data.append('cpf',$('#cpf').val());
-            data.append('rg',$('#rg').val());
+            data.append('cpf',$('#cpf').val());            
             data.append('email',$('#email').val());
             data.append('password',$('#password').val());
             data.append('link_instagram',$('#link_instagram').val());

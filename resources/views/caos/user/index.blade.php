@@ -300,4 +300,3 @@ $(document).on('click','.admin_user',function(e){
 //Fim escopo geral
 </script>
 @endsection
-

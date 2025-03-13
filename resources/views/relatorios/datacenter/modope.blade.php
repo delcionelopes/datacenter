@@ -79,10 +79,11 @@
                 <td></td>
                 <td></td>
                 </tr>
+                {{$linha++}}
                 @endforeach
             </tr>
             {{$linha++}}
-            @if(($linha==21)&&($linha % 21==0)&&($pagina<2))
+            @if(($linha==35)&&($linha % 35==0)&&($pagina<2))
            <!-- Rodapé-->
             <footer class="border-top">
                <div class="container px-4 px-lg-5">
@@ -96,7 +97,7 @@
             {{$pagina++}}
             {{$linha=0}}            
            @endif            
-           @if(($linha>=28)&&($linha % 28==0)&&($pagina>1))
+           @if(($linha>=40)&&($linha % 40==0)&&($pagina>1))
             <!-- Rodapé-->
             <footer class="border-top">
                <div class="container px-4 px-lg-5">

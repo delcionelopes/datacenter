@@ -8,6 +8,7 @@ use App\Models\Setor;
 use App\Models\User;
 use App\Models\Funcao;
 use App\Models\Perfil;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
@@ -17,13 +18,15 @@ class UserController extends Controller
     private $funcao;
     private $perfil;
     private $setor;
+    private $orgao;
 
-    public function __construct(User $user, Funcao $funcao, Perfil $perfil, Setor $setor)
+    public function __construct(User $user, Funcao $funcao, Perfil $perfil, Setor $setor, Orgao $orgao)
     {
         $this->user = $user;
         $this->funcao = $funcao;
         $this->perfil = $perfil;
         $this->setor = $setor;
+        $this->orgao = $orgao;
     }
     /**
      * Método para listagem de registros com opção de pesquisa
@@ -39,8 +42,8 @@ class UserController extends Controller
                    ->where('name','LIKE','%'.$request->pesquisa.'%');
             $users = $query->orderByDesc('id')->paginate(5);
         }  
-        $orgaos = Orgao::all();
-        $setores = Setor::all();      
+        $orgaos = $this->orgao->orderBy('id')->get();
+        $setores = $this->setor->orderBy('idsetor')->get();
         return view('caos.user.index',[
             'users' => $users,
             'orgaos' => $orgaos,
@@ -59,10 +62,12 @@ class UserController extends Controller
         $funcoes = $this->funcao->orderBy('id')->get();
         $perfis = $this->perfil->orderBy('id')->get();
         $setores = $this->setor->orderBy('idsetor')->get();
+        $orgaos = $this->orgao->orderBy('id')->get();
         return view('caos.user.create',[
             'funcoes' => $funcoes,
             'perfis' => $perfis,
             'setores' => $setores,
+            'orgaos' => $orgaos,
         ]);
     }
 
@@ -108,11 +113,11 @@ class UserController extends Controller
                $data['funcao_id'] = $request->input('funcao_id');
                $data['perfil_id'] = $request->input('perfil_id');
                $data['setor_id'] = $request->input('setor_id');
+               $data['orgao_id'] = $request->input('orgao_id');
                $data['email'] = $request->input('email');
                $data['password'] = bcrypt($request->input('password'));
                $data['matricula'] = $request->input('matricula');
                $data['cpf'] = $this->deixaSomenteDigitos($request->input('cpf'));
-               $data['rg'] = $request->input('rg');
                $data['sistema'] = $request->input('sistema');
                $data['inativo'] = false;
                $data['admin'] = false;
@@ -155,11 +160,13 @@ class UserController extends Controller
         $perfis = $this->perfil->orderBy('id')->get();
         $funcoes = $this->funcao->orderBy('id')->get();
         $setores = $this->setor->orderBy('idsetor')->get();
+        $orgaos = $this->orgao->orderBy('id')->get();
         return view('caos.user.edit',[
             'user' => $user,
             'perfis' => $perfis,
             'funcoes' => $funcoes,
             'setores' => $setores,
+            'orgaos' => $orgaos,
         ]);
 
     }
@@ -216,6 +223,7 @@ class UserController extends Controller
             $data['name'] = $request->input('name');
             $data['funcao_id'] = $request->input('funcao_id');
             $data['perfil_id'] = $request->input('perfil_id');
+            $data['orgao_id'] = $request->input('orgao_id');
             $data['setor_id'] = $request->input('setor_id');
             $data['email'] = $request->input('email');
             if($request->password){
@@ -223,7 +231,6 @@ class UserController extends Controller
             }
             $data['matricula'] = $request->input('matricula');
             $data['cpf'] = $this->deixaSomenteDigitos($request->input('cpf'));
-            $data['rg'] = $request->input('rg');
             $data['sistema'] = $request->input('sistema');
             $data['inativo'] = $request->input('inativo');
             $data['admin'] = $request->input('admin');
@@ -380,6 +387,18 @@ class UserController extends Controller
 
     protected function deixaSomenteDigitos($input){
         return preg_replace('/[^0-9]/','',$input);
+    }
+
+     //relatórios
+     public function relatorioUsuarios(){
+        $users = $this->user->all();
+        $date = now();
+        $setor = auth()->user()->setor->nome;
+        return Pdf::loadView('relatorios.datacenter.usuarios',[
+            'users' => $users,
+            'date' => $date,
+            'setor' => $setor,
+        ])->setPaper('a4','landscape')->stream('usuarios.pdf');        
     }
 
 }

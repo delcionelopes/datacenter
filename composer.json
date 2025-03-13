@@ -11,6 +11,7 @@
         "fruitcake/laravel-cors": "^2.0",
         "geekcom/validator-docs": "^3.7",
         "guzzlehttp/guzzle": "^7.0.1",
+        "igorescobar/jquery-mask-plugin": "^1.14",
         "jeroennoten/laravel-adminlte": "^3.8",
         "laravel/framework": "^8.75",
         "laravel/sanctum": "^2.11",

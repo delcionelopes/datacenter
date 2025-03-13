@@ -359,6 +359,7 @@ Route::group(['middleware'=> ['auth']],function(){
             Route::get('relatorio-orgaos',[OrgaoController::class,'relatorioOrgaos'])->name('relatorio.orgaos');
             Route::get('relatorio-areas',[Area_ConhecimentoController::class,'relatorioAreas'])->name('relatorio.areas');
             Route::get('relatorio-modope',[ModuloController::class,'relatorioModope'])->name('relatorio.modope');
+            Route::get('relatorio-usuarios',[UserController::class,'relatorioUsuarios'])->name('relatorio.usuarios');
            });
 
         });

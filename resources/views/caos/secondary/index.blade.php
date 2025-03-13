@@ -157,6 +157,8 @@ $(document).ready(function(){
       break; 
       case 24: location.replace('/datacenteradmin/relatorios/relatorio-modope'); ///Relatorio de módulos X operações
       break; 
+      case 25: location.replace('/datacenteradmin/relatorios/relatorio-usuarios'); ///Relatorio de usuários
+      break; 
       default:
         break;
     }  
