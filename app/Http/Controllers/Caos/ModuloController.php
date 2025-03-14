@@ -3,8 +3,10 @@
 namespace App\Http\Controllers\Caos;
 
 use App\Http\Controllers\Controller;
+use App\Models\Autorizacao;
 use App\Models\Modulo;
 use App\Models\Operacao;
+use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -13,12 +15,15 @@ class ModuloController extends Controller
 {
     private $modulo;
     private $operacao;
+    private $autorizacao;
+    private $user;
 
-
-    public function __construct(Modulo $modulo, Operacao $operacao)
+    public function __construct(Modulo $modulo, Operacao $operacao, Autorizacao $autorizacao, User $user)
     {
         $this->modulo = $modulo;
         $this->operacao = $operacao;
+        $this->autorizacao = $autorizacao;
+        $this->user = $user;
     }
     /**
      * Display a listing of the resource.
@@ -312,5 +317,23 @@ class ModuloController extends Controller
         'setor' => $setor,
     ])->stream('modulosXoperacoes.pdf');        
 }
+
+//relatório de permissões
+public function relatorioPermissoes(int $id){
+    $user = $this->user->whereId($id)->get();
+    $perfil = $user->perfil;
+    dd($perfil);
+    $autorizacoes = $perfil->autorizacoes;
+    dd($autorizacoes);
+    $date = now();
+    $setor = $user()->setor->nome;
+    return Pdf::loadView('relatorios.datacenter.autorizacao',[
+        'user' => $user,
+        'autorizacoes' => $autorizacoes,
+        'date' => $date,
+        'setor' => $setor,
+    ])->stream('permissões_de_'.$user->name.'.pdf');        
+}
+
 
 }

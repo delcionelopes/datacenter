@@ -120,7 +120,7 @@ Route::group(['middleware'=> ['auth']],function(){
 
       Route::prefix('principal')->name('principal.')->group(function(){   //navegação módulos autorizados
         Route::get('/index',[PrincipalController::class,'index'])->name('index'); //módulos
-        Route::get('/operacoes/{id}',[PrincipalController::class,'operacoes'])->name('operacoes');  //operações
+        Route::get('/operacoes/{id}/{color}',[PrincipalController::class,'operacoes'])->name('operacoes');  //operações
       });
 
       Route::prefix('funcao')->name('funcao.')->group(function(){
@@ -360,6 +360,7 @@ Route::group(['middleware'=> ['auth']],function(){
             Route::get('relatorio-areas',[Area_ConhecimentoController::class,'relatorioAreas'])->name('relatorio.areas');
             Route::get('relatorio-modope',[ModuloController::class,'relatorioModope'])->name('relatorio.modope');
             Route::get('relatorio-usuarios',[UserController::class,'relatorioUsuarios'])->name('relatorio.usuarios');
+            Route::get('relatorio-permissoes/{id}',[ModuloController::class,'relatorioPermissoes'])->name('relatorio.permissoes');
            });
 
         });

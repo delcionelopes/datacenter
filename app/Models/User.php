@@ -89,7 +89,7 @@ class User extends Authenticatable
     }
 
     public function perfil(){
-        return $this->belongsTo(Perfil::class);
+        return $this->belongsTo(Perfil::class,'perfil_id','id');
     }
 
     public function funcao(){

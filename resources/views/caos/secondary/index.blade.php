@@ -25,6 +25,39 @@
     }
 </style>
 
+<!--inicio SelUsuario -->
+<div class="modal fade animate__animated animate__bounce animate__faster" id="SelUserModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header navbar-dark bg-{{$color}}" id="titulo_selusermodal">
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Selecione o usuário</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form id="seluserform" name="seluserform" class="form-horizontal" role="form">
+                    <input type="hidden" id="add_cluster_id">
+                    <ul id="selusuario_errList"></ul>                    
+                    <div class="form-group mb-3">
+                        <label for="">Usuários</label>
+                        <select name="selusuario_id" id="selusuario_id" class="custom-select">
+                            @foreach($users as $user)
+                            <option value="{{$user->id}}">{{$user->name}}</option>
+                            @endforeach
+                        </select>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-{{$color}} btnselusuario"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--Fim SelUsuario -->
+
 <div class="container-fluid py-5"> 
 
             <div class="card p-3" style="background-image: url('/assets/img/home-bg.jpg')">
@@ -53,7 +86,7 @@
       <div class="card-header">
         <b style="background: transparent; color: black; border: none;"><i class="fas fa-desktop"></i> {{$ope->nome}}</b>
       </div>
-      <a href="" data-id="{{$ope->id}}" data-color="{{$aut->modulos->color}}" id="link1" class="abrir">
+      <a href="" data-id="{{$ope->id}}" data-color="{{$aut->modulos->color}}" id="link" class="abrir">
       <img class="card-img-top" src="{{asset('storage/'.$ope->ico)}}" alt="Imagem de capa do módulo" width="286" height="180">
       </a>
       <div class="card-body">                
@@ -108,7 +141,8 @@ $(document).ready(function(){
   $(document).on('click','.abrir',function(e){    //aciona pelos elementos img pelo link e pelo button abrir_btn através do atributo comum class .abrir
     e.preventDefault();
     var codoperacao = $(this).data("id");
-    var color = $(this).data("color"); 
+    var color = $(this).data("color");
+    var linkgif = "{{asset('storage/ajax-loader.gif')}}";
         
       switch (codoperacao) {
       case 1: location.replace('/datacenteradmin/orgao/index-orgao/'+color); ///cadastro de orgãos
@@ -158,12 +192,62 @@ $(document).ready(function(){
       case 24: location.replace('/datacenteradmin/relatorios/relatorio-modope'); ///Relatorio de módulos X operações
       break; 
       case 25: location.replace('/datacenteradmin/relatorios/relatorio-usuarios'); ///Relatorio de usuários
-      break; 
+      break;
+      case 26: { //exibir o form modal para selecionar o usuário
+            $("#seluserform").trigger('reset');
+            $("#SelUserModal").modal('show');
+            $("#selusuario_errList").replaceWith('<ul id="selusuario_errList"></ul>');
+      }
+      break;
       default:
         break;
     }  
 
   });  
+
+   //reconfigura o option selected do select do usuário html
+   $('select[name="selusuario_id"]').on('change',function(){
+            var opt = this.value;
+            $("#selusuario_id option")
+            .removeAttr('selected')
+            .filter('[value='+opt+']')
+            .attr('selected',true);
+        }); 
+        //reconfigura o option selected do usuário
+
+    //inicio exibição do form SelUserModal
+    $('#SelUserModal').on('shown.bs.modal',function(){
+            $("#selusuario_id").focus();
+       });
+     //fim exibição do form SelUserModal      
+    
+    $(document).on('click','.btnselusuario',function(){
+      //e.preventDefault();
+      var id = $('#selusuario_id').val();
+      location.replace('/datacenteradmin/relatorios/relatorio-permissoes/'+id);
+    
+        /*    $.ajaxSetup({
+                    headers:{
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+    
+    
+            $.ajax({ 
+                type: 'GET',             
+                dataType: 'json',                                    
+                url: '/datacenteradmin/relatorios/relatorio-permissoes/'+id,                                
+                success: function(response){           
+                    if(response.status==200){                           
+                        $(".nome_funcao").val(response.funcao.nome);
+                        $(".descricao_funcao").val(response.funcao.descricao);
+                        $("#edit_funcao_id").val(response.funcao.id);                                                                                                       
+                    }      
+                }
+            }); */       
+    
+        
+    });
 
 });
 
