@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -88,7 +89,7 @@ class User extends Authenticatable
         return $this->belongsTo(Setor::class,'setor_id','idsetor');
     }
 
-    public function perfil(){
+    public function perfil():BelongsTo{
         return $this->belongsTo(Perfil::class,'perfil_id','id');
     }
 

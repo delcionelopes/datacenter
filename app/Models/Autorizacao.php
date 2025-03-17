@@ -23,14 +23,14 @@ class Autorizacao extends Model
     ];
 
     protected function perfil(){
-        return $this->belongsTo(Perfil::class);
+        return $this->belongsTo(Perfil::class,'perfil_id','id');
     }
 
-    public function modulos(){
+    public function modulo(){
         return $this->belongsTo(Modulo::class,'modulo_has_operacao_modulo_id','id');
     }
 
-    public function operacaos(){
+    public function operacao(){
         return $this->belongsTo(Operacao::class,'modulo_has_operacao_operacao_id','id');
     }
 

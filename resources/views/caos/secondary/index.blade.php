@@ -86,12 +86,12 @@
       <div class="card-header">
         <b style="background: transparent; color: black; border: none;"><i class="fas fa-desktop"></i> {{$ope->nome}}</b>
       </div>
-      <a href="" data-id="{{$ope->id}}" data-color="{{$aut->modulos->color}}" id="link" class="abrir">
+      <a href="" data-id="{{$ope->id}}" data-color="{{$aut->modulo->color}}" id="link" class="abrir">
       <img class="card-img-top" src="{{asset('storage/'.$ope->ico)}}" alt="Imagem de capa do módulo" width="286" height="180">
       </a>
       <div class="card-body">                
         <p class="card-text">{{$ope->descricao}}</p>        
-        <button type="button" id="abrir_btn" data-id="{{$ope->id}}" data-color="{{$aut->modulos->color}}" class="abrir btn btn-{{$aut->modulos->color}}">Abrir</button>
+        <button type="button" id="abrir_btn" data-id="{{$ope->id}}" data-color="{{$aut->modulo->color}}" class="abrir btn btn-{{$aut->modulo->color}}">Abrir</button>
       </div>
     </div>
   </div>
@@ -222,31 +222,8 @@ $(document).ready(function(){
      //fim exibição do form SelUserModal      
     
     $(document).on('click','.btnselusuario',function(){
-      //e.preventDefault();
       var id = $('#selusuario_id').val();
       location.replace('/datacenteradmin/relatorios/relatorio-permissoes/'+id);
-    
-        /*    $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-                    }
-                });
-    
-    
-            $.ajax({ 
-                type: 'GET',             
-                dataType: 'json',                                    
-                url: '/datacenteradmin/relatorios/relatorio-permissoes/'+id,                                
-                success: function(response){           
-                    if(response.status==200){                           
-                        $(".nome_funcao").val(response.funcao.nome);
-                        $(".descricao_funcao").val(response.funcao.descricao);
-                        $("#edit_funcao_id").val(response.funcao.id);                                                                                                       
-                    }      
-                }
-            }); */       
-    
-        
     });
 
 });

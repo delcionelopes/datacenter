@@ -6,6 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Autorizacao;
 use App\Models\Modulo;
 use App\Models\Operacao;
+use App\Models\Perfil;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -17,13 +18,15 @@ class ModuloController extends Controller
     private $operacao;
     private $autorizacao;
     private $user;
+    private $perfil;
 
-    public function __construct(Modulo $modulo, Operacao $operacao, Autorizacao $autorizacao, User $user)
+    public function __construct(Modulo $modulo, Operacao $operacao, Autorizacao $autorizacao, User $user, Perfil $perfil)
     {
         $this->modulo = $modulo;
         $this->operacao = $operacao;
         $this->autorizacao = $autorizacao;
         $this->user = $user;
+        $this->perfil = $perfil;
     }
     /**
      * Display a listing of the resource.
@@ -320,19 +323,32 @@ class ModuloController extends Controller
 
 //relatório de permissões
 public function relatorioPermissoes(int $id){
-    $user = $this->user->whereId($id)->get();
-    $perfil = $user->perfil;
-    dd($perfil);
-    $autorizacoes = $perfil->autorizacoes;
-    dd($autorizacoes);
+    $user = $this->user->whereId($id)->first();    
+    $perfil = $this->perfil->whereId($user->perfil_id)->first();
+    $autorizacoes = $this->autorizacao->query()->wherePerfil_id($perfil->id)->get();
+    $modulos = $this->modulo->all();
     $date = now();
-    $setor = $user()->setor->nome;
+    $setor = auth()->user()->setor->nome;
     return Pdf::loadView('relatorios.datacenter.autorizacao',[
         'user' => $user,
         'autorizacoes' => $autorizacoes,
+        'modulos' => $modulos,
         'date' => $date,
         'setor' => $setor,
     ])->stream('permissões_de_'.$user->name.'.pdf');        
+}
+
+public function retornaOperacao(int $perfil_id, int $modulo_id){
+    $autope = $this->autorizacao->query()
+                                ->wherePerfil_id($perfil_id)
+                                ->whereModulo_has_operacao_modulo_id($modulo_id)
+                                ->get();
+    $operacoes = $this->operacao->all();
+    return response()->json([
+        'autope' => $autope,
+        'operacoes' => $operacoes,
+        'status' => 200,
+    ]);
 }
 
 

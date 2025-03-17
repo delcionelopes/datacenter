@@ -39,6 +39,10 @@
     </div>        
     </div>
     <h3 style="text-align: center; text-decoration-style: solid">RELATÓRIO DE PERMISSÕES PARA {{$user->name}}</h3>
+    <br>
+    <p>Usuário:&nbsp;{{$user->email}}</p>
+    <p>Perfil:&nbsp;{{$user->perfil->nome}}</p>
+    <br>
     </nav>    
     <div>    
     </div>    
@@ -51,74 +55,32 @@
         </tr>       
     </thead>
     <tbody>
-           {{$pagina=1}}
-           {{$linha=0}}
-            @foreach($autorizacoes as $aut)            
+        @if($autorizacoes->count())
+        @foreach($modulos as $mod)
+            @foreach($autorizacoes as $aut)
+            @if($aut->modulo_has_operacao_modulo_id==$mod->id)
             <tr>
-                <td><span>&#8226;</span> {{$aut->modulos->nome}}</td>
+                <td><span>&#8226;</span>&nbsp;{{$mod->nome}}</td>
                 @if($aut->created_at==null)
                 <td></td>
                 @else
                 <td>{{date('d/m/Y H:i:s',strtotime($aut->created_at))}}</td>
                 @endif                
-                <td>{{$aut->usercreater->name}}</td>
-                @if($aut->modulos->operacoes->count()>0)
+                <td>{{$aut->usercreater->cpf}}</td>
                 <tr>
                    <th scope="row" style="text-align: justify">&nbsp;&nbsp;OPERAÇÕES</th>
                    <th scope="row" style="text-align: justify"></th>
                    <th scope="row" style="text-align: justify"></th>
                 </tr>
-                @endif
-                @foreach($aut->modulos->operacoes as $operacao)
-                <tr>
-                <td>&nbsp;&nbsp;{{$operacao->nome}}</td>
-                <td></td>
-                <td></td>
-                </tr>
-                {{$linha++}}
-                @endforeach
+                <div id="listaoperacoes" data-perfil="{{$user->perfil_id}}" data-modulo="{{$mod->id}}" onload="mostraOperacoes();"></div>
             </tr>
-            {{$linha++}}
-            @if(($linha==35)&&($linha % 35==0)&&($pagina<2))
-           <!-- Rodapé-->
-            <footer class="border-top">
-               <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">                        
-                        <div class="small text-center text-muted fst-italic">Gerado em {{date('d/m/Y H:i:s',strtotime($date))}} - Página {{$pagina}}</div>
-                    </div>
-                </div>
-             </div>
-           </footer>
-            {{$pagina++}}
-            {{$linha=0}}            
-           @endif            
-           @if(($linha>=40)&&($linha % 40==0)&&($pagina>1))
-            <!-- Rodapé-->
-            <footer class="border-top">
-               <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">                        
-                        <div class="small text-center text-muted fst-italic">Gerado em {{date('d/m/Y H:i:s',strtotime($date))}} - Página {{$pagina}}</div>
-                    </div>
-                </div>
-             </div>
-           </footer>
-            {{$pagina++}}                        
-            @endif            
-            @if($loop->last)
-            <!-- Rodapé-->
-            <footer class="border-top">
-               <div class="container px-4 px-lg-5">
-                <div class="row gx-4 gx-lg-5 justify-content-center">
-                    <div class="col-md-10 col-lg-8 col-xl-7">                        
-                        <div class="small text-center text-muted fst-italic">Gerado em {{date('d/m/Y H:i:s',strtotime($date))}} - Página {{$pagina}}</div>
-                    </div>
-                </div>
-             </div>
-           </footer>
-            @endif
-            @endforeach            
+            @break
+            @elseif ($loop->last)
+              {{-- cessa a construção de cards --}}
+            @endif      
+            @endforeach
+        @endforeach
+        @endif
     </tbody>    
     </table>     
      
@@ -126,3 +88,37 @@
             
 </body>
 </html>
+<script type="text/javascript">
+    $(document).ready(function(){
+        const minhaDiv = document.getElementById('listaoperacoes');
+        minhaDiv.addEventListener('load',function(){            
+            var perfil = $(this).data("perfil");
+            var modulo = $(this).data("modulo");
+            $.ajaxSetup({
+                    headers:{
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                    }
+                });                
+    
+            $.ajax({ 
+                type: 'GET',             
+                dataType: 'json',                                    
+                url: '/datacenteradmin/relatorios/relatorio-listaoperacoes/'+perfil+'/'+modulo,                                
+                success: function(response){
+                    if(response.status==200){
+                        $.each(response.operacoes,function(key, operacao){
+                            $.each(response.autope,function(key, autope){
+                                if(autope.modulo_has_operacao_operacao_id == operacao.id){
+                                    $('#listaoperacoes').append('<tr><td>'+operacao.nome+'</td><td></td><td></td></tr>');
+                                }
+                            });
+                        });
+                    }
+                }
+        });
+        
+    });
+
+        });        
+   
+</script>

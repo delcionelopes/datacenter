@@ -24,5 +24,9 @@ class Modulo extends Model
     public function operacoes():BelongsToMany{
         return $this->belongsToMany(Operacao::class,'modulo_has_operacao','modulo_id','operacao_id');
     }
+
+    public function autorizacao(){
+        return $this->hasMany(Autorizacao::class,'id','modulo_has_operacao_modulo_id');
+    }
     
 }
