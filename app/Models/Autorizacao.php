@@ -32,7 +32,7 @@ class Autorizacao extends Model
 
     public function operacao(){
         return $this->belongsTo(Operacao::class,'modulo_has_operacao_operacao_id','id');
-    }
+    }    
 
     public function usercreater(){
         return $this->belongsTo(User::class,'user_creater','id');

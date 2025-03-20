@@ -7,6 +7,7 @@
      
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+    <script src="{{asset('jquery/jquery-3.6.0.js')}}"></script>
     
     <title>Relatório de Autorizações</title>  
     
@@ -54,33 +55,43 @@
             <th scope="row" style="text-align: justify">AUTORIZADOR</th>
         </tr>       
     </thead>
-    <tbody>
-        @if($autorizacoes->count())
-        @foreach($modulos as $mod)
+    <tbody>           
+         @foreach($modulos as $mod)  
             @foreach($autorizacoes as $aut)
-            @if($aut->modulo_has_operacao_modulo_id==$mod->id)
+            @if($aut->modulo_has_operacao_modulo_id == $mod->id)
             <tr>
                 <td><span>&#8226;</span>&nbsp;{{$mod->nome}}</td>
                 @if($aut->created_at==null)
                 <td></td>
                 @else
                 <td>{{date('d/m/Y H:i:s',strtotime($aut->created_at))}}</td>
-                @endif                
+                @endif
                 <td>{{$aut->usercreater->cpf}}</td>
                 <tr>
                    <th scope="row" style="text-align: justify">&nbsp;&nbsp;OPERAÇÕES</th>
                    <th scope="row" style="text-align: justify"></th>
                    <th scope="row" style="text-align: justify"></th>
-                </tr>
-                <div id="listaoperacoes" data-perfil="{{$user->perfil_id}}" data-modulo="{{$mod->id}}" onload="mostraOperacoes();"></div>
+                </tr>               
+                @foreach($operacoes as $ope)
+                @foreach($aut2 as $autindiv)
+                @if(($autindiv->modulo_has_operacao_operacao_id == $ope->id)&&($autindiv->modulo_has_operacao_modulo_id == $mod->id))                
+                <tr>
+                <td>&nbsp;&nbsp;{{$ope->nome}}</td>
+                <td></td>
+                <td></td>
+                </tr>                
+                @break
+                @elseif ($loop->last)
+                @endif
+                @endforeach
+                @endforeach
             </tr>
             @break
             @elseif ($loop->last)
-              {{-- cessa a construção de cards --}}
-            @endif      
+            @endif
             @endforeach
-        @endforeach
-        @endif
+            @endforeach
+                          
     </tbody>    
     </table>     
      
@@ -88,37 +99,3 @@
             
 </body>
 </html>
-<script type="text/javascript">
-    $(document).ready(function(){
-        const minhaDiv = document.getElementById('listaoperacoes');
-        minhaDiv.addEventListener('load',function(){            
-            var perfil = $(this).data("perfil");
-            var modulo = $(this).data("modulo");
-            $.ajaxSetup({
-                    headers:{
-                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-                    }
-                });                
-    
-            $.ajax({ 
-                type: 'GET',             
-                dataType: 'json',                                    
-                url: '/datacenteradmin/relatorios/relatorio-listaoperacoes/'+perfil+'/'+modulo,                                
-                success: function(response){
-                    if(response.status==200){
-                        $.each(response.operacoes,function(key, operacao){
-                            $.each(response.autope,function(key, autope){
-                                if(autope.modulo_has_operacao_operacao_id == operacao.id){
-                                    $('#listaoperacoes').append('<tr><td>'+operacao.nome+'</td><td></td><td></td></tr>');
-                                }
-                            });
-                        });
-                    }
-                }
-        });
-        
-    });
-
-        });        
-   
-</script>

@@ -323,22 +323,26 @@ class ModuloController extends Controller
 
 //relatório de permissões
 public function relatorioPermissoes(int $id){
-    $user = $this->user->whereId($id)->first();    
-    $perfil = $this->perfil->whereId($user->perfil_id)->first();
-    $autorizacoes = $this->autorizacao->query()->wherePerfil_id($perfil->id)->get();
+    $user = $this->user->whereId($id)->first();
+    $autorizacoes = $this->autorizacao->query()->wherePerfil_id($user->perfil->id)->get();
+    $aut2 = $this->autorizacao->query()->wherePerfil_id($user->perfil->id)->get();
     $modulos = $this->modulo->all();
+    $operacoes = $this->operacao->all();
     $date = now();
     $setor = auth()->user()->setor->nome;
     return Pdf::loadView('relatorios.datacenter.autorizacao',[
         'user' => $user,
         'autorizacoes' => $autorizacoes,
+        'aut2' => $aut2,
         'modulos' => $modulos,
+        'operacoes' => $operacoes,
         'date' => $date,
         'setor' => $setor,
     ])->stream('permissões_de_'.$user->name.'.pdf');        
 }
 
 public function retornaOperacao(int $perfil_id, int $modulo_id){
+    dd("Chegou aqui, controller!");
     $autope = $this->autorizacao->query()
                                 ->wherePerfil_id($perfil_id)
                                 ->whereModulo_has_operacao_modulo_id($modulo_id)
