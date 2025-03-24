@@ -452,33 +452,15 @@ $(document).ready(function(){
                         $('#listtitleModalLabel').replaceWith('<h5 class="modal-title" id="listtitleModalLabel" style="color: white;">Perfil: '+response.perfil.nome+'</h5>');
                         $('#cardauthorizations').replaceWith('<div class="card-body" id="cardauthorizations"></div>');                        
                         var limitacard = "";
-                        var alfa = "";
-                        var beta = "";
-                        $.each(response.modope,function(key,modope){                            
-                                alfa = '<div class="card-body" id="cardauthorizations'+modope.modulo_id+'">\
+                        $.each(response.modulos,function(key,modulo){                              
+                                limitacard = limitacard+
+                                '<div class="card-body" id="cardauthorizations'+modulo.id+'">\
                                 <fieldset>\
-                                    <legend>'+modope.modulo.nome+'</legend>\
-                                    <div class="form-check" id="form-check-vinculo'+modope.modulo_id+'">\
+                                    <legend>'+modulo.nome+'</legend>\
+                                    <div class="form-check" id="form-check-vinculo'+modulo.id+'">\
                                     </div>\
                                 </fieldset>\
                                 </div>';
-                                if(alfa!=beta){
-                                limitacard = limitacard+
-                                '<div class="card-body" id="cardauthorizations'+modope.modulo_id+'">\
-                                <fieldset>\
-                                    <legend>'+modope.modulo.nome+'</legend>\
-                                    <div class="form-check" id="form-check-vinculo'+modope.modulo_id+'">\
-                                    </div>\
-                                </fieldset>\
-                                </div>';       
-                                }
-                                beta = '<div class="card-body" id="cardauthorizations'+modope.modulo_id+'">\
-                                <fieldset>\
-                                    <legend>'+modope.modulo.nome+'</legend>\
-                                    <div class="form-check" id="form-check-vinculo'+modope.modulo_id+'">\
-                                    </div>\
-                                </fieldset>\
-                                </div>';                  
                         });
                         $('#cardauthorizations').append(limitacard);
                         

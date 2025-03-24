@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Caos;
 use App\Http\Controllers\Controller;
 use App\Models\Autorizacao;
 use App\Models\Modope;
+use App\Models\Modulo;
 use App\Models\Perfil;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -12,12 +13,14 @@ use Illuminate\Support\Facades\Validator;
 class PerfilController extends Controller
 {
     private $perfil;
+    private $modulo;
     private $modope;
     private $autorizacao;
 
-    public function __construct(Perfil $perfil, Modope $modope, Autorizacao $autorizacao)
+    public function __construct(Perfil $perfil, Modope $modope, Autorizacao $autorizacao, Modulo $modulo)
     {
         $this->perfil = $perfil;
+        $this->modulo = $modulo;
         $this->modope = $modope;
         $this->autorizacao = $autorizacao;
 
@@ -191,11 +194,13 @@ class PerfilController extends Controller
 
     public function listAuthorizations(int $id){        
         $perfil = $this->perfil->find($id);
+        $modulos = $this->modulo->all();
         $modope = $this->modope->with('modulo','operacao')->get();        
         $authorizations = $this->autorizacao->wherePerfil_id($id)->get();                
         if($modope->count()){
             return response()->json([
                 'status' => 200,
+                'modulos' => $modulos,
                 'modope' => $modope,
                 'perfil' => $perfil,
                 'authorizations' => $authorizations,
