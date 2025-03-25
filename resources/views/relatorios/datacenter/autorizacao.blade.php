@@ -39,11 +39,7 @@
         <img src="logo_prodap.png" alt="" width="80" height="80">
     </div>        
     </div>
-    <h3 style="text-align: center; text-decoration-style: solid">RELATÓRIO DE PERMISSÕES PARA {{$user->name}}</h3>
-    <br>
-    <p>Usuário:&nbsp;{{$user->email}}</p>
-    <p>Perfil:&nbsp;{{$user->perfil->nome}}</p>
-    <br>
+    <h3 style="text-align: center; text-decoration-style: solid">RELATÓRIO DE PERMISSÕES PARA {{$perfil->nome}}</h3>    
     </nav>    
     <div>    
     </div>    
@@ -60,18 +56,13 @@
             @foreach($autorizacoes as $aut)
             @if($aut->modulo_has_operacao_modulo_id == $mod->id)
             <tr>
-                <td><span>&#8226;</span>&nbsp;{{$mod->nome}}</td>
+                <td style="font-weight: bold;"><span>&#8226;</span>&nbsp;{{$mod->nome}}</td>
                 @if($aut->created_at==null)
                 <td></td>
                 @else
-                <td>{{date('d/m/Y H:i:s',strtotime($aut->created_at))}}</td>
+                <td style="font-weight: bold;">{{date('d/m/Y H:i:s',strtotime($aut->created_at))}}</td>
                 @endif
-                <td>{{$aut->usercreater->cpf}}</td>
-                <tr>
-                   <th scope="row" style="text-align: justify">&nbsp;&nbsp;OPERAÇÕES</th>
-                   <th scope="row" style="text-align: justify"></th>
-                   <th scope="row" style="text-align: justify"></th>
-                </tr>               
+                <td style="font-weight: bold;">{{$aut->usercreater->cpf}}</td>
                 @foreach($operacoes as $ope)
                 @foreach($aut2 as $autindiv)
                 @if(($autindiv->modulo_has_operacao_operacao_id == $ope->id)&&($autindiv->modulo_has_operacao_modulo_id == $mod->id))                

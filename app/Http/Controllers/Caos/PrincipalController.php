@@ -6,7 +6,7 @@ use App\Http\Controllers\Controller;
 use App\Models\Autorizacao;
 use App\Models\Modulo;
 use App\Models\Operacao;
-use App\Models\User;
+use App\Models\Perfil;
 use Illuminate\Http\Request;
 
 class PrincipalController extends Controller
@@ -14,14 +14,14 @@ class PrincipalController extends Controller
     private $modulo;
     private $operacao;
     private $autorizacao;
-    private $user;
+    private $perfil;
 
-    public function __construct(Modulo $modulo, Operacao $operacao, Autorizacao $autorizacao, User $user)
+    public function __construct(Modulo $modulo, Operacao $operacao, Autorizacao $autorizacao, Perfil $perfil)
     {
         $this->modulo = $modulo;
         $this->operacao = $operacao;
         $this->autorizacao = $autorizacao;
-        $this->user = $user;
+        $this->perfil = $perfil;
     }
 
     public function index(Request $request){
@@ -36,18 +36,18 @@ class PrincipalController extends Controller
         ]);
     }
 
-    public function operacoes(Request $request, int $id, $color){        
+    public function operacoes(int $id, $color){        
         $user = auth()->user();        
         $autorizacao = $this->autorizacao->query()
                                 ->wherePerfil_id($user->perfil_id)
                                 ->whereModulo_has_operacao_modulo_id($id)
                                 ->get();
         $operacoes = $this->operacao->all();
-        $users = $this->user->all();
+        $perfis = $this->perfil->all();
         return view('caos.secondary.index',[
             'autorizacao' => $autorizacao,
             'operacoes' => $operacoes,
-            'users' => $users,
+            'perfis' => $perfis,
             'color' => $color,
         ]);
     }

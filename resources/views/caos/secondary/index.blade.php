@@ -25,12 +25,12 @@
     }
 </style>
 
-<!--inicio SelUsuario -->
-<div class="modal fade animate__animated animate__bounce animate__faster" id="SelUserModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+<!--inicio SelPerfil -->
+<div class="modal fade animate__animated animate__bounce animate__faster" id="SelPerfilModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-{{$color}}" id="titulo_selusermodal">
-                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Selecione o usuário</h5>
+                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Selecione o perfil</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
                 </button>
@@ -40,10 +40,10 @@
                     <input type="hidden" id="add_cluster_id">
                     <ul id="selusuario_errList"></ul>                    
                     <div class="form-group mb-3">
-                        <label for="">Usuários</label>
+                        <label for="">Perfis</label>
                         <select name="selusuario_id" id="selusuario_id" class="custom-select">
-                            @foreach($users as $user)
-                            <option value="{{$user->id}}">{{$user->name}}</option>
+                            @foreach($perfis as $perfil)
+                            <option value="{{$perfil->id}}">{{$perfil->nome}}</option>
                             @endforeach
                         </select>
                     </div>
@@ -51,7 +51,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-{{$color}} btnselusuario"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" class="btn btn-{{$color}} btnselusuario"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Visualizar</button>
             </div>
         </div>
     </div>
@@ -195,9 +195,11 @@ $(document).ready(function(){
       break;
       case 26: { //exibir o form modal para selecionar o usuário
             $("#seluserform").trigger('reset');
-            $("#SelUserModal").modal('show');
+            $("#SelPerfilModal").modal('show');
             $("#selusuario_errList").replaceWith('<ul id="selusuario_errList"></ul>');
       }
+      break;
+      case 27: location.replace('/datacenteradmin/relatorios/relatorio-equipamentos'); ///Relatorio de equipamentos do setor do usuário
       break;
       default:
         break;

@@ -360,7 +360,8 @@ Route::group(['middleware'=> ['auth']],function(){
             Route::get('relatorio-areas',[Area_ConhecimentoController::class,'relatorioAreas'])->name('relatorio.areas');
             Route::get('relatorio-modope',[ModuloController::class,'relatorioModope'])->name('relatorio.modope');
             Route::get('relatorio-usuarios',[UserController::class,'relatorioUsuarios'])->name('relatorio.usuarios');
-            Route::get('relatorio-permissoes/{id}',[ModuloController::class,'relatorioPermissoes'])->name('relatorio.permissoes');            
+            Route::get('relatorio-permissoes/{id}',[ModuloController::class,'relatorioPermissoes'])->name('relatorio.permissoes');
+            Route::get('relatorio-equipamentos',[EquipamentoController::class,'relatorioEquipamentos'])->name('relatorio.equipamentos');
            });
 
         });

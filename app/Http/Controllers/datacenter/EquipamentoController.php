@@ -5,6 +5,7 @@ namespace App\Http\Controllers\datacenter;
 use App\Http\Controllers\Controller;
 use App\Models\EquipamentoRede;
 use App\Models\User;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Crypt;
 use Illuminate\Support\Facades\DB;
@@ -322,5 +323,17 @@ class EquipamentoController extends Controller
                 ]);            
         }
     }
+
+    //relatórios
+  public function relatorioEquipamentos(){
+    $equipamentos = $this->equipamento->whereSetor_idsetor(auth()->user()->setor_id)->get();
+    $date = now();
+    $setor = auth()->user()->setor->nome;
+    return Pdf::loadView('relatorios.datacenter.equipamentos',[
+        'equipamentos' => $equipamentos,
+        'date' => $date,
+        'setor' => $setor,
+    ])->setPaper('a4','landscape')->stream('equipamentos_de_'.$setor.'.pdf');        
+}
 
 }

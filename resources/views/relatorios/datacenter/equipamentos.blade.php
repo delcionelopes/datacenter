@@ -38,7 +38,7 @@
         <img src="logo_prodap.png" alt="" width="80" height="80">
     </div>        
     </div>
-    <h3 style="text-align: center; text-decoration-style: solid">RELATÓRIO DE BANCOS DE DADOS</h3>
+    <h3 style="text-align: center; text-decoration-style: solid">RELATÓRIO DE EQUIPAMENTOS</h3>
     </nav>    
     <div>    
     </div>    
@@ -46,20 +46,16 @@
     <thead>        
         <tr>
             <th scope="row" style="text-align: justify">NOME</th>            
-            <th scope="row" style="text-align: justify">IP</th>
-            <th scope="row" style="text-align: justify">DONO</th>
-            <th scope="row" style="text-align: justify">PROJETO</th>
+            <th scope="row" style="text-align: justify">DESCRIÇÃO</th>
         </tr>       
     </thead>
     <tbody>
            {{$pagina=1}}
            {{$linha=0}}
-            @foreach($bases as $base)            
+            @foreach($equipamentos as $equipamento)            
             <tr>
-                <td>{{$base->nome_base}}</td>                
-                <td>{{$base->ip}}</td>
-                <td>{{$base->dono}}</td>
-                <td>{{$base->projeto->nome_projeto}}</td>
+                <td>{{$equipamento->nome}}</td>                
+                <td>{{$equipamento->descricao}}</td>
             </tr>
             {{$linha++}}
             @if(($linha==21)&&($linha % 21==0)&&($pagina<2))
