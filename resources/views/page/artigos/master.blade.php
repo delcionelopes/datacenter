@@ -53,7 +53,7 @@
                                 <i class="fas fa-comment-alt"></i> {{$artigo->comentarios()->count()}}
                             </a> 
                             @auth                       
-                            @if((auth()->user()->moderador) && (auth()->user()->inativo!=1))
+                            @if((auth()->user()->admin) && (auth()->user()->inativo!=1))
                             @if($artigo->notificarassinantes!=1)
                             <button type="button" id="notificar{{$artigo->id}}" data-id="{{$artigo->id}}" data-slug="{{$artigo->slug}}" data-notificar="1" class="notificar_btn fas fa-envelope" style="color: red;"></button>
                             @else
