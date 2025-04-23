@@ -21,7 +21,7 @@ class ArtigoController extends Controller
         $this->arquivo = $arquivo;
     }
 
-    public function index(Request $request)
+    public function index(Request $request,$color)
     {     
         if(is_null($request->pesquisa)){
             $artigos = $this->artigo->orderBy('id','DESC')->paginate(5);                           
@@ -31,7 +31,10 @@ class ArtigoController extends Controller
             $artigos = $query->orderBy('id','DESC')->paginate(5);
         }            
             $temas = Tema::all('id','titulo'); //Todos os temas
-        return view('artigos.index',compact('artigos','temas'));
+        return view('artigos.index',[
+            'artigos' => $artigos,
+            'temas' => $temas,
+            'color' => $color]);
     }
 
     

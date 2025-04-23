@@ -201,6 +201,14 @@ $(document).ready(function(){
       break;
       case 27: location.replace('/datacenteradmin/relatorios/relatorio-equipamentos'); ///Relatorio de equipamentos do setor do usuário
       break;
+      case 28: location.replace('/admin/institucionais/index/'+color); ///cadastro de instituições para links institucionais na front-page
+      break;
+      case 29: location.replace('/admin/entidades/index/'+color); ///cadastro da entidade principal para a front-page
+      break;
+      case 30: location.replace('/admin/artigos/index/'+color); ///cadastro de artigos da front-page
+      break;
+      case 31: location.replace('/admin/temas/index/'+color); ///cadastro de temas da front-page
+      break;
       default:
         break;
     }  

@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\admin\AmbienteController;
 use App\Http\Controllers\admin\Area_ConhecimentoController;
+use App\Http\Controllers\admin\ArtigoController;
 use App\Http\Controllers\admin\ManualController;
 use App\Http\Controllers\admin\OrgaoController;
 use App\Http\Controllers\admin\PlataformaController;
@@ -9,6 +10,7 @@ use App\Http\Controllers\admin\ProjetoController;
 use App\Http\Controllers\Auth\ForgotPasswordController;
 use App\Http\Controllers\Caos\SetorController;
 use App\Http\Controllers\admin\Sub_Area_ConhecimentoController;
+use App\Http\Controllers\admin\TemaController;
 use App\Http\Controllers\admin\UserController;
 use App\Http\Controllers\Caos\FuncaoController;
 use App\Http\Controllers\Caos\ModuloController;
@@ -20,8 +22,10 @@ use App\Http\Controllers\datacenter\AppController;
 use App\Http\Controllers\datacenter\BaseController;
 use App\Http\Controllers\datacenter\CadastroIpController;
 use App\Http\Controllers\datacenter\ClusterController;
+use App\Http\Controllers\datacenter\entidadeController;
 use App\Http\Controllers\datacenter\EquipamentoController;
 use App\Http\Controllers\datacenter\HostController;
+use App\Http\Controllers\datacenter\institucionalController;
 use App\Http\Controllers\datacenter\RedeController;
 use App\Http\Controllers\datacenter\SenhaController;
 use App\Http\Controllers\datacenter\VirtualMachineController;
@@ -42,29 +46,29 @@ Route::get('/home', [App\Http\Controllers\Page\HomeController::class, 'master'])
 Route::group(['middleware'=> ['auth']],function(){
 
        ///ADMIN        
-    Route::prefix('admin')->namespace('App\Http\Controllers\admin')->name('admin.')->group(function(){
+    Route::prefix('admin')->name('admin.')->group(function(){
       //Administração da frontpage
     Route::prefix('artigos')->name('artigos.')->group(function(){
-        Route::get('/index','ArtigoController@index')->name('index');         
-        Route::get('/create','ArtigoController@create')->name('create');
-        Route::post('/store','ArtigoController@store')->name('store');
-        Route::get('/edit/{id}','ArtigoController@edit')->name('edit');
-        Route::put('/update/{id}','ArtigoController@update')->name('update');
-        Route::delete('/delete/{id}','ArtigoController@destroy')->name('delete');
-        Route::get('/edit-capa/{id}','ArtigoController@editCapa');
-        Route::put('/upload-capa/{id}','ArtigoController@uploadCapa');
-        Route::post('/delete-capa/{id}','ArtigoController@deleteCapa');
-        Route::get('/edit-arquivo/{id}','ArtigoController@editArquivo');
-        Route::put('/upload-arquivo/{id}','ArtigoController@uploadArquivo');
-        Route::delete('/delete-arquivo/{id}','ArtigoController@deleteArquivo');            
+        Route::get('/index/{color}',[ArtigoController::class,'index'])->name('index');         
+        Route::get('/create',[ArtigoController::class,'create'])->name('create');
+        Route::post('/store',[ArtigoController::class,'store'])->name('store');
+        Route::get('/edit/{id}',[ArtigoController::class,'edit'])->name('edit');
+        Route::put('/update/{id}',[ArtigoController::class,'update'])->name('update');
+        Route::delete('/delete/{id}',[ArtigoController::class,'destroy'])->name('delete');
+        Route::get('/edit-capa/{id}',[ArtigoController::class,'editCapa']);
+        Route::put('/upload-capa/{id}',[ArtigoController::class,'uploadCapa']);
+        Route::post('/delete-capa/{id}',[ArtigoController::class,'deleteCapa']);
+        Route::get('/edit-arquivo/{id}',[ArtigoController::class,'editArquivo']);
+        Route::put('/upload-arquivo/{id}',[ArtigoController::class,'uploadArquivo']);
+        Route::delete('/delete-arquivo/{id}',[ArtigoController::class,'deleteArquivo']);            
     });  
 
     Route::prefix('tema')->name('tema.')->group(function(){
-        Route::get('/index','TemaController@index')->name('index');
-        Route::post('/store','TemaController@store');
-        Route::get('/edit/{id}','TemaController@edit');
-        Route::put('/update/{id}','TemaController@update');
-        Route::delete('/delete/{id}','TemaController@destroy');
+        Route::get('/index/{color}',[TemaController::class,'index'])->name('index');
+        Route::post('/store',[TemaController::class,'store']);
+        Route::get('/edit/{id}',[TemaController::class,'edit']);
+        Route::put('/update/{id}',[TemaController::class,'update']);
+        Route::delete('/delete/{id}',[TemaController::class,'destroy']);
       }); 
 
       Route::prefix('user')->name('user.')->group(function(){
@@ -80,6 +84,28 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::put('/armazenar-imgtemp',[UserController::class,'armazenarImgTemp']);
         Route::delete('/delete-imgtemp',[UserController::class,'deleteImgTemp']);
       });    
+
+      Route::prefix('entidades')->name('entidades.')->group(function(){
+        Route::get('/index/{color}',[entidadeController::class,'index'])->name('index');
+        Route::get('/create/{color}',[entidadeController::class,'create'])->name('create');
+        Route::delete('/delete/{id}',[entidadeController::class,'destroy']);
+        Route::get('/edit/{id}/{color}',[entidadeController::class,'edit'])->name('edit');
+        Route::put('/update/{id}',[entidadeController::class,'update']);
+        Route::put('/store',[entidadeController::class,'store']);
+        Route::put('/imagemtemp-upload',[entidadeController::class,'armazenarImagemTemporaria']);
+        Route::delete('/delete-imgtemp',[entidadeController::class,'excluirImagemTemporaria']);
+    });
+
+    Route::prefix('institucionais')->name('institucionais.')->group(function(){
+      Route::get('/index/{color}',[institucionalController::class,'index'])->name('index');
+      Route::get('/create/{color}',[institucionalController::class,'create'])->name('create');
+      Route::delete('/delete/{id}',[institucionalController::class,'destroy']);
+      Route::get('/edit/{id}/{color}',[institucionalController::class,'edit'])->name('edit');
+      Route::put('/update/{id}',[institucionalController::class,'update']);
+      Route::put('/store',[institucionalController::class,'store']);
+      Route::put('/imagemtemp-upload',[institucionalController::class,'armazenarImagemTemporaria']);
+      Route::delete('/delete-imgtemp',[institucionalController::class,'excluirImagemTemporaria']);
+  });
        //fim administração da frontpage
 
     }); //fim do grupo ADMNIN

@@ -1,4 +1,10 @@
-@extends('layouts.app')
+<!--@extends('layouts.app') -->
+
+<!-- @section('content') -->
+
+@extends('adminlte::page')
+
+@section('title', 'PRODAP - Datacenter')
 
 @section('content')
 
@@ -7,7 +13,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddArtigoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-        <div class="modal-header navbar navbar-dark bg-primary">
+        <div class="modal-header navbar navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Artigo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                 <span aria-hidden="true" style="color: white;">&times;</span>
@@ -46,7 +52,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal"> Fechar</button>
-                <button type="button" class="btn btn-primary add_artigo"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" class="btn btn-{{$color}} add_artigo"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -57,7 +63,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditArtigoModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-           <div class="modal-header navbar navbar-dark bg-primary">
+           <div class="modal-header navbar navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Artigo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -97,7 +103,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-primary update_artigo"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" class="btn btn-{{$color}} update_artigo"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -109,7 +115,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EnviarCapaModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar navbar-dark bg-primary">
+            <div class="modal-header navbar navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Enviar Capa do Artigo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -127,7 +133,7 @@
                  </div>  
                 <!-- arquivo de imagem-->                                    
             <div class="modal-footer">
-                <button type="button" class="btn btn-primary" data-dismiss="modal">Fechar</button>                
+                <button type="button" class="btn btn-{{$color}}" data-dismiss="modal">Fechar</button>                
             </div>
             </div>
             </form>
@@ -140,7 +146,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EnviarPDFModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-           <div class="modal-header navbar navbar-dark bg-primary">
+           <div class="modal-header navbar navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Enviar PDFs do Artigo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -159,7 +165,7 @@
                 <!--fim arquivo pdf-->                                                 
             <div class="modal-footer">
             <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-            <button type="submit" class="btn btn-primary fazer_upload_btn">Enviar</button>
+            <button type="submit" class="btn btn-{{$color}} fazer_upload_btn">Enviar</button>
             </div>                        
             </form>
             </div>            
@@ -174,7 +180,7 @@
 <div class="container-fluid py-5"> 
     <div id="success_message"></div>        
     <section class="border p-4 mb-4 d-flex align-items-left">    
-    <form action="{{route('admin.artigos.index')}}" class="form-search" method="GET">
+    <form action="{{route('admin.artigos.index',['color'=>$color])}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Busca" aria-label="Search"
@@ -190,7 +196,7 @@
     </section>    
             
                     <table class="table table-hover">
-                        <thead class="navbar-dark bg-primary" style="color: white">
+                        <thead class="navbar-dark bg-{{$color}}" style="color: white">
                             <tr>                                
                                 <th>#</th>
                                 <th>TÍTULO</th>
@@ -252,6 +258,7 @@
 </div> 
 <!--fim Index-->
 
+@endsection
 @endsection
 
 @section('scripts')

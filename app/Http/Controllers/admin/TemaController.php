@@ -16,7 +16,7 @@ class TemaController extends Controller
         $this->tema = $tema;
     }
 
-    public function index(Request $request)
+    public function index(Request $request,$color)
     {
         if(is_null($request->pesquisa)){
             $temas = $this->tema->orderBy('id','DESC')->paginate(5);
@@ -25,7 +25,7 @@ class TemaController extends Controller
                      ->where('titulo','LIKE','%'.$request->pesquisa.'%');
             $temas = $query->orderBy('id','DESC')->paginate(5);
         }
-        return view('tema.index',compact('temas'));
+        return view('tema.index',compact('temas','color'));
     }
     
     public function create()
