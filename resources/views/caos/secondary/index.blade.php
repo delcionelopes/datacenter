@@ -207,7 +207,7 @@ $(document).ready(function(){
       break;
       case 30: location.replace('/admin/artigos/index/'+color); ///cadastro de artigos da front-page
       break;
-      case 31: location.replace('/admin/temas/index/'+color); ///cadastro de temas da front-page
+      case 31: location.replace('/admin/tema/index/'+color); ///cadastro de temas da front-page
       break;
       default:
         break;

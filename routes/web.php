@@ -50,9 +50,9 @@ Route::group(['middleware'=> ['auth']],function(){
       //Administração da frontpage
     Route::prefix('artigos')->name('artigos.')->group(function(){
         Route::get('/index/{color}',[ArtigoController::class,'index'])->name('index');         
-        Route::get('/create',[ArtigoController::class,'create'])->name('create');
+        Route::get('/create/{color}',[ArtigoController::class,'create'])->name('create');
         Route::post('/store',[ArtigoController::class,'store'])->name('store');
-        Route::get('/edit/{id}',[ArtigoController::class,'edit'])->name('edit');
+        Route::get('/edit/{id}/{color}',[ArtigoController::class,'edit'])->name('edit');
         Route::put('/update/{id}',[ArtigoController::class,'update'])->name('update');
         Route::delete('/delete/{id}',[ArtigoController::class,'destroy'])->name('delete');
         Route::get('/edit-capa/{id}',[ArtigoController::class,'editCapa']);

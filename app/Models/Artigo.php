@@ -11,6 +11,7 @@ class Artigo extends Model
     use HasFactory;
     use Sluggable;    
     protected $table = 'artigos';
+    protected $primaryKey = 'id';
     protected $fillable = 
     [
         'id',
@@ -20,6 +21,8 @@ class Artigo extends Model
         'slug',
         'user_id',
         'imagem',
+        'created_at',
+        'updated_at',
     ];
 
     public function user(){

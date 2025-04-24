@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 class Entidade extends Model
 {
     use HasFactory;
-    protected $tatle = "entidade";
+    protected $table = "entidade";
     protected $primaryKey = "id";
     protected $fillable = [
         'id',

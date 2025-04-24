@@ -22,7 +22,7 @@ class institucionalController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index($request, $color)
+    public function index(Request $request, $color)
     {
         if(isNull($request->pesquisa)){
             $institucionais = $this->institucional->orderByDesc('id')->paginate(6);

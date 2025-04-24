@@ -1,63 +1,73 @@
 @extends('adminlte::page')
 
-@section('title', 'Edição de instituição')
+@section('title', 'Criação de artigos')
 
 @section('content')
 
 <form role="form" enctype="multipart/form-data" method="POST">
     @csrf
     @method('PUT')
-    <ul id="saveform_errList"></ul>
-    <input type="hidden" id="edit_instituicao_id" value="{{$institucional->id}}">
+    <ul id="saveform_errList"></ul> 
+    <header class="masthead" style="background-image: url('/assets/img/home-bg.jpg')">
+    </header>              
     <div class="container-fluid py-5">
         <div class="card">
             <div class="card-body">
-              <div class="card p-3" style="background-image: url('/assets/img/home-bg.jpg')">
-                <div class="d-flex align-items-center">
-                    <!--arquivo de imagem-->
-                    <div class="form-group mb-3">                                                
-                       <div class="image">           
-                        @if($institucional->logo)                 
-                            <img src="{{asset('storage/'.$institucional->logo')}}" class="imgico rounded-circle" width="100" >
-                        @else
-                            <img src="{{asset('storage/user.png')}}" class="imgico rounded-circle" width="100" >
-                        @end    
-                        </div>
-                       <label for="">Logo</label>                        
-                       <span class="btn btn-none fileinput-button"><i class="fas fa-plus"></i>                          
-                          <input id="upimagem" type="file" name="imagem" class="btn btn-{{$color}}" accept="image/x-png,image/gif,image/jpeg">
-                       </span>                       
-                     </div>  
-                     <!--arquivo de imagem--> 
-                </div>
-              </div>
-                  <fieldset>
-                    <legend>Dados da Instituição</legend>
+                <label for="upimagem">Capa</label>                        
+                <span class="btn btn-none fileinput-button"><i class="fas fa-plus"></i>
+                <input id="upimagem" type="file" name="imagem" class="btn btn-{{$color}}" accept="image/x-png,image/gif,image/jpeg">
+                </span>
+            </div>
+        </div>        
+        <div class="card">
+        <div class="card-body">                          
+                <fieldset>
+                    <legend>Identificação da postagem</legend>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="nome">Nome</label>
-                                <input type="text" required class="nome form-control" name="nome" id="nome" placeholder="Nome da instituição" value="{{$institucional->nome}}">
-                            </div>
-                        </div>
-                    </div>
-                    <div class="row">
-                        <div class="col-md-4">
-                              <div class="form-group">
-                                <label for="sigla">Sigla</label>
-                                <input type="text" required class="sigla form-control" name="sigla" id="sigla" placeholder="Sigla da instituição" value="{{$institucional->sigla}}">
+                                <label for="titulo">Título</label>
+                                <input type="text" required class="titulo form-control" name="titulo" id="titulo" placeholder="Informe o título">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="url_site">URL do Site</label>
-                                <input type="text" required class="nome form-control" name="url_site" id="url_site" placeholder="https://.." value="{{$institucional->url_site}}">
+                                <label for="descricao">Descrição</label>
+                                <input type="text" required class="descricao form-control" name="descricao" id="descricao" placeholder="Informe a descrição">
                             </div>
                         </div>
                     </div>
                 </fieldset>
+
+                <fieldset>
+                    <legend>Conteúdo</legend>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="">Teor da postagem</label>
+                                <textarea class="conteudo form-control" name="conteudo" placeholder="informe o conteúdo" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>                        
+                    </div>
+                </fieldset>
+                
+                <div class="card">
+                     <div class="card-body"> 
+                            <fieldset>
+                                <legend>Temas</legend>
+                                <div class="form-check">                                                                        
+                                    @foreach ($temas as $tema)
+                                    <label class="form-check-label" for="check{{$tema->id}}">
+                                        <input type="checkbox" id="check{{$tema->id}}" name="temas[]" value="{{$tema->id}}" class="form-check-input"> {{$tema->titulo}}
+                                    </label><br>
+                                    @endforeach                                    
+                                </div>
+                            </fieldset>   
+                     </div>
+                </div>
+                
                 <div class="row">
                     <div class="col-md-12">
                         <div class="modal-footer">
@@ -66,9 +76,10 @@
                         </div>
                     </div>
                 </div>
-            </div>
-        </div>
-    </div>
+
+            </div> <!-- card-body -->       
+        </div> <!-- card -->
+    </div> <!-- card-fluid -->
 </form>
 @stop
 
@@ -89,22 +100,26 @@ $(document).ready(function(){
         var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
         var loading = $('#imgadd');
             loading.show();
-        var color = $(this).data("color");        
-        
-        var id = $('#edit_entidade_id').val();
+        var color = $(this).data("color");
 
+        //Array apenas com os checkboxes marcados
+        var temas = new Array();
+                $("input[name='temas[]']:checked").each(function(){
+                    temas.push($(this).val());
+                });        
         var data = new FormData();        
             
-            data.append('nome',$('#nome').val());
-            data.append('sigla',$('#sigla').val());
-            data.append('url_site',$('#url_site').val());
+            data.append('titulo',$('#titulo').val());
+            data.append('descricao',$('#descricao').val());
+            data.append('conteudo',$('.conteudo').val());
             data.append('imagem',$('#upimagem')[0].files[0]);
+            data.append('temas',JSON.stringify(temas)); //array
             data.append('_enctype','multipart/form-data');
             data.append('_token',CSRF_TOKEN);
-            data.append('_method','PUT');              
+            data.append('_method','put');              
 
         $.ajax({
-            url: '/admin/institucionais/update/'+id,
+            url: '/admin/artigos/store',
             type: 'POST',
             dataType: 'json',
             data: data,
@@ -119,10 +134,12 @@ $(document).ready(function(){
                         $.each(response.errors,function(key,err_values){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });
+                        loading.hide();
                 } else{
-                    $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');  
                     loading.hide();
-                     location.replace('/admin/institucionais/index/'+color);
+                    $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');
+                    loading.hide();
+                    location.replace('/admin/artigos/index'+color);
                 }  
             }  
         });
@@ -134,18 +151,18 @@ $(document).ready(function(){
           
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var fd = new FormData();
-            var files = $(this)[0].files;                      
+            var arqs = $(this)[0].files;                      
 
-            if(files.length > 0){
+            if(arqs.length > 0){
             // Append data 
-            fd.append('imagem',$(this)[0].files[0]);      
+            fd.append('imagem',$(this)[0].files[0]);
             fd.append('_token',CSRF_TOKEN);
             fd.append('_enctype','multipart/form-data');
             fd.append('_method','put');      
             
         $.ajax({                      
                 type: 'POST',                             
-                url:'/admin/institucionais/imagemtemp-upload',                
+                url:'/admin/artigos/imagemtemp-upload',
                 dataType: 'json',            
                 data: fd,
                 cache: false,
@@ -159,11 +176,11 @@ $(document).ready(function(){
                             $('#saveform_errList').append('<li>'+err_values+'</li>');
                         });
                 }else{                                                     
-                        var arq = response.filepath; 
-                            arq = arq.toString();                  ;
-                        var linkimagem = "{{asset('')}}"+arq;
-                        var imagemnova = '<img src="'+linkimagem+'" class="imgico rounded-circle" width="100" >';
-                        $(".imgico").replaceWith(imagemnova);
+                        var arq = response.filepath;
+                            arq = arq.toString();
+                        var linkimagem = "{{asset('')}}"+arq;                        
+                        var imagemnova = '<header class="masthead" style="background-image: url('+linkimagem+')">';                        
+                        $(".masthead").replaceWith(imagemnova);
                     }   
                 }                                  
             });
@@ -174,37 +191,37 @@ $(document).ready(function(){
     $(document).on('click','.cancelar_btn',function(e){
         e.preventDefault();
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        var files = $('#upimagem')[0].files;
+        var data = new FormData();
+        var arqs = $('#upimagem')[0].files;
         var color = $(this).data("color");
 
-        if(files.length > 0){
-        var data = new FormData();
+        if(arqs.length > 0){        
             data.append('imagem',$('#upimagem')[0].files[0]);
             data.append('_token',CSRF_TOKEN);
             data.append('_enctype','multipart/form-data');
             data.append('_method','delete');   
              $.ajax({                      
                 type: 'POST',                             
-                url:'/admin/institucionais/delete-imgtemp',                
-                dataType: 'json',            
+                url:'/admin/artigos/delete-imgtemp',                
+                dataType: 'json',
                 data: data,
                 cache: false,
                 processData: false,
-                contentType: false,                                                                                     
-                success: function(response){                              
+                contentType: false,
+                success: function(response){
                     if(response.status==200){
                     $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');
-                    location.replace('/admin/institucionais/index/'+color);
+                    location.replace('/admin/artigos/index'+color);
                 } 
                 }                                  
             });
 
         }else{
-            location.replace('/admin/institucionais/index/'+color);
+            location.replace('/admin/artigos/index'+color);
         }
 
     });
-    //fim excluir imagem temporária pelo cancelamento
+    //fim excluir imagem temporária pelo cancelamento    
 
 });
 

@@ -1,67 +1,67 @@
-@extends('layouts.app')
+@extends('adminlte::page')
+
+@section('title', 'Temas')
+
 @section('content')
+
 <!--AddTemaModal-->
-<div class="modal fade animate__animated animate__bounce animate__faster" id="AddTemaModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+
+<div class="modal fade animate__animated animate__bounce animate__faster" id="AddTemaModal" tabindex="-1" role="dialog" aria-labelledby="addtitleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-           <div class="modal-header navbar navbar-dark bg-{{$color}}">
-                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Tema</h5>
+            <div class="modal-header navbar-dark bg-{{$color}}">
+                <h5 class="modal-title" id="addtitleModalLabel" style="color: white;">Adicionar Tema</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
-                    <span aria-hidden="true" style="color: white;">&times;</span>
-                </button>
+                <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>                
             </div>
             <div class="modal-body form-horizontal">
-                <form id="addform" name="addform" class="form-horizontal" role="form">
-                    <ul id="saveform_errList"></ul>
-                    <div class="form-group mb-3">
-                        <label for="">Título</label>
-                        <input type="text" class="titulo form-control">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="">Descrição</label>
-                        <input type="text" class="descricao form-control">
-                    </div>
-                    <!--<div class="form-group mb-3">
-                        <label for="">Slug</label>
-                        <input type="text" class="slug form-control">
-                    </div> -->
-                </form>
+            <form id="addform" name="addform" class="form-horizontal" role="form">                 
+                <ul id="saveform_errList"></ul>                   
+                <div class="form-group mb-3">
+                    <label for="addtitulo">Título</label>
+                    <input type="text" id="addtitulo" class="titulo form-control">
+                </div>                                
+                <div class="form-group mb-3">
+                    <label for="adddescricao">Descrição</label>
+                    <input type="text" id="adddescricao" class="descricao form-control">
+                </div>                
+            </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button class="btn btn-{{$color}} add_tema"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" class="btn btn-{{$color}} add_tema"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
+
 </div>
-<!--Fim AddTemaModal-->
+<!--End AddTemaModal-->
+
 <!--EditTemaModal-->
-<div class="modal fade animate__animated animate__bounce animate__faster" id="EditTemaModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
+
+<div class="modal fade animate__animated animate__bounce" id="editTemaModal" tabindex="-1" role="dialog" aria-labelledby="edittitleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar navbar-dark bg-{{$color}}">
-                <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Tema</h5>
+            <div class="modal-header navbar-dark bg-{{$color}}">
+                <h5 class="modal-title" id="edittitleModalLabel" style="color: white;">Editar e atualizar Tema</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
-                </button>
+                </button>                
             </div>
             <div class="modal-body form-horizontal">
-                <form id="editform" name="editform" class="form-horizontal" role="form">
-                    <ul id="updateform_errList"></ul>
-                    <input type="hidden" id="edit_tema_id">
-                    <div class="form-group mb-3">
-                        <label for="">Título</label>
-                        <input type="text" id="edit_titulo" class="titulo form-control">
-                    </div>
-                    <div class="form-group mb-3">
-                        <label for="">Descrição</label>
-                        <input type="text" id="edit_descricao" class="descricao form-control">
-                    </div>
-                    <!--<div class="form-group mb-3">
-                        <label for="">Slug</label>
-                        <input type="text" id="edit_slug" class="slug form-control">
-                    </div> -->
-                </form>
+            <form id="editform" name="editform" class="form-horizontal" role="form">                
+                <ul id="updateform_errList"></ul>               
+                <input type="hidden" id="edit_tema_id">
+                <div class="form-group mb-3">
+                    <label for="edit_titulo">Título</label>
+                    <input type="text" id="edit_titulo" class="titulo form-control">
+                </div>
+                <div class="form-group mb-3">
+                    <label for="edit_descricao">Descrição</label>
+                    <input type="text" id="edit_descricao" class="descricao form-control">
+                </div>                
+            </form>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -70,299 +70,314 @@
         </div>
     </div>
 </div>
-<!--Fim EditTemaModal-->
-<!--Início Index-->
-<div class="container-fluid py-5">
-    <div id="success_message"></div>
-            <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('admin.tema.index',['color'=>$color])}}" class="form-search" method="GET">
-                    <div class="col-sm-12">
-                        <div class="input-group rounded">
-                            <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Busca" aria-label="Search" aria-describedby="search-addon">
-                            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
-                                <i class="fas fa-search"></i>
-                            </button>
-                            <button type="button" class="AddTemaModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;">
-                                 <i class="fas fa-plus"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
-            </section>
-            <table class="table table-hover">
-                <thead class="navbar-dark bg-{{$color}}" style="color: white">
-                    <tr>
-                        <th>#</th>
-                        <th>TÍTULO</th>
-                        <th>CRIADO EM</th>
-                        <th>MODIFICADO EM</th>
-                        <th>AÇÕES</th>
-                    </tr>
-                </thead>
-                <tbody id="lista_tema">
-                    @forelse($temas as $tema)
-                    <tr id="tema{{$tema->id}}" data-toggle="tooltip" title="{{$tema->descricao}}">
-                        <td>{{$tema->id}}</td>
-                        <td>{{$tema->titulo}}</td>
-                        @if(is_null($tema->created_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s', strtotime($tema->created_at))}}</td>
-                        @endif
-                        @if(is_null($tema->updated_at))
-                        <td></td>
-                        @else
-                        <td>{{date('d/m/Y H:i:s',strtotime($tema->updated_at))}}</td>
-                        @endif
-                        <td>
-                            <div class="btn-group">
-                                <button type="button" data-id="{{$tema->id}}" class="edit_tema_btn fas fa-edit" style="background: transparent;border: none;"></button>
-                                <button type="button" data-id="{{$tema->id}}" data-titulotema="{{$tema->titulo}}" class="delete_tema_btn fas fa-trash" style="background: transparent;border: none;"></button>
-                            </div>
-                        </td>
-                    </tr>
-                    @empty
-                    <tr id="nadaencontrado">
-                        <td colspan="4">Nada Encontrado!</td>
-                    </tr>
-                    @endforelse
-                </tbody>
-            </table> 
-            <div class="col-12">
-                {{$temas->links("pagination::bootstrap-4")}}
-            </div>                
-</div>
-<!--Fim Index-->
-@endsection
 
-@section('scripts')
+<!--End editTemaModal -->
+
+<!--index-->
+@auth
+@if(!(auth()->user()->inativo))
+<div class="container-fluid py-5">   
+    <div id="success_message"></div>    
+
+    <section class="border p-4 mb-4 d-flex align-items-left">
+    
+    <form action="{{route('admin.tema.index',['color'=>$color])}}" class="form-search" method="GET">
+        <div class="col-sm-12">
+            <div class="input-group rounded">            
+            <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="título do tema" aria-label="Search"
+            aria-describedby="search-addon">
+            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
+                <i class="fas fa-search"></i>
+            </button>        
+            <button type="button" class="AddTemaModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-plus"></i></button>
+            </div>            
+            </div>        
+            </form>                     
+  
+    </section>    
+            
+                    <table class="table table-hover">
+                        <thead class="bg-{{$color}}" style="color: white">
+                            <tr>                                
+                                <th scope="col">TEMAS</th>
+                                <th scope="col">AÇÕES</th>
+                            </tr>
+                        </thead>
+                        <tbody id="lista_tema">
+                        <tr id="novo" style="display:none;"></tr>
+                        @forelse($temas as $tema)   
+                            <tr id="tema{{$tema->id}}">                                
+                                <th scope="row">{{$tema->titulo}}</th>                                
+                                <td>                                    
+                                        <div class="btn-group">                                           
+                                            <button type="button" data-id="{{$tema->id}}" class="edit_tema fas fa-edit" style="background:transparent;border:none"></button>
+                                            <button type="button" data-id="{{$tema->id}}" data-titulo="{{$tema->titulo}}" class="delete_tema_btn fas fa-trash" style="background:transparent;border:none"></button>
+                                        </div>                                    
+                                </td>
+                            </tr>  
+                            @empty
+                            <tr id="nadaencontrado">
+                                <td colspan="4">Nada Encontrado!</td>
+                            </tr>                      
+                            @endforelse                                                    
+                        </tbody>
+                    </table> 
+                    <div class="d-flex hover justify-content-center">
+                    {{$temas->links()}}
+                    </div>  
+   
+    </div>        
+    
+</div> 
+@else 
+  <i class="fas fa-lock"></i><b class="title"> USUÁRIO INATIVO OU NÃO LIBERADO! CONTACTE O ADMINISTRADOR.</b>
+@endif
+@endauth
+<!--End Index-->
+@stop
+
+@section('css')
+    <!--<link rel="stylesheet" href="/css/admin_custom.css">  -->
+    <link href="{{asset('css/styles.css')}}" rel="stylesheet"/>  {{-- css da aplicação --}}
+@stop
+
+@section('js')
+
 <script type="text/javascript">
 
-//Início escopo geral
-$(document).ready(function(){
-    //inicio delete Tema
-    $(document).on('click','.delete_tema_btn',function(e){
-        e.preventDefault();
-        var CSRF_TOKEN  = document.querySelector('meta[name="_token"]').getAttribute('content');
-        var id = $(this).data("id");
-        var titulotema = $(this).data("titulotema");
-        var resposta = confirm(titulotema+". Deseja excluir?");
-
-        if(resposta==true){
+$(document).ready(function(){        
+    
+        $(document).on('click','.delete_tema_btn',function(e){   ///inicio delete
+            e.preventDefault();           
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
+            var id = $(this).data("id");            
+            var linklogo = "{{asset('storage')}}";
+            var titulo = $(this).data("titulo");
+            
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:titulo,
+                text: "Deseja excluir?",
+                imageUrl: linklogo+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do sistema',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){             
+                $.ajax({
+                    url: '/admin/tema/delete/'+id,
+                    type: 'POST',
+                    dataType: 'json',
+                    data:{
+                        'id': id,
+                        '_method': 'DELETE',                    
+                        '_token':CSRF_TOKEN,
+                    },
+                    success:function(response){
+                        if(response.status==200){                        
+                            //remove linha correspondente da tabela html
+                            $("#tema"+id).remove();     
+                            $('#success_message').replaceWith('<div id="success_message"></div>');                       
+                            $('#success_message').addClass('alert alert-success');
+                            $('#success_message').text(response.message);         
+                        }else{
+                            //Não pôde excluir por causa dos relacionamentos
+                            $('#success_message').replaceWith('<div id="success_message"></div>');                        
+                            $('#success_message').addClass('alert alert-danger');
+                            $('#success_message').text(response.errors);         
+                        }
+                    }
+                });            
+            }  
+        });
+      
+        });  ///fim delete
+        //início da exibição do form
+        $('#editTemaModal').on('shown.bs.modal',function(){
+            $('#edit_titulo').focus();
+        });
+        $(document).on('click','.edit_tema',function(e){  
+            e.preventDefault();
+            
+            var id = $(this).data("id");                                   
+            $('#editform').trigger('reset');
+            $('#editTemaModal').modal('show');          
+            $('#updateform_errList').replaceWith('<ul id="updateform_errList"></ul>');
+    
             $.ajaxSetup({
-                headers:{
-                    'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
+                    headers:{
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+    
+    
+            $.ajax({ 
+                type: 'GET',             
+                dataType: 'json',                                    
+                url: '/admin/tema/edit/'+id,                                
+                success: function(response){           
+                    if(response.status==200){                           
+                        $('.titulo').val(response.tema.titulo);                        
+                        $('.descricao').val(response.tema.descricao);
+                        $('#edit_tema_id').val(response.tema.id);
+                    }      
                 }
             });
+    
+        }); //fim da da exibição do form
+    
+        $(document).on('click','.update_tema',function(e){ //inicio da atualização de registro
+            e.preventDefault();
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            
+            var loading = $('#imgedit');
+                loading.show();
+    
+            var id = $('#edit_tema_id').val();        
+    
+            var data = {
+                'titulo' : $('#edit_titulo').val(),
+                'descricao' : $('#edit_descricao').val(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }
+            
+            $.ajax({     
+                type: 'POST',                          
+                data: data,
+                dataType: 'json',    
+                url: '/admin/tema/update/'+id,         
+                success: function(response){                                                    
+                    if(response.status==400){
+                        //erros
+                        $('#updateform_errList').replaceWith('<ul id="updateform_errList"></ul>');
+                        $('#updateform_errList').addClass('alert alert-danger');
+                        $.each(response.errors,function(key,err_values){
+                            $('#updateform_errList').append('<li>'+err_values+'</li>');
+                        });    
+                       loading.hide();
+    
+                    } else if(response.status==404){
+                        $('#updateform_errList').replaceWith('<ul id="updateform_errList"></ul>');    
+                        $('#success_message').replaceWith('<div id="success_message"></div>');             
+                        $('#success_message').addClass('alert alert-warning');
+                        $('#success_message').text(response.message);
+                        loading.hide();
+                    } else {
+                        $('#updateform_errList').replaceWith('<ul id="updateform_errList"></ul>');      
+                        $('#success_message').replaceWith('<div id="success_message"></div>');                 
+                        $('#success_message').addClass("alert alert-success");
+                        $('#success_message').text(response.message);                             
+                        
+                        loading.hide();
+                        $('#editform').trigger('reset');
+                        $('#editTemaModal').modal('hide');                  
+                        
+                        //atualizando a linha na tabela html                      
+                        var linha = "";
+                            linha = '<tr id="tema'+response.tema.id+'">\
+                                    <th scope="row">'+response.tema.titulo+'</th>\
+                                    <td><div class="btn-group">\
+                                    <button type="button" data-id="'+response.tema.id+'" class="edit_tema fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.tema.id+'" data-titulo="'+response.tema.titulo+'" class="delete_tema_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    </div></td>\
+                                    </tr>';                             
+                        $("#tema"+id).replaceWith(linha);                                                                                
+    
+                    }
+                }
+            });    
+    
+        
+    
+        }); //fim da atualização do registro
+    
+        //exibe form de adição de registro
+        $('#AddTemaModal').on('shown.bs.modal',function(){
+            $('.titulo').focus();
+        });
+        $(document).on('click','.AddTemaModal_btn',function(e){  //início da exibição do form
+            e.preventDefault();       
+            
+            $('#addform').trigger('reset');
+            $('#AddTemaModal').modal('show'); 
+            $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');
+        });
+    
+        //fim exibe form de adição de registro
+    
+        $(document).on('click','.add_tema',function(e){ //início da adição de Registro
+            e.preventDefault();
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');  
+            
+            var loading = $('#imgadd');
+                loading.show();
+            var data = {
+                'titulo': $('.titulo').val(),
+                'descricao': $('.descricao').val(),
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            } 
+            
             $.ajax({
-                url:'delete/'+id,
-                type:'POST',
-                dataType:'json',
-                data:{
-                    "id":id,
-                    "_method":'DELETE',
-                    "_token":CSRF_TOKEN,
-                },                
-                success:function(response){
-                    if(response.status==200){
-                        //remove a linha correspondente
-                        $("#tema"+id).remove();
-                        $("#success_message").addClass("alert alert-success");
-                        $("#success_message").text(response.message);
+                type: 'POST',
+                url: '/admin/tema/store',
+                data: data,
+                dataType: 'json',
+                success: function(response){
+                    if(response.status==400){
+                        $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');
+                        $('#saveform_errList').addClass('alert alert-danger');
+                        $.each(response.errors,function(key,err_values){
+                            $('#saveform_errList').append('<li>'+err_values+'</li>');
+                        });
+                        loading.hide();
+                    } else {
+                        $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');     
+                        $('#success_message').replaceWith('<div id="success_message"></div>');              
+                        $('#success_message').addClass('alert alert-success');
+                        $('#success_message').text(response.message);     
+                        
+                        loading.hide();
+                        $('#addform').trigger('reset');                    
+                        $('#AddTemaModal').modal('hide');
+    
+                        //adiciona a linha na tabela html                      
+                            
+                        var tupla = "";
+                        var linha0 = "";
+                        var linha1 = "";
+                            linha0 = '<tr id="novo" style="display:none;"></tr>';
+                            linha1 = '<tr id="tema'+response.tema.id+'">\
+                                    <th scope="row">'+response.tema.titulo+'</th>\
+                                    <td><div class="btn-group">\
+                                    <button type="button" data-id="'+response.tema.id+'" class="edit_tema fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.tema.id+'" data-titulo="'+response.tema.titulo+'" class="delete_tema_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    </div></td>\
+                                    </tr>';
+                        if(!$('#nadaencontrado').html==""){
+                            $('#nadaencontrado').remove();
+                        }
+                        tupla = linha0+linha1;                             
+                        $("#novo").replaceWith(tupla);                                                     
+                        
                     }
+                    
                 }
             });
-        }
-    });
-    //fim delete Tema
-//Início chamada EditTemaModal
-$('#EditTemaModal').on('shown.bs.modal',function(){
-        $(".titulo").focus();
-    });
-    $(document).on('click','.edit_tema_btn',function(e){
-        e.preventDefault();
-        var id = $(this).data("id");
-        $("#editform").trigger('reset');
-        $("#EditTemaModal").modal('show');
-
-        $.ajaxSetup({
-            headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type:'GET',
-            dataType:'json',
-            url:'edit/'+id,
-            success:function(response){
-                if(response.status==200){
-                    $("#edit_tema_id").val(response.tema.id);
-                    $(".titulo").val(response.tema.titulo);
-                    $(".descricao").val(response.tema.descricao);
-                    //$('.slug').val(response.tema.slug);
-                }
-            }
-        });
-    });
-    //Fim chamada EditTemaModal
-    //Início processo update do tema
-    $(document).on('click','.update_tema',function(e){
-        e.preventDefault();
-        var loading = $("#imgedit");
-            loading.show();
-        var id = $("#edit_tema_id").val();
-        var data = {
-            'titulo':$("#edit_titulo").val(),
-            'descricao':$("#edit_descricao").val(),
-            //'slug':$('#edit_slug').val(),
-        }
-        $.ajaxSetup({
-            headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-            }
-        });
-        $.ajax({
-            type:'POST',            
-            dataType:'json',
-            method:'PUT',
-            url:'update/'+id,
-            data:data,
-            success:function(response){
-                if(response.status==400){
-                    //erros
-                    $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
-                    $("#updateform_errList").addClass('alert alert-danger');
-                    $.each(response.errors,function(key,err_values){
-                        $("#updateform_errList").append('<li>'+err_values+'</li>');
-                    });
-                    loading.hide();
-                }else if(response.status==404){
-                    //Não localizado
-                    $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
-                    $("#success_message").addClass('alert alert-warning');
-                    $("#success_message").text(response.message);
-                    loading.hide();
-                }else{
-                    //Êxito na operação
-                    $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
-                    $("#success_message").addClass('alert alert-success');
-                    $("#success_message").text(response.message);
-                    loading.hide();
-                    $("#editform").trigger('reset');
-                    $("#EditTemaModal").modal('hide');
-                    //Atualizando a <tr> identificada na tabela html
-             var datacriacao = new Date(response.tema.created_at).toLocaleString('pt-BR');
-                    if(datacriacao=="31/12/1969 21:00:00"){
-                        datacriacao = "";
-                    }
-         var dataatualizacao = new Date(response.tema.updated_at).toLocaleString('pt-BR');                
-                    if(dataatualizacao=="31/12/1969 21:00:00"){
-                        dataatualizacao="";
-                    }
-                    var linhaatualizada = '<tr id="tema'+response.tema.id+'" data-toggle="tooltip" title="'+response.tema.descricao+'">\
-                                <td>'+response.tema.id+'</td>\
-                                <td>'+response.tema.titulo+'</td>\
-                                <td>'+datacriacao+'</td>\
-                                <td>'+dataatualizacao+'</td>\
-                                <td><div class="btn-group">\
-                                <button type="button" data-id="'+response.tema.id+'" \
-                                class="edit_tema_btn fas fa-edit" \
-                                style="background:transparent;border:none;"></button>\
-                                <button type="button" data-id="'+response.tema.id+'" \
-                                data-titulotema="'+response.tema.titulo+'" \
-                                class="delete_tema_btn fas fa-trash" \
-                                style="background:transparent;border:none;"></button>\
-                                </div></td>\
-                                </tr>';                                             
-                    $("#tema"+id).replaceWith(linhaatualizada);
-                }
-            }
-        });
-    });   
-    //Fim processo update do tema
- //Chamar AddTemaModal
- $('#AddTemaModal').on('shown.bs.modal',function(){
-        $(".titulo").focus();
-    });
-    $(document).on('click','.AddTemaModal_btn',function(e){
-        e.preventDefault();
-        $("#addform").trigger('reset');
-        $("#AddTemaModal").modal('show');
-    });
-    //Fim chamar AddTemaModal
-    //Adicionar tema na base
-    $(document).on('click','.add_tema',function(e){
-        e.preventDefault();
-        var loading = $("#imgadd");
-            loading.show();
-        var data = {
-            'titulo':$(".titulo").val(),
-            'descricao':$(".descricao").val(),
-            //'slug':$('.slug').val(),
-        }
-        $.ajaxSetup({
-            headers:{
-                'X-CSRF-TOKEN':$('meta[name="_token"]').attr('content')
-            }
-        });
-        $.ajax({
-            url:'store',
-            type:'POST',
-            dataType:'json',
-            data:data,
-            success:function(response){
-                if(response.status==400){
-                    //erros
-                    $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
-                    $("#saveform_errList").addClass('alert alert-danger');
-                    $.each(response.errors,function(key,err_values){
-                        $("#saveform_errList").append('<li>'+err_values+'</li>');
-                    });         
-                    loading.hide();
-                }else{
-                    //sucesso                    
-                    $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
-                    $("#success_message").addClass('alert alert-success');
-                    $("#success_message").text(response.message);
-                    loading.hide();
-                    $("#addform").trigger('reset');
-                    $("#AddTemaModal").modal('hide');
-                    //formata data                    
-   var datacriacao = new Date(response.tema.created_at).toLocaleString('pt-BR');          
-                    if(datacriacao=="31/12/1969 21:00:00"){
-                        datacriacao="";
-                    }
-    var dataatualizacao = new Date(response.tema.updated_at).toLocaleString('pt-BR');                      
-                    if(dataatualizacao=="31/12/1969 21:00:00"){
-                        dataatualizacao="";
-                    }                       
-                    //Insere linha nova na tabela html do index
-                    var linhacriada = '<tr id="tema'+response.tema.id+'" data-toggle="tooltip" title="'+response.tema.descricao+'">\
-                                <td>'+response.tema.id+'</td>\
-                                <td>'+response.tema.titulo+'</td>\
-                                <td>'+datacriacao+'</td>\
-                                <td>'+dataatualizacao+'</td>\
-                                <td><div class="btn-group">\
-                                <button type="button" data-id="'+response.tema.id+'" \
-                               class="edit_tema_btn fas fa-edit" \
-                               style="background:transparent;border:none;"></button>\
-                               <button type="button" data-id="'+response.tema.id+'" \
-                               data-titulotema="'+response.tema.titulo+'" \
-                               class="delete_tema_btn fas fa-trash" \
-                               style="background:transparent;border:none;"></button>\
-                               </div></td>\
-                               </tr>';
-                    if(!$("#nadaencontrado").html()=="")
-                    {
-                        $("#nadaencontrado").remove();
-                    }
-                    $("#lista_tema").append(linhacriada);
-                }                
-            }
-        });
-    });
-    //Fim adicionar tema na base
-});
-//Fim escopo geral
-</script>
-@endsection
+    
+        }); //Fim da adição de registro
+    
+    
+    }); ///Fim do escopo do script
+    
+    </script>
+@stop
