@@ -18,7 +18,7 @@
                     <div class="form-group mb-3">                                                
                        <div class="image">           
                         @if($entidade->logo)                 
-                            <img src="{{asset('storage/'.$entidade->logo')}}" class="imgico rounded-circle" width="100" >
+                            <img src="{{asset('storage/'.$entidade->logo)}}" class="imgico rounded-circle" width="100" >
                         @else
                             <img src="{{asset('storage/user.png')}}" class="imgico rounded-circle" width="100" >
                         @end    

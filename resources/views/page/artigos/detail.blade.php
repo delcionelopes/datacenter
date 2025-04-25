@@ -1,6 +1,19 @@
 @extends('layouts.page')
 @section('content') 
 
+<style>
+  .card {
+    transition: transform 0.2s ease;
+    box-shadow: 0 4px 6px 0 rgba(22, 22, 26, 0.18);
+    border-radius: 0;
+    border: 0;
+    margin-bottom: 1.5em;
+  }
+  .card:hover {
+    transform: scale(1.1);
+  }
+</style>
+
   <!-- Cabeçalho-->
  <header class="masthead" style="background-image: url('/storage/{{$artigo->imagem}}')">
             <div class="container position-relative px-4 px-lg-5">
@@ -60,7 +73,57 @@
                                     white-space: pre-line;">
                            {{$artigo->conteudo}}                                                   
                         </pre>             
-                </div>
+                </div>                
+                <!-- institucionais -->    
+                <div class="container-fluid">
+                    <div class="row">
+                    @if($artigo==null)                       
+                     @foreach($artigo->institucionais as $institucional)
+                     @if($institucional->logo)
+                    <div class="p-2 mt-2">       
+                    <div class="card card-hover" style="width: 14rem;"> 
+                          <div class="card-header">
+                             <b style="background: transparent; color: black; border: none;"><i class="fas fa-desktop"></i> {{$institucional->sigla}}</b>
+                          </div>
+                          <a href="{{$patrocinio->link_site}}" target="_blank">
+                               <img class="card-img-top" src="{{asset('storage/'.$institucional->logo)}}" alt="{{$institucional->nome}}" width="286" height="180">
+                           </a>
+                        <div class="card-body">                
+                           <p class="card-text"></p>        
+                           <a href="{{$institucional->link_site}}" type="button" target="_blank" class="btn btn-success">Visitar</a>
+                        </div>
+                     </div>
+                   </div>
+                    @break
+                    @elseif ($loop->last)
+                    {{-- cessa a construção de cards --}}
+                    @endif
+                    @endforeach                    
+                    @else
+                    <div class="container-fluid">
+                    <div class="row">
+                    <div class="p-2 mt-2">
+                       <div class="card" style="width: 18rem;">
+                           <div class="row no-gutters">
+                              <div class="col-md-4">
+                                  <img src="{{asset('logo_prodap.png')}}" class="card-img" alt="Amapá">
+                              </div>
+                       <div class="col-md-8">
+                            <div class="card-body">
+                                 <h5 class="card-title"><b>Seja bem vindo!</b></h5>
+                                 <p class="card-text">Prodap!</p>
+                                 <p class="card-text"><small class="text-muted">Tecnologia e transformação digital!</small></p>
+                            </div>
+                        </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    </div>
+                    @endif
+                    </div>
+                    </div>
+                <!-- fim institucionais -->
                 <!--chamada dos comentários--> 
                 @auth   
                 <div class="col-14">             
@@ -89,7 +152,7 @@
                         <small><strong>{{$comentario->user->name}}</strong></small>
                         <small class="text-muted">enviado em {{date('d/m/Y H:i:s',strtotime($comentario->created_at))}}</small>                                                
                         @auth
-                        @if((auth()->user()->moderador)&&(auth()->user()->inativo!=1))
+                        @if((auth()->user()->admin)&&(auth()->user()->inativo!=1))
                         <button data-id="{{$comentario->id}}" class="delete_comentario_btn fas fa-trash" style="background:transparent;border:none;"></button>
                         @else
                             @if(($comentario->user_id)==(auth()->user()->id))             

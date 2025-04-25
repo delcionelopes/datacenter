@@ -39,7 +39,11 @@ class Artigo extends Model
 
     public function arquivos(){
         return $this->hasMany(Arquivo::class,'artigos_id');
-  }  
+    }
+    
+    public function institucionais(){
+        return $this->belongsToMany(Institucional::class,'institucional_has_artigo','artigos_id','institucional_id');
+    }
 
   public function Sluggable():array{
     return [

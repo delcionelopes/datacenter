@@ -59,7 +59,7 @@ class institucionalController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'sigla' => ['required','max:10'],
-            'nome' => ['required','max:30'],
+            'nome' => ['required','max:100'],
             'url_site' => ['required'],
         ]);
         if($validator->fails()){
@@ -136,7 +136,7 @@ class institucionalController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'sigla' => ['required','max:10'],
-            'nome' => ['required','max:30'],
+            'nome' => ['required','max:100'],
             'url_site' => ['required'],
         ]);
         if($validator->fails()){

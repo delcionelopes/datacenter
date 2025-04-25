@@ -7,6 +7,7 @@ use App\Mail\SendMailUser;
 use App\Models\Arquivo;
 use App\Models\Artigo;
 use App\Models\Comentario;
+use App\Models\Entidade;
 use App\Models\Tema;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
@@ -16,10 +17,12 @@ use Illuminate\Support\Facades\Mail;
 class HomeController extends Controller
 {
     private $artigo;
+    private $entidade;
 
-    public function __construct(Artigo $artigo)
+    public function __construct(Artigo $artigo, Entidade $entidade)
     {        
         $this->artigo = $artigo;
+        $this->entidade = $entidade;
     }   
     
     public function master(Request $request){
@@ -35,9 +38,11 @@ class HomeController extends Controller
             $artigos = $query->orderByDesc('id')->paginate(5);
         }
         $temas = Tema::all();
+        $entidade = $this->entidade->orderByDesc('id')->first();        
         return view('page.artigos.master',[
             'temas' => $temas,
             'artigos' => $artigos,
+            'entidade' => $entidade,
         ]);
     }
 

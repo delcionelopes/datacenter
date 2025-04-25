@@ -62,7 +62,7 @@ class entidadeController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'nome' => ['required','max:30'],
+            'nome' => ['required','max:100'],
             'sigla' => ['required','max:10'],
         ]);
         if($validator->fails()){
@@ -141,7 +141,7 @@ class entidadeController extends Controller
     public function update(Request $request, $id)
     {
         $validator = Validator::make($request->all(),[
-            'nome' => ['required','max:30'],
+            'nome' => ['required','max:100'],
             'sigla' => ['required','max:10'],
         ]);
         if($validator->fails()){

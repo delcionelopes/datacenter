@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class Entidade extends Model
 {
@@ -20,7 +19,7 @@ class Entidade extends Model
         'updated_at',
     ];
 
-    public function institucionais():BelongsToMany{
+    public function institucionais(){
         return $this->belongsToMany(Institucional::class,'entidade_has_institucional','entidade_id','institucional_id');
     }
 }
