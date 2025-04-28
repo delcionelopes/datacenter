@@ -67,6 +67,21 @@
                             </fieldset>   
                      </div>
                 </div>
+
+                <div class="card">
+                     <div class="card-body"> 
+                            <fieldset>
+                                <legend>Institucionais</legend>
+                                <div class="form-check">                                                                        
+                                    @foreach ($institucionais as $inst)
+                                    <label class="form-check-label" for="icheck{{$inst->id}}">
+                                        <input type="checkbox" id="icheck{{$inst->id}}" name="institucionais[]" value="{{$inst->id}}" class="form-check-input"> {{$inst->nome}}
+                                    </label><br>
+                                    @endforeach                                    
+                                </div>
+                            </fieldset>   
+                     </div>
+                </div>
                 
                 <div class="row">
                     <div class="col-md-12">
@@ -107,6 +122,10 @@ $(document).ready(function(){
                 $("input[name='temas[]']:checked").each(function(){
                     temas.push($(this).val());
                 });        
+        var institucionais = new Array();
+                $("input[name='institucionais[]']:checked").each(function(){
+                    institucionais.push($(this).val());
+                });        
         var data = new FormData();        
             
             data.append('titulo',$('#titulo').val());
@@ -114,6 +133,7 @@ $(document).ready(function(){
             data.append('conteudo',$('.conteudo').val());
             data.append('imagem',$('#upimagem')[0].files[0]);
             data.append('temas',JSON.stringify(temas)); //array
+            data.append('institucionais',JSON.stringify(institucionais)); //array
             data.append('_enctype','multipart/form-data');
             data.append('_token',CSRF_TOKEN);
             data.append('_method','put');              
@@ -139,7 +159,7 @@ $(document).ready(function(){
                     loading.hide();
                     $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');
                     loading.hide();
-                    location.replace('/admin/artigos/index'+color);
+                    location.replace('/admin/artigos/index/'+color);
                 }  
             }  
         });
@@ -211,13 +231,13 @@ $(document).ready(function(){
                 success: function(response){
                     if(response.status==200){
                     $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');
-                    location.replace('/admin/artigos/index'+color);
+                    location.replace('/admin/artigos/index/'+color);
                 } 
                 }                                  
             });
 
         }else{
-            location.replace('/admin/artigos/index'+color);
+            location.replace('/admin/artigos/index/'+color);
         }
 
     });

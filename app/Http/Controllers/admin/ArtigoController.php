@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Admin;
 use App\Http\Controllers\Controller;
 use App\Models\Arquivo;
 use App\Models\Artigo;
+use App\Models\Institucional;
 use App\Models\Tema;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
@@ -14,12 +15,14 @@ class ArtigoController extends Controller
     private $artigo;
     private $tema;
     private $arquivo;
+    private $institucional;
 
-    public function __construct(Artigo $artigo, Tema $tema, Arquivo $arquivo)
+    public function __construct(Artigo $artigo, Tema $tema, Arquivo $arquivo, Institucional $institucional)
     {
         $this->artigo = $artigo;
         $this->tema = $tema;
         $this->arquivo = $arquivo;
+        $this->institucional = $institucional;
     }
 
     public function index(Request $request,$color)
@@ -31,6 +34,7 @@ class ArtigoController extends Controller
                          ->where('titulo','LIKE','%'.$request->pesquisa.'%');         
             $artigos = $query->orderBy('id','DESC')->paginate(5);
         }            
+        $institucionais = $this->institucional->all();
         return view('artigos.index',[
             'artigos' => $artigos,
             'color' => $color,
@@ -41,9 +45,11 @@ class ArtigoController extends Controller
     public function create($color)
     {       
         $temas = $this->tema->all('id','titulo');
+        $institucionais = $this->institucional->all('id','nome');
         return view('artigos.create',[
             'temas' => $temas,
             'color' => $color,
+            'institucionais' => $institucionais,
         ]);
     }
 
@@ -91,6 +97,7 @@ class ArtigoController extends Controller
             $artigo = $this->artigo->create($data);      //criação do artigo                                          
             
             $artigo->temas()->sync(json_decode($request->input('temas')));  //sincronização
+            $artigo->institucionais()->sync(json_decode($request->input('institucionais')));  //sincronização
             
             return response()->json([                
                 'status'  => 200,            
@@ -113,10 +120,12 @@ class ArtigoController extends Controller
 
         $artigo = $this->artigo->find($id);
         $temas = $this->tema->all('id','titulo');
+        $institucionais = $this->institucional->all('id','nome');
         return view('artigos.edit',[
             'temas'  => $temas,
             'artigo' => $artigo,
             'color' => $color,
+            'institucionais' => $institucionais,
         ]);
    
     }
@@ -175,6 +184,7 @@ class ArtigoController extends Controller
                 $artigo->update($data);       //atualização retorna um booleano  
                 $a = Artigo::find($id);   //localização do artigo atualizado pelo $id
                 $a->temas()->sync(json_decode($request->input('temas'))); //sync()temas do artigo
+                $a->institucionais()->sync(json_decode($request->input('institucionais'))); 
                 
                 return response()->json([
                     'status'  => 200,                
@@ -194,7 +204,9 @@ class ArtigoController extends Controller
     {
         $artigo = $this->artigo->find($id);
         $t = $artigo->temas; //os dados de temas são atribuídos a variável $t
+        $i = $artigo->institucionais;
         $artigo->temas()->detach($t); //exclui os dados de temas()
+        $artigo->institucionais()->detach($i);
         if($artigo->imagem)
         {
             //deleção do arquivo de imagem do diretório

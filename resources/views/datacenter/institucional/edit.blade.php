@@ -1,13 +1,13 @@
 @extends('adminlte::page')
 
-@section('title', 'Edição de instituição')
+@section('title', 'Edição da instituição')
 
 @section('content')
 
 <form role="form" enctype="multipart/form-data" method="POST">
     @csrf
     @method('PUT')
-    <ul id="saveform_errList"></ul>
+    <ul id="saveform_errList"></ul> 
     <input type="hidden" id="edit_instituicao_id" value="{{$institucional->id}}">
     <div class="container-fluid py-5">
         <div class="card">
@@ -16,12 +16,12 @@
                 <div class="d-flex align-items-center">
                     <!--arquivo de imagem-->
                     <div class="form-group mb-3">                                                
-                       <div class="image">           
-                        @if($institucional->logo)                 
-                            <img src="{{asset('/storage/'.$institucional->logo)}}" class="imgico rounded-circle" width="100" >
+                       <div class="image">                            
+                       @if($institucional->logo)                 
+                            <img src="{{asset('storage/'.$institucional->logo)}}" class="imgico rounded-circle" width="100" >
                         @else
-                            <img src="{{asset('/storage/user.png')}}" class="imgico rounded-circle" width="100" >
-                        @end    
+                            <img src="{{asset('storage/user.png')}}" class="imgico rounded-circle" width="100" >
+                        @endif    
                         </div>
                        <label for="">Logo</label>                        
                        <span class="btn btn-none fileinput-button"><i class="fas fa-plus"></i>                          
@@ -37,27 +37,28 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="nome">Nome</label>
-                                <input type="text" required class="nome form-control" name="nome" id="nome" placeholder="Nome da instituição" value="{{$institucional->nome}}">
+                                <input type="text" required class="form-control" name="nome" id="nome" placeholder="Nome da instituição" value="{{$institucional->nome}}">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-4">
                               <div class="form-group">
-                                <label for="sigla">Sigla</label>
-                                <input type="text" required class="sigla form-control" name="sigla" id="sigla" placeholder="Sigla da instituição" value="{{$institucional->sigla}}">
+                                <label for="descricao">Sigla</label>
+                                <input type="text" required class="form-control" name="sigla" id="sigla" placeholder="Sigla da instituição" value="{{$institucional->sigla}}">
                             </div>
-                        </div>
+                        </div>                        
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="url_site">URL do Site</label>
-                                <input type="text" required class="nome form-control" name="url_site" id="url_site" placeholder="https://.." value="{{$institucional->url_site}}">
+                                <input type="text" required class="form-control" name="url_site" id="url_site" placeholder="https://.." value="{{$institucional->url_site}}">
                             </div>
                         </div>
                     </div>
-                </fieldset>
+                </fieldset>             
+
                 <div class="row">
                     <div class="col-md-12">
                         <div class="modal-footer">
@@ -78,7 +79,6 @@
     
 @stop
 
-
 @section('js')
 
 <script type="text/javascript">
@@ -90,16 +90,15 @@ $(document).ready(function(){
         var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
         var loading = $('#imgadd');
             loading.show();
-        var color = $(this).data("color");        
+        var color = $(this).data("color");
+        var id = $('#edit_instituicao_id').val();
         
-        var id = $('#edit_entidade_id').val();
-
         var data = new FormData();        
             
             data.append('nome',$('#nome').val());
             data.append('sigla',$('#sigla').val());
-            data.append('url_site',$('#url_site').val());
             data.append('imagem',$('#upimagem')[0].files[0]);
+            data.append('url_site',$('#url_site').val());
             data.append('_enctype','multipart/form-data');
             data.append('_token',CSRF_TOKEN);
             data.append('_method','PUT');              

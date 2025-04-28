@@ -8,6 +8,7 @@ use App\Models\Arquivo;
 use App\Models\Artigo;
 use App\Models\Comentario;
 use App\Models\Entidade;
+use App\Models\Institucional;
 use App\Models\Tema;
 use App\Models\User;
 use Illuminate\Support\Facades\Validator;
@@ -18,11 +19,13 @@ class HomeController extends Controller
 {
     private $artigo;
     private $entidade;
+    private $institucional;
 
-    public function __construct(Artigo $artigo, Entidade $entidade)
+    public function __construct(Artigo $artigo, Entidade $entidade, Institucional $institucional)
     {        
         $this->artigo = $artigo;
         $this->entidade = $entidade;
+        $this->institucional = $institucional;
     }   
     
     public function master(Request $request){
@@ -38,11 +41,13 @@ class HomeController extends Controller
             $artigos = $query->orderByDesc('id')->paginate(5);
         }
         $temas = Tema::all();
-        $entidade = $this->entidade->orderByDesc('id')->first();        
+        $entidade = $this->entidade->orderByDesc('id')->first();
+        $institucionais = $this->institucional->all();
         return view('page.artigos.master',[
             'temas' => $temas,
             'artigos' => $artigos,
             'entidade' => $entidade,
+            'institucionais' => $institucionais,
         ]);
     }
 
@@ -54,11 +59,12 @@ class HomeController extends Controller
 
         $query = Comentario::query()
                  ->where('artigos_id','=',$artigo->id);
-        $comentarios = $query->orderByDesc('id')->paginate(10);                    
-
+        $comentarios = $query->orderByDesc('id')->paginate(10);
+        $institucionais = $this->institucional->all();
         return view('page.artigos.detail',[
             'artigo' => $artigo,
             'comentarios' => $comentarios,
+            'institucionais' => $institucionais,
         ]);
     }
 

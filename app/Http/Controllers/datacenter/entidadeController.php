@@ -128,6 +128,7 @@ class entidadeController extends Controller
         return view('datacenter.entidade.edit',[
             'entidade' => $entidade,
             'institucionais' => $institucionais,
+            'color' => $color,
         ]);
     }
 

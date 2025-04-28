@@ -77,28 +77,24 @@
                 <!-- institucionais -->    
                 <div class="container-fluid">
                     <div class="row">
-                    @if($artigo==null)                       
+                    <div class="card-group">
+                    @if($artigo->institucionais()->count())
+                    @foreach($institucionais as $inst)
                      @foreach($artigo->institucionais as $institucional)
-                     @if($institucional->logo)
+                     @if(($institucional->id)==($inst->id))
                     <div class="p-2 mt-2">       
-                    <div class="card card-hover" style="width: 14rem;"> 
-                          <div class="card-header">
-                             <b style="background: transparent; color: black; border: none;"><i class="fas fa-desktop"></i> {{$institucional->sigla}}</b>
-                          </div>
-                          <a href="{{$patrocinio->link_site}}" target="_blank">
-                               <img class="card-img-top" src="{{asset('storage/'.$institucional->logo)}}" alt="{{$institucional->nome}}" width="286" height="180">
-                           </a>
-                        <div class="card-body">                
-                           <p class="card-text"></p>        
-                           <a href="{{$institucional->link_site}}" type="button" target="_blank" class="btn btn-success">Visitar</a>
-                        </div>
+                    <div class="card card-hover" style="width: 5rem;height: 5rem;">
+                          <a href="{{$institucional->url_site}}" target="_blank">
+                               <img class="card-img-top" src="{{asset('storage/'.$institucional->logo)}}" alt="{{$institucional->nome}}" width="100" height="100">
+                           </a>                        
                      </div>
                    </div>
                     @break
                     @elseif ($loop->last)
                     {{-- cessa a construção de cards --}}
                     @endif
-                    @endforeach                    
+                    @endforeach
+                    @endforeach
                     @else
                     <div class="container-fluid">
                     <div class="row">
@@ -121,6 +117,7 @@
                     </div>
                     </div>
                     @endif
+                    </div>
                     </div>
                     </div>
                 <!-- fim institucionais -->
