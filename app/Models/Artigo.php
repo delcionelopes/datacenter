@@ -4,12 +4,12 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Cviebrock\EloquentSluggable\Sluggable;
+//use Cviebrock\EloquentSluggable\Sluggable;
 
 class Artigo extends Model
 {
     use HasFactory;
-    use Sluggable;    
+  //  use Sluggable;    
     protected $table = 'artigos';
     protected $primaryKey = 'id';
     protected $fillable = 
@@ -26,7 +26,7 @@ class Artigo extends Model
     ];
 
     public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(User::class,'user_id');
     }    
 
     public function comentarios(){
@@ -45,14 +45,14 @@ class Artigo extends Model
         return $this->belongsToMany(Institucional::class,'institucional_has_artigo','artigos_id','institucional_id');
     }
 
-  public function Sluggable():array{
-    return [
-            'slug' => [
-                'source' => 'titulo',
-            ],
-    ];
+  //public function sluggable():array{
+  //  return [
+  //          'slug' => [
+  //              'source' => ['id']
+  //          ],
+  //  ];
 
-}
+//}
 
     
 }

@@ -51,16 +51,15 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::prefix('artigos')->name('artigos.')->group(function(){
         Route::get('/index/{color}',[ArtigoController::class,'index'])->name('index');         
         Route::get('/create/{color}',[ArtigoController::class,'create'])->name('create');
-        Route::post('/store',[ArtigoController::class,'store'])->name('store');
+        Route::put('/store',[ArtigoController::class,'store'])->name('store');
         Route::get('/edit/{id}/{color}',[ArtigoController::class,'edit'])->name('edit');
         Route::put('/update/{id}',[ArtigoController::class,'update'])->name('update');
         Route::delete('/delete/{id}',[ArtigoController::class,'destroy'])->name('delete');
-        Route::get('/edit-capa/{id}',[ArtigoController::class,'editCapa']);
-        Route::put('/upload-capa/{id}',[ArtigoController::class,'uploadCapa']);
-        Route::post('/delete-capa/{id}',[ArtigoController::class,'deleteCapa']);
-        Route::get('/edit-arquivo/{id}',[ArtigoController::class,'editArquivo']);
-        Route::put('/upload-arquivo/{id}',[ArtigoController::class,'uploadArquivo']);
-        Route::delete('/delete-arquivo/{id}',[ArtigoController::class,'deleteArquivo']);            
+        Route::get('/abrir-doc/{id}',[ArtigoController::class,'abrirDoc']);
+        Route::put('/upload-docs/{id}',[ArtigoController::class,'uploadDocs']);
+        Route::delete('/delete-docs/{id}',[ArtigoController::class,'deleteDocs']);
+        Route::put('/imagemtemp-upload',[ArtigoController::class,'armazenarImagemTemporaria']);
+        Route::delete('/delete-imgtemp',[ArtigoController::class,'excluirImagemTemporaria']);
     });  
 
     Route::prefix('tema')->name('tema.')->group(function(){

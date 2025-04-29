@@ -20,12 +20,14 @@ class HomeController extends Controller
     private $artigo;
     private $entidade;
     private $institucional;
+    private $arquivo;
 
-    public function __construct(Artigo $artigo, Entidade $entidade, Institucional $institucional)
+    public function __construct(Artigo $artigo, Entidade $entidade, Institucional $institucional, Arquivo $arquivo)
     {        
         $this->artigo = $artigo;
         $this->entidade = $entidade;
         $this->institucional = $institucional;
+        $this->arquivo = $arquivo;
     }   
     
     public function master(Request $request){
@@ -68,17 +70,12 @@ class HomeController extends Controller
         ]);
     }
 
-    public function downloadArquivo($id){                      
-        
-        $arquivo = Arquivo::find($id);                
-        $downloadPath = public_path('/storage/'.$arquivo->path);                
-
-        $headers = [
-            'HTTP/1.1 200 OK',
-            'Pragma: public',
-            'Content-Type: application/pdf'
-        ];                   
-        return response()->download($downloadPath,$arquivo->rotulo,$headers);    
+    public function downloadArquivo($id){        
+        $arquivo = $this->arquivo->find($id);
+        return response()->json([
+            'status' => 200,
+            'arquivo' => $arquivo,
+        ]);
     }
 
     public function showPerfil($id){

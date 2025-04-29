@@ -33,8 +33,7 @@ class ArtigoController extends Controller
             $query = Artigo::with('User')
                          ->where('titulo','LIKE','%'.$request->pesquisa.'%');         
             $artigos = $query->orderBy('id','DESC')->paginate(5);
-        }            
-        $institucionais = $this->institucional->all();
+        }        
         return view('artigos.index',[
             'artigos' => $artigos,
             'color' => $color,
@@ -83,14 +82,16 @@ class ArtigoController extends Controller
                 }
             }
             $user = auth()->user();
-            $data['id'] = $this->maxId();
+            $id = $this->maxId();
+            $data['id'] = $id;
             $data['titulo'] = $request->input('titulo');
             $data['descricao'] = $request->input('descricao');
             $data['conteudo'] = $request->input('conteudo');
+            $data['slug'] = $id;
             if($filePath){
                 $data['imagem'] = $filePath;
             }
-            $data['users_id'] = $user->id;
+            $data['user_id'] = $user->id;
             $data['created_at'] = now();
             $data['updated_at'] = null;
             
@@ -158,13 +159,14 @@ class ArtigoController extends Controller
                         }
                     }
 
+                    //armazena a nova imagem
                     $file = $request->file('imagem');
                     $fileName = $file->getClientOriginalName();
                     $filePath = 'img/'.$fileName;
                     $storagePath = public_path().'/storage/img/';
                     $file->move($storagePath,$fileName);
 
-                    //exclui imagem temporária
+                    //exclui imagem da pasta temporária
                     $tempPath = public_path().'/storage/temp/'.$fileName;
                     if(file_exists($tempPath)){
                         unlink($tempPath);
@@ -178,7 +180,7 @@ class ArtigoController extends Controller
                 if($filePath){
                     $data['imagem'] = $filePath;
                 }
-                $data['users_id'] = $user->id;
+                $data['user_id'] = $user->id;
                 $data['updated_at'] = now();
                 
                 $artigo->update($data);       //atualização retorna um booleano  

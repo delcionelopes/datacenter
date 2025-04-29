@@ -58,7 +58,7 @@
                     <li><a href="#!">Downloads</a>
                         <ul>
                             @foreach($artigo->arquivos as $arq)   
-                                <li><a href="{{route('page.download',['id'=> $arq->id])}}" id="download_file_btn" data-id="{{$arq->id}}" data-filename="{{$arq->name}}"><i class="far fa-file-pdf"></i> {{$arq->rotulo}}</a></li>	                  
+                                <li><a href="#!" id="download_file_btn" data-id="{{$arq->id}}" data-filename="{{$arq->name}}"><i class="far fa-file-pdf"></i> {{$arq->rotulo}}</a></li>	                  
                             @endforeach      
                         </ul>
                     </li>       
@@ -363,6 +363,35 @@ var datacriacao = new Date(response.comentario.created_at);
             });
         });
         //Fim excluir comentário
+
+        ////Abrir doc
+    $(document).on('click','#download_file_btn',function(e){
+        e.preventDefault();            
+            var id = $(this).data("id"); 
+
+               $.ajaxSetup({
+                    headers:{
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+    
+    
+            $.ajax({ 
+                type: 'GET',             
+                dataType: 'json',                                    
+                url: '/admin/artigos/abrir-doc/'+id,                                
+                success: function(response){ 
+                    if(response.status==200){
+                      var link = "{{asset('')}}"+'storage/'+response.arquivo.path;
+                      //visualizar o pdf no browser                
+                          window.open(link);                    
+                    }
+                }
+            });
+
+    });
+    ///fim abrir doc   
+
 }); //FIM ESCOPO GERAL
 </script>
 @endsection
