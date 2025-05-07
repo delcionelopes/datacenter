@@ -80,7 +80,7 @@ class ManualController extends Controller
                 'objetivo' => strtoupper($request->input('objetivo')),
                 'manual' => strtoupper($request->input('manual')),
                 'setor_id' => $user->setor_id,
-                'usuario' => $user->name,
+                'usuario' => $user->cpf,
                 'created_at' => now(),
             ];
             $manual = $this->manual->create($data);            
@@ -151,11 +151,11 @@ class ManualController extends Controller
                 $manual->objetivo = strtoupper($request->input('objetivo'));
                 $manual->manual = strtoupper($request->input('manual'));
                 $manual->setor_id = $user->setor_id;
-                $manual->usuario = $user->name;
+                $manual->usuario = $user->cpf;
                 $manual->updated_at = now();
                 $manual->update();                
                 $ma = Manual::find($id);                
-                $area = Area_Conhecimento::find($ma->area_conhecimento_id);
+                $area = $ma->area_conhecimento->descricao;
                 $uploads = Upload::query('upload')
                            ->where('manual_id', $id)
                            ->get();

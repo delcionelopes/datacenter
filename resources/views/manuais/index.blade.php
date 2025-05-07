@@ -167,13 +167,13 @@
                         <th scope="row">{{$manual->descricao}}</th>                        
                         <td>{{$manual->area_conhecimento->descricao}}</td>
                         <td id="uploads{{$manual->id}}">
-                        <label id="files{{$manual->id}}">Files: {{$manual->uploads->count()}} </label><button type="button" id="upload_files_btn" data-manualid="{{$manual->id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" class="upload_files_btn fas fa-file-pdf" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Enviar ARQUIVOS"></button>    
+                        <label id="files{{$manual->id}}">Files: {{$manual->uploads->count()}} </label><button type="button" id="upload_files_btn" data-manualid="{{$manual->id}}" data-idsetor="{{$manual->setor_idsetor}}" class="upload_files_btn fas fa-file-pdf" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Enviar ARQUIVOS"></button>    
                         <ul id="listaarquivos{{$manual->id}}" style="list-style: none;">
                         @if($manual->uploads->count())    
                             @foreach($manual->uploads as $upload)                                                        
                             <li id="up{{$upload->id}}">
                                 <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" class="download_file_btn fas fa-download"></i>
-                                <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" data-admin="{{auth()->user()->admin}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" class="delete_file_btn fas fa-trash"></i></li>
+                                <i data-filename="{{$upload->nome_arquivo}}" data-id="{{$upload->id}}" data-admin="{{auth()->user()->admin}}" data-idsetor="{{$manual->setor_idsetor}}" class="delete_file_btn fas fa-trash"></i></li>
                                 <iframe id="viewer{{$upload->id}}" src="{{asset('storage/ViewerJS/#../'.$upload->path_arquivo)}}" width="400" height="300" allowfullscreen webkitallowfullscreen></iframe>
                             <br>
                             @endforeach
@@ -182,8 +182,8 @@
                         </td>                       
                         <td>
                             <div class="btn-group">
-                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" data-descricao="{{$manual->descricao}}" class="edit_manual_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-idsetor="{{$manual->setor_idsetor}}" data-setor="{{$manual->setor->sigla}}" data-descricao="{{$manual->descricao}}" class="delete_manual_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-idsetor="{{$manual->setor_idsetor}}" data-descricao="{{$manual->descricao}}" class="edit_manual_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button data-id="{{$manual->id}}" data-admin="{{auth()->user()->admin}}" data-idsetor="{{$manual->setor_idsetor}}" data-descricao="{{$manual->descricao}}" class="delete_manual_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
@@ -429,28 +429,31 @@
                         var linha2 = "";
                             linha1 = '<tr id="man'+response.manual.id+'" data-toggle="tooltip" title="'+response.manual.objetivo+'">\
                                     <th scope="row">'+response.manual.descricao+'</th>\
-                                    <td>'+response.area_conhecimento.descricao+'</td>\
+                                    <td>'+response.area_conhecimento+'</td>\
                                     <td id="uploads'+response.manual.id+'">\
-                                    <label id="files'+response.manual.id+'">Files: '+response.uploads.count()+' </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
+                                    <label id="files'+response.manual.id+'">Files: '+response.uploads.count()+' </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" data-idsetor="'+response.manual.setor_idsetor+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
                                     <ul id="listaarquivos'+response.manual.id+'">';
                                     if(response.uploads){  
                                         $("#listaarquivos"+response.manual.id).replaceWith = '<ul id="listaarquivos'+response.manual.id+'"></ul>';
                                         $.each(response.uploads,function(key,arq){                                           
                                             $("#listaarquivos").append('li id="up'+arq.id+'">\
                                             <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>\
-                                            <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_file_btn fas fa-trash"></i>\
+                                            <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" data-idsetor="'+response.manual.setor_idsetor+'" class="delete_file_btn fas fa-trash"></i>\
                                             '+arq.nome_arquivo+'</li><br>');
                                     });                                     
                                     }    
                             linha2 = '</td>\
                                     <td>\
                                     <div class="btn-group">\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div>\
                                     </td>\
                                     </tr>';   
-                            tupla = linha1+linha2;                          
+                            tupla = linha1+linha2;
+                            
+                            console.log(tupla);
+                            
                          $("#man"+id).replaceWith(tupla);                                                                              
                  } 
                 }                   
@@ -518,7 +521,8 @@
                         $("#addform").trigger('reset');
                         $("#AddManualForm").modal('hide');
     
-                        //atualizando a tr da tabela html                                   
+                        //atualizando a tr da tabela html                        
+
                         var tupla = "";
                         var linha0 = "";
                         var linha1 = "";
@@ -527,20 +531,21 @@
                                     <th scope="row">'+response.manual.descricao+'</th>\
                                     <td>'+response.area_conhecimento.descricao+'</td>\
                                     <td id="uploads'+response.manual.id+'">\
-                                    <label id="files'+response.manual.id+'">Files: 0 </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" data-setoradmin="'+response.user.setor_idsetor+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
+                                    <label id="files'+response.manual.id+'">Files: 0 </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" data-idsetor="'+response.manual.setor_idsetor+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
                                     <ul id="listaarquivos'+response.manual.id+'"></ul>\
                                     </td>\
                                     <td>\
                                     <div class="btn-group">\
                                     <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none;"></button>\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none;"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none;"></button>\
                                     </div>\
                                     </td>\
                                     </tr>'; 
                         if(!$("#nadaencontrado").html==""){
                             $("#nadaencontrado").remove();
                         }                        
-                            tupla = linha0+linha1;                                                       
+                            tupla = linha0+linha1;
+                                                                                   
                          $("#novo").replaceWith(tupla);                                         
                     }
                 }
@@ -559,7 +564,7 @@
         var idsetor = $(this).data("idsetor");
         var setor = $(this).data("setor");
         var vfilename = ($(this).data("filename")).trim();
-        if((admin)&&(setoradmin==idsetor)){
+        if(admin){
         Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -736,7 +741,7 @@
                       $("#up"+arq.id).remove();
                        var item = '<li id="up'+arq.id+'">\
                                 <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>\
-                                <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" data-idsetor="'+response.manual.setor_idsetor+'" data-setor="'+response.setor.sigla+'" class="delete_file_btn fas fa-trash"></i>'+arq.nome_arquivo+'</li><br>';                                
+                                <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" data-idsetor="'+response.manual.setor_idsetor+'" class="delete_file_btn fas fa-trash"></i>'+arq.nome_arquivo+'</li><br>';                                
                        $("#listaarquivos"+response.manualid).append(item);
                        });     
               } 
