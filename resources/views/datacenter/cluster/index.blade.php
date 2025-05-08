@@ -325,7 +325,7 @@ $(document).ready(function(){
             var id = $(this).data("id");
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");            
-            var nomecluster = ($(this).data("nomecluster")).trim();
+            var nomecluster = $(this).data("nomecluster");
             if(admin){
             Swal.fire({
                 showClass: {
@@ -422,11 +422,11 @@ $(document).ready(function(){
                 url: '/datacenteradmin/cluster/edit-cluster/'+id,                                
                 success: function(response){           
                     if(response.status==200){    
-                        var vnomecluster = (response.cluster.nome_cluster).trim();
+                        var vnomecluster = response.cluster.nome_cluster;
                         $(".nome_cluster").val(vnomecluster);
-                        var vtotalmemoria = (response.cluster.total_memoria).trim();
+                        var vtotalmemoria = response.cluster.total_memoria;
                         $(".total_memoria").val(vtotalmemoria);
-                        var vtotalprocessador = (response.cluster.total_processador).trim();
+                        var vtotalprocessador = response.cluster.total_processador;
                         $(".total_processador").val(vtotalprocessador);
                         $("#edit_cluster_id").val(response.cluster.id);                                                                                                       
                     }      
@@ -466,9 +466,9 @@ $(document).ready(function(){
             var id = $("#edit_cluster_id").val();        
     
             var data = {
-                'nome_cluster' : ($("#edit_nome_cluster").val()).trim(),
-                'total_memoria': ($("#edit_total_memoria").val()).trim(),
-                'total_processador': ($("#edit_total_processador").val()).trim(),
+                'nome_cluster' : $("#edit_nome_cluster").val(),
+                'total_memoria': $("#edit_total_memoria").val(),
+                'total_processador': $("#edit_total_processador").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }    
@@ -540,9 +540,9 @@ $(document).ready(function(){
                 loading.show();
             var strcolor = $(this).data("color");
             var data = {
-                'nome_cluster': ($(".nome_cluster").val()).trim(),
-                'total_memoria': ($(".total_memoria").val()).trim(),
-                'total_processador': ($(".total_processador").val()).trim(),
+                'nome_cluster': $(".nome_cluster").val(),
+                'total_memoria': $(".total_memoria").val(),
+                'total_processador': $(".total_processador").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }           
@@ -616,7 +616,7 @@ $(document).ready(function(){
             
             $("#addform").trigger('reset');
             $("#AddHostModal").modal('show');                                       
-            $(".cluster").val(($(this).data("nomecluster")).trim());
+            $(".cluster").val($(this).data("nomecluster"));
             $("#add_cluster_id").val($(this).data("id"));
             $("#saveformHost_errList").replaceWith('<ul id="saveformHost_errList"></ul>');
             
@@ -630,10 +630,10 @@ $(document).ready(function(){
             var loading = $("#imgaddhost");
                 loading.show();
             var data = {
-                'datacenter': ($(".datacenter").val()).trim(),
-                'ip': ($('.ip').val()).trim(),
-                'cluster': ($(".cluster").val()).trim(),
-                'obs_host': ($(".obs_host").val()).trim(),
+                'datacenter': $(".datacenter").val(),
+                'ip': $('.ip').val(),
+                'cluster': $(".cluster").val(),
+                'obs_host': $(".obs_host").val(),
                 'cluster_id': $("#add_cluster_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -701,14 +701,14 @@ $(document).ready(function(){
         });
         $(document).on('click','.novo_vm_btn',function(e){
             e.preventDefault();
-            var labelHtml = ($(this).data("nomecluster")).trim();
+            var labelHtml = $(this).data("nomecluster");
             var link = "{{asset('storage')}}";
             
             $("#vm_addform").trigger('reset');
             $("#AddVirtualMachineModal").modal('show');
             $("#vm_add_cluster_id").val($(this).data("id"));
             $("#vm_nome_cluster").replaceWith('<Label id="vm_nome_cluster" style="font-style:italic;">'+labelHtml+'</Label>');
-            $("#input_nome_cluster").val( ($(this).data("nomecluster")).trim());
+            $("#input_nome_cluster").val($(this).data("nomecluster"));
             $("#vm_saveform_errList").replaceWith('<ul id="vm_saveform_errList"></ul>'); 
            
         });
@@ -733,15 +733,15 @@ $(document).on('click','.add_virtualmachine',function(e){
                 'projeto_id': vmprojetoid,
                 'orgao_id': vmorgaoid,
                 'ambiente_id': vmambienteid,
-                'nome_vm': ($(".vm_nome_vm").val()).trim(),
-                'cpu': ($(".vm_cpu").val()).trim(),
-                'memoria': ($(".vm_memoria").val()).trim(),
-                'disco': ($(".vm_disco").val()).trim(),
-                'ip': ($(".vm_ip").val()).trim(),
-                'resource_pool': ($(".vm_resource_pool").val()).trim(),
-                'cluster': ($("#input_nome_cluster").val()).trim(),
-                'sistema_operacional': ($(".vm_sistema_operacional").val()).trim(),
-                'gatway': ($(".vm_gatway").val()).trim(),            
+                'nome_vm': $(".vm_nome_vm").val(),
+                'cpu': $(".vm_cpu").val(),
+                'memoria': $(".vm_memoria").val(),
+                'disco': $(".vm_disco").val(),
+                'ip': $(".vm_ip").val(),
+                'resource_pool': $(".vm_resource_pool").val(),
+                'cluster': $("#input_nome_cluster").val(),
+                'sistema_operacional': $(".vm_sistema_operacional").val(),
+                'gatway': $(".vm_gatway").val(),
                 'vlans': vlans,
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,

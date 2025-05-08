@@ -457,7 +457,7 @@ $(document).ready(function(){
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
             var id = $(this).data("id");
-            var nomebase = ($(this).data("nomebase")).trim();
+            var nomebase = $(this).data("nomebase");
             if(admin){
             Swal.fire({
                 showClass: {
@@ -562,15 +562,15 @@ $(document).ready(function(){
                         .filter('[value='+opcao+']')
                         .attr('selected',true);
                         //fim seta projeto
-                        var vnomevm = (response.vm.nome_vm).trim();
+                        var vnomevm = response.vm.nome_vm;
                         $("#edit_nome_vm").replaceWith('<Label id="edit_nome_vm" style="font-style:italic;">'+vnomevm+'</Label>');
-                        var vnomebase = (response.base.nome_base).trim();
+                        var vnomebase = response.base.nome_base;
                         $("#nome_base").val(vnomebase);
-                        var vip = (response.base.ip).trim();
+                        var vip = response.base.ip;
                         $("#ip").val(vip);
-                        var vbasedono = (response.base.dono).trim();
+                        var vbasedono = response.base.dono;
                         $("#dono").val(vbasedono);
-                        var vencoding = (response.base.encoding).trim();
+                        var vencoding = response.base.encoding;
                         $("#encoding").val(vencoding);
                         $("#edit_vm_id").val(response.base.virtual_machine_id);
                         $("#edit_base_id").val(response.base.id);
@@ -622,11 +622,11 @@ $(document).ready(function(){
             var id = $("#edit_base_id").val();
             var data = {
                 'projeto_id': optprojeto,
-                'virtual_machine_id': ($("#edit_vm_id").val()).trim(),
-                'nome_base': ($(".edit_nome_base").val()).trim(),
-                'ip': ($(".edit_ip").val()).trim(),
-                'dono': ($(".edit_dono").val()).trim(),
-                'encoding': ($(".edit_encoding").val()).trim(),
+                'virtual_machine_id': $("#edit_vm_id").val(),
+                'nome_base': $(".edit_nome_base").val(),
+                'ip': $(".edit_ip").val(),
+                'dono': $(".edit_dono").val(),
+                'encoding': $(".edit_encoding").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }            
@@ -674,7 +674,7 @@ $(document).ready(function(){
         });
         $(document).on('click','.AddBase_btn',function(e){
             e.preventDefault();
-            var labelHtml = ($(this).data("nome_vm")).trim();            
+            var labelHtml = $(this).data("nome_vm");
             
             $("#addform").trigger('reset');
             $("#AddBaseModal").modal('show');
@@ -695,11 +695,11 @@ $(document).ready(function(){
             var strcolor = $(this).data("color");
             var data = {
                 'projeto_id': optprojeto,
-                'virtual_machine_id': ($("#add_vm_id").val()).trim(),
-                'nome_base': ($(".nome_base").val()).trim(),
-                'ip': ($(".ip").val()).trim(),
-                'dono': ($(".dono").val()).trim(),
-                'encoding': ($(".encoding").val()).trim(),
+                'virtual_machine_id': $("#add_vm_id").val(),
+                'nome_base': $(".nome_base").val(),
+                'ip': $(".ip").val(),
+                'dono': $(".dono").val(),
+                'encoding': $(".encoding"),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }    
@@ -883,8 +883,8 @@ $(document).ready(function(){
 
         $(document).on('click','.cadsenha_btn',function(e){
             e.preventDefault();
-            var labelHtml = ($(this).data("nomebase")).trim();            
-            var labelip = ($(this).data("ip")).trim();
+            var labelHtml = $(this).data("nomebase");
+            var labelip = $(this).data("ip");
             
             $("#addformsenha").trigger('reset');
             $("#AddSenhaBase").modal('show');
@@ -984,8 +984,8 @@ $(document).ready(function(){
         if(opcaosenha){
     
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomebase")).trim();            
-        var labelip = ($(this).data("ip")).trim(); 
+        var labelHtml = $(this).data("nomebase");
+        var labelip = $(this).data("ip");
         $("#editformsenha").trigger('reset');
         $("#EditSenhaBase").modal('show');  
         $("#editnomebase").replaceWith('<Label id="editnomebase" style="font-style:italic;">'+labelHtml+'</Label>');            

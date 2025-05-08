@@ -158,7 +158,7 @@
                                     <button type="submit" data-id="{{$rede->id}}" class="list_ip_btn fas fa-network-wired" style="background: transparent;border: none;color:green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista IPs"> {{$rede->cadastro_ips->count()}}</button>
                                 </form>
                                 @else
-                                <button type="button" data-id="{{$rede->id}}" data-nomerede="{{$rede->nome_rede}}" class="novo_ip_btn fas fa-folder" style="background: transparent;border: none;color: orange; nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Novo IP"></button>
+                                <button type="button" data-id="{{$rede->id}}" data-nomerede="{{$rede->nome_rede}}" class="novo_ip_btn fas fa-folder" style="background: transparent;border: none;color: orange; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Novo IP"></button>
                                 @endif
                             </div>
                         </td>                       
@@ -203,7 +203,7 @@ $(document).ready(function(){
             var id = $(this).data("id");
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");            
-            var nomerede = ($(this).data("nomerede")).trim();
+            var nomerede = $(this).data("nomerede");
             if(admin){
             Swal.fire({
                 showClass: {
@@ -302,11 +302,11 @@ $(document).ready(function(){
                 url:'/datacenteradmin/rede/edit-rede/'+id,
                 success:function(response){
                     if(response.status==200){    
-                        var vnomerede = (response.rede.nome_rede).trim();
+                        var vnomerede = response.rede.nome_rede;
                         $("#edit_nome_rede").val(vnomerede);
-                        var vmascara = (response.rede.mascara).trim();
+                        var vmascara = response.rede.mascara;
                         $("#edit_mascara").val(vmascara);
-                        var vtiporede = (response.rede.tipo_rede).trim();
+                        var vtiporede = response.rede.tipo_rede;
                         $("#edit_tipo_rede").val(vtiporede);                    
                         $("#edit_rede_id").val(response.rede.id);
                         $("#edit_vlan_id").val(response.rede.vlan_id);
@@ -349,9 +349,9 @@ $(document).ready(function(){
             var id = $("#edit_rede_id").val();
     
             var data = {
-                'nome_rede': ($("#edit_nome_rede").val()).trim(),
-                'mascara': ($("#edit_mascara").val()).trim(),
-                'tipo_rede': ($("#edit_tipo_rede").val()).trim(), 
+                'nome_rede': $("#edit_nome_rede").val(),
+                'mascara': $("#edit_mascara").val(),
+                'tipo_rede': $("#edit_tipo_rede").val(),
                 'vlan_id':$("#edit_vlan_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -438,9 +438,9 @@ $(document).ready(function(){
             var loading = $("#imgadd");
                 loading.show();
             var data = {
-                'nome_rede': ($(".nome_rede").val()).trim(),
-                'mascara': ($(".mascara").val()).trim(),
-                'tipo_rede': ($(".tipo_rede").val()).trim(),
+                'nome_rede': $(".nome_rede").val(),
+                'mascara': $(".mascara").val(),
+                'tipo_rede': $(".tipo_rede").val(),
                 'vlan_id': $("#add_vlan_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,

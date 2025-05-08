@@ -345,7 +345,7 @@ $(document).ready(function(){
             var id = $(this).data("id");
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");            
-            var nomedatacenter = ($(this).data("nomedatacenter")).trim();
+            var nomedatacenter = $(this).data("nomedatacenter");
             if(admin){
             Swal.fire({
                 showClass: {
@@ -443,13 +443,13 @@ $(document).ready(function(){
                 url:'/datacenteradmin/host/edit-host/'+id,
                 success:function(response){
                     if(response.status==200){        
-                        var vdatacenter = (response.host.datacenter).trim();
+                        var vdatacenter = response.host.datacenter;
                         $("#edit_datacenter").val(vdatacenter);
-                        var vip = (response.host.ip).trim();
+                        var vip = response.host.ip;
                         $("#edit_ip").val(vip);
-                        var vcluster = (response.host.cluster).trim();
+                        var vcluster = response.host.cluster;
                         $("#edit_cluster").val(vcluster);
-                        var vobshost = (response.host.obs_host).trim();
+                        var vobshost = response.host.obs_host;
                         $("#obs_host").val(vobshost);    
                         $("#edit_host_id").val(response.host.id);
                         $("#edit_cluster_id").val(response.host.cluster_id);
@@ -492,10 +492,10 @@ $(document).ready(function(){
             var id = $("#edit_host_id").val();
     
             var data = {
-                'datacenter': ($("#edit_datacenter").val()).trim(),
-                'ip': ($("#edit_ip").val()).trim(),
-                'cluster': ($("#edit_cluster").val()).trim(),
-                'obs_host': ($("#obs_host").val()).trim(),
+                'datacenter': $("#edit_datacenter").val(),
+                'ip': $("#edit_ip").val(),
+                'cluster': $("#edit_cluster").val(),
+                'obs_host': $("#obs_host").val(),
                 'cluster_id':$("#edit_cluster_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -593,10 +593,10 @@ $(document).ready(function(){
                 loading.show();
             var strcolor = $(this).data("color");
             var data = {
-                'datacenter': ($(".datacenter").val()).trim(),
-                'ip': ($('.ip').val()).trim(),
-                'cluster': ($(".cluster").val()).trim(),
-                'obs_host': ($(".obs_host").val()).trim(),
+                'datacenter': $(".datacenter").val(),
+                'ip': $('.ip').val(),
+                'cluster': $(".cluster").val(),
+                'obs_host': $(".obs_host").val(),
                 'cluster_id': $("#add_cluster_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -676,8 +676,8 @@ $(document).ready(function(){
 
         $(document).on('click','.cadsenha_btn',function(e){
             e.preventDefault();
-            var labelHtml = ($(this).data("nomehost")).trim();            
-            var labelclusterip = ($(this).data("clusterip")).trim();            
+            var labelHtml = $(this).data("nomehost");
+            var labelclusterip = $(this).data("clusterip");
             var link = "{{asset('storage')}}";
                         
             $("#addformsenha").trigger('reset');
@@ -780,8 +780,8 @@ $(document).ready(function(){
         if(opcaosenha){
     
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomehost")).trim();            
-        var labelclusterip = ($(this).data("clusterip")).trim(); 
+        var labelHtml = $(this).data("nomehost");
+        var labelclusterip = $(this).data("clusterip");
         $("#editformsenha").trigger('reset');
         $("#EditSenhaHost").modal('show');  
         $("#editnomehost").replaceWith('<Label id="editnomehost" style="font-style:italic;">'+labelHtml+'</Label>');            

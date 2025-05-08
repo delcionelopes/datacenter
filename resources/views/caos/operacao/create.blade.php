@@ -146,7 +146,7 @@ $(document).ready(function(){
                 }else{                                                     
                         var arq = response.filepath; 
                             arq = arq.toString();                  ;
-                        var linkimagem = '{{asset('')}}'+arq;
+                        var linkimagem = "{{asset('')}}"+arq;
                         var imagemnova = '<img src="'+linkimagem+'" class="imgico rounded-circle" width="100" >';
                         $(".imgico").replaceWith(imagemnova);
                     }   

@@ -137,7 +137,7 @@
             var link = "{{asset('storage')}}";
             var id = $(this).data("id");
             var admin = $(this).data("admin");            
-            var nomeplataforma = ($(this).data("nomeplataforma")).trim();
+            var nomeplataforma = $(this).data("nomeplataforma");
             if(admin=true){
             Swal.fire({
                 showClass: {
@@ -232,7 +232,7 @@
                     url: '/datacenteradmin/plataforma/edit-plataforma/'+id,
                     success:function(response){
                         if(response.status==200){
-                            var vnomeplataforma = (response.plataforma.nome_plataforma).trim();
+                            var vnomeplataforma = response.plataforma.nome_plataforma;
                             $(".nome_plataforma").val(vnomeplataforma);
                             $("#edit_plataforma_id").val(response.plataforma.id);
                         }
@@ -276,7 +276,7 @@
             var id = $("#edit_plataforma_id").val();
     
             var data = {
-                'nome_plataforma' : ($("#edit_nome_plataforma").val()).trim(),
+                'nome_plataforma' : $("#edit_nome_plataforma").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }    
@@ -353,7 +353,7 @@
             var loading = $("#imgadd");
                 loading.show();
             var data = {
-                'nome_plataforma' : ($(".nome_plataforma").val()).trim(),
+                'nome_plataforma' : $(".nome_plataforma").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }        

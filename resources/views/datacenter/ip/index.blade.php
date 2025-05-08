@@ -159,7 +159,7 @@ $(document).ready(function(){
             var id = $(this).data("id");
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
-            var enderecoip = ($(this).data("enderecoip")).trim();
+            var enderecoip = $(this).data("enderecoip");
             if(admin){
             Swal.fire({
                 showClass: {
@@ -257,9 +257,9 @@ $(document).ready(function(){
                         }else{
                             var corstatus = 'style="color:green;"';                        
                         }
-                        var vstatus = (response.cadastroIp.status).trim();
+                        var vstatus = response.cadastroIp.status;
                         $("#edit_status").replaceWith('<label id="edit_status" class="status"'+corstatus+'>'+vstatus+'</label>');   
-                        var vip = (response.cadastroIp.ip).trim();
+                        var vip = response.cadastroIp.ip;
                         $("#edit_ip").val(vip);                                        
                         $("#edit_rede_id").val(response.cadastroIp.rede_id);
                         $("#edit_ip_id").val(response.cadastroIp.id);
@@ -302,7 +302,7 @@ $(document).ready(function(){
             var meulink = "{{route('datacenteradmin.rede.rede.index',['id' => $vlan_id,'color'=>$color])}}";
     
             var data = {            
-                'ip': ($("#edit_ip").val()).trim(),            
+                'ip': $("#edit_ip").val(),
                 'rede_id':$("#edit_rede_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -389,7 +389,7 @@ $(document).ready(function(){
                 loading.show();
             var meulink = "{{route('datacenteradmin.rede.rede.index',['id' => $vlan_id,'color'=>$color])}}";
             var data = {            
-                'ip': ($(".ip").val()).trim(),
+                'ip': $(".ip").val(),
                 'status': "LIVRE",            
                 'rede_id': $("#add_rede_id").val(),
                 '_method':'PUT',
@@ -457,7 +457,7 @@ $(document).ready(function(){
             e.preventDefault();            
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");            
-            var vstatus = ($(this).data("status")).trim();
+            var vstatus = $(this).data("status");
             var data = {
                 'pstatus': vstatus,
                 '_method':'PUT',

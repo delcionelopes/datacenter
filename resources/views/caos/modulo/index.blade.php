@@ -3,7 +3,7 @@
 @section('title', 'Módulos')
 
 @section('content')
-
+white-space:
 <!--index-->
 @auth
 @if(!(auth()->user()->inativo))

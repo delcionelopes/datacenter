@@ -140,7 +140,7 @@
             var link = "{{asset('storage')}}";
             var id = $(this).data("id");
             var admin = $(this).data("admin");
-            var nomeprojeto = ($(this).data("nomeprojeto")).trim();
+            var nomeprojeto = $(this).data("nomeprojeto");
             if(admin){
             Swal.fire({
                 showClass: {
@@ -240,7 +240,7 @@
                     url:'/datacenteradmin/projeto/edit-projeto/'+id,
                     success:function(response){
                         if(response.status==200){  
-                            var vnomeprojeto = (response.projeto.nome_projeto).trim();
+                            var vnomeprojeto = response.projeto.nome_projeto;
                             $(".nome_projeto").val(vnomeprojeto);
                             $("#edit_projeto_id").val(response.projeto.id);
                         }
@@ -277,7 +277,7 @@
                 loading.show();
             var id = $("#edit_projeto_id").val();
             var data = {
-                'nome_projeto' : ($("#edit_nome_projeto").val()).trim(),
+                'nome_projeto' : $("#edit_nome_projeto").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }            
@@ -354,7 +354,7 @@
             var loading = $("#imgadd");
                 loading.show();
             var data = {
-                'nome_projeto' : ($(".nome_projeto").val()).trim(),
+                'nome_projeto' : $(".nome_projeto").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }    

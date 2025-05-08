@@ -301,7 +301,7 @@ $(document).ready(function(){
         var linklogo = "{{asset('storage')}}";
         var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var id = $(this).data("id");
-        var nomeusuario = ($(this).data("nomeusuario")).trim();
+        var nomeusuario = $(this).data("nomeusuario");
 
         Swal.fire({
             showClass: {
@@ -369,7 +369,7 @@ $('#EditUserModal').on('shown.bs.modal',function(){
             success:function(response){
                 if(response.status==200){
                     $("#edit_user_id").val(response.user.id);
-                    $(".name").val((response.user.name).trim());                   
+                    $(".name").val(response.user.name);                   
                     $(".email").val(response.user.email);
                     if(response.user.moderador){
                     $(".moderador").attr('checked',true);
@@ -454,16 +454,16 @@ $('#EditUserModal').on('shown.bs.modal',function(){
         $("#edit_admin:checked").each(function(){admin = true;});                     
         
         var data = new FormData();
-            data.append('name',($("#edit_name").val()).trim());            
+            data.append('name',$("#edit_name").val());            
             data.append('email',$("#edit_email").val());
-            data.append('link_instagram',($("#edit_link_instagram").val()).trim());
-            data.append('link_facebook',($("#edit_link_facebook").val()).trim());
-            data.append('link_site',($("#edit_link_site").val()).trim());
+            data.append('link_instagram',$("#edit_link_instagram").val());
+            data.append('link_facebook',$("#edit_link_facebook").val());
+            data.append('link_site',$("#edit_link_site").val());
             data.append('password',$("#edit_password").val());
             data.append('moderador',moderador);
             data.append('inativo',inativo),
-            data.append('cpf',($("#edit_cpf").val()).trim());
-            data.append('matricula',($("#edit_matricula").val()).trim());
+            data.append('cpf',$("#edit_cpf").val());
+            data.append('matricula',$("#edit_matricula").val());
             data.append('setor',upd_setor_id);
             data.append('orgao_id',upd_orgao_id);
             data.append('admin',admin);
@@ -610,17 +610,17 @@ $('#EditUserModal').on('shown.bs.modal',function(){
         $("#moderador:checked").each(function(){moderador = true;});                     
         $("#admin:checked").each(function(){admin = true;});                     
         var data = new FormData();        
-            data.append('name',($(".name").val()).trim());
-            data.append('email',($(".email").val()).trim());
-            data.append('link_instagram',($(".link_instagram").val()).trim());
-            data.append('link_facebook',($(".link_facebook").val()).trim());
-            data.append('link_site',($(".link_site").val()).trim());
-            data.append('password',($(".password").val()).trim());
+            data.append('name',$(".name").val());
+            data.append('email',$(".email").val());
+            data.append('link_instagram',$(".link_instagram").val());
+            data.append('link_facebook',$(".link_facebook").val());
+            data.append('link_site',$(".link_site").val());
+            data.append('password',$(".password").val());
             data.append('moderador',moderador);
             data.append('inativo',inativo);
             data.append('admin',admin);
-            data.append('cpf',($(".cpf").val()).trim());
-            data.append('matricula',($(".matricula").val()).trim());
+            data.append('cpf',$(".cpf").val());
+            data.append('matricula',$(".matricula").val());
             data.append('orgao_id',ins_orgao_id);
             data.append('setor',ins_setor_id);
             data.append('imagem',$("#addimagem")[0].files[0]);

@@ -159,7 +159,7 @@
             var link = "{{asset('storage')}}";
             var id = $(this).data("id");
             var admin = $(this).data("admin");            
-            var descricao = ($(this).data("descricao")).trim();
+            var descricao = $(this).data("descricao");
             if(admin){
             Swal.fire({
                 showClass: {
@@ -256,7 +256,7 @@
                     url:'/datacenteradmin/subareaconhecimento/edit-subareaconhecimento/'+id,                                
                     success:function(response){
                         if(response.status==200){
-                            var vdescricao = (response.sub_area_conhecimento.descricao).trim();
+                            var vdescricao = response.sub_area_conhecimento.descricao;
                             $(".descricao").val(vdescricao);
                             //seta a opção certa no select html
                             var opcao = response.area_conhecimento.id;                        
@@ -318,7 +318,7 @@
             var id = $("#edit_sub_area_conhecimento_id").val();
             var data = {
                 'area_conhecimento_id' : opt,
-                'descricao' : ($("#edit_descricao").val()).trim(),
+                'descricao' : $("#edit_descricao").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }           
@@ -396,7 +396,7 @@
                 loading.show();
             var data = {
                 'area_conhecimento_id' : $("#area_id").val(),
-                'descricao' : ($(".descricao").val()).trim(),
+                'descricao' : $(".descricao").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }

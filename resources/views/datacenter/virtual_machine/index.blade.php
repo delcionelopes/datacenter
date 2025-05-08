@@ -430,7 +430,7 @@
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" data-id="{{$id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddVMModal_btn input-group-text border-0 animate__animated animate__bounce animate__faster" style="background: transparent;border: none; white-space: white-space:nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                            <button type="button" data-id="{{$id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddVMModal_btn input-group-text border-0 animate__animated animate__bounce animate__faster" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
                             <a href="{{route('datacenteradmin.cluster.cluster.index',['color'=>$color])}}" type="button" data-id="{{$id}}" class="cluster_btn input-group-text border-0" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="CLUSTER">
@@ -540,7 +540,7 @@ $(document).ready(function(){
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
             var id = $(this).data("id");       
-            var nomevm = ($(this).data("vm")).trim();
+            var nomevm = $(this).data("vm");
             if(admin){
             Swal.fire({
                 showClass: {
@@ -674,23 +674,23 @@ $(document).ready(function(){
                         .filter('[value='+opcaoambiente+']')
                         .attr('selected',true);                      
                         //fim seta projeto
-                        var vnomevm = (response.virtualmachine.nome_vm).trim();
+                        var vnomevm = response.virtualmachine.nome_vm;
                         $(".nome_vm").val(vnomevm);
-                        var vcpu = (response.virtualmachine.cpu).trim();
+                        var vcpu = response.virtualmachine.cpu;
                         $(".cpu").val(vcpu);     
-                        var vmemoria = (response.virtualmachine.memoria).trim();
+                        var vmemoria = response.virtualmachine.memoria;
                         $(".memoria").val(vmemoria);
-                        var vdisco = (response.virtualmachine.disco).trim();
+                        var vdisco = response.virtualmachine.disco;
                         $(".disco").val(vdisco);
-                        var vip = (response.virtualmachine.ip).trim();
+                        var vip = response.virtualmachine.ip;
                         $(".ip").val(vip);
-                        var vresourcepool = (response.virtualmachine.resource_pool).trim();
+                        var vresourcepool = response.virtualmachine.resource_pool;
                         $(".resource_pool").val(vresourcepool);
-                        var vsistemaoperacional = (response.virtualmachine.sistema_operacional).trim();
+                        var vsistemaoperacional = response.virtualmachine.sistema_operacional;
                         $(".sistema_operacional").val(vsistemaoperacional);
-                        var vgatway = (response.virtualmachine.gatway).trim();
+                        var vgatway = response.virtualmachine.gatway;
                         $(".gatway").val(vgatway);
-                        var vnomecluster = (response.virtualmachine.cluster).trim();
+                        var vnomecluster = response.virtualmachine.cluster;
                         $("#nome_cluster").val(vnomecluster);
                         //Atribuindo as vlan relacionadas aos checkboxes
                         $("input[name='vlans[]'").attr('checked',false); //desmarca todos
@@ -775,15 +775,15 @@ $(document).ready(function(){
                 'orgao_id' : opt_orgao,
                 'ambiente_id' : opt_ambiente,
                 'cluster_id' : cluster_id,
-                'nome_vm': ($("#nome_vm").val()).trim(),            
-                'cpu': ($("#cpu").val()).trim(),
-                'memoria' : ($("#memoria").val()).trim(),
-                'disco' : ($("#disco").val()).trim(),
-                'ip' : ($("#ip").val()).trim(),
-                'resource_pool' : ($("#resource_pool").val()).trim(),
-                'cluster' : ($("#nome_cluster").val()).trim(),
-                'gatway' : ($("#gatway").val()).trim(),  
-                'sistema_operacional' : ($("#sistema_operacional").val()).trim(),                      
+                'nome_vm': $("#nome_vm").val(),
+                'cpu': $("#cpu").val(),
+                'memoria' : $("#memoria").val(),
+                'disco' : $("#disco").val(),
+                'ip' : $("#ip").val(),
+                'resource_pool' : $("#resource_pool").val(),
+                'cluster' : $("#nome_cluster").val(),
+                'gatway' : $("#gatway").val(),
+                'sistema_operacional' : $("#sistema_operacional").val(),
                 'vlans': vlans, //Array
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -915,15 +915,15 @@ $(document).ready(function(){
                 'projeto_id': $(".projeto_id").val(),
                 'orgao_id': $(".orgao_id").val(),
                 'ambiente_id': $(".ambiente_id").val(),
-                'nome_vm': ($(".nome_vm").val()).trim(),
-                'cpu': ($(".cpu").val()).trim(),
-                'memoria': ($(".memoria").val()).trim(),
-                'disco': ($(".disco").val()).trim(),
-                'ip': ($(".ip").val()).trim(),
-                'resource_pool': ($(".resource_pool").val()).trim(),
-                'cluster': ($("#nome_cluster").val()).trim(),
-                'sistema_operacional': ($(".sistema_operacional").val()).trim(),
-                'gatway': ($(".gatway").val()).trim(),            
+                'nome_vm': $(".nome_vm").val(),
+                'cpu': $(".cpu").val(),
+                'memoria': $(".memoria").val(),
+                'disco': $(".disco").val(),
+                'ip': $(".ip").val(),
+                'resource_pool': $(".resource_pool").val(),
+                'cluster': $("#nome_cluster").val(),
+                'sistema_operacional': $(".sistema_operacional").val(),
+                'gatway': $(".gatway").val(),
                 'vlans': vlans,
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -1044,7 +1044,7 @@ $(document).ready(function(){
         $(document).on('click','.nova_base_btn',function(e){
             e.preventDefault();
             var link = "{{asset('storage')}}";            
-            var labelHtml = ($(this).data("nome_vm")).trim();
+            var labelHtml = $(this).data("nome_vm");
                 
             $("#addbaseform").trigger('reset');
             $("#AddBaseModal").modal('show');
@@ -1063,12 +1063,12 @@ $(document).ready(function(){
             var baseoptprojeto = $("#baseprojeto_id").val();
                   
             var data = {
-                'nome_base': ($(".nome_base").val()).trim(),
+                'nome_base': $(".nome_base").val(),
                 'projeto_id': baseoptprojeto,
-                'ip': ($(".baseip").val()).trim(),
-                'dono': ($(".dono").val()).trim(),
+                'ip': $(".baseip").val(),
+                'dono': $(".dono").val(),
                 'virtual_machine_id': $("#add_vm_id").val(),
-                'encoding': ($(".encoding").val()).trim(),
+                'encoding': $(".encoding").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }
@@ -1111,8 +1111,8 @@ $(document).ready(function(){
 
         $(document).on('click','.cadsenha_btn',function(e){
             e.preventDefault();
-            var labelHtml = ($(this).data("nomevm")).trim();            
-            var labelclusterip = ($(this).data("clusterip")).trim();
+            var labelHtml = $(this).data("nomevm");
+            var labelclusterip = $(this).data("clusterip");
             var link = "{{asset('storage')}}";
             
             $("#addformsenha").trigger('reset');
@@ -1214,8 +1214,8 @@ $(document).ready(function(){
         if(opcaosenha){
     
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomevm")).trim();            
-        var labelclusterip = ($(this).data("clusterip")).trim(); 
+        var labelHtml = $(this).data("nomevm");
+        var labelclusterip = $(this).data("clusterip");
         $("#editformsenha").trigger('reset');
         $("#EditSenhaVM").modal('show');  
         $("#editnomeVM").replaceWith('<Label id="editnomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            

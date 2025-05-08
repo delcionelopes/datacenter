@@ -193,7 +193,7 @@ class HostController extends Controller
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
             'validade' => ['required','date'],
-            'users' => ['required','array','min:2'],
+            'users' => ['required','array','min:1'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -227,7 +227,7 @@ class HostController extends Controller
         $validator = Validator::make($request->all(),[
             'senha' => 'required',
             'validade' => ['required','date'],
-            'users' => ['required','array','min:2'],
+            'users' => ['required','array','min:1'],
         ]);
         if($validator->fails()){
             return response()->json([

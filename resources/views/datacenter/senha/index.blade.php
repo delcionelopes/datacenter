@@ -841,8 +841,8 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.userapp_item',function(e){
         e.preventDefault();               
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomeapp")).trim();            
-        var labelDominio = ($(this).data("dominio")).trim(); 
+        var labelHtml = $(this).data("nomeapp");
+        var labelDominio = $(this).data("dominio");
         $("#editformsenhaapp").trigger('reset');
         $("#EditSenhaApp").modal('show');  
         $("#editnomeapp").replaceWith('<Label id="editnomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
@@ -977,8 +977,8 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.userhost_item',function(e){
         e.preventDefault();
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomehost")).trim();            
-        var labelclusterip = ($(this).data("clusterip")).trim(); 
+        var labelHtml = $(this).data("nomehost");
+        var labelclusterip = $(this).data("clusterip");
         $("#editformsenhahost").trigger('reset');
         $("#EditSenhaHost").modal('show');  
         $("#editnomehost").replaceWith('<Label id="editnomehost" style="font-style:italic;">'+labelHtml+'</Label>');            
@@ -1114,8 +1114,8 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.uservm_item',function(e){
         e.preventDefault();
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomevm")).trim();            
-        var labelclusterip = ($(this).data("clusterip")).trim(); 
+        var labelHtml = $(this).data("nomevm");
+        var labelclusterip = $(this).data("clusterip");
         $("#editformsenhavm").trigger('reset');
         $("#EditSenhaVM").modal('show');  
         $("#editnomeVM").replaceWith('<Label id="editnomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
@@ -1254,8 +1254,8 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.userbase_item',function(e){
         e.preventDefault();
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomebase")).trim();            
-        var labelip = ($(this).data("ip")).trim(); 
+        var labelHtml = $(this).data("nomebase");
+        var labelip = $(this).data("ip");
         $("#editformsenhabase").trigger('reset');
         $("#EditSenhaBase").modal('show');  
         $("#editnomebase").replaceWith('<Label id="editnomebase" style="font-style:italic;">'+labelHtml+'</Label>');            
@@ -1393,7 +1393,7 @@ $(document).ready(function(){ //início do bloco principal
     $(document).on('click','.uservlan_item',function(e){
         e.preventDefault();
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomevlan")).trim();                   
+        var labelHtml = $(this).data("nomevlan");
         $("#editformsenhavlan").trigger('reset');
         $("#EditSenhaVLAN").modal('show');  
         $("#editnomevlan").replaceWith('<Label id="editnomevlan" style="font-style:italic;">'+labelHtml+'</Label>');                    
@@ -1758,8 +1758,8 @@ $(document).ready(function(){ //início do bloco principal
         if(opcaosenha){
     
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomeapp")).trim();            
-        var labelDominio = ($(this).data("dominio")).trim(); 
+        var labelHtml = $(this).data("nomeapp");
+        var labelDominio = $(this).data("dominio");
         $("#editformsenha").trigger('reset');
         $("#EditSenhaApp").modal('show');  
         $("#editnomeapp").replaceWith('<Label id="editnomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
@@ -1869,8 +1869,8 @@ $(document).ready(function(){ //início do bloco principal
         if(opcaosenha){
     
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomebase")).trim();            
-        var labelip = ($(this).data("ip")).trim(); 
+        var labelHtml = $(this).data("nomebase");
+        var labelip = $(this).data("ip");
         $("#editformsenhabase").trigger('reset');
         $("#EditSenhaBase").modal('show');  
         $("#editnomebase").replaceWith('<Label id="editnomebase" style="font-style:italic;">'+labelHtml+'</Label>');            
@@ -1974,8 +1974,8 @@ $(document).ready(function(){ //início do bloco principal
         if(opcaosenha){
     
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomevm")).trim();            
-        var labelclusterip = ($(this).data("clusterip")).trim(); 
+        var labelHtml = $(this).data("nomevm");
+        var labelclusterip = $(this).data("clusterip");
         $("#editformsenhavm").trigger('reset');
         $("#EditSenhaVM").modal('show');  
         $("#editnomeVM").replaceWith('<Label id="editnomeVM" style="font-style:italic;">'+labelHtml+'</Label>');            
@@ -2079,8 +2079,8 @@ $(document).ready(function(){ //início do bloco principal
         if(opcaosenha){
     
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomehost")).trim();            
-        var labelclusterip = ($(this).data("clusterip")).trim(); 
+        var labelHtml = $(this).data("nomehost");
+        var labelclusterip = $(this).data("clusterip");
         $("#editformsenhahost").trigger('reset');
         $("#EditSenhaHost").modal('show');  
         $("#editnomehost").replaceWith('<Label id="editnomehost" style="font-style:italic;">'+labelHtml+'</Label>');            
@@ -2184,7 +2184,7 @@ $(document).ready(function(){ //início do bloco principal
         if(opcaosenha){
     
        var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomevlan")).trim();                   
+        var labelHtml = $(this).data("nomevlan");
         $("#editformsenhavlan").trigger('reset');
         $("#EditSenhaVLAN").modal('show');  
         $("#editnomevlan").replaceWith('<Label id="editnomevlan" style="font-style:italic;">'+labelHtml+'</Label>');                    

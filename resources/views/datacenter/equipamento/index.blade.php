@@ -298,7 +298,7 @@ $(document).ready(function(){
             var setor = $(this).data("setor");
             var idsetor = $(this).data("idsetor");
             var useridsetor = $(this).data("useridsetor");
-            var nome = ($(this).data("nome")).trim();
+            var nome = $(this).data("nome");
             if(admin==true){ 
             Swal.fire({
                 showClass: {
@@ -549,7 +549,7 @@ $(document).ready(function(){
                 loading.show();
             
             var data = {            
-                'nome': ($(".nome").val()).trim(),
+                'nome': $(".nome").val(),
                 'descricao': $(".descricao").val(),                
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,

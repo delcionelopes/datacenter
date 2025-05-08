@@ -159,7 +159,7 @@
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
             var admin = $(this).data("admin");
-            var nomedoorgao = ($(this).data("nomeorgao")).trim();
+            var nomedoorgao = $(this).data("nomeorgao");
             if(admin=true){
             Swal.fire({
                 showClass: {
@@ -261,9 +261,9 @@
                     assync: true,
                     success:function(response){
                         if(response.status==200){
-                            var vnomedoorgao = (response.orgao.nome).trim();
+                            var vnomedoorgao = response.orgao.nome;
                             $(".nome_orgao").val(vnomedoorgao);
-                            var vtelefone = (response.orgao.telefone).trim();
+                            var vtelefone = response.orgao.telefone;
                             $(".telefone").val(vtelefone);
                             $("#edit_orgao_id").val(response.orgao.id);
                         }
@@ -303,8 +303,8 @@
         var id = $("#edit_orgao_id").val();
         
         var data = {
-            'nome' : ($("#edit_nome_orgao").val()).trim(),
-            'telefone' : ($("#edit_telefone").val()).trim(),
+            'nome' : $("#edit_nome_orgao").val(),
+            'telefone' : $("#edit_telefone").val(),
             '_method':'PUT',
             '_token':CSRF_TOKEN,
         }    
@@ -382,8 +382,8 @@
         var loading = $("#imgadd");
             loading.show();
         var data = {
-            'nome' : ($(".nome_orgao").val()).trim(),
-            'telefone' : ($(".telefone").val()).trim(),
+            'nome' : $(".nome_orgao").val(),
+            'telefone' : $(".telefone").val(),
             '_method':'PUT',
             '_token':CSRF_TOKEN,
         }            

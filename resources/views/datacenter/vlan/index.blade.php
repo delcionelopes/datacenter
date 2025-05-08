@@ -319,7 +319,7 @@
                                         <button type="submit" data-id="{{$vlan->id}}" class="list_rede_btn fas fa-network-wired" style="background: transparent;border:none;color:green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista REDE(s)"> {{$vlan->redes()->count()}}</button>
                                     </form>
                                     @else
-                                        <button type="button" data-id="{{$vlan->id}}" class="nova_rede_btn fas fa-folder" style="background: transparent;border:none;color:orange; nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Cadastra nova REDE"></button>
+                                        <button type="button" data-id="{{$vlan->id}}" class="nova_rede_btn fas fa-folder" style="background: transparent;border:none;color:orange; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Cadastra nova REDE"></button>
                                     @endif    
                                 </td>                               
                                 <td>                                    
@@ -366,7 +366,7 @@ $(document).ready(function(){
             var id = $(this).data("id");
             var link = "{{asset('storage')}}";
             var admin = $(this).data("admin");
-            var nomevlan = ($(this).data("nomevlan")).trim();
+            var nomevlan = $(this).data("nomevlan");
             if(admin){
             Swal.fire({
                 showClass: {
@@ -464,7 +464,7 @@ $(document).ready(function(){
                 url: '/datacenteradmin/vlan/edit-vlan/'+id,                                
                 success: function(response){           
                     if(response.status==200){            
-                        $("#edit_nome_vlan").val((response.vlan.nome_vlan).trim());
+                        $("#edit_nome_vlan").val(response.vlan.nome_vlan);
                         $("#edit_vlan_id").val(response.vlan.id);                                                                                                       
                     }      
                 }
@@ -503,7 +503,7 @@ $(document).ready(function(){
             var id = $("#edit_vlan_id").val();        
     
             var data = {
-                'nome_vlan' : ($("#edit_nome_vlan").val()).trim(),
+                'nome_vlan' : $("#edit_nome_vlan").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }
@@ -572,7 +572,7 @@ $(document).ready(function(){
             var loading = $("#imgadd");
                 loading.show();
             var data = {
-                'nome_vlan': ($(".nome_vlan").val()).trim(),
+                'nome_vlan': $(".nome_vlan").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             }    
@@ -667,9 +667,9 @@ $(document).ready(function(){
             var loading = $("#imgaddrede");
                 loading.show();
             var data = {
-                'nome_rede': ($(".nome_rede").val()).trim(),
-                'mascara': ($(".mascara").val()).trim(),
-                'tipo_rede': ($(".tipo_rede").val()).trim(),
+                'nome_rede': $(".nome_rede").val(),
+                'mascara': $(".mascara").val(),
+                'tipo_rede': $(".tipo_rede").val(),
                 'vlan_id': $("#add_vlan_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -712,7 +712,7 @@ $(document).ready(function(){
 
         $(document).on('click','.cadsenha_btn',function(e){
             e.preventDefault();            
-            var labelHtml = ($(this).data("nomevlan")).trim();            
+            var labelHtml = $(this).data("nomevlan");
             $("#addformsenha").trigger('reset');
             $("#AddSenhaVLAN").modal('show');
             $("#add_vlansenha_id").val($(this).data("id"));
@@ -812,7 +812,7 @@ $(document).ready(function(){
         if(opcaosenha){
     
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomevlan")).trim();                   
+        var labelHtml = $(this).data("nomevlan");
         $("#editformsenha").trigger('reset');
         $("#EditSenhaVLAN").modal('show');  
         $("#editnomevlan").replaceWith('<Label id="editnomevlan" style="font-style:italic;">'+labelHtml+'</Label>');                    

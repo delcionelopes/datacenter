@@ -222,7 +222,7 @@
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var link = "{{asset('storage')}}";
             var id = $(this).data("id");  
-            var nomemanual = ($(this).data("descricao")).trim();
+            var nomemanual = $(this).data("descricao");
             var admin = $(this).data("admin");
             var idsetor = $(this).data("idsetor");
             var setor = $(this).data("setor");
@@ -324,7 +324,7 @@
                 url:'/datacenteradmin/manual/edit-manual/'+id,
                 success:function(response){
                     if(response.status==200){
-                        var descricaomanual = (response.manual.descricao).trim();
+                        var descricaomanual = response.manual.descricao;
                         $(".descricao").val(descricaomanual);
                         //seta a area de conhecimento no select html
                         var opcao = response.area_conhecimento.id;
@@ -333,9 +333,9 @@
                         .filter('[value='+opcao+']')
                         .attr('selected',true);
                         //fim seta area_conhecimento
-                        var objetivomanual = (response.manual.objetivo).trim();
+                        var objetivomanual = response.manual.objetivo;
                         $(".objetivo").text(objetivomanual);
-                        var manualmanual = (response.manual.manual).trim();
+                        var manualmanual = response.manual.manual;
                         $(".manual").text(manualmanual);
                         $("#edit_manual_id").val(response.manual.id);                          
                         $("#fileupload").attr('data-manualid',response.manual.id);
@@ -387,9 +387,9 @@
             var id = $("#edit_manual_id").val();        
             var data = {
                 'area_conhecimento_id' : opt,
-                'descricao' : ($("#edit_descricao").val()).trim(),
-                'objetivo' : ($("#edit_objetivo").text()).trim(),
-                'manual' : ($("#edit_manual").text()).trim(),
+                'descricao' : $("#edit_descricao").val(),
+                'objetivo' : $("#edit_objetivo").text(),
+                'manual' : $("#edit_manual").text(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
             };     
@@ -431,28 +431,26 @@
                                     <th scope="row">'+response.manual.descricao+'</th>\
                                     <td>'+response.area_conhecimento+'</td>\
                                     <td id="uploads'+response.manual.id+'">\
-                                    <label id="files'+response.manual.id+'">Files: '+response.uploads.count()+' </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" data-idsetor="'+response.manual.setor_idsetor+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
+                                    <label id="files'+response.manual.id+'">Files: '+response.uploads.length+' </label><button type="button" id="upload_files_btn" data-manualid="'+response.manual.id+'" data-idsetor="'+response.manual.setor_id+'" class="fas fa-file-pdf" style="background: transparent;border: none;"></button>\
                                     <ul id="listaarquivos'+response.manual.id+'">';
                                     if(response.uploads){  
                                         $("#listaarquivos"+response.manual.id).replaceWith = '<ul id="listaarquivos'+response.manual.id+'"></ul>';
                                         $.each(response.uploads,function(key,arq){                                           
                                             $("#listaarquivos").append('li id="up'+arq.id+'">\
                                             <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" class="download_file_btn fas fa-download"></i>\
-                                            <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" data-idsetor="'+response.manual.setor_idsetor+'" class="delete_file_btn fas fa-trash"></i>\
+                                            <i data-filename="'+arq.nome_arquivo+'" data-id="'+arq.id+'" data-idsetor="'+response.manual.setor_id+'" class="delete_file_btn fas fa-trash"></i>\
                                             '+arq.nome_arquivo+'</li><br>');
                                     });                                     
                                     }    
                             linha2 = '</td>\
                                     <td>\
                                     <div class="btn-group">\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
-                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_idsetor+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_id+'" data-descricao="'+response.manual.descricao+'" class="edit_manual_btn fas fa-edit" style="background:transparent;border:none"></button>\
+                                    <button type="button" data-id="'+response.manual.id+'" data-admin="'+response.user.admin+'" data-idsetor="'+response.manual.setor_id+'" data-descricao="'+response.manual.descricao+'" class="delete_manual_btn fas fa-trash" style="background:transparent;border:none"></button>\
                                     </div>\
                                     </td>\
                                     </tr>';   
-                            tupla = linha1+linha2;
-                            
-                            console.log(tupla);
+                            tupla = linha1+linha2;                            
                             
                          $("#man"+id).replaceWith(tupla);                                                                              
                  } 
@@ -491,9 +489,9 @@
             var opt = $("#add_area_id").val();
             var dataAdd = {
                 'area_conhecimento_id' : opt,
-                'descricao' : ($(".descricao").val()).trim(),
-                'objetivo' : ($(".objetivo").val()).trim(),
-                'manual' : ($(".manual").val()).trim(),
+                'descricao' : $(".descricao").val(),
+                'objetivo' : $(".objetivo").val(),
+                'manual' : $(".manual").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN
             }   
@@ -563,7 +561,7 @@
         var admin = $(this).data("admin");
         var idsetor = $(this).data("idsetor");
         var setor = $(this).data("setor");
-        var vfilename = ($(this).data("filename")).trim();
+        var vfilename = $(this).data("filename");
         if(admin){
         Swal.fire({
                 showClass: {
@@ -639,7 +637,7 @@
             e.preventDefault();
     
             var id = $(this).data("id");                                              
-            var filename = $(this).data("filename").trim();                     
+            var filename = $(this).data("filename");
        
             $.ajaxSetup({
                         headers:{

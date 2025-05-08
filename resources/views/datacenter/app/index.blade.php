@@ -412,7 +412,7 @@
         var link = "{{asset('storage')}}";
         var admin = $(this).data("admin");
         var id = $(this).data("id");
-        var nomeapp = ($(this).data("nomeapp")).trim();
+        var nomeapp = $(this).data("nomeapp");
         if(admin){
         Swal.fire({
             showClass: {
@@ -508,9 +508,9 @@
                 if(response.status==200){ 
                     $("#edit_app_id").val(id);               
                     //seta a base
-                    var vnomebase = (response.base.nome_base).trim();
+                    var vnomebase = response.base.nome_base;
                     $("#edit_nome_base").replaceWith('<label id="edit_nome_base" style="font-style: italic;">'+vnomebase+'</label>');
-                    var vnomevm = (response.vm.nome_vm).trim();
+                    var vnomevm = response.vm.nome_vm;
                     $("#edit_nome_vm").replaceWith('<label id="edit_nome_vm" style="font-style: italic;">'+vnomevm+'</label>');
                     var opcaobase = response.base.id;
                     $("#edit_selbase_id option")
@@ -532,9 +532,9 @@
                     .filter('[value='+opcaoprojeto+']')
                     .attr('selected',true);
                     //fim seta o projeto
-                    var vnomeapp = (response.app.nome_app).trim();
+                    var vnomeapp = response.app.nome_app;
                     $("#edit_nome_app").val(vnomeapp);
-                    var vdominio = (response.app.dominio).trim();
+                    var vdominio = response.app.dominio;
                     $("#edit_dominio").val(vdominio);                               
                     if(response.app.https){
                         $("#edit_https").attr('checked',true);                
@@ -633,8 +633,8 @@
                 'orgao_id': upd_orgao_id,
                 'projetos_id': upd_projeto_id,
                 'bases_id': upd_base_id,
-                'nome_app': ($(".edit_nome_app").val()).trim(),
-                'dominio': ($(".edit_dominio").val()).trim(),
+                'nome_app': $(".edit_nome_app").val(),
+                'dominio': $(".edit_dominio").val(),
                 'https': edit_https,
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,
@@ -719,8 +719,8 @@
         });
         $(document).on('click','.AddApp_btn',function(e){
             e.preventDefault();
-            var labelHtml = ($(this).data("nome_base")).trim();
-            var labelHtmlVm = ($("#vmnome").val()).trim(); 
+            var labelHtml = $(this).data("nome_base");
+            var labelHtmlVm = $("#vmnome").val();
             var link = "{{asset('storage')}}";            
             
             $("#addform").trigger('reset');
@@ -883,8 +883,8 @@
         $(document).on('click','.cadsenha_btn',function(e){
             e.preventDefault();
             var link = "{{asset('storage')}}";            
-            var labelHtml = ($(this).data("nomeapp")).trim();            
-            var labelDominio = ($(this).data("dominio")).trim();            
+            var labelHtml = $(this).data("nomeapp");
+            var labelDominio = $(this).data("dominio");
             
             $("#addformsenha").trigger('reset');
             $("#AddSenhaApp").modal('show');
@@ -985,8 +985,8 @@
         if(opcaosenha){
     
         var id = $(this).data("id");
-        var labelHtml = ($(this).data("nomeapp")).trim();            
-        var labelDominio = ($(this).data("dominio")).trim(); 
+        var labelHtml = $(this).data("nomeapp");
+        var labelDominio = $(this).data("dominio");
         $("#editformsenha").trigger('reset');
         $("#EditSenhaApp").modal('show');  
         $("#editnomeapp").replaceWith('<Label id="editnomeapp" style="font-style:italic;">'+labelHtml+'</Label>');            
