@@ -85,7 +85,6 @@
 
 <!--index-->
 @auth
-@if(!(auth()->user()->inativo))
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
@@ -135,9 +134,6 @@
             {{$sub_areas_conhecimento->links()}}
     </div>
 </div>
-@else 
-<i class="fas fa-lock"></i><b class="title"> USUÁRIO INATIVO OU NÃO LIBERADO! CONTACTE O ADMINISTRADOR.</b>
-@endif
 @endauth
 <!--fim index-->
 @stop

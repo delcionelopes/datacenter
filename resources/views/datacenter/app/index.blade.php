@@ -313,7 +313,6 @@
 
 <!-- início index -->
 @auth
-@if(!(auth()->user()->inativo))
 <div class="container-fluid py-5">
     <div id="success_message"></div>    
             <section class="border p-4 mb-4 d-flex align-items-left">
@@ -389,9 +388,6 @@
                 <button type="button" class="voltar_btn fas fa-arrow-left" style="background: transparent; border: none; white-space: nowrap;" onclick="history.back()" data-html="true" data-placement="right" data-toggle="popover" title="Voltar para BASE(s)"></button>
             </div>    
 </div>
-@else 
-<i class="fas fa-lock"></i><b class="title"> USUÁRIO INATIVO OU NÃO LIBERADO! CONTACTE O ADMINISTRADOR.</b>
-@endif
 @endauth
 <!-- fim index -->
 @stop
