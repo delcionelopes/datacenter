@@ -71,12 +71,14 @@ class vlanController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ]);
         }else{           
+            $user = auth()->user();
             $data = [
-                'nome_vlan' => strtoupper($request->input('nome_vlan')),                
+                'nome_vlan' => strtoupper($request->input('nome_vlan')),
+                'created_at' => now(),
+                'criador_id' => $user->id,
             ];
             $vlan = $this->vlan->create($data); 
-            $u = $vlan->users;  
-            $user = auth()->user();
+            $u = $vlan->users;
             return response()->json([
                 'vlan' => $vlan,
                 'users' => $u,
@@ -125,13 +127,15 @@ class vlanController extends Controller
         }else{           
             $vlan = $this->vlan->find($id);            
             if($vlan){
+                        $user = auth()->user();
                         $data = [
-                            'nome_vlan' => strtoupper($request->input('nome_vlan')),                            
+                            'nome_vlan' => strtoupper($request->input('nome_vlan')),
+                            'updated_at' => now(),
+                            'alterador_id' => $user->id,
                         ];
                         $vlan->update($data);                      
                         $v = Vlan::find($id);
-                        $u = $v->users;
-                        $user = auth()->user();
+                        $u = $v->users;                        
                         return response()->json([
                             'vlan' => $v,
                             'users' => $u,
@@ -226,7 +230,8 @@ class vlanController extends Controller
                 'nome_rede' => strtoupper($request->input('nome_rede')),
                 'mascara'   => $request->input('mascara'),
                 'tipo_rede' => strtoupper($request->input('tipo_rede')),
-                'vlan_id'   => $request->input('vlan_id'),               
+                'vlan_id'   => $request->input('vlan_id'),
+                'created_at' => now(),               
             ];            
             $rede = $this->rede->create($data);          
             $vlan = $rede->vlan;

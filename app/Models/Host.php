@@ -19,10 +19,12 @@ class Host extends Model
         'val_indefinida',
         'criador_id',
         'alterador_id',
+        'created_at',
+        'updated_at',
     ];
 
     public function clusterref(){
-        return $this->belongsTo(Cluster::class,'cluster_id','id');
+        return $this->belongsTo(Cluster::class);
     }
 
     public function users():BelongsToMany{

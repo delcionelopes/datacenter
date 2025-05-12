@@ -123,7 +123,8 @@ class VirtualMachineController extends Controller
                 'status'  => 400,
                 'errors'  => $validator->errors()->getMessages(),
             ]);
-        }else{            
+        }else{
+            $user = auth()->user();            
             $data = [
                 'nome_vm' => strtoupper($request->input('nome_vm')),
                 'cpu'     => $request->input('cpu'),
@@ -138,6 +139,8 @@ class VirtualMachineController extends Controller
                 'cluster_id'  => $request->input('cluster_id'),
                 'projeto_id'  => $request->input('projeto_id'),
                 'cluster'     => $request->input('cluster'),               
+                'criador_id' => $user->id,
+                'created_at' => now(),
             ];
             $virtualmachine = $this->virtualmachine->create($data);                       
            
@@ -235,6 +238,7 @@ class VirtualMachineController extends Controller
         }else{           
             $virtualmachine = $this->virtualmachine->find($id);
             $v = $virtualmachine;
+            $user = auth()->user();
             if($virtualmachine){
             $data = [
                 'nome_vm' => strtoupper($request->input('nome_vm')),
@@ -249,7 +253,9 @@ class VirtualMachineController extends Controller
                 'orgao_id'    => $request->input('orgao_id'),
                 'cluster_id'  => $request->input('cluster_id'),
                 'projeto_id'  => $request->input('projeto_id'),                
-                'cluster' => $request->input('cluster'),                
+                'cluster' => $request->input('cluster'),
+                'alterador_id' => $user->id,      
+                'updated_at' => now(),          
             ];
             $virtualmachine->update($data);                       
             $v->vlans()->sync($request->input('vlans'));  //sincronização do relacionamento vlan n:n

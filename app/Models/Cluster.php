@@ -3,7 +3,6 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
 
 class Cluster extends Model
 {    
@@ -11,13 +10,15 @@ class Cluster extends Model
     protected $fillable = [        
         'nome_cluster',
         'total_memoria',
-        'total_processador',      
+        'total_processador',
+        'created_at',
+        'updated_at',      
     ];
 
-    public function hosts():HasMany{
+    public function hosts(){
         return $this->hasMany(Host::class);
     }
-    public function virtual_machines():HasMany{
-        return $this->hasMany(VirtualMachine::class,'id','cluster_id');
+    public function virtual_machines(){
+        return $this->hasMany(VirtualMachine::class);
     }
 }

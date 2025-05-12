@@ -80,12 +80,15 @@ class HostController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ]);
         }else{                 
+            $user = auth()->user();
             $data = [
                 'cluster_id' => $request->input('cluster_id'),
                 'obs_host'   => strtoupper($request->input('obs_host')),
                 'ip'         => $request->input('ip'),
                 'datacenter' => strtoupper($request->input('datacenter')),
-                'cluster'    => strtoupper($request->input('cluster')),            
+                'cluster'    => strtoupper($request->input('cluster')),
+                'criador_id' => $user->id,
+                'created_at' => now(),
             ];
             $host = $this->host->create($data);     
             $users = $host->users;  
@@ -144,12 +147,15 @@ class HostController extends Controller
         }else{           
             $host = $this->host->find($id);            
             if($host){
+                $user = auth()->user();
                 $data = [
                     'cluster_id' => $request->input('cluster_id'),
                     'obs_host'   => strtoupper($request->input('obs_host')),
                     'ip'         => $request->input('ip'),
                     'datacenter' => strtoupper($request->input('datacenter')),
-                    'cluster'    => strtoupper($request->input('cluster')),                   
+                    'cluster'    => strtoupper($request->input('cluster')),
+                    'alterador_id' => $user->id,
+                    'updated_at' => now(),
                 ];
                 $host->update($data);               
                 $h = Host::find($id);   

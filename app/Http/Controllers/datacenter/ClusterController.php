@@ -44,7 +44,7 @@ class ClusterController extends Controller
         $projetos = Projeto::all(); //todos os projetos        
         $orgaos = Orgao::all(); //todos os orgãos
         $ambientes = Ambiente::all(); //todos os ambientes
-        $vlans = Vlan::all();  //todas as vlans   
+        $vlans = Vlan::all();  //todas as vlans
         return view('datacenter.cluster.index',[
            'clusters' => $clusters,
              'vlans'           => $vlans,
@@ -85,7 +85,8 @@ class ClusterController extends Controller
             $data = [
                 'nome_cluster'      => strtoupper($request->input('nome_cluster')),
                 'total_memoria'     => $request->input('total_memoria'),
-                'total_processador' => $request->input('total_processador'),              
+                'total_processador' => $request->input('total_processador'),
+                'created_at' => now(),              
             ];            
             $cluster = $this->cluster->create($data);
             $user = auth()->user();
@@ -144,7 +145,8 @@ class ClusterController extends Controller
                         $data = [
                             'nome_cluster'      => strtoupper($request->input('nome_cluster')),
                             'total_memoria'     => $request->input('total_memoria'),
-                            'total_processador' => $request->input('total_processador'),                         
+                            'total_processador' => $request->input('total_processador'), 
+                            'updated_at' => now(),                  
                         ];
             $cluster->update($data);           
             $c = Cluster::find($id);
@@ -247,12 +249,15 @@ class ClusterController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ]);
         }else{
+            $user = auth()->user();
             $data = [
                 'cluster_id' => $request->input('cluster_id'),
                 'obs_host'   => strtoupper($request->input('obs_host')),
                 'ip'         => $request->input('ip'),
                 'datacenter' => strtoupper($request->input('datacenter')),
                 'cluster'    => strtoupper($request->input('cluster')),
+                'criador_id' => $user->id,
+                'created_at' => now(),
             ];
             $host = $this->host->create($data);
             $cluster = $this->cluster->find($host->cluster_id);
@@ -311,6 +316,7 @@ class ClusterController extends Controller
                 'errors'  => $validator->errors()->getMessages(),
             ]);
         }else{            
+            $user = auth()->user();
             $data = [
                 'nome_vm' => strtoupper($request->input('nome_vm')),
                 'cpu'     => $request->input('cpu'),
@@ -324,7 +330,9 @@ class ClusterController extends Controller
                 'orgao_id'    => $request->input('orgao_id'),
                 'cluster_id'  => $request->input('cluster_id'),
                 'projeto_id'  => $request->input('projeto_id'),
-                'cluster'     => $request->input('cluster'),               
+                'cluster'     => $request->input('cluster'),
+                'criador_id' => $user->id,
+                'created_at' => now(),
             ];
             $virtualmachine = $this->virtualmachine->create($data);                       
            

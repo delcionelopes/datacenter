@@ -10,7 +10,9 @@ class Cadastro_ip extends Model
     protected $fillable = [
         'rede_id',
         'ip',
-        'status',   
+        'status',
+        'created_at',
+        'updated_at',
     ];
     public function rede(){
         return $this->belongsTo(Rede::class,'rede_id','id');

@@ -12,7 +12,9 @@ class Rede extends Model
         'nome_rede',
         'mascara',
         'tipo_rede',
-        'vlan_id',     
+        'vlan_id',
+        'created_at',
+        'updated_at',     
     ];
 
     public function vlan():BelongsTo{

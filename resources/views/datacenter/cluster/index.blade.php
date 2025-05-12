@@ -260,7 +260,7 @@
                             <tr id="cluster{{$cluster->id}}">                                
                                 <th scope="row">{{$cluster->nome_cluster}}</th>
                                 <td>
-                                   <div class="btn-group">                                        
+                                   <div class="btn-group">
                                         @if($cluster->hosts()->count())
                                         <form action="{{route('datacenteradmin.host.host.index',['id' => $cluster->id,'color'=>$color])}}" method="get">
                                         <button type="submit" data-id="{{$cluster->id}}" class="list_host_btn fas fa-server" style="background: transparent;border:none;color: green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista HOSTS"> {{$cluster->hosts->count()}}</button>
@@ -702,8 +702,6 @@ $(document).ready(function(){
         $(document).on('click','.novo_vm_btn',function(e){
             e.preventDefault();
             var labelHtml = $(this).data("nomecluster");
-            var link = "{{asset('storage')}}";
-            
             $("#vm_addform").trigger('reset');
             $("#AddVirtualMachineModal").modal('show');
             $("#vm_add_cluster_id").val($(this).data("id"));

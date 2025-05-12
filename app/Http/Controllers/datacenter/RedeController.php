@@ -78,7 +78,8 @@ class RedeController extends Controller
                 'nome_rede' => strtoupper($request->input('nome_rede')),
                 'mascara'   => $request->input('mascara'),
                 'tipo_rede' => strtoupper($request->input('tipo_rede')),
-                'vlan_id'   => $request->input('vlan_id'),            
+                'vlan_id'   => $request->input('vlan_id'),
+                'created_at' => now(),            
             ];
             $rede = $this->rede->create($data);           
             $vl = $rede->vlan;
@@ -145,7 +146,8 @@ class RedeController extends Controller
                     'nome_rede' => strtoupper($request->input('nome_rede')),
                     'mascara'   => $request->input('mascara'),
                     'tipo_rede' => strtoupper($request->input('tipo_rede')),
-                    'vlan_id'   => $request->input('vlan_id'),                   
+                    'vlan_id'   => $request->input('vlan_id'),  
+                    'updated_at' => now(),                 
                 ];
                 $rede->update($data);              
                 $r = Rede::find($id);
@@ -171,10 +173,10 @@ class RedeController extends Controller
      * Método para exclusão de registro
      */
     public function destroy(int $id)
-    {
+    {         
         $rede = $this->rede->find($id);
-        $ips = $rede->cadastro_ips;
-        if($rede->cadastro_ips()->count()){
+        $ips = $rede->cadastro_ips;        
+        if($ips){
             if((auth()->user()->admin)&&(!(auth()->user()->inativo))){
                 foreach ($ips as $ip) {
                     $i = Cadastro_ip::find($ip->id);
@@ -203,12 +205,9 @@ class RedeController extends Controller
     public function storeIp(Request $request){
         $validator = Validator::make($request->all(),[            
             'ip'          => 'required|max:15',
-            'status'  => 'required|max:20',            
         ],[
             'ip.required'         => 'O campo IP é obrigatório!',
             'ip.max'              => 'O IP deve ter no máximo :max caracteres!',
-            'status.required' => 'O campo STATUS é obrigatório!',
-            'status.max'      => 'O STATUS deve ter no máximo :max caracteres!',            
         ]);
         if($validator->fails()){
             return response()->json([
@@ -219,7 +218,8 @@ class RedeController extends Controller
             $data = [
                 'rede_id' => $request->input('rede_id'),                
                 'ip'         => $request->input('ip'),
-                'status' => strtoupper($request->input('status')),                
+                'status' => strtoupper('LIVRE'),
+                'created_at' => now(),
             ];
             $cadastroIp = $this->cadastroIp->create($data);
             $rede = $cadastroIp->rede;

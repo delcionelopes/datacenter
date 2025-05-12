@@ -14,14 +14,16 @@ class Vlan extends Model
         'validade',
         'val_indefinida',
         'criador_id',
-        'alterador_id',       
+        'alterador_id',
+        'created_at',
+        'updated_at',       
     ];
 
     public function virtual_machines():BelongsToMany{
         return $this->belongsToMany(VirtualMachine::class,'vm_vlan','vlan_id','virtual_machine_id');
     }    
     public function redes(){
-        return $this->hasMany(Rede::class,'id','vlan_id');
+        return $this->hasMany(Rede::class);
     }
 
     public function users():BelongsToMany{

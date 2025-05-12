@@ -65,10 +65,6 @@
                         <label for="">IP</label>
                         <input type="text" class="ip form-control" data-mask="099.099.099.099">
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="">Status</label>
-                        <input type="text" class="status form-control">
-                    </div>                    
                 </form>
             </div>
             <div class="modal-footer">
@@ -153,7 +149,7 @@
                         <td><a href="{{route('datacenteradmin.vlan.vlan.index',['color'=>$color])}}">{{$vlan->nome_vlan}}</a></td>
                         <td>
                             <div class="btn-group">
-                                @if($rede->cadastro_ips->count())
+                                @if($rede->cadastro_ips()->count())
                                 <form action="{{route('datacenteradmin.ip.ip.index',['id' => $rede->id,'color'=>$color])}}" method="get">
                                     <button type="submit" data-id="{{$rede->id}}" class="list_ip_btn fas fa-network-wired" style="background: transparent;border: none;color:green; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Lista IPs"> {{$rede->cadastro_ips->count()}}</button>
                                 </form>
@@ -224,7 +220,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                                                       
                     $.ajax({
-                        url:'/datacenteradmin/delete-rede/'+id,
+                        url:'/datacenteradmin/rede/delete-rede/'+id,
                         type:'POST',                    
                         dataType:'json',
                         data:{
@@ -514,7 +510,6 @@ $(document).ready(function(){
                 loading.show();
             var data = {            
                 'ip': $(".ip").val(),
-                'status': $(".status").val(),            
                 'rede_id': $("#add_rede_id").val(),
                 '_method':'PUT',
                 '_token':CSRF_TOKEN,

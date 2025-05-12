@@ -66,7 +66,8 @@ class CadastroIpController extends Controller
             $data = [
                 'rede_id' => $request->input('rede_id'),
                 'ip' => $request->input('ip'),
-                'status' => strtoupper($request->input('status')),               
+                'status' => strtoupper($request->input('status')),
+                'created_at' => now(),               
             ];
             $cadastroIp = $this->cadastroIp->create($data);                      
             $rede = $cadastroIp->rede;
@@ -121,7 +122,8 @@ class CadastroIpController extends Controller
              if($cadastroIp){
                 $data = [
                     'rede_id' => $request->input('rede_id'),
-                    'ip' => $request->input('ip'),                                          
+                    'ip' => $request->input('ip'),
+                    'updated_at' => now(),                                          
                 ];
                 $cadastroIp->update($data);               
                 $c = Cadastro_ip::find($id);
@@ -161,7 +163,7 @@ class CadastroIpController extends Controller
      */
     public function status(Request $request, int $id){
         $vstatus = $request->input('pstatus');        
-        $data = ['status' => $vstatus];
+        $data = ['status' => $vstatus,'updated_at'=>now()];
         $cadastroIp = $this->cadastroIp->find($id);
         $cadastroIp->update($data);
         $ip = Cadastro_ip::find($id);
