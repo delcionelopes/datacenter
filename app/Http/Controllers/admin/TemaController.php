@@ -49,9 +49,11 @@ class TemaController extends Controller
                 'message' => $validator->errors()->getMessages(),
             ]);
         }else{        
-            $data['id'] = $this->maxId();
+            $id = $this->maxId();
+            $data['id'] = $id;
             $data['titulo'] = $request->input('titulo');
-            $data['descricao'] = $request->input('descricao');            
+            $data['descricao'] = $request->input('descricao');
+            $data['slug'] = $id;
             $data['created_at'] = now();
             $data['updated_at'] = null;
 

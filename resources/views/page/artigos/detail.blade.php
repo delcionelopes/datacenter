@@ -31,7 +31,7 @@
                                 <img src="../../user.png" class="rounded-circle" width="50">
                                 @endif
                                 <span class="caret"></span><br>                               
-                                {{utf8_encode(ucwords(strftime('%A, %d de %B de %Y', strtotime($artigo->created_at))))}}
+                                {{ucfirst(utf8_encode(strftime('%A, %d de %B de %Y', strtotime($artigo->created_at))))}}
                             </span>
                         </div>
                     </div>

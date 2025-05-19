@@ -28,11 +28,10 @@
                         <p class="post-meta">
                             Postado por
                             <a href="#!">{{$artigo->user->name}}</a>                            
-                            {{utf8_encode(ucwords(strftime('%A, %d de %B de %Y', strtotime($artigo->created_at))))}}
+                            {{ucfirst(utf8_encode(strftime('%A, %d de %B de %Y', strtotime($artigo->created_at))))}}
                             <a href="{{route('page.detail',['slug' => $artigo->slug])}}">
                                 <i class="fas fa-comment"></i> {{$artigo->comentarios()->count()}}
-                            </a> 
-                            <button type="button" id="enviar_email_btn" class="fas fa-mail-bulk" style="background: transparent; border: none;"></button>
+                            </a>
                         </p>
                     </div>
                     @empty

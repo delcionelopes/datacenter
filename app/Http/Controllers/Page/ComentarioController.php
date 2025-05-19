@@ -60,10 +60,10 @@ class ComentarioController extends Controller
     protected function maxidcomentario_inc(){
         $comentario = $this->comentario->orderByDesc('id')->first();
         if($comentario){
-            $codigo = $comentario->id+1;
+            $codigo = $comentario->id;
         }else{
-            $codigo = 1;
+            $codigo = 0;
         }
-        return $codigo;
+        return $codigo+1;
     }
 }

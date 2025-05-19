@@ -403,7 +403,6 @@ Route::group(['middleware'=> ['auth']],function(){
     Route::put('/perfil/{id}','HomeController@perfilUsuario')->name('perfil');  
     Route::post('/salvar-comentario','ComentarioController@salvarComentario');
     Route::delete('/delete-comentario/{id}','ComentarioController@deleteComentario');
-    Route::get('/enviar-email/{slug}','HomeController@enviarEmail');
   });
 
    //acesso ao sistema do datacenter

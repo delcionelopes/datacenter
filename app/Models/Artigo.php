@@ -4,12 +4,10 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-//use Cviebrock\EloquentSluggable\Sluggable;
 
 class Artigo extends Model
 {
     use HasFactory;
-  //  use Sluggable;    
     protected $table = 'artigos';
     protected $primaryKey = 'id';
     protected $fillable = 
@@ -43,16 +41,6 @@ class Artigo extends Model
     
     public function institucionais(){
         return $this->belongsToMany(Institucional::class,'institucional_has_artigo','artigos_id','institucional_id');
-    }
-
-  //public function sluggable():array{
-  //  return [
-  //          'slug' => [
-  //              'source' => ['id']
-  //          ],
-  //  ];
-
-//}
-
+    }  
     
 }

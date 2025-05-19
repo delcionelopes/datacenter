@@ -32,7 +32,7 @@ class HomeController extends Controller
     
     public function master(Request $request){
 
-        setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
         if(is_null($request->pesquisa)){
@@ -54,7 +54,7 @@ class HomeController extends Controller
     }
 
     public function detail($slug){        
-        setlocale(LC_ALL, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
         date_default_timezone_set('America/Sao_Paulo');
 
         $artigo = $this->artigo->whereSlug($slug)->first();
@@ -142,33 +142,5 @@ class HomeController extends Controller
     
     }
 
-    public function enviarEmail(Request $request, $slug){
-        $notificar = $request->input('notificar');        
-        //Atualizando o campo notificarassinante
-        $artigo = $this->artigo->whereSlug($slug)->first();
-        $data = [
-            'notificarassinantes'  => $notificar,
-        ];
-        $artigo->update($data);
-        if($notificar==1){
-        //Montando a lista de emails
-        $contatos = User::all('email');        
-        $emails = [];
-        $i=0;
-        foreach($contatos as $contato){
-            $emails[$i] = $contato->email;
-            $i++;
-        }
-        Mail::to($emails)->send(new SendMailUser($artigo));
-        }
-        return response()->json([
-            'status' => 200,
-            'id' => $artigo->id,
-            'slug' => $slug,
-            'notificar' => $notificar,
-        ]);
-    }
-
-
-    
+      
 }

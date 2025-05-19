@@ -16,6 +16,9 @@ class TemaArtigoController extends Controller
     }
 
     public function index($slug){
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        
         $tema = $this->tema->whereSlug($slug)->first();
         $artigos = $tema->artigos()->orderByDesc('id')->paginate(5);
         return view('page.temas',[
