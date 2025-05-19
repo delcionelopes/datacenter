@@ -23,7 +23,7 @@
                             <h1>{{$artigo->titulo}}</h1>
                             <h2 class="subheading">{{$artigo->descricao}}</h2>
                             <span class="meta">
-                                Postado por
+                                Setor {{$artigo->user->setor->sigla}} - Postado por
                                 <a href="#!">{{$artigo->user->name}}</a>
                                 @if($artigo->user->avatar)
                                 <img src="{{asset('/storage/'.$artigo->user->avatar)}}" class="rounded-circle" width="50">
