@@ -43,10 +43,10 @@
                                 <input type="text" required class="form-control" name="descricao" id="descricao" placeholder="Descrição do módulo">
                             </div>
                         </div>
-                        <div class="col-md-1">
+                        <div class="col-md-6">
                             <div class="form-group">
-                               <input type="hidden" id="color"> 
-                               <label for="color">Cores</label>
+                               <input type="hidden" id="color">
+                               <label for="color">Esquema de cores</label>
                                <div class="btn-group">
                                 <button type="button" id="corbtn" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
                                     <span class="caret"></span>
