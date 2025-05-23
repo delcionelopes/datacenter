@@ -25,6 +25,9 @@ class PrincipalController extends Controller
     }
 
     public function index(Request $request){
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+
         $user = auth()->user();        
         $autorizacao = $this->autorizacao->query()
                                 ->wherePerfil_id($user->perfil_id)
@@ -36,7 +39,10 @@ class PrincipalController extends Controller
         ]);
     }
 
-    public function operacoes(int $id, $color){        
+    public function operacoes(int $id, $color){
+        setlocale(LC_TIME, 'pt_BR', 'pt_BR.utf-8', 'pt_BR.utf-8', 'portuguese');
+        date_default_timezone_set('America/Sao_Paulo');
+        
         $user = auth()->user();        
         $autorizacao = $this->autorizacao->query()
                                 ->wherePerfil_id($user->perfil_id)
