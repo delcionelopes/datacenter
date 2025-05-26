@@ -86,7 +86,7 @@
   <div class="row no-gutters">
     <div class="col-md-4">
       <a href="" data-id="{{$ope->id}}" data-color="{{$aut->modulo->color}}" id="link" class="abrir">
-      <img src="{{asset('storage/'.$ope->ico)}}" class="card-img" alt="Capa da operação">
+      <img src="{{asset('storage/'.$ope->ico)}}" class="card-img" alt="{{$ope->nome}}">
       </a>
     </div>
     <div class="col-md-8">

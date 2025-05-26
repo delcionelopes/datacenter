@@ -53,7 +53,7 @@
   <div class="row no-gutters">
     <div class="col-md-4">
       <a href="{{route('datacenteradmin.principal.operacoes',['id' => $mod->id,'color'=>$mod->color])}}">
-      <img src="{{asset('storage/'.$mod->ico)}}" class="card-img" alt="Capa do módulo">
+      <img src="{{asset('storage/'.$mod->ico)}}" class="card-img" alt="{{$mod->nome}}">
       </a>
     </div>
     <div class="col-md-8">
