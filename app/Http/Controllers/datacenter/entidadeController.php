@@ -63,7 +63,8 @@ class entidadeController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'nome' => ['required','max:100'],
-            'sigla' => ['required','max:10'],
+            'sigla' => ['required','max:10'],            
+            'institucionais' => ['required','array','min:1'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -143,7 +144,8 @@ class entidadeController extends Controller
     {
         $validator = Validator::make($request->all(),[
             'nome' => ['required','max:100'],
-            'sigla' => ['required','max:10'],
+            'sigla' => ['required','max:10'],            
+            'institucionais' => ['required','array','min:1'],
         ]);
         if($validator->fails()){
             return response()->json([

@@ -78,7 +78,7 @@
                 <div class="container-fluid">
                     <div class="row">
                     <div class="card-group">
-                    @if($entidade->institucionais()->count()) 
+                    @if($entidade) 
                     @foreach($institucionais as $inst)                      
                      @foreach($entidade->institucionais as $institucional)
                      @if(($institucional->id)==($inst->id)) 

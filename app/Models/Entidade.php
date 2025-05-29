@@ -22,4 +22,5 @@ class Entidade extends Model
     public function institucionais(){
         return $this->belongsToMany(Institucional::class,'entidade_has_institucional','entidade_id','institucional_id');
     }
+         
 }

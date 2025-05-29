@@ -4,7 +4,6 @@ namespace App\Models;
 
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
@@ -19,6 +18,8 @@ class User extends Authenticatable
      *
      * @var array<int, string>
      */
+    protected $table = "users";
+    protected $primaryKey = "id";
     protected $fillable = [
         'name',
         'email',
@@ -89,12 +90,12 @@ class User extends Authenticatable
         return $this->belongsTo(Setor::class,'setor_id','idsetor');
     }
 
-    public function perfil():BelongsTo{
+    public function perfil(){
         return $this->belongsTo(Perfil::class,'perfil_id','id');
     }
 
     public function funcao(){
-        return $this->belongsTo(Funcao::class,'id');
+        return $this->belongsTo(Funcao::class,'funcao_id','id');
     }
 
 

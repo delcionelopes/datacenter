@@ -3,7 +3,7 @@
 @section('title', 'Módulos')
 
 @section('content')
-white-space:
+
 <!--index-->
 @auth
 <div class="container-fluid py-5">   

@@ -58,7 +58,9 @@ class ArtigoController extends Controller
         $validator = Validator::make($request->all(),[
             'titulo'    => ['required','max:100'],
             'descricao' => ['required','max:180'],
-            'conteudo'  => ['required'],        
+            'conteudo'  => ['required'],
+            'temas' => ['required','array','min:1'],
+            'institucionais' => ['required','array','min:1'],
         ]);
 
         if($validator->fails()){
@@ -138,6 +140,8 @@ class ArtigoController extends Controller
             'titulo'    => ['required','max:100'],
             'descricao' => ['required','max:180'],
             'conteudo'  => ['required'],        
+            'temas' => ['required','array','min:1'],
+            'institucionais' => ['required','array','min:1'],
         ]);
 
         if($validator->fails()){
