@@ -140,8 +140,8 @@ class ArtigoController extends Controller
             'titulo'    => ['required','max:100'],
             'descricao' => ['required','max:180'],
             'conteudo'  => ['required'],        
-            'temas' => ['required','array','min:1'],
-            'institucionais' => ['required','array','min:1'],
+            'temas' => ['required','min:1'],
+            'institucionais' => ['required','min:1'],
         ]);
 
         if($validator->fails()){
