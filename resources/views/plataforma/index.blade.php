@@ -70,16 +70,18 @@
 <!--fim EditPlataformaModal-->
 
 <!--index-->
-@auth
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
                 <form action="{{route('datacenteradmin.plataforma.plataforma.index',['color'=>$color])}}"  class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
+                        <nav class="navbar navbar-expand-md navbar-light bg-light">
                             <input type="text" name="pesquisanome" class="form-control rounded float-left" placeholder="Nome da plataforma" aria-label="Search" aria-describedby="search-addon">
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER"><i class="fas fa-search"></i></button>
                             <button type="button" class="AddPlataformaModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></button>
+                            <button data-color="{{$color}}" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></button>
+                        </nav>
                         </div>
                     </div>
                 </form>                
@@ -114,7 +116,6 @@
                   {{$plataformas->links()}}                       
     </div>
 </div>
-@endauth
 <!--fim index-->
 @stop
 
@@ -408,6 +409,12 @@
         $(".edit_plataforma").tooltip();    
     });
     ///fim tooltip
+
+    $(document).on('click','.voltarmenu_btn',function(e){
+        e.preventDefault();  
+        var color = $(this).data("color");
+        location.replace('/datacenteradmin/principal/operacoes/1/'+color);
+    });
     
     
     }); //fim do escopo geral
