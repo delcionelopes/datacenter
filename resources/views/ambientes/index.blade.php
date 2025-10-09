@@ -76,7 +76,7 @@
     <form action="{{route('datacenteradmin.ambiente.ambiente.index',['color'=>$color])}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">
-            <nav class="navbar navbar-expand-md navbar-light bg-light">            
+            <nav class="navbar navbar-expand-md navbar-light bg-light">
             <input type="text" name="nome" class="form-control rounded float-left" placeholder="nome do ambiente" aria-label="Search"
             aria-describedby="search-addon">
             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
