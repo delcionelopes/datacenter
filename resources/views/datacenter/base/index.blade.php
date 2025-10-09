@@ -356,6 +356,7 @@
             <form action="{{route('datacenteradmin.base.base.index',['id'=>$id,'color'=>$color])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
+                        <nav class="navbar navbar-expand-md navbar-light bg-light">
                             <input type="hidden" id="vmid" value="{{$id}}">  
                             <input type="hidden" id="vmnome" value="{{$vm->nome_vm}}">                        
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome da base" aria-label="Search" aria-describedby="search-addon">
@@ -364,7 +365,9 @@
                             </button>
                             <button type="button" data-id="{{$id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" data-nome_vm="{{$vm->nome_vm}}" class="AddBase_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
-                            </button>                              
+                            </button>
+                            <button data-color="{{$color}}" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;" onclick="history.back()"><i class="fas fa-door-open"></i></button>
+                        </nav>
                         </div>
                     </div>
             </form>    
@@ -1176,7 +1179,7 @@ $(document).ready(function(){
         $(".edit_base_btn").tooltip();
         $(".voltar_btn").tooltip();
     });
-    ///fim tooltip
+    ///fim tooltip    
 
     });
     

@@ -415,14 +415,13 @@
 <!-- fim EditSenhaVM -->
 
 <!--index-->
-@auth
 <div class="container-fluid py-5">
-    <div id="success_message"></div> 
-   
+    <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
             <form action="{{route('datacenteradmin.vm.vm.index',['id'=>$id,'color'=>$color])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
+                        <nav class="navbar navbar-expand-md navbar-light bg-light">
                             <input type="hidden" id="clusterid" value="{{$id}}">
                             <input type="hidden" id="vlanid" name="vlanid" value=""> 
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome da VM" aria-label="Search" aria-describedby="search-addon">
@@ -432,9 +431,11 @@
                             <button type="button" data-id="{{$id}}" data-setoradmin="{{auth()->user()->setor_idsetor}}" class="AddVMModal_btn input-group-text border-0 animate__animated animate__bounce animate__faster" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
+                            <button data-color="{{$color}}" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></button>
                             <a href="{{route('datacenteradmin.cluster.cluster.index',['color'=>$color])}}" type="button" data-id="{{$id}}" class="cluster_btn input-group-text border-0" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="CLUSTER">
                                {{$cluster->nome_cluster}}
                             </a>                            
+                        </nav>
                         </div>
                     </div>
             </form>    
@@ -516,7 +517,6 @@
                 <button type="button" class="voltar_btn fas fa-arrow-left" style="background: transparent; border: none; white-space: nowrap;" onclick="history.back()" data-html="true" data-placement="right" data-toggle="popover" title="Voltar para Cluster(s)"></button>
             </div>
 </div>
-@endauth
 <!--Fim Index-->
 @stop
 
@@ -1410,6 +1410,11 @@ $(document).ready(function(){
     });
     ///fim tooltip
 
+    $(document).on('click','.voltarmenu_btn',function(e){
+        e.preventDefault();  
+        var color = $(this).data("color");
+        location.replace('/datacenteradmin/cluster/index-cluster/'+color);
+    });
     
     });
     

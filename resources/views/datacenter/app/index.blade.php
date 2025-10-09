@@ -312,13 +312,13 @@
 <!-- fim EditSenhaApp -->
 
 <!-- início index -->
-@auth
 <div class="container-fluid py-5">
     <div id="success_message"></div>    
             <section class="border p-4 mb-4 d-flex align-items-left">
                 <form action="{{route('datacenteradmin.app.app.index',['id'=>$id,'color'=>$color])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
+                        <nav class="navbar navbar-expand-md navbar-light bg-light">
                             <input type="hidden" id="baseid" value="{{$id}}">
                             <input type="hidden" id="vmnome" value="{{$vm->nome_vm}}"> 
                             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do APP" aria-label="Search" aria-describedby="search-addon">
@@ -328,6 +328,8 @@
                             <button type="button" data-id="{{$id}}" data-nome_base="{{$bd->nome_base}}" class="AddApp_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent; border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                             <i class="fas fa-plus"></i>
                             </button>
+                            <button data-color="{{$color}}" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;" onclick="history.back()"><i class="fas fa-door-open"></i></button>
+                        </nav>
                         </div>
                     </div>
                 </form>
@@ -388,7 +390,6 @@
                 <button type="button" class="voltar_btn fas fa-arrow-left" style="background: transparent; border: none; white-space: nowrap;" onclick="history.back()" data-html="true" data-placement="right" data-toggle="popover" title="Voltar para BASE(s)"></button>
             </div>    
 </div>
-@endauth
 <!-- fim index -->
 @stop
 
