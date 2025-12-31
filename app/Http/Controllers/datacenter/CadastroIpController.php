@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\datacenter;
+namespace App\Http\Controllers\Datacenter;
 
 use App\Models\Cadastro_ip;
 use App\Http\Controllers\Controller;

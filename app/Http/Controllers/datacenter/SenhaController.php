@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Http\Controllers\datacenter;
+namespace App\Http\Controllers\Datacenter;
 
 use App\Http\Controllers\Controller;
 use App\Models\App;
