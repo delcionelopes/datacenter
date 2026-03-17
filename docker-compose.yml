@@ -1,68 +1,79 @@
 version: '3.8'
 services:
-#banco de dados
-  laravel_docker_datacenter_db:
-    image: postgres
-    container_name: laravel_docker_datacenter_db
-    volumes:
-      - pgsql:/var/lib/pgsql
-    environment:
-      - PGSQL_DATABASE=postgres
-      - PGSQL_USER=postgres
-      - PGSQL_PASSWORD=145236
-      - PGSQL_PORT=5432      
-    networks:
-      laraDockerEnvNetwork:
-        ipv4_address: 173.73.0.2
-
 #aplicação
-  laravel_docker_datacenter_app:
+  app:
     container_name: laravel_docker_datacenter_app
     build: 
       context: ./
-      dockerfile: Dockerfile
-    working_dir: /var/www
-    ports:
-      - "8081:80"
-    volumes:
-      - /var/www/storage
-      - ./:/var/www
+      dockerfile: docker/php/Dockerfile
+      args:
+        - APP_ENV=${APP_ENV}
+    restart: always
+    working_dir: /var/www   
     env_file: .env
+    volumes:
+      - ./:/var/www      
     environment:
-      - "DB_HOST=laravel_docker_datacenter_db"
-      - "DB_PORT=5432"
-    links:
-      - laravel_docker_datacenter_db
+      - COMPOSER_HOME=/composer
+      - COMPOSER_ALLOW_SUPERUSER=1
+      - APP_ENV=${APP_ENV}
+      - CONTAINER_ROLE=app
+      - APP_KEY=${APP_KEY}
+      #- DB_HOST=127.0.0.1
+      #- DB_PORT=5436
     depends_on:
-      - laravel_docker_datacenter_db
+      - db
     networks:
-      laraDockerEnvNetwork:
-        ipv4_address: 173.73.0.3
-
+      - mynet  
+    
 #servidor web - nginx
-  laravel_docker_datacenter_nginx:
-    container_name: laravel_docker_datacenter_nginx
+  nginx:
     build:
       context: ./
-      dockerfile: nginx.Dockerfile    
-    ports:
-      - "80:80"      
-    links:
-      - laravel_docker_datacenter_app
+      dockerfile: docker/nginx/Dockerfile    
+    container_name: laravel_docker_datacenter_nginx
+    restart: always
     volumes:
-      - ./:/var/www
-      - ./nginx/access.log:/var/log/nginx/access.log
-      - ./nginx/error.log:/var/log/nginx/error.log      
+      - ./:/var/www      
+      - ./docker/nginx:/etc/nginx/conf.d
+      - ./docker/nginx/access.log:/var/log/nginx/access.log
+      - ./docker/nginx/error.log:/var/log/nginx/error.log
     networks:
-      laraDockerEnvNetwork:
-        ipv4_address: 173.73.0.4
-
-networks:
-  laraDockerEnvNetwork:
-    driver: bridge
-    ipam:
-      config:
-        - subnet: 173.73.0.0/16
+      - mynet
+    ports:
+      - "80:80"
+    depends_on:    
+      - app
+   
+#servidor de banco de dados
+  db:
+    build:
+      context: ./
+      dockerfile: docker/db/DockerFile
+    container_name: laravel_docker_datacenter_db
+    env_file: .env
+    environment:
+      - POSTGRES_DB=${DB_DATABASE}
+      - POSTGRES_USER=${DB_USERNAME}
+      - POSTGRES_PASSWORD=${DB_PASSWORD}
+      - PGDATA=/var/lib/postgresql/data    
+    volumes:      
+      - $HOME/pgdata:/var/lib/postgresql/data
+      ##- ./docker/db/scripts/docker-user-create-db.sh:/docker-entrypoint-initdb.d/docker-user-create-db.sh  
+    networks:
+      - mynet
+    ports:
+      - "5436:5432"
+    restart: unless-stopped
 
 volumes:
-  pgsql:
+  pgdata:
+    driver: local
+
+networks:
+  mynet:
+    name: mynet
+    ipam:
+      driver: default
+      config:
+      - subnet: 172.20.0.0/16

@@ -14,10 +14,10 @@ class CreateTableModuloHasOperacao extends Migration
     public function up()
     {
         Schema::create('modulo_has_operacao', function (Blueprint $table) {
-            $table->smallInteger('id');
-            $table->integer('modulo_id');
-            $table->integer('operacao_id');
-
+            $table->id();
+            $table->unsignedBigInteger('modulo_id');
+            $table->unsignedBigInteger('operacao_id');
+            
             $table->primary(['id','modulo_id','operacao_id']);
             $table->foreign('modulo_id')->references('id')->on('modulo')->onDelete('cascade');
             $table->foreign('operacao_id')->references('id')->on('operacao')->onDelete('cascade');

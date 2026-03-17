@@ -14,13 +14,11 @@ class CreateTableEntidade extends Migration
     public function up()
     {
         Schema::create('entidade', function (Blueprint $table) {
-            $table->integer('id');
+            $table->id();
             $table->string('logo',200)->nullable();
             $table->string('nome',100)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
         });
     }
 

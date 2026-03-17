@@ -14,10 +14,9 @@ class CreateTableTemasArtigos extends Migration
     public function up()
     {
         Schema::create('temas_artigos', function (Blueprint $table) {
-            $table->integer('artigos_id');
-            $table->integer('temas_id');
-
-            $table->primary(['artigos_id','temas_id']);
+            $table->unsignedBigInteger('artigos_id');
+            $table->unsignedBigInteger('temas_id');
+            
             $table->foreign('artigos_id')->references('id')->on('artigos');
             $table->foreign('temas_id')->references('id')->on('temas');
         });

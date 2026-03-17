@@ -14,8 +14,8 @@ class CreateTableEquipamentoRede extends Migration
     public function up()
     {
         Schema::create('equipamento_rede', function (Blueprint $table) {
-            $table->integer('idequipamento_rede');
-            $table->integer('setor_idsetor')->nullable();
+            $table->bigIncrements('idequipamento_rede');
+            $table->unsignedBigInteger('setor_idsetor')->nullable();
             $table->string('nome',50)->nullable();
             $table->string('descricao',100)->nullable();
             $table->string('pass_admin',200)->nullable();
@@ -24,7 +24,6 @@ class CreateTableEquipamentoRede extends Migration
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
 
-            $table->primary('idequipamento_rede');
             $table->foreign('setor_idsetor')->references('idsetor')->on('setor');
             $table->foreign('alterador_id')->references('id')->on('users');
             $table->foreign('criador_id')->references('id')->on('users');

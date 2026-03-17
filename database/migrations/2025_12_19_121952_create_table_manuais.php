@@ -14,19 +14,18 @@ class CreateTableManuais extends Migration
     public function up()
     {
         Schema::create('manuais', function (Blueprint $table) {
-            $table->bigInteger('id');
-            $table->integer('setor_id')->nullable();
+            $table->id();
+            $table->unsignedBigInteger('setor_id')->nullable();
             $table->timestamp('data_criacao')->nullable();
             $table->timestamp('data_atualizacao')->nullable();
             $table->string('descricao',100)->nullable();
             $table->text('objetivo')->nullable();
             $table->text('manual')->nullable();
-            $table->integer('area_conhecimento_id');
+            $table->unsignedBigInteger('area_conhecimento_id')->nullable();
             $table->string('usuario',20)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
+            
             $table->foreign('area_conhecimento_id')->references('id')->on('area_conhecimento')->onDelete('cascade');
             $table->foreign('setor_id')->references('idsetor')->on('setor')->onDelete('cascade');            
         });

@@ -14,7 +14,7 @@ class CreateTableVlan extends Migration
     public function up()
     {
         Schema::create('vlan', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
             $table->string('nome_vlan',100)->nullable();
             $table->text('senha')->nullable();
             $table->timestamp('validade')->nullable();
@@ -23,8 +23,6 @@ class CreateTableVlan extends Migration
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->integer('criador_id')->nullable();
             $table->integer('alterador_id')->nullable();
-
-            $table->primary('id');
         });
     }
 

@@ -14,13 +14,10 @@ class CreateTablePlataformas extends Migration
     public function up()
     {
         Schema::create('plataformas', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
             $table->string('nome_plataforma',100)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
-            $table->unique('nome_plataforma');
         });
     }
 

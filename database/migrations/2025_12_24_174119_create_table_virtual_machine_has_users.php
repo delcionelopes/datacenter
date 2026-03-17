@@ -14,8 +14,8 @@ class CreateTableVirtualMachineHasUsers extends Migration
     public function up()
     {
         Schema::create('virtual_machine_has_users', function (Blueprint $table) {
-            $table->integer('virtual_machine_id');
-            $table->integer('user_id');
+            $table->unsignedBigInteger('virtual_machine_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->primary(['virtual_machine_id','user_id']);
             $table->foreign('virtual_machine_id')->references('id')->on('virtual_machine');

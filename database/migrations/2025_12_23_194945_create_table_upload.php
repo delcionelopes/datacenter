@@ -14,16 +14,15 @@ class CreateTableUpload extends Migration
     public function up()
     {
         Schema::create('upload', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
             $table->string('nome_arquivo',199)->nullable();
-            $table->integer('manual_id');
+            $table->unsignedBigInteger('manual_id')->nullable();
             $table->binary('arquivo')->nullable();
             $table->timestamp('data_atual')->nullable()->useCurrent();
             $table->string('path_arquivo',255)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
+           
             $table->foreign('manual_id')->references('id')->on('manuais')->onDelete('cascade');
         });
     }

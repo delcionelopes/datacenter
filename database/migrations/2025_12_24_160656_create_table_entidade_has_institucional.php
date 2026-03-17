@@ -14,8 +14,8 @@ class CreateTableEntidadeHasInstitucional extends Migration
     public function up()
     {
         Schema::create('entidade_has_institucional', function (Blueprint $table) {
-            $table->integer('entidade_id');
-            $table->integer('institucional_id');
+            $table->unsignedBigInteger('entidade_id');
+            $table->unsignedBigInteger('institucional_id');
 
             $table->primary(['entidade_id','institucional_id']);
             $table->foreign('entidade_id')->references('id')->on('entidade');

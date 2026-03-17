@@ -14,7 +14,7 @@ class CreateTableArtigos extends Migration
     public function up()
     {
         Schema::create('artigos', function (Blueprint $table) {
-            $table->integer('id');
+            $table->id();
             $table->string('titulo',100)->nullable();
             $table->string('descricao',190)->nullable();
             $table->text('conteudo');
@@ -23,8 +23,7 @@ class CreateTableArtigos extends Migration
             $table->integer('user_id')->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
+            
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }

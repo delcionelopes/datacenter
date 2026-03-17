@@ -14,10 +14,9 @@ class CreateTableVlanHasUsers extends Migration
     public function up()
     {
         Schema::create('vlan_has_users', function (Blueprint $table) {
-            $table->integer('vlan_id');
-            $table->integer('user_id');
-
-            $table->primary(['vlan_id','user_id']);
+            $table->unsignedBigInteger('vlan_id');
+            $table->unsignedBigInteger('user_id');
+            
             $table->foreign('vlan_id')->references('id')->on('vlan')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

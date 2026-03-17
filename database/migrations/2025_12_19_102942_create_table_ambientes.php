@@ -14,12 +14,10 @@ class CreateTableAmbientes extends Migration
     public function up()
     {
         Schema::create('ambientes', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
             $table->string('nome_ambiente',100)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
         });
     }
 

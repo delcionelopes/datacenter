@@ -1,0 +1,9 @@
+FROM postgres
+
+#COPY docker-user-create-db.sh .
+#RUN chmod +x ./docker-user-create-db.sh
+#ENTRYPOINT ["/docker-user-create-db.sh"]
+
+EXPOSE 5432
+
+CMD ["postgres"]
