@@ -14,10 +14,10 @@ class CreateTableApp extends Migration
     public function up()
     {
         Schema::create('app', function (Blueprint $table) {
-            $table->bigInteger('id');
-            $table->integer('orgao_id')->nullable();
-            $table->integer('projeto_id')->nullable();
-            $table->integer('base_id')->nullable();
+            $table->id();
+            $table->unsignedBigInteger('orgao_id')->nullable();
+            $table->unsignedBigInteger('projeto_id')->nullable();
+            $table->unsignedBigInteger('base_id')->nullable();
             $table->string('nome_app',100);
             $table->string('dominio',100)->nullable();
             $table->text('senha')->nullable();
@@ -28,8 +28,7 @@ class CreateTableApp extends Migration
             $table->integer('alterador_id')->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
+            
             $table->foreign('base_id')->references('id')->on('bases');
             $table->foreign('orgao_id')->references('id')->on('orgao');
             $table->foreign('projeto_id')->references('id')->on('projetos');

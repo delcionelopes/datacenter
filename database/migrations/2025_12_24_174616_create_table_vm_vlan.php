@@ -14,8 +14,8 @@ class CreateTableVmVlan extends Migration
     public function up()
     {
         Schema::create('vm_vlan', function (Blueprint $table) {
-            $table->integer('virtual_machine_id');
-            $table->integer('vlan_id');
+            $table->unsignedBigInteger('virtual_machine_id');
+            $table->unsignedBigInteger('vlan_id');
 
             $table->primary(['virtual_machine_id','vlan_id']);
             $table->foreign('virtual_machine_id')->references('id')->on('virtual_machine');

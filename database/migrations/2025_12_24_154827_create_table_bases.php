@@ -14,9 +14,9 @@ class CreateTableBases extends Migration
     public function up()
     {
         Schema::create('bases', function (Blueprint $table) {
-            $table->bigInteger('id');
-            $table->integer('projetos_id')->nullable();
-            $table->integer('virtual_machine_id')->nullable();
+            $table->id();
+            $table->unsignedBigInteger('projetos_id')->nullable();
+            $table->unsignedBigInteger('virtual_machine_id')->nullable();
             $table->string('nome_base',100);
             $table->string('ip',15)->nullable();
             $table->string('dono',50)->nullable();
@@ -28,9 +28,7 @@ class CreateTableBases extends Migration
             $table->integer('alterador_id')->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
-            $table->unique('nome_base');
+            
             $table->foreign('projetos_id')->references('id')->on('projetos')->onDelete('cascade');
             $table->foreign('virtual_machine_id')->references('id')->on('virtual_machine')->onDelete('cascade');
         });

@@ -14,13 +14,12 @@ class CreateTableSubAreaConhecimento extends Migration
     public function up()
     {
         Schema::create('sub_area_conhecimento', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
             $table->string('descricao',80)->nullable();
-            $table->integer('area_conhecimento_id')->nullable();
+            $table->unsignedBigInteger('area_conhecimento_id')->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
 
-            $table->primary('id');
             $table->foreign('area_conhecimento_id')->references('id')->on('area_conhecimento')->onDelete('cascade');
         });
     }

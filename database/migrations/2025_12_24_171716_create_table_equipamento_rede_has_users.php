@@ -14,8 +14,8 @@ class CreateTableEquipamentoRedeHasUsers extends Migration
     public function up()
     {
         Schema::create('equipamento_rede_has_users', function (Blueprint $table) {
-            $table->integer('equipamento_rede_idequipamento_rede');
-            $table->integer('users_id');
+            $table->bigIncrements('equipamento_rede_idequipamento_rede');
+            $table->unsignedBigInteger('users_id');
             $table->string('pass_user_equipamento')->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();

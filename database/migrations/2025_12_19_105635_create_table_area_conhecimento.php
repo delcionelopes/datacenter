@@ -14,7 +14,7 @@ class CreateTableAreaConhecimento extends Migration
     public function up()
     {
         Schema::create('area_conhecimento', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
             $table->string('descricao',80)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();

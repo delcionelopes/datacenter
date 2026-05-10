@@ -23,14 +23,21 @@
             <div class="modal-body form-horizontal">
                 <form id="addform" name="addform" class="form-horizontal" role="form">
                     <ul id="saveform_errList"></ul>
-
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Nome</label>
                         <input type="text" class="nome_orgao form-control">
                     </div>
-                    <div class="form-group mb3">
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Telefone</label>
                         <input type="text" class="telefone form-control" placeholder="(00)00000-0000" data-mask="(00)00000-0000">
+                    </div>
+                    </div>
                     </div>
                 </form>
                 <div class="modal-footer">
@@ -62,14 +69,22 @@
                     <ul id="updateform_errList"></ul>
 
                     <input type="hidden" id="edit_orgao_id">
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Nome</label>
                         <input type="text" id="edit_nome_orgao" class="nome_orgao form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Telefone</label>
                         <input type="text" id="edit_telefone" class="telefone form-control" placeholder="(00)00000-0000" data-mask="(00)00000-0000">
-                    </div>                    
+                    </div>           
+                    </div>
+                    </div>         
                 </form>
                 <div class="modal-footer">
                     <button type="button" data-color="{{$color}}" class="btn btn-default" data-dismiss="modal" >Fechar</button>

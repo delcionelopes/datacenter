@@ -14,10 +14,9 @@ class CreateTableInstitucionalHasArtigo extends Migration
     public function up()
     {
         Schema::create('institucional_has_artigo', function (Blueprint $table) {
-            $table->integer('institucional_id');
-            $table->integer('artigos_id');
-
-            $table->primary(['instituciona_id','artigos_id']);
+            $table->unsignedBigInteger('institucional_id');
+            $table->unsignedBigInteger('artigos_id');
+            
             $table->foreign('institucional_id')->references('id')->on('institucional')->onDelete('cascade');
             $table->foreign('artigos_id')->references('id')->on('artigos')->onDelete('cascade');
         });

@@ -23,19 +23,29 @@
             </div>
             <div class="modal-body form-horizontal">
             <form id="addmyform" name="addmyform" class="form-horizontal" role="form"> 
-                <ul id="saveform_errList"></ul>                
-                <div class="form-group mb-3">
+                <ul id="saveform_errList"></ul>
+                <div class="row">
+                <div class="col-md-12">
+                <div class="form-group">
                     <label for="">Nome do Cluster</label>
                     <input type="text" id="nome_cluster" class="nome_cluster form-control">
                 </div>
-                <div class="form-group mb-3">
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-md-6">
+                <div class="form-group">
                     <label for="">Total de Memória</label>
                     <input type="text" class="total_memoria form-control">
                 </div>
-                <div class="form-group mb-3">
+                </div>
+                <div class="col-md-6">
+                <div class="form-group">
                     <label for="">Total de Processador</label>
                     <input type="text" class="total_processador form-control">
-                </div>            
+                </div> 
+                </div>
+                </div>           
             </form>
             </div>
             <div class="modal-footer">
@@ -62,21 +72,35 @@
                 <form id="addform" name="addform" class="form-horizontal" role="form">
                     <input type="hidden" id="add_cluster_id">
                     <ul id="saveformHost_errList"></ul>
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Datacenter</label>
                         <input type="text" id="datacenter" class="datacenter form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">IP</label>
                         <input type="text" class="ip form-control" data-mask="099.099.099.099">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Cluster</label>
                         <input type="text" class="cluster form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Observações do Host</label>
                         <textarea name="obs_host" cols="30" rows="10" class="obs_host form-control"></textarea>
+                    </div>
+                    </div>
                     </div>
                 </form>
             </div>
@@ -115,16 +139,21 @@
                         <label for="">Cluster:</label>
                         <label for="" id="vm_nome_cluster" style="font-style:italic;"></label>
                         <input type="hidden" id="input_nome_cluster">
-                    </div>             
-                    <div class="form-group mb-3">
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Orgão</label>
                         <select name="vm_orgao_id" id="vm_orgao_id" class="custom-select">
                             @foreach($orgaos as $orgao)                            
                                 <option value="{{$orgao->id}}">{{$orgao->nome}}</option>
                             @endforeach                                
                         </select>
-                    </div>       
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Ambiente</label>
                         <select name="vm_ambiente_id" id="vm_ambiente_id" class="custom-select">
                             @foreach($ambientes as $ambiente)
@@ -132,25 +161,46 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Nome da VM</label>
                         <input type="text" class="vm_nome_vm form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">CPU</label>
                         <input type="text" class="vm_cpu form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Memória</label>
                         <input type="text" class="vm_memoria form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Disco</label>
                         <input type="text" class="vm_disco form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">IP</label>
                         <input type="text" class="vm_ip form-control" data-mask="099.099.099.099">
+                    </div>
+                    </div>
                     </div>
                     <div class="form-group mb-3">
                         <label for="">Resource Pool</label>
@@ -198,20 +248,29 @@
             <div class="modal-body form-horizontal">
             <form id="editmyform" name="editmyform" class="form-horizontal" role="form">
                 <ul id="updateform_errList"></ul>
-
                 <input type="hidden" id="edit_cluster_id">
+                <div class="row">
+                <div class="col-md-12">
                 <div class="form-group mb-3">
                     <label for="">Nome do Cluster</label>
                     <input type="text" id="edit_nome_cluster" class="nome_cluster form-control">
                 </div>
-                <div class="form-group mb-3">
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-md-6">
+                <div class="form-group">
                     <label for="">Total de Memória</label>
                     <input type="text" id="edit_total_memoria" class="total_memoria form-control">
                 </div>                
-                <div class="form-group mb-3">
+                </div>
+                <div class="col-md-6">
+                <div class="form-group">
                     <label for="">Total de Processador</label>
                     <input type="text" id="edit_total_processador" class="total_processador form-control">
-                </div>            
+                </div>           
+                </div>
+                </div> 
             </form>
             </div>
             <div class="modal-footer">

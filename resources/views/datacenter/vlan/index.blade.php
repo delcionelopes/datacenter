@@ -56,17 +56,28 @@
                 <form id="addredeform" name="addredeform" class="form-horizontal" role="form">
                     <input type="hidden" id="add_vlan_id">                    
                     <ul id="saveformrede_errList"></ul>
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Nome REDE</label>
                         <input type="text" id="nome_rede" class="nome_rede form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Máscara</label>
                         <input type="text" class="mascara form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Tipo REDE</label>
                         <input type="text" class="tipo_rede form-control">
+                    </div>
+                    </div>
                     </div>
                 </form>
             </div>
@@ -132,20 +143,30 @@
                     <div class="form-group mb-3">
                         <label  for="">Nome da VLAN:</label>
                         <label  id="nomevlan"></label>
-                    </div>                    
-                    <div class="form-group mb-3">
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Senha</label>
                         <input type="text" class="add_senha form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Validade</label>
                         <input type="text" class="add_validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
                     </div>
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-check">
                         <label class="form-check-label" for="flexCheck"> 
                         <input type="checkbox" class="add_val_indefinida form-check-input" name="add_val_indefinida" id="flexCheck"> Validade indeterminada
                         </label>
-                    </div>         
+                    </div>
+                    </div>
+                    </div>
+
                      </fieldset>
                     </div>
                     </div>
@@ -214,20 +235,29 @@
                         <label  for="">Modificador:</label>
                         <label  id="editmodificador"></label>
                     </div>
-                    <div class="form-group mb-3">
+
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Senha</label>
                         <input type="text" id="edit_senha" class="senha form-control">
                         <label for=""><small id="senhavencida" style="color: red">Senha vencida!</small></label>
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Validade</label>
                         <input type="text" id="edit_validade" class="validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
                     </div>
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-check">
                         <label class="form-check-label" for="edit_val_indefinida"> 
                         <input type="checkbox" class="val_indefinida form-check-input" name="edit_val_indefinida" id="edit_val_indefinida"> Validade indeterminada
                         </label>
-                    </div>                
+                    </div>    
+                    </div>           
+                    </div>     
                     </fieldset>    
                     </div>
                     </div>

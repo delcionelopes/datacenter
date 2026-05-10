@@ -14,8 +14,8 @@ class CreateTableAppHasUsers extends Migration
     public function up()
     {
         Schema::create('app_has_users', function (Blueprint $table) {
-            $table->integer('app_id');
-            $table->integer('user_id');
+            $table->unsignedBigInteger('app_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->primary(['app_id','user_id']);
             $table->foreign('app_id')->references('id')->on('app');

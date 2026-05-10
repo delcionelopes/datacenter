@@ -15,8 +15,8 @@ class CreateTableHosts extends Migration
     public function up()
     {
         Schema::create('hosts', function (Blueprint $table) {
-            $table->BigInteger('id');
-            $table->integer('cluster_id')->nullable();
+            $table->id();
+            $table->unsignedBigInteger('cluster_id')->nullable();
             $table->text('obs_host')->nullable();
             $table->string('ip',15)->nullable();
             $table->string('datacenter',50)->nullable();
@@ -28,8 +28,7 @@ class CreateTableHosts extends Migration
             $table->integer('alterador_id')->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
+            
             $table->foreign('cluster_id')->references('id')->on('cluster')->onDelete('cascade');
         });
     }

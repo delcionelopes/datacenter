@@ -14,14 +14,12 @@ class CreateTableCluster extends Migration
     public function up()
     {
         Schema::create('cluster', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
             $table->string('nome_cluster',100)->nullable();
             $table->string('total_memoria',15)->nullable();
             $table->string('total_processador',15)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
         });
     }
 

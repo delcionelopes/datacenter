@@ -23,14 +23,22 @@
             </div>
             <div class="modal-body form-horizontal">
             <form id="addform" name="addform" class="form-horizontal" role="form">                 
-                <ul id="saveform_errList"></ul>                   
+                <ul id="saveform_errList"></ul>
+                <div class="row">
+                <div class="col-md-6">
                 <div class="form-group mb-2">
                     <label for="">Sigla</label>
                     <input type="text" class="sigla_setor form-control">
-                </div>                
-                    <div class="form-group mb-3">
+                </div>           
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-md-12">     
+                <div class="form-group">
                     <label for="">Nome</label>
                     <input type="text" class="nome_setor form-control">
+                </div>
+                </div>
                 </div>
             </form>            
             </div>
@@ -59,14 +67,22 @@
             <form id="editform" name="editform" class="form-horizontal" role="form">                
                 <ul id="updateform_errList"></ul>               
                 <input type="hidden" id="edit_setor_id">
-                <div class="form-group mb-3">
+                <div class="row">
+                <div class="col-md-6">
+                <div class="form-group">
                     <label for="edit_sigla_setor">Sigla</label>
                     <input type="text" id="edit_sigla_setor" class="sigla_setor form-control">
                 </div>         
-                <div class="form-group mb-3">
+                </div>
+                </div>
+                <div class="row">
+                <div class="col-md-12">
+                <div class="form-group">
                     <label for="edit_nome_setor">Nome</label>
                     <input type="text" id="edit_nome_setor" class="nome_setor form-control">
                 </div>         
+                </div>
+                </div>
             </form>
             </div>
             <div class="modal-footer">

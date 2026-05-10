@@ -14,10 +14,9 @@ class CreateTableHostsHasUsers extends Migration
     public function up()
     {
         Schema::create('hosts_has_users', function (Blueprint $table) {
-            $table->integer('host_id');            
-            $table->integer('user_id');
-
-            $table->primary(['host_id','user_id']);
+            $table->unsignedBigInteger('host_id');            
+            $table->unsignedBigInteger('user_id');
+            
             $table->foreign('host_id')->references('id')->on('hosts')->onDelete('cascade');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });

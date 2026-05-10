@@ -14,13 +14,11 @@ class CreateTableOrgao extends Migration
     public function up()
     {
         Schema::create('orgao', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
             $table->string('nome',100)->nullable();
             $table->string('telefone',15)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
         });
     }
 

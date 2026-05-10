@@ -14,16 +14,15 @@ class CreateTableAutorizacao extends Migration
     public function up()
     {
         Schema::create('autorizacao', function (Blueprint $table) {
-            $table->integer('id');
-            $table->integer('perfil_id')->nullable();
-            $table->integer('modulo_has_operacao_operacao_id')->nullable();
-            $table->integer('modulo_has_operacao_modulo_id')->nullable();
+            $table->id();
+            $table->unsignedBigInteger('perfil_id')->nullable();
+            $table->unsignedBigInteger('modulo_has_operacao_operacao_id')->nullable();
+            $table->unsignedBigInteger('modulo_has_operacao_modulo_id')->nullable();
             $table->integer('user_creater')->nullable();
             $table->integer('user_updater')->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
 
-            $table->primary('id');
             $table->foreign('modulo_has_operacao_modulo_id')->references('id')->on('modulo')->onDelete('cascade');
             $table->foreign('modulo_has_operacao_operacao_id')->references('id')->on('operacao')->onDelete('cascade');
             $table->foreign('perfil_id')->references('id')->on('perfil')->onDelete('cascade');            

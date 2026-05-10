@@ -14,14 +14,12 @@ class CreateTableTemas extends Migration
     public function up()
     {
         Schema::create('temas', function (Blueprint $table) {
-            $table->integer('id');
+            $table->id();
             $table->string('titulo',100)->nullable();
             $table->string('descricao',190)->nullable();
             $table->string('slug',190)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
-            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
+            $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();            
         });
     }
 

@@ -14,15 +14,14 @@ class CreateTableRede extends Migration
     public function up()
     {
         Schema::create('rede', function (Blueprint $table) {
-            $table->bigInteger('id');
-            $table->integer('vlan_id')->nullable();
+            $table->id();
+            $table->unsignedBigInteger('vlan_id')->nullable();
             $table->string('nome_rede',100)->nullable();
             $table->string('mascara',15)->nullable();
             $table->string('tipo_rede',20)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
+            
             $table->foreign('vlan_id')->references('id')->on('vlan');
         });
     }
