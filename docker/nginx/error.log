@@ -12784,6 +12784,7 @@
 2026/03/17 14:51:25 [notice] 1#1: start worker process 33
 2026/03/17 14:51:25 [notice] 1#1: start worker process 34
 2026/03/17 14:51:25 [notice] 1#1: start worker process 35
+<<<<<<< HEAD
 2026/03/18 12:02:47 [notice] 1#1: using the "epoll" event method
 2026/03/18 12:02:47 [notice] 1#1: nginx/1.29.5
 2026/03/18 12:02:47 [notice] 1#1: built by gcc 14.2.0 (Debian 14.2.0-19) 
@@ -17878,3 +17879,5 @@
 2026/05/10 14:25:27 [notice] 1#1: start worker process 33
 2026/05/10 14:25:27 [notice] 1#1: start worker process 34
 2026/05/10 14:25:27 [notice] 1#1: start worker process 35
+=======
+>>>>>>> 4e40b56822fcee4b40f412e7b064402802ad267d

@@ -237,6 +237,7 @@
 172.20.0.1 - - [10/Mar/2026:02:57:22 +0000] "GET /favicon.ico HTTP/1.1" 304 0 "http://localhost/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
 172.20.0.1 - - [10/Mar/2026:03:00:39 +0000] "GET /work HTTP/1.1" 404 27 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
 172.20.0.1 - - [10/Mar/2026:03:00:51 +0000] "GET /work HTTP/1.1" 404 27 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/145.0.0.0 Safari/537.36"
+<<<<<<< HEAD
 172.20.0.1 - - [18/Mar/2026:13:44:24 +0000] "GET / HTTP/1.1" 404 27 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
 172.20.0.1 - - [18/Mar/2026:13:44:33 +0000] "GET /template-local/ HTTP/1.1" 404 27 "-" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
 172.20.0.1 - - [18/Mar/2026:13:44:33 +0000] "GET /favicon.ico HTTP/1.1" 200 1317 "http://localhost/template-local/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/146.0.0.0 Safari/537.36"
@@ -656,3 +657,5 @@
 172.20.0.1 - - [10/May/2026:19:30:22 +0000] "GET / HTTP/1.1" 200 12276 "http://localhost/datacenteradmin/principal/operacoes/2/success" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
 172.20.0.1 - - [10/May/2026:19:30:26 +0000] "POST /logout HTTP/1.1" 302 322 "http://localhost/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
 172.20.0.1 - - [10/May/2026:19:30:26 +0000] "GET / HTTP/1.1" 200 11412 "http://localhost/" "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/147.0.0.0 Safari/537.36"
+=======
+>>>>>>> 4e40b56822fcee4b40f412e7b064402802ad267d

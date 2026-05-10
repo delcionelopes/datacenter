@@ -21,6 +21,7 @@
             <div class="modal-body form-horizontal">
                 <form id="addform" name="addform" class="form-horizontal" role="form">
                     <ul id="saveform_errList"></ul>
+<<<<<<< HEAD
                     <div class="row">
                     <div class="col-md-12">
                     <div class="form-group">
@@ -37,6 +38,17 @@
                     </div>
                     </div>
                     </div>
+=======
+
+                    <div class="form-group mb-3">
+                        <label for="">Nome</label>
+                        <input type="text" class="nome_orgao form-control">
+                    </div>
+                    <div class="form-group mb3">
+                        <label for="">Telefone</label>
+                        <input type="text" class="telefone form-control" placeholder="(00)00000-0000" data-mask="(00)00000-0000">
+                    </div>
+>>>>>>> 4e40b56822fcee4b40f412e7b064402802ad267d
                 </form>
                 <div class="modal-footer">
                     <button type="button" data-color="<?php echo e($color); ?>" class="btn btn-default" data-dismiss="modal">Fechar</button>
@@ -67,6 +79,7 @@
                     <ul id="updateform_errList"></ul>
 
                     <input type="hidden" id="edit_orgao_id">
+<<<<<<< HEAD
                     <div class="row">
                     <div class="col-md-12">
                     <div class="form-group">
@@ -83,6 +96,16 @@
                     </div>           
                     </div>
                     </div>         
+=======
+                    <div class="form-group mb-3">
+                        <label for="">Nome</label>
+                        <input type="text" id="edit_nome_orgao" class="nome_orgao form-control">
+                    </div>
+                    <div class="form-group mb-3">
+                        <label for="">Telefone</label>
+                        <input type="text" id="edit_telefone" class="telefone form-control" placeholder="(00)00000-0000" data-mask="(00)00000-0000">
+                    </div>                    
+>>>>>>> 4e40b56822fcee4b40f412e7b064402802ad267d
                 </form>
                 <div class="modal-footer">
                     <button type="button" data-color="<?php echo e($color); ?>" class="btn btn-default" data-dismiss="modal" >Fechar</button>
