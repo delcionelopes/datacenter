@@ -14,13 +14,11 @@ class CreateTableSetor extends Migration
     public function up()
     {
         Schema::create('setor', function (Blueprint $table) {
-            $table->integer('idsetor');
+            $table->bigIncrements('idsetor');
             $table->string('sigla','10')->nullable();
             $table->string('nome',50)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('idsetor');
         });
     }
 

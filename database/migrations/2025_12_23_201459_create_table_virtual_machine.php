@@ -14,7 +14,7 @@ class CreateTableVirtualMachine extends Migration
     public function up()
     {
         Schema::create('virtual_machine', function (Blueprint $table) {
-            $table->bigInteger('id');
+            $table->id();
             $table->string('nome_vm',100)->nullable();
             $table->float('cpu')->nullable();
             $table->float('memoria')->nullable();
@@ -24,10 +24,10 @@ class CreateTableVirtualMachine extends Migration
             $table->string('cluster',50)->nullable();
             $table->string('sistema_operacional',80)->nullable();
             $table->string('gatway',20)->nullable();
-            $table->integer('ambiente_id')->nullable();
-            $table->integer('orgao_id')->nullable();
-            $table->integer('cluster_id')->nullable();
-            $table->integer('projeto_id')->nullable();
+            $table->unsignedBigInteger('ambiente_id')->nullable();
+            $table->unsignedBigInteger('orgao_id')->nullable();
+            $table->unsignedBigInteger('cluster_id')->nullable();
+            $table->unsignedBigInteger('projeto_id')->nullable();
             $table->timestamp('validade')->nullable();
             $table->integer('val_indefinida')->nullable();
             $table->text('senha')->nullable();
@@ -35,8 +35,7 @@ class CreateTableVirtualMachine extends Migration
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
             $table->integer('criador_id')->nullable();
             $table->integer('alterador_id')->nullable();
-
-            $table->primary('id');
+            
             $table->foreign('ambiente_id')->references('id')->on('ambientes')->onDelete('cascade');
             $table->foreign('orgao_id')->references('id')->on('orgao')->onDelete('cascade');
             $table->foreign('cluster_id')->references('id')->on('cluster')->onDelete('cascade');

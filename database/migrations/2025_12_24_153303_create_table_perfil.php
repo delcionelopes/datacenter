@@ -14,12 +14,23 @@ class CreateTablePerfil extends Migration
     public function up()
     {
         Schema::create('perfil', function (Blueprint $table) {
-            $table->integer('id');
+            $table->id();
             $table->string('nome',20)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
+        });
 
-            $table->primary('id');
+        Schema::table('users',function(Blueprint $table){
+            $table->unsignedBigInteger('perfil_id')->nullable();
+            $table->unsignedBigInteger('orgao_id')->nullable();
+            $table->unsignedBigInteger('setor_id')->nullable();
+            $table->unsignedBigInteger('funcao_id')->nullable();
+
+            $table->foreign('perfil_id')->references('id')->on('perfil');
+            $table->foreign('orgao')->references('id')->on('orgao');
+            $table->foreign('setor_id')->references('idsetor')->on('setor');
+            $table->foreign('funcao_id')->references('id')->on('funcao');
+
         });
     }
 

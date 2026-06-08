@@ -39,7 +39,7 @@ class ModuloController extends Controller
             $modulos = $this->modulo->orderByDesc('id')->paginate(6);
         }else{
             $query = $this->modulo->query()
-                          ->where('nome','LIKE','$'.strtoupper($request->pesquisa).'%');
+                          ->where('nome','LIKE','%'.strtoupper($request->pesquisa).'%');
             $modulos = $query->orderByDesc('id')->paginate(6);
         }
         return view('caos.modulo.index',[

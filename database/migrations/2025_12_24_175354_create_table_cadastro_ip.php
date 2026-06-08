@@ -14,15 +14,13 @@ class CreateTableCadastroIp extends Migration
     public function up()
     {
         Schema::create('cadastro_ip', function (Blueprint $table) {
-            $table->bigInteger('id');
-            $table->integer('rede_id');
+            $table->id();
+            $table->unsignedBigInteger('rede_id');
             $table->string('ip',15);            
             $table->string('status',20)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
-            $table->unique('ip');
+            
             $table->foreign('rede_id')->references('id')->on('rede');
         });
     }

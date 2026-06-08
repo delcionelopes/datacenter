@@ -14,8 +14,8 @@ class CreateTableBasesHasUsers extends Migration
     public function up()
     {
         Schema::create('bases_has_users', function (Blueprint $table) {
-            $table->integer('base_id');
-            $table->integer('user_id');
+            $table->unsignedBigInteger('base_id');
+            $table->unsignedBigInteger('user_id');
 
             $table->primary(['base_id','user_id']);
             $table->foreign('base_id')->references('id')->on('bases');

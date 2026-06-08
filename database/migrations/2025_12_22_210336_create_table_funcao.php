@@ -14,13 +14,11 @@ class CreateTableFuncao extends Migration
     public function up()
     {
         Schema::create('funcao', function (Blueprint $table) {
-            $table->integer('id');
+            $table->id();
             $table->string('nome',30)->nullable();
             $table->string('descricao',50)->nullable();
             $table->timestamp('created_at')->nullable()->useCurrent();
             $table->timestamp('updated_at')->nullable()->useCurrentOnUpdate();
-
-            $table->primary('id');
         });
     }
 

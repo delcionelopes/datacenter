@@ -63,14 +63,14 @@
         {{-- Login field --}}
         <div class="row">
             <div class="col-7">
-                <div class="icheck-primary" title="Lembre me">
+            <!--    <div class="icheck-primary" title="Lembre me">
                     <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
                     <label for="remember">
                         {{ __('adminlte::adminlte.remember_me') }}
                     </label>
-                </div>
-            </div>
+                </div>  -->
+             </div>
 
             <div class="col-5">
                 <button type=submit class="btn btn-block {{ config('adminlte.classes_auth_btn', 'btn-flat btn-primary') }}">
@@ -86,11 +86,11 @@
 @section('auth_footer')
     {{-- Password reset link --}}
     @if($password_reset_url)
-        <p class="my-0">            
+       <!-- <p class="my-0">            
             <a href="{{ route('forget.password.get') }}"> 
                 Esqueci a minha senha
             </a>
-        </p>
+        </p> -->
     @endif
 
     {{-- Register link --}}

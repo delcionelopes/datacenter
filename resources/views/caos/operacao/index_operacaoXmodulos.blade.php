@@ -5,28 +5,33 @@
 @section('content')
 
 <!--index-->
-@auth
+
 <div class="container-fluid py-5">   
     <div id="success_message"></div>    
 
     <section class="border p-4 mb-4 d-flex align-items-left">
     
-    <form action="{{route('ceteaadmin.operacao.index')}}" class="form-search" method="GET">
+    <form action="{{route('datacenteradmin.operacao.index')}}" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">            
             <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="nome da operação" aria-label="Search"
             aria-describedby="search-addon">
-            <button type="submit" class="input-group-text border-0" id="search-addon" style="background: transparent;border: none;">
+            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                 <i class="fas fa-search"></i>
             </button>            
             
-            <a href="{{route('datacenteradmin.operacao.create')}}" type="button" class="AddModuloModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-plus"></i></a>
+            <a href="{{route('datacenteradmin.operacao.create')}}" type="button" class="AddModuloModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></a>
+            <button type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Sair"><i class="fas fa-door-open"></i></button>
             
             </div>            
             </div>        
             </form>                     
   
     </section>    
+     <section class="content border p-4 mb-4 d-flex">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
             
                     <table class="table table-hover">
                         <thead class="sidebar-dark-primary" style="color: white">
@@ -59,7 +64,7 @@
                                         </button>
                                         <ul class="dropdown-menu" id="dropdown{{$operacao->id}}">
                                             @foreach($operacao->modulos as $modulo)                                                                                                            
-                                            <li class="dropdown-item"><a href="{{route('ceteaadmin.operacao.operacaoxmodulo',['modulo_id'=>$modulo->id])}}" class="dropdown-item">{{$modulo->nome}}</a></li>
+                                            <li class="dropdown-item"><a href="{{route('datacenteradmin.operacao.operacaoxmodulo',['modulo_id'=>$modulo->id])}}" class="dropdown-item">{{$modulo->nome}}</a></li>
                                             @endforeach
                                         </ul>                                           
                                         @endif                               
@@ -83,10 +88,13 @@
                     {{$operacoes->links()}}
                     </div>  
    
-    </div>        
+        </div>
+        </div>
+        </div>
+    </section>   
     
 </div>
-@endauth
+
 <!--End Index-->
 @stop
 
@@ -157,6 +165,19 @@ $(document).ready(function(){
        
       
     });  ///fim delete
+
+     ///tooltip
+    $(function(){             
+        $(".AddModuloModal_btn").tooltip();
+        $(".pesquisa_btn").tooltip();                
+        $(".voltarmenu_btn").tooltip();    
+    });
+    ///fim tooltip
+
+    $(document).on('click','.voltarmenu_btn',function(e){
+        e.preventDefault();
+        location.replace('/datacenteradmin/seguranca/index-seguranca');       
+    });
 
 
 });
