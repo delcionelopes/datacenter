@@ -11,7 +11,7 @@
 </style>
 
 <!--index-->
-@auth
+
 <div class="container-fluid py-5">   
     <div id="success_message"></div>    
 
@@ -33,7 +33,11 @@
             </div>        
             </form>                     
   
-    </section>    
+    </section>        
+  <section class="content border p-4 mb-4 d-flex">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
             
                     <table class="table table-hover">
                         <thead class="bg-{{$color}}" style="color: white">
@@ -67,10 +71,13 @@
                     {{$entidades->links()}}
                     </div>  
    
-    </div>        
+       </div>
+        </div>
+        </div>
+    </section>       
     
 </div>
-@endauth
+
 
 @stop
 

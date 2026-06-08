@@ -35,15 +35,20 @@
                     <div class="form-group mb-3">
                         <label for="">Cluster:</label>
                         <label for="" id="nome_cluster" style="font-style:italic;">{{$cluster->nome_cluster}}</label>
-                    </div>             
-                    <div class="form-group mb-3">
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Orgão</label>
                         <select name="orgao_id" id="orgao_id" class="custom-select">
                             @foreach($orgaos as $orgao)                            
                                 <option value="{{$orgao->id}}">{{$orgao->nome}}</option>
                             @endforeach                                
                         </select>
-                    </div>       
+                    </div>
+                    </div>
+                    <div class="col">
                     <div class="form-group mb-3">
                         <label for="">Ambiente</label>
                         <select name="ambiente_id" id="ambiente_id" class="custom-select">
@@ -52,26 +57,48 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Nome da VM</label>
                         <input type="text" class="nome_vm form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">CPU</label>
                         <input type="text" class="cpu form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Memória</label>
                         <input type="text" class="memoria form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Disco</label>
                         <input type="text" class="disco form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">IP</label>
                         <input type="text" class="ip form-control" data-mask="099.099.099.099">
                     </div>
+                    </div>
+                    </div>
+
                     <div class="form-group mb-3">
                         <label for="">Resource Pool</label>
                         <input type="text" class="resource_pool form-control">
@@ -135,10 +162,15 @@
                         <label for="">Nome da base</label>
                         <input type="text" class="nome_base form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">IP</label>
                         <input type="text" class="baseip form-control" data-mask="099.099.099.099">
                     </div>
+                    </div>
+                    </div>
+
                     <div class="form-group mb-3">
                         <label for="">Dono</label>
                         <input type="text" class="dono form-control">
@@ -193,8 +225,11 @@
                                 <option value="{{$orgao->id}}">{{$orgao->nome}}</option>
                             @endforeach                                
                         </select>
-                    </div>       
-                    <div class="form-group mb-3">
+                    </div>   
+                    
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Ambiente</label>
                         <select name="ambiente_id" id="ambiente_id" class="custom-select">
                             @foreach($ambientes as $ambiente)
@@ -202,26 +237,45 @@
                             @endforeach
                         </select>
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Nome da VM</label>
                         <input type="text" id="nome_vm" class="nome_vm form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">CPU</label>
                         <input type="text" id="cpu" class="cpu form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Memória</label>
                         <input type="text" id="memoria" class="memoria form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Disco</label>
                         <input type="text" id="disco" class="disco form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">IP</label>
                         <input type="text" id="ip" class="ip form-control" data-mask="099.099.099.099">
                     </div>
+                    </div>
+                    </div>
+
                     <div class="form-group mb-3">
                         <label for="">Resource Pool</label>
                         <input type="text" id="resource_pool" class="resource_pool form-control">
@@ -281,19 +335,28 @@
                         <label  for="">Cluster/IP:</label>
                         <label  id="clusterip"></label>
                     </div>
-                    <div class="form-group mb-3">
+
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Senha</label>
                         <input type="text" class="add_senha form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Validade</label>
                         <input type="text" class="add_validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
                     </div>
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-check">
                         <label class="form-check-label" for="flexCheck"> 
                         <input type="checkbox" class="add_val_indefinida form-check-input" name="add_val_indefinida" id="flexCheck"> Validade indeterminada
                         </label>
                     </div>         
+                    </div>
+                    </div>
                      </fieldset>
                     </div>
                     </div>
@@ -366,20 +429,30 @@
                         <label  for="">Modificador:</label>
                         <label  id="editmodificador"></label>
                     </div>
-                    <div class="form-group mb-3">
+
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Senha</label>
                         <input type="text" id="edit_senha" class="senha form-control">
                         <label for=""><small id="senhavencida" style="color: red">Senha vencida!</small></label>
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Validade</label>
                         <input type="text" id="edit_validade" class="validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
                     </div>
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-check">
                         <label class="form-check-label" for="edit_val_indefinida"> 
                         <input type="checkbox" class="val_indefinida form-check-input" name="edit_val_indefinida" id="edit_val_indefinida"> Validade indeterminada
                         </label>
-                    </div>                
+                    </div>           
+                    </div>
+                    </div>
+
                     </fieldset>    
                     </div>
                     </div>
@@ -441,6 +514,10 @@
                     </div>
             </form>    
             </section>
+        <section class="content border p-4 mb-4 d-flex">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
             <table class="table table-hover">
             <thead class="bg-{{$color}}" style="color: white">
                     <tr>                        
@@ -511,6 +588,10 @@
                     @endforelse
                 </tbody>
             </table>
+        </div>
+        </div>
+        </div>
+    </section>       
             <div class="d-flex hover justify-content-center bg-{{$color}}">
                 {{$virtualmachines->links()}}                
             </div>                   

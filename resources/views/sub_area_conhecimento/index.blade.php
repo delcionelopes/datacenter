@@ -104,6 +104,10 @@
                     </div>
                 </form>
             </section>
+        <section class="content border p-4 mb-4 d-flex">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
             <table class="table table-hover">
             <thead class="bg-{{$color}}" style="color: white">
                     <tr>
@@ -135,6 +139,10 @@
             <div class="d-flex hover justify-content-center bg-{{$color}}">
             {{$sub_areas_conhecimento->links()}}
     </div>
+          </div>
+        </div>
+        </div>
+    </section>       
 </div>
 <!--fim index-->
 @stop

@@ -317,11 +317,15 @@
                         <label  id="editcriador"></label><br>
                         <label  for="">Modificador:</label>
                         <label  id="editmodificador"></label>
-                    </div>                    
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="" id="senhaindividualdeadmin">Sua senha individual de </label>                        
                         <input type="text" id="edit_senhaindividualequip" class="senhaindividual form-control">
-                    </div>                   
+                    </div>           
+                    </div>
+                    </div>        
                     </fieldset>
                     </div>
                     </div>
@@ -378,10 +382,14 @@
                         <label  for="">Nome do equipamento:</label>
                         <label  id="editnomeequipamento"></label>
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="" id="nomedousuario">Senha de </label>
                         <input type="text" id="edit_senhaindividual" class="senha form-control">                       
-                    </div>                                 
+                    </div>           
+                    </div>
+                    </div>                      
                     </fieldset>    
                     </div>
                     </div>                                    
@@ -434,20 +442,30 @@
                         <label  for="">Modificador:</label>
                         <label  id="editmodificador"></label>
                     </div>
-                    <div class="form-group mb-3">
+
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Senha</label>
                         <input type="text" id="edit_senha" class="senha form-control">
                         <label><small id="senhavencida" style="color: red">Senha vencida!</small></label>
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Validade</label>
                         <input type="text" id="edit_validade" class="validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">                        
                     </div>
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-check">
                         <label class="form-check-label" for="edit_val_indefinida"> 
                         <input type="checkbox" class="val_indefinida form-check-input" name="edit_val_indefinida" id="edit_val_indefinida"> Validade indeterminada
                         </label>
-                    </div>                
+                    </div>           
+                    </div>
+                    </div>
+
                     </fieldset>    
                     </div>
                     </div>
@@ -520,20 +538,30 @@
                         <label  for="">Modificador:</label>
                         <label  id="editmodificadorhost"></label>
                     </div>
-                    <div class="form-group mb-3">
+
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Senha</label>
                         <input type="text" id="edit_senhahost" class="senhahost form-control">
                         <label for=""><small id="senhavencidahost" style="color: red">Senha vencida!</small></label>
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Validade</label>
                         <input type="text" id="edit_validadehost" class="validadehost form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
                     </div>
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-check">
                         <label class="form-check-label" for="edit_val_indefinida"> 
                         <input type="checkbox" class="val_indefinidahost form-check-input" name="edit_val_indefinidahost" id="edit_val_indefinidahost"> Validade indeterminada
                         </label>
-                    </div>                
+                    </div>
+                    </div>
+                    </div>
+
                     </fieldset>    
                     </div>
                     </div>
@@ -606,20 +634,30 @@
                         <label  for="">Modificador:</label>
                         <label  id="editmodificadorvm"></label>
                     </div>
-                    <div class="form-group mb-3">
+
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Senha</label>
                         <input type="text" id="edit_senhavm" class="senhavm form-control">
                         <label for=""><small id="senhavencidavm" style="color: red">Senha vencida!</small></label>
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Validade</label>
                         <input type="text" id="edit_validadevm" class="validadevm form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
                     </div>
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-check">
                         <label class="form-check-label" for="edit_val_indefinida"> 
                         <input type="checkbox" class="val_indefinidavm form-check-input" name="edit_val_indefinidavm" id="edit_val_indefinidavm"> Validade indeterminada
                         </label>
                     </div>                
+                    </div>
+                    </div>
+
                     </fieldset>    
                     </div>
                     </div>
@@ -692,20 +730,30 @@
                         <label  for="">Modificador:</label>
                         <label  id="editmodificadorbase"></label>
                     </div>
-                    <div class="form-group mb-3">
+
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Senha</label>
                         <input type="text" id="edit_senhabase" class="senhabase form-control">
                         <label for=""><small id="senhavencidabase" style="color: red">Senha vencida!</small></label>
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Validade</label>
                         <input type="text" id="edit_validadebase" class="validadebase form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
                     </div>
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-check">
                         <label class="form-check-label" for="edit_val_indefinidabase"> 
                         <input type="checkbox" class="val_indefinidabase form-check-input" name="edit_val_indefinidabase" id="edit_val_indefinidabase"> Validade indeterminada
                         </label>
-                    </div>                
+                    </div>           
+                    </div>
+                    </div>
+
                     </fieldset>    
                     </div>
                     </div>
@@ -774,20 +822,30 @@
                         <label  for="">Modificador:</label>
                         <label  id="editmodificadorvlan"></label>
                     </div>
-                    <div class="form-group mb-3">
+
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Senha</label>
                         <input type="text" id="edit_senhavlan" class="senhavlan form-control">
                         <label for=""><small id="senhavencidavlan" style="color: red">Senha vencida!</small></label>
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Validade</label>
                         <input type="text" id="edit_validadevlan" class="validadevlan form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
                     </div>
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-check">
                         <label class="form-check-label" for="edit_val_indefinidavlan"> 
                         <input type="checkbox" class="val_indefinidavlan form-check-input" name="edit_val_indefinidavlan" id="edit_val_indefinidavlan"> Validade indeterminada
                         </label>
-                    </div>                
+                    </div>           
+                    </div>
+                    </div>
+
                     </fieldset>    
                     </div>
                     </div>

@@ -24,21 +24,35 @@
                 <form id="addform" name="addform" class="form-horizontal" role="form">
                     <input type="hidden" id="add_cluster_id">
                     <ul id="saveform_errList"></ul>
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Datacenter</label>
                         <input type="text" class="datacenter form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">IP</label>
                         <input type="text" class="ip form-control" data-mask="099.099.099.099">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Cluster</label>
                         <input type="text" class="cluster form-control" value="{{$cluster->nome_cluster}}">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Observações do Host</label>
                         <textarea name="obs_host" cols="30" rows="10" class="obs_host form-control"></textarea>
+                    </div>
+                    </div>
                     </div>
                 </form>
             </div>
@@ -65,21 +79,35 @@
                     <ul id="updateform_errList"></ul>
                     <input type="hidden" id="edit_host_id">
                     <input type="hidden" id="edit_cluster_id">
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Datacenter</label>
                         <input type="text" id="edit_datacenter" class="datacenter form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">IP</label>
                         <input type="text" id="edit_ip" class="ip form-control" data-mask="099.099.099.099">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Cluster</label>
                         <input type="text" id="edit_cluster" class="cluster form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Observações do Host</label>
                         <textarea name="obs_host" id="obs_host" cols="30" rows="10" class="obs_host form-control"></textarea>
+                    </div>
+                    </div>
                     </div>
                 </form>
             </div>
@@ -118,19 +146,27 @@
                         <label  for="">Cluster/IP:</label>
                         <label  id="clusterip"></label>
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Senha</label>
                         <input type="text" class="add_senha form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Validade</label>
                         <input type="text" class="add_validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
                     </div>
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-check">
                         <label class="form-check-label" for="flexCheck"> 
                         <input type="checkbox" class="add_val_indefinida form-check-input" name="add_val_indefinida" id="flexCheck"> Validade indeterminada
                         </label>
                     </div>         
+                    </div>
+                    </div>
                      </fieldset>
                     </div>
                     </div>
@@ -203,19 +239,27 @@
                         <label  for="">Modificador:</label>
                         <label  id="editmodificador"></label>
                     </div>
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Senha</label>
                         <input type="text" id="edit_senha" class="senha form-control">
                         <label for=""><small id="senhavencida" style="color: red">Senha vencida!</small></label>
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
                         <label for="">Validade</label>
                         <input type="text" id="edit_validade" class="validade form-control" placeholder="DD/MM/AAAA" data-mask="00/00/0000" data-mask-reverse="true">
                     </div>
+                    </div>
+                    <div class="col-md-4">
                     <div class="form-check">
                         <label class="form-check-label" for="edit_val_indefinida"> 
                         <input type="checkbox" class="val_indefinida form-check-input" name="edit_val_indefinida" id="edit_val_indefinida"> Validade indeterminada
                         </label>
+                    </div>
+                    </div>
                     </div>                
                     </fieldset>    
                     </div>
@@ -272,6 +316,10 @@
                     </div>
                 </form>
             </section>
+             <section class="content border p-4 mb-4 d-flex">
+           <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
             <table class="table table-hover">
             <thead class="bg-{{$color}}" style="color: white">
                     <tr>
@@ -318,6 +366,13 @@
             <div class="d-flex hover justify-content-center bg-{{$color}}">
                 {{$hosts->links()}}               
             </div>
+
+            
+           </div>
+        </div>
+        </div>
+    </section>       
+
             <div>
                 <button type="button" class="voltar_btn fas fa-arrow-left" style="background: transparent; border: none; white-space: nowrap;" onclick="history.back()" data-html="true" data-placement="right" data-toggle="popover" title="Voltar para Cluster(s)"></button>
             </div>

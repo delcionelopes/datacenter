@@ -25,18 +25,28 @@
                 <form id="addform" name="addform" class="form-horizontal" role="form">
                     <input type="hidden" id="add_vlan_id">
                     <ul id="saveform_errList"></ul>
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Nome da REDE</label>
                         <input type="text" class="nome_rede form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Máscara</label>
                         <input type="text" class="mascara form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Tipo de REDE</label>
                         <input type="text" class="tipo_rede form-control">
-                    </div>                    
+                    </div>           
+                    </div>
+                    </div>         
                 </form>
             </div>
             <div class="modal-footer">
@@ -90,18 +100,28 @@
                     <ul id="updateform_errList"></ul>
                     <input type="hidden" id="edit_rede_id">
                     <input type="hidden" id="edit_vlan_id">
-                    <div class="form-group mb-3">
+                    <div class="row">
+                    <div class="col-md-12">
+                    <div class="form-group">
                         <label for="">Nome da REDE</label>
                         <input type="text" id="edit_nome_rede" class="nome_rede form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    </div>
+                    <div class="row">
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Máscara</label>
                         <input type="text" id="edit_mascara" class="mascara form-control">
                     </div>
-                    <div class="form-group mb-3">
+                    </div>
+                    <div class="col-md-6">
+                    <div class="form-group">
                         <label for="">Tipo de REDE</label>
                         <input type="text" id="edit_tipo_rede" class="tipo_rede form-control">
-                    </div>                    
+                    </div>           
+                    </div>
+                    </div>         
                 </form>
             </div>
             <div class="modal-footer">
@@ -133,6 +153,10 @@
                     </div>
                 </form>
             </section>
+        <section class="content border p-4 mb-4 d-flex">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
             <table class="table table-hover">
             <thead class="bg-{{$color}}" style="color: white">
                     <tr>
@@ -176,6 +200,10 @@
             <div class="d-flex hover justify-content-center bg-{{$color}}">
                 {{$redes->links()}}
             </div>      
+                 </div>
+        </div>
+        </div>
+    </section>       
 </div>
 <!--End Index -->
 @stop

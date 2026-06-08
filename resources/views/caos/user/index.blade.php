@@ -11,7 +11,6 @@
 </style>
 
 <!--Início Index-->
-@auth
 <div class="container-fluid py-5">
     <div id="success_message"></div>
     <div class="row">
@@ -27,10 +26,15 @@
                             <a href="{{route('admin.user.create')}}" type="button" class="AddUserModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                  <i class="fas fa-plus"></i>
                             </a>
+                            <button type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Sair"><i class="fas fa-door-open"></i></button>
                         </div>
                     </div>
                 </form>
             </section>
+    <section class="content border p-4 mb-4 d-flex">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-12">
             <table class="table table-hover">
                 <thead class="sidebar-dark-primary" style="color: white">
                     <tr>                        
@@ -77,11 +81,16 @@
             <div class="d-flex hover justify-content-center">
                 {{$users->links()}}
             </div>            
+           </div>
         </div>
+        </div>
+    </section>     
+</div>
     </div>
 </div>
+
 <!--Fim Index-->
-@endauth
+
 <!--End Index-->
 @stop
 
@@ -289,8 +298,14 @@ $(document).on('click','.admin_user',function(e){
         $(".pesquisa_btn").tooltip();        
         $(".delete_user_btn").tooltip();
         $(".edit_user_btn").tooltip();    
+        $(".voltarmenu_btn").tooltip();    
     });
     ///fim tooltip
+
+    $(document).on('click','.voltarmenu_btn',function(e){
+        e.preventDefault();
+        location.replace('/datacenteradmin/seguranca/index-seguranca');       
+    });
 
 });
 //Fim escopo geral
