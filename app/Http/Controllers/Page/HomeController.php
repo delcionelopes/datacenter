@@ -35,11 +35,11 @@ class HomeController extends Controller
         date_default_timezone_set('America/Sao_Paulo');
 
         if(is_null($request->pesquisa)){
-            $artigos = $this->artigo->orderByDesc('id')->paginate(5);
+            $artigos = $this->artigo->orderBy('id','DESC')->paginate(5);
         }else{
             $query = $this->artigo->query()
                    ->where('titulo','LIKE','%'.$request->pesquisa.'%');
-            $artigos = $query->orderByDesc('id')->paginate(5);
+            $artigos = $query->orderBy('id','DESC')->paginate(5);
         }        
         $temas = Tema::all();
         $entidade = $this->entidade->orderByDesc('id')->first();
