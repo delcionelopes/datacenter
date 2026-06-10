@@ -167,9 +167,7 @@ $(document).ready(function(){
      ///tooltip
     $(function(){             
         $(".AddModuloModal_btn").tooltip();
-        $(".pesquisa_btn").tooltip();        
-        $(".delete_modulo_btn").tooltip();
-        $(".edit_modulo").tooltip();
+        $(".pesquisa_btn").tooltip();                
         $(".voltarmenu_btn").tooltip();    
     });
     ///fim tooltip
