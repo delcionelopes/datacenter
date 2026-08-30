@@ -578,7 +578,6 @@ $(document).ready(function(){
         $(".edit_rede").tooltip();  
     });
     ///fim tooltip
-
     
     });
     

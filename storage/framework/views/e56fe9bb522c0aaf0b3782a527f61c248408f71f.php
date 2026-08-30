@@ -80,7 +80,7 @@
   <?php $__currentLoopData = $autorizacao; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $aut): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
   <?php if(($aut->modulo_has_operacao_operacao_id) == ($ope->id)): ?>
   <div class="p-2 mt-2">
-  <div class="card card-hover mb-3" style="max-width: 540px;">
+  <div class="card card-hover mb-3">
   <div class="row no-gutters">
     <div class="col-md-4">
       <a href="" data-id="<?php echo e($ope->id); ?>" data-color="<?php echo e($aut->modulo->color); ?>" id="link" class="abrir">
@@ -91,7 +91,6 @@
       <div class="card-body text-right">
         <h5 class="card-title"><?php echo e($ope->nome); ?></h5>
         <p class="card-text"><?php echo e($ope->descricao); ?></p>
-        <p class="card-text"><small class="text-muted">Criado em <?php echo e(ucfirst(utf8_encode(strftime('%A, %d de %B de %Y', strtotime($ope->created_at))))); ?></small></p>
         <button id="abrir_btn" data-id="<?php echo e($ope->id); ?>" data-color="<?php echo e($aut->modulo->color); ?>" class="abrir btn btn-<?php echo e($aut->modulo->color); ?>">Executar</button>
       </div>
     </div>
@@ -172,29 +171,29 @@ $(document).ready(function(){
       break;
       case 12: location.replace('/datacenteradmin/equipamento/index-equipamento/'+color); ///Gestão de senhas
       break;
-      case 13: location.replace('/datacenteradmin/relatorios/relatorio-ambientes'); ///Relatorio de ambientes
+      case 13: window.open('/datacenteradmin/relatorios/relatorio-ambientes', '_blank');  ///Relatorio de ambientes
       break;
-      case 14: location.replace('/datacenteradmin/relatorios/relatorio-orgaos'); ///Relatorio de orgãos
+      case 14: window.open('/datacenteradmin/relatorios/relatorio-orgaos', '_blank'); ///Relatorio de orgãos
       break;
-      case 16: location.replace('/datacenteradmin/relatorios/relatorio-plataformas'); ///Relatorio de plataformas
+      case 16: window.open('/datacenteradmin/relatorios/relatorio-plataformas', '_blank'); ///Relatorio de plataformas
       break;
-      case 17: location.replace('/datacenteradmin/relatorios/relatorio-bases'); ///Relatorio de bases de dados
+      case 17: window.open('/datacenteradmin/relatorios/relatorio-bases', '_blank'); ///Relatorio de bases de dados
       break;
-      case 18: location.replace('/datacenteradmin/relatorios/relatorio-maquinasvirtuais'); ///Relatorio de máquinas virtuais
+      case 18: window.open('/datacenteradmin/relatorios/relatorio-maquinasvirtuais', '_blank'); ///Relatorio de máquinas virtuais
       break; 
-      case 19: location.replace('/datacenteradmin/relatorios/relatorio-redes'); ///Relatorio de redes
+      case 19: window.open('/datacenteradmin/relatorios/relatorio-redes', '_blank'); ///Relatorio de redes
       break; 
-      case 20: location.replace('/datacenteradmin/relatorios/relatorio-setores'); ///Relatorio de setores
+      case 20: window.open('/datacenteradmin/relatorios/relatorio-setores', '_blank'); ///Relatorio de setores
       break; 
-      case 21: location.replace('/datacenteradmin/relatorios/relatorio-hosts'); ///Relatorio de hosts
+      case 21: window.open('/datacenteradmin/relatorios/relatorio-hosts', '_blank'); ///Relatorio de hosts
       break; 
-      case 22: location.replace('/datacenteradmin/relatorios/relatorio-clusters'); ///Relatorio de clusters
+      case 22: window.open('/datacenteradmin/relatorios/relatorio-clusters', '_blank'); ///Relatorio de clusters
       break; 
-      case 23: location.replace('/datacenteradmin/relatorios/relatorio-areas'); ///Relatorio de areas
+      case 23: window.open('/datacenteradmin/relatorios/relatorio-areas', '_blank'); ///Relatorio de areas
       break; 
-      case 24: location.replace('/datacenteradmin/relatorios/relatorio-modope'); ///Relatorio de módulos X operações
+      case 24: window.open('/datacenteradmin/relatorios/relatorio-modope', '_blank'); ///Relatorio de módulos X operações
       break; 
-      case 25: location.replace('/datacenteradmin/relatorios/relatorio-usuarios'); ///Relatorio de usuários
+      case 25: window.open('/datacenteradmin/relatorios/relatorio-usuarios', '_blank'); ///Relatorio de usuários
       break;
       case 26: { //exibir o form modal para selecionar o usuário
             $("#seluserform").trigger('reset');
@@ -202,7 +201,7 @@ $(document).ready(function(){
             $("#selusuario_errList").replaceWith('<ul id="selusuario_errList"></ul>');
       }
       break;
-      case 27: location.replace('/datacenteradmin/relatorios/relatorio-equipamentos'); ///Relatorio de equipamentos do setor do usuário
+      case 27: window.open('/datacenteradmin/relatorios/relatorio-equipamentos', '_blank'); ///Relatorio de equipamentos do setor do usuário
       break;
       case 28: location.replace('/admin/institucionais/index/'+color); ///cadastro de instituições para links institucionais na front-page
       break;
@@ -236,7 +235,7 @@ $(document).ready(function(){
     
     $(document).on('click','.btnselusuario',function(){
       var id = $('#selusuario_id').val();
-      location.replace('/datacenteradmin/relatorios/relatorio-permissoes/'+id);
+      window.open('/datacenteradmin/relatorios/relatorio-permissoes/'+id, '_blank');
     });
 
 });

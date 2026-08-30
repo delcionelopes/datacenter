@@ -213,7 +213,7 @@
                             <button type="button" class="AddEquipamento_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
-                            <button data-color="{{$color}}" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;" onclick="history.back()"><i class="fas fa-door-open"></i></button>
+                            <button data-color="{{$color}}" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></button>
                         </nav>
                         </div>
                     </div>
@@ -994,6 +994,12 @@ $(document).ready(function(){
         $(".edit_equipamento_btn").tooltip();        
     });
     ///fim tooltip
+
+    $(document).on('click','.voltarmenu_btn',function(e){
+        e.preventDefault();  
+        var color = $(this).data("color");
+        location.replace('/datacenteradmin/principal/operacoes/3/'+color);
+        });
 
     });
     

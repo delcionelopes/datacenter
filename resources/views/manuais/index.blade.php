@@ -227,11 +227,10 @@
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var link = "{{asset('storage')}}";
             var id = $(this).data("id");  
-            var nomemanual = $(this).data("descricao");
-            var admin = $(this).data("admin");
+            var nomemanual = $(this).data("descricao");            
             var idsetor = $(this).data("idsetor");
             var setor = $(this).data("setor");
-            if(admin){
+            
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -276,28 +275,7 @@
             }                                       
         
         });  
-    }else{
-       Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA "+setor+" !",
-                text: "Você não pode excluir este registro, pertence ao setor "+setor+". Procure um administrador do setor "+setor+" !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            }) 
-    }                      
+    
         
         });//fim delete registro
         //inicio exibe EditManualForm
@@ -307,12 +285,11 @@
         $(document).on('click','.edit_manual_btn',function(e){
             e.preventDefault();
             var link = "{{asset('storage')}}";
-            var id = $(this).data("id");
-            var admin = $(this).data("admin");
+            var id = $(this).data("id");            
             var nome = $(this).data("descricao");
             var idsetor = $(this).data("idsetor");
             var setor = $(this).data("setor");
-            if(admin){
+            
             $("#editmyform").trigger('reset');
             $("#EditManualForm").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');    
@@ -347,28 +324,7 @@
                     }
                 }
             });
-        }else{
-            Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA "+setor+" !",
-                text: "Você não pode alterar este registro, pois pertence a "+setor+". Procure um administrador do setor "+setor+" !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            }) 
-        }
+        
         });//fim EditManualForm
     
         //inicio reconfigura o option selected do select html
@@ -562,12 +518,11 @@
         e.preventDefault();
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var link = "{{asset('storage')}}";
-        var id = $(this).data("id");
-        var admin = $(this).data("admin");
+        var id = $(this).data("id");        
         var idsetor = $(this).data("idsetor");
         var setor = $(this).data("setor");
         var vfilename = $(this).data("filename");
-        if(admin){
+        
         Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -612,28 +567,7 @@
             }                                       
         
         });
-    }else{
-         Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA "+setor+" !",
-                text: "Você não pode excluir este arquivo, pois pertence a "+setor+". Procure um administrador do setor "+setor+" !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            }) 
-    }
+   
         
         });
         

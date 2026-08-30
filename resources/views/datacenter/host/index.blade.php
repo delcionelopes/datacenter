@@ -395,10 +395,9 @@ $(document).ready(function(){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
-            var link = "{{asset('storage')}}";
-            var admin = $(this).data("admin");            
+            var link = "{{asset('storage')}}";            
             var nomedatacenter = $(this).data("nomedatacenter");
-            if(admin){
+            
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -443,28 +442,7 @@ $(document).ready(function(){
             }                                       
         
         });                        
-    }else{
-         Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para excluir este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }
+    
         
         }); 
         //fim delete host
@@ -478,8 +456,7 @@ $(document).ready(function(){
     
             var id = $(this).data("id");        
             var link = "{{asset('storage')}}";
-            var admin = $(this).data("admin");
-            if(admin){
+            
             $("#editform").trigger('reset');
             $("#EditHostModal").modal('show');
             $("#updateform_errList").html('<ul id="updateform_errList"></ul>'); 
@@ -508,28 +485,7 @@ $(document).ready(function(){
                     }
                 }
             });
-        }else{
-            Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para alterar este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-        }
+      
     
         });
         //Fim Exibe EditHostModal

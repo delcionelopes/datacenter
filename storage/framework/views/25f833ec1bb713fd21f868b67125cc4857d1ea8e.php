@@ -1,12 +1,10 @@
-@extends('adminlte::page')
+<?php $__env->startSection('title', 'Cadastro de Módulos'); ?>
 
-@section('title', 'Cadastro de Módulos')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <form role="form" enctype="multipart/form-data" method="POST">
-    @csrf
-    @method('PUT')
+    <?php echo csrf_field(); ?>
+    <?php echo method_field('PUT'); ?>
     <ul id="saveform_errList"></ul> 
     <div class="container-fluid py-5">
         <div class="card">
@@ -16,7 +14,7 @@
                     <!--arquivo de imagem-->
                     <div class="form-group mb-3">                                                
                        <div class="image">                            
-                            <img src="{{asset('storage/user.png')}}" class="imgico rounded-circle" width="100" >
+                            <img src="<?php echo e(asset('storage/user.png')); ?>" class="imgico rounded-circle" width="100" >
                         </div>
                        <label for="">Ícone</label>                        
                        <span class="btn btn-none fileinput-button"><i class="fas fa-plus"></i>                          
@@ -71,7 +69,7 @@
                     <div class="col-md-12">
                         <div class="modal-footer">
                             <button type="button" class="cancelar_btn btn btn-default">Cancelar</button>
-                            <button class="salvar_btn btn btn-primary" type="button"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                            <button class="salvar_btn btn btn-primary" type="button"><img id="imgadd" src="<?php echo e(asset('storage/ajax-loader.gif')); ?>" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                         </div>
                     </div>
                 </div>
@@ -79,15 +77,15 @@
         </div>
     </div>
 </form>
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
 
-<link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
+<link href="<?php echo e(asset('css/styles.css')); ?>" rel="stylesheet"/>
     
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
 <script type="text/javascript">
 
@@ -167,7 +165,7 @@ $(document).ready(function(){
                 }else{                                                     
                         var arq = response.filepath; 
                             arq = arq.toString();                  ;
-                        var linkimagem = "{{asset('')}}"+arq;
+                        var linkimagem = "<?php echo e(asset('')); ?>"+arq;
                         var imagemnova = '<img src="'+linkimagem+'" class="imgico rounded-circle" width="100" >';
                         $(".imgico").replaceWith(imagemnova);
                     }   
@@ -227,4 +225,5 @@ $(document).ready(function(){
 
 </script>
 
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('adminlte::page', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\php\datacenter\resources\views/caos/modulo/create.blade.php ENDPATH**/ ?>

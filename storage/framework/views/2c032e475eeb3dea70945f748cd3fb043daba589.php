@@ -1,93 +1,73 @@
-@extends('adminlte::page')
+<?php $__env->startSection('title', 'Edição do cadastro de Operações'); ?>
 
-@section('title', 'Cadastro de Módulos')
-
-@section('content')
-
+<?php $__env->startSection('content'); ?>
 <form role="form" enctype="multipart/form-data" method="POST">
-    @csrf
-    @method('PUT')
+    <?php echo csrf_field(); ?>    
+    <?php echo method_field('PUT'); ?>
     <ul id="saveform_errList"></ul> 
-    <div class="container-fluid py-5">
+    <input type="hidden" id="editoperacao_id" value="<?php echo e($operacao->id); ?>">
         <div class="card">
             <div class="card-body">
               <div class="card p-3" style="background-image: url('/assets/img/home-bg.jpg')">
                 <div class="d-flex align-items-center">
                     <!--arquivo de imagem-->
                     <div class="form-group mb-3">                                                
-                       <div class="image">                            
-                            <img src="{{asset('storage/user.png')}}" class="imgico rounded-circle" width="100" >
+                       <div class="image">
+                        <?php if($operacao->ico): ?>
+                            <img src="<?php echo e(asset('storage/'.$operacao->ico)); ?>" class="imgico rounded-circle" width="100" >
+                        <?php else: ?>
+                            <img src="<?php echo e(asset('storage/user.png')); ?>" class="imgico rounded-circle" width="100" >
+                        <?php endif; ?>
                         </div>
-                       <label for="">Ícone</label>                        
-                       <span class="btn btn-none fileinput-button"><i class="fas fa-plus"></i>                          
+                       <label for="upimagem">Ícone</label>                        
+                       <span class="btn btn-none fileinput-button"><i class="fas fa-plus"></i>
                           <input id="upimagem" type="file" name="imagem" class="btn btn-primary" accept="image/x-png,image/gif,image/jpeg">
                        </span>                       
                      </div>  
                      <!--arquivo de imagem--> 
-                </div>
+                  </div>
               </div>
-                  <fieldset>
-                    <legend>Dados do Módulo</legend>
+                <fieldset>
+                    <legend>Dados da Operação</legend>
                     <div class="row">
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="nome">Nome</label>
-                                <input type="text" required class="form-control" name="nome" id="nome" placeholder="Nome do módulo">
+                                <input type="text" required class="form-control" name="nome" id="nome" placeholder="Nome da operação" value="<?php echo e($operacao->nome); ?>">
                             </div>
                         </div>
                     </div>
                     <div class="row">
                         <div class="col-md-12">
                               <div class="form-group">
-                                <label for="descricao">Descrição</label>
-                                <input type="text" required class="form-control" name="descricao" id="descricao" placeholder="Descrição do módulo">
+                                <label for="descricao">Descricao</label>
+                                <input type="text" required class="form-control" name="descricao" id="descricao" placeholder="Descrição da operacao" value="<?php echo e($operacao->descricao); ?>">
                             </div>
-                        </div>
-                        <div class="col-md-6">
-                            <div class="form-group">
-                               <input type="hidden" id="color">
-                               <label for="color">Esquema de cores</label>
-                               <div class="btn-group">
-                                <button type="button" id="corbtn" class="btn btn-primary dropdown-toggle" data-toggle="dropdown" aria-expanded="false">
-                                    <span class="caret"></span>
-                                </button>
-                                <ul class="dropdown-menu">
-                                    <li class="dropdown-item cores" data-color="primary"><span class="btn btn-primary"></span> primary</li>
-                                    <li class="dropdown-item cores" data-color="secondary"><span class="btn btn-secondary"></span> secondary</li>
-                                    <li class="dropdown-item cores" data-color="success"><span class="btn btn-success"></span> success</li>
-                                    <li class="dropdown-item cores" data-color="danger"><span class="btn btn-danger"></span> danger</li>
-                                    <li class="dropdown-item cores" data-color="warning"><span class="btn btn-warning"></span> warning</li>
-                                    <li class="dropdown-item cores" data-color="info"><span class="btn btn-info"></span> info</li>                                    
-                                </ul>
-                               </div>
-                             
-                            </div>
-                        </div>                         
+                        </div>                        
                     </div>                    
-                  
-                </fieldset>
-     
+                   
+                </fieldset>                
+               
                 <div class="row">
                     <div class="col-md-12">
                         <div class="modal-footer">
                             <button type="button" class="cancelar_btn btn btn-default">Cancelar</button>
-                            <button class="salvar_btn btn btn-primary" type="button"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                            <button type="button" class="salvar_btn btn btn-primary"><img id="imgedit" src="<?php echo e(asset('storage/ajax-loader.gif')); ?>" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
-    </div>
 </form>
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
 
-<link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
+<link href="<?php echo e(asset('css/styles.css')); ?>" rel="stylesheet"/>
     
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
 <script type="text/javascript">
 
@@ -95,29 +75,30 @@ $(document).ready(function(){
 
     $(document).on('click','.salvar_btn',function(e){
         e.preventDefault();
-        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
-        var loading = $('#imgadd');
-            loading.show();    
+        var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");       
+        var id = $('#editoperacao_id').val();
 
-        var data = new FormData();        
+        var loading = $('#imgedit');
+            loading.show();                          
+       
+           var data = new FormData();        
             
             data.append('nome',$('#nome').val());
-            data.append('descricao',$('#descricao').val());
-            data.append('color',$('#color').val());
-            data.append('imagem',$('#upimagem')[0].files[0]);
+            data.append('descricao',$('#descricao').val());               
+            data.append('imagem',$('#upimagem')[0].files[0]);                        
             data.append('_enctype','multipart/form-data');
             data.append('_token',CSRF_TOKEN);
-            data.append('_method','PUT');              
-
+            data.append('_method','PUT');   
+      
         $.ajax({
-            url: '/datacenteradmin/modulo/store-modulo',
-            type: 'POST',
+            url: '/datacenteradmin/operacao/update-operacao/'+id,
+            type: 'POST',           
             dataType: 'json',
             data: data,
             cache: false,
-            processData: false,
-            contentType: false,
-            async:true,
+            processData: false,            
+            contentType:false,            
+            async:true,       
             success: function(response){
                 if(response.status==400){
                       $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');
@@ -128,7 +109,7 @@ $(document).ready(function(){
                 } else{
                     $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');  
                     loading.hide();
-                     location.replace('/datacenteradmin/modulo/index-modulo');
+                    location.replace('/datacenteradmin/operacao/index-operacao');
                 }  
             }  
         });
@@ -151,7 +132,7 @@ $(document).ready(function(){
             
         $.ajax({                      
                 type: 'POST',                             
-                url:'/datacenteradmin/modulo/moduloimagemtemp-upload',                
+                url:'/datacenteradmin/operacao/operacaoimagemtemp-upload',
                 dataType: 'json',            
                 data: fd,
                 cache: false,
@@ -167,7 +148,7 @@ $(document).ready(function(){
                 }else{                                                     
                         var arq = response.filepath; 
                             arq = arq.toString();                  ;
-                        var linkimagem = "{{asset('')}}"+arq;
+                        var linkimagem = "<?php echo e(asset('')); ?>"+arq;                        
                         var imagemnova = '<img src="'+linkimagem+'" class="imgico rounded-circle" width="100" >';
                         $(".imgico").replaceWith(imagemnova);
                     }   
@@ -190,7 +171,7 @@ $(document).ready(function(){
             data.append('_method','delete');   
              $.ajax({                      
                 type: 'POST',                             
-                url:'/datacenteradmin/modulo/delete-imgmodulo',                
+                url:'/datacenteradmin/operacao/delete-imgoperacao',
                 dataType: 'json',            
                 data: data,
                 cache: false,
@@ -198,33 +179,21 @@ $(document).ready(function(){
                 contentType: false,                                                                                     
                 success: function(response){                              
                     if(response.status==200){
-                    $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');
-                    location.replace('/datacenteradmin/modulo/index-modulo');
+                    $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');                         
+                    location.replace('/datacenteradmin/operacao/index-operacao');
                 } 
                 }                                  
             });
 
         }else{
-            location.replace('/datacenteradmin/modulo/index-modulo');
+            location.replace('/datacenteradmin/operacao/index-operacao');
         }
 
     });
     //fim excluir imagem temporária pelo cancelamento
-
-    //atribuição de cores
-    $(document).on('click','.cores',function(e){
-        e.preventDefault();
-        var color = $(this).data("color");
-        var id = $(this).data("id");
-            $('#corbtn').replaceWith('<button type="button" id="corbtn" class="btn btn-'+color+' dropdown-toggle" data-toggle="dropdown" aria-expanded="false">\
-                                      <span class="caret"></span>\
-                                      </button>');            
-            $('#color').val(color);
-    });
-    //fim atribuição de cores
-
 });
 
 </script>
 
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('adminlte::page', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\php\datacenter\resources\views/caos/operacao/edit.blade.php ENDPATH**/ ?>

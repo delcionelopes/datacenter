@@ -399,9 +399,8 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
             var link = "{{asset('storage')}}";
-            var admin = $(this).data("admin");
             var nomevlan = $(this).data("nomevlan");
-            if(admin){
+            
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -445,30 +444,8 @@ $(document).ready(function(){
                 });
             }                                       
         
-        });                 
-        
-    }else{
-        Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para excluir este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }
+        });
+   
         
         });  ///fim delete vlan
         //início da exibição do form EditVlanModal
@@ -477,10 +454,9 @@ $(document).ready(function(){
         });
         $(document).on('click','.edit_vlan',function(e){  
             e.preventDefault();
-            var link = "{{asset('storage')}}";
-            var admin = $(this).data("admin");
+            var link = "{{asset('storage')}}";            
             var id = $(this).data("id");                
-            if(admin){
+            
             $("editform").trigger('reset');
             $("#EditVlanModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');                   
@@ -503,28 +479,7 @@ $(document).ready(function(){
                     }      
                 }
             });
-        }else{
-             Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para alterar este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-        }
+       
     
         }); //fim da da exibição do form EditVlanModal
     
@@ -1044,7 +999,7 @@ $(document).ready(function(){
     $(document).on('click','.voltarmenu_btn',function(e){
         e.preventDefault();  
         var color = $(this).data("color");
-        location.replace('/datacenteradmin/principal/operacoes/2/'+color);
+        location.replace('/datacenteradmin/principal/operacoes/3/'+color);
     });
 
 

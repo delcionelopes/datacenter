@@ -215,7 +215,7 @@ class AmbienteController extends Controller
         $num_linhas_impressas = $ambientes->count();
         $num_linhas_total = 35;
         $num_paginas = round(($num_linhas_total + $num_linhas_impressas)/$num_linhas_total);
-        $setor = auth()->user()->setor->nome;
+        $setor = auth()->user()->setor->nome;        
         return Pdf::loadView('relatorios.datacenter.ambientes',[
             'ambientes' => $ambientes,
             'date' => $date,
@@ -223,6 +223,6 @@ class AmbienteController extends Controller
             'num_linhas_total' => $num_linhas_total,
             'num_paginas' => $num_paginas,
             'setor' => $setor,
-        ])->stream('ambientes.pdf');
+        ])->stream('ambientes.pdf',["Attachment" => False]);
     }
 }

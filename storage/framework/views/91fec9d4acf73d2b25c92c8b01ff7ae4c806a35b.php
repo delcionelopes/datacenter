@@ -1,8 +1,6 @@
-@extends('adminlte::page')
+<?php $__env->startSection('title', 'PRODAP - Datacenter'); ?>
 
-@section('title', 'PRODAP - Datacenter')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
     .tooltip-inner {
@@ -14,7 +12,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSub_Area_Conhecimento" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-{{$color}}">
+            <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
             <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Sub-Área de Conhecimento</h5>
             <button type="button" class="close" data-dismiss="modal" aria-label="close">
                 <span aria-hidden="true" style="color: white;">&times;</span>
@@ -30,15 +28,15 @@
                 <div class="form-group mb-3">
                     <label for="">Área de Conhecimento</label>
                     <select class="custom-select" id="area_id" name="area_id">
-                            @foreach($areas_conhecimento as $area)
-                            <option value="{{$area->id}}">{{$area->descricao}}</option>
-                            @endforeach                        
+                            <?php $__currentLoopData = $areas_conhecimento; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $area): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                            <option value="<?php echo e($area->id); ?>"><?php echo e($area->descricao); ?></option>
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>                        
                     </select>
                 </div>
             </form>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-{{$color}} add_sub_area_conhecimento"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" class="btn btn-<?php echo e($color); ?> add_sub_area_conhecimento"><img id="imgadd" src="<?php echo e(asset('storage/ajax-loader.gif')); ?>" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
         </div>
@@ -50,7 +48,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSub_Area_Conhecimento" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-{{$color}}">
+            <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Sub-Áreas de Conhecimento</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -67,15 +65,15 @@
                     <div class="form-group mb-3">
                         <label for="">Conhecimento</label>                        
                         <select class="custom-select" id="area_id" name="area_id">
-                            @foreach($areas_conhecimento as $area)                                      
-                            <option value="{{$area->id}}">{{$area->descricao}}</option>                                                        
-                            @endforeach
+                            <?php $__currentLoopData = $areas_conhecimento; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $area): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>                                      
+                            <option value="<?php echo e($area->id); ?>"><?php echo e($area->descricao); ?></option>                                                        
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                         </select>                                                                                             
                     </div>                 
                 </form>
                 <div class="modal-footer">
                     <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                    <button type="button" class="btn btn-{{$color}} update_sub_area_conhecimento"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                    <button type="button" class="btn btn-<?php echo e($color); ?> update_sub_area_conhecimento"><img id="imgedit" src="<?php echo e(asset('storage/ajax-loader.gif')); ?>" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
                 </div>
             </div>
         </div>
@@ -87,7 +85,7 @@
 <div class="container-fluid py-5">
     <div id="success_message"></div>
             <section class="border p-4 mb-4 d-flex align-items-left">
-                <form action="{{route('datacenteradmin.subareaconhecimento.subareaconhecimento.index',['color'=>$color])}}" class="form-search" method="GET">                    
+                <form action="<?php echo e(route('datacenteradmin.subareaconhecimento.subareaconhecimento.index',['color'=>$color])); ?>" class="form-search" method="GET">                    
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                         <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -98,7 +96,7 @@
                             <button type="button" class="Add_Sub_Area_Conhecimento_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                             <i class="fas fa-plus"></i>
                             </button>
-                            <button data-color="{{$color}}" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></button>
+                            <button data-color="<?php echo e($color); ?>" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></button>
                         </nav>
                         </div>
                     </div>
@@ -109,7 +107,7 @@
             <div class="row">
                 <div class="col-12">
             <table class="table table-hover">
-            <thead class="bg-{{$color}}" style="color: white">
+            <thead class="bg-<?php echo e($color); ?>" style="color: white">
                     <tr>
                         <th scope="col">SUB-AREAS DE CONHECIMENTO</th>
                         <th scope="col">AREAS REF</th>                   
@@ -118,26 +116,27 @@
                 </thead>
                 <tbody id="lista_sub_area_conhecimento">
                 <tr id="novo" style="display:none;"></tr>
-                    @forelse($sub_areas_conhecimento as $sub)
-                    <tr id="sub{{$sub->id}}">
-                        <th scope="row">{{$sub->descricao}}</th>
-                        <td>{{$sub->area_conhecimento->descricao}}</td>                       
+                    <?php $__empty_1 = true; $__currentLoopData = $sub_areas_conhecimento; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $sub): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
+                    <tr id="sub<?php echo e($sub->id); ?>">
+                        <th scope="row"><?php echo e($sub->descricao); ?></th>
+                        <td><?php echo e($sub->area_conhecimento->descricao); ?></td>                       
                         <td>
                             <div class="btn-group">
-                                <button data-id="{{$sub->id}}" data-admin="{{auth()->user()->admin}}" data-descricao="{{$sub->descricao}}" class="edit_sub_area_conhecimento fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
-                                <button data-id="{{$sub->id}}" data-admin="{{auth()->user()->admin}}" data-descricao="{{$sub->descricao}}" class="delete_area_conhecimento_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                <button data-id="<?php echo e($sub->id); ?>" data-admin="<?php echo e(auth()->user()->admin); ?>" data-descricao="<?php echo e($sub->descricao); ?>" class="edit_sub_area_conhecimento fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button data-id="<?php echo e($sub->id); ?>" data-admin="<?php echo e(auth()->user()->admin); ?>" data-descricao="<?php echo e($sub->descricao); ?>" class="delete_area_conhecimento_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
                     </tr>
-                    @empty
+                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                     <tr id="nadaencontrado">
                         <td colspan="4">Nada Encontrado!</td>
                     </tr>
-                    @endforelse
+                    <?php endif; ?>
                 </tbody>
             </table>
-            <div class="d-flex hover justify-content-center bg-{{$color}}">
-            {{$sub_areas_conhecimento->links()}}
+            <div class="d-flex hover justify-content-center bg-<?php echo e($color); ?>">
+            <?php echo e($sub_areas_conhecimento->links()); ?>
+
     </div>
           </div>
         </div>
@@ -145,13 +144,13 @@
     </section>       
 </div>
 <!--fim index-->
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
     <!--<link rel="stylesheet" href="/css/admin_custom.css">  -->
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 <script type="text/javascript">
 
     //inicio do escopo geral
@@ -161,10 +160,11 @@
         $(document).on('click','.delete_area_conhecimento_btn',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            var link = "{{asset('storage')}}";
+            var link = "<?php echo e(asset('storage')); ?>";
             var id = $(this).data("id");
+            var admin = $(this).data("admin");            
             var descricao = $(this).data("descricao");
-            
+            if(admin){
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -205,7 +205,28 @@
             }                                       
         
         });                        
-    
+    }else{
+        Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:descricao,
+                text: "Você não pode excluir este registro. Procure um administrador!",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+    }
         
         });
         //fim delete registro
@@ -219,9 +240,10 @@
             e.preventDefault();        
             
             var id = $(this).data("id");        
-            var link = "{{asset('storage')}}";
+            var link = "<?php echo e(asset('storage')); ?>";
+            var admin = $(this).data("admin");
             var descricao = $(this).data("descricao");
-            
+            if(admin){
             $("#editform").trigger('reset');
             $("#EditSub_Area_Conhecimento").modal('show');     
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');                   
@@ -252,7 +274,29 @@
                     }
                 });
 
-            
+            }else{
+                Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:descricao,
+                text: "Você não pode alterar este registro. Procure um administrador!",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: false,
+                confirmButtonText: 'OK!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){  
+             }
+            })
+            }
+    
         });
         //fim Exibe EditSub_Area_Conhecimento    
         
@@ -432,4 +476,6 @@
     
     
     </script>
-@stop
+<?php $__env->stopSection(); ?>
+
+<?php echo $__env->make('adminlte::page', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\php\datacenter\resources\views/sub_area_conhecimento/index.blade.php ENDPATH**/ ?>

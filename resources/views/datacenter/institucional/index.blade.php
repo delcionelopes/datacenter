@@ -158,7 +158,7 @@ $(document).ready(function(){
     $(document).on('click','.voltarmenu_btn',function(e){
         e.preventDefault();  
         var color = $(this).data("color");
-        location.replace('/datacenteradmin/principal/operacoes/2/'+color);
+        location.replace('/datacenteradmin/principal/operacoes/6/'+color);
         });
     
     

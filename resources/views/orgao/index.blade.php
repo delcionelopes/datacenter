@@ -177,10 +177,9 @@
             e.preventDefault();
             var linklogo = "{{asset('storage')}}";
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-            var id = $(this).data("id");
-            var admin = $(this).data("admin");
+            var id = $(this).data("id");            
             var nomedoorgao = $(this).data("nomeorgao");
-            if(admin=true){
+            
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -227,28 +226,7 @@
             }                                       
         
         });                       
-    }else{
-        Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:nomedoorgao,
-                text: "Você não pode excluir este registro. Procure um administrador!",
-                imageUrl: linklogo+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    } 
+    
         
         });//fim delete orgao
     
@@ -260,10 +238,9 @@
     $(document).on('click','.edit_orgao',function(e){
         e.preventDefault();
         var link = "{{asset('storage')}}";
-        var id = $(this).data("id");
-        var admin = $(this).data("admin");        
+        var id = $(this).data("id");              
         var nome = $(this).data("nomeorgao");
-        if(admin=true){
+        
         $("#editform").trigger('reset');
         $("#EditOrgaoModal").modal('show');
         $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');     
@@ -289,28 +266,7 @@
                         }
                     }
                 });
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:nome,
-                text: "Você não pode alterar este registro. Procure um administrador!",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+          
     });//fim exibição edit orgão    
     
     //inicio da atualização do orgão

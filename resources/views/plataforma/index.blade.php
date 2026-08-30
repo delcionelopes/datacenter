@@ -142,9 +142,8 @@
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var link = "{{asset('storage')}}";
             var id = $(this).data("id");
-            var admin = $(this).data("admin");            
             var nomeplataforma = $(this).data("nomeplataforma");
-            if(admin=true){
+            
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -185,28 +184,7 @@
             }                                       
         
         });                        
-    }else{
-        Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:nomeplataforma,
-                text: "Você não pode excluir este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }
+    
         });//fim delete plataforma
     
         //inicio exibição edit plataforma
@@ -218,10 +196,9 @@
             e.preventDefault();
     
             var id = $(this).data("id");
-            var link = "{{asset('storage')}}";
-            var admin = $(this).data("admin");
+            var link = "{{asset('storage')}}";            
             var nome = $(this).data("nomeplataforma");
-            if(admin=true){
+            
             $("#editform").trigger('reset');
             $("#EditPlataformaModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
@@ -245,28 +222,7 @@
                     }
                 });
 
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:nome,
-                text: "Você não pode alterar este registro. Procure um administrador de INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+            
     
         });//fim exibição do edit plataforma
     

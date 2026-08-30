@@ -104,8 +104,7 @@ class ModuloController extends Controller
                 $data['ico'] = $filePath;
             }
             $data['created_at'] = now();
-            $modulo = $this->modulo->create($data);
-            $modulo->operacoes()->sync(json_decode($request->input('operacoes')));
+            $modulo = $this->modulo->create($data);            
             return response()->json([
                 'modulo' => $modulo,
                 'status' => 200,

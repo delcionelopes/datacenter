@@ -1,15 +1,13 @@
-@extends('adminlte::page')
+<?php $__env->startSection('title', 'Temas'); ?>
 
-@section('title', 'Temas')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <!--AddTemaModal-->
 
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddTemaModal" tabindex="-1" role="dialog" aria-labelledby="addtitleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-{{$color}}">
+            <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="addtitleModalLabel" style="color: white;">Adicionar Tema</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                 <span aria-hidden="true" style="color: white;">&times;</span>
@@ -30,7 +28,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-{{$color}} add_tema"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" class="btn btn-<?php echo e($color); ?> add_tema"><img id="imgadd" src="<?php echo e(asset('storage/ajax-loader.gif')); ?>" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -43,7 +41,7 @@
 <div class="modal fade animate__animated animate__bounce" id="editTemaModal" tabindex="-1" role="dialog" aria-labelledby="edittitleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-{{$color}}">
+            <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="edittitleModalLabel" style="color: white;">Editar e atualizar Tema</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -65,7 +63,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-{{$color}} update_tema"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" class="btn btn-<?php echo e($color); ?> update_tema"><img id="imgedit" src="<?php echo e(asset('storage/ajax-loader.gif')); ?>" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -79,7 +77,7 @@
 
     <section class="border p-4 mb-4 d-flex align-items-left">
     
-    <form action="{{route('admin.tema.index',['color'=>$color])}}" class="form-search" method="GET">
+    <form action="<?php echo e(route('admin.tema.index',['color'=>$color])); ?>" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">
             <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -89,7 +87,7 @@
                 <i class="fas fa-search"></i>
             </button>        
             <button type="button" class="AddTemaModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-plus"></i></button>
-            <button data-color="{{$color}}" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></button>
+            <button data-color="<?php echo e($color); ?>" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></button>
             </nav>
             </div>            
             </div>        
@@ -101,7 +99,7 @@
             <div class="row">
                 <div class="col-12">
                     <table class="table table-hover">
-                        <thead class="bg-{{$color}}" style="color: white">
+                        <thead class="bg-<?php echo e($color); ?>" style="color: white">
                             <tr>                                
                                 <th scope="col">TEMAS</th>
                                 <th scope="col">AÇÕES</th>
@@ -109,25 +107,26 @@
                         </thead>
                         <tbody id="lista_tema">
                         <tr id="novo" style="display:none;"></tr>
-                        @forelse($temas as $tema)   
-                            <tr id="tema{{$tema->id}}">                                
-                                <th scope="row">{{$tema->titulo}}</th>                                
+                        <?php $__empty_1 = true; $__currentLoopData = $temas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $tema): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>   
+                            <tr id="tema<?php echo e($tema->id); ?>">                                
+                                <th scope="row"><?php echo e($tema->titulo); ?></th>                                
                                 <td>                                    
                                         <div class="btn-group">                                           
-                                            <button type="button" data-id="{{$tema->id}}" class="edit_tema fas fa-edit" style="background:transparent;border:none"></button>
-                                            <button type="button" data-id="{{$tema->id}}" data-titulo="{{$tema->titulo}}" class="delete_tema_btn fas fa-trash" style="background:transparent;border:none"></button>
+                                            <button type="button" data-id="<?php echo e($tema->id); ?>" class="edit_tema fas fa-edit" style="background:transparent;border:none"></button>
+                                            <button type="button" data-id="<?php echo e($tema->id); ?>" data-titulo="<?php echo e($tema->titulo); ?>" class="delete_tema_btn fas fa-trash" style="background:transparent;border:none"></button>
                                         </div>                                    
                                 </td>
                             </tr>  
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr id="nadaencontrado">
                                 <td colspan="4">Nada Encontrado!</td>
                             </tr>                      
-                            @endforelse                                                    
+                            <?php endif; ?>                                                    
                         </tbody>
                     </table> 
                     <div class="d-flex hover justify-content-center">
-                    {{$temas->links()}}
+                    <?php echo e($temas->links()); ?>
+
                     </div>  
    
           </div>
@@ -137,14 +136,14 @@
     
 </div>
 <!--End Index-->
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
     <!--<link rel="stylesheet" href="/css/admin_custom.css">  -->
-    <link href="{{asset('css/styles.css')}}" rel="stylesheet"/>  {{-- css da aplicação --}}
-@stop
+    <link href="<?php echo e(asset('css/styles.css')); ?>" rel="stylesheet"/>  
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
 <script type="text/javascript">
 
@@ -154,7 +153,7 @@ $(document).ready(function(){
             e.preventDefault();           
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
             var id = $(this).data("id");            
-            var linklogo = "{{asset('storage')}}";
+            var linklogo = "<?php echo e(asset('storage')); ?>";
             var titulo = $(this).data("titulo");
             
             Swal.fire({
@@ -389,4 +388,5 @@ $(document).ready(function(){
     }); ///Fim do escopo do script
     
     </script>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('adminlte::page', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\php\datacenter\resources\views/tema/index.blade.php ENDPATH**/ ?>

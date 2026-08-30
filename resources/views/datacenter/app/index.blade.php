@@ -464,11 +464,10 @@
     $(document).on('click','.delete_app_btn',function(e){
         e.preventDefault();
         var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
-        var link = "{{asset('storage')}}";
-        var admin = $(this).data("admin");
+        var link = "{{asset('storage')}}";        
         var id = $(this).data("id");
         var nomeapp = $(this).data("nomeapp");
-        if(admin){
+
         Swal.fire({
             showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -508,29 +507,7 @@
                 });
             }                                       
         
-        });                 
-    }else{
-        Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:nomeapp,
-                text: "Você não pode excluir este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }       
+        });                          
         
         });
     ///fim delete app
@@ -541,11 +518,10 @@
     });
     $(document).on('click','.edit_app_btn',function(e){
         e.preventDefault();
-        var link = "{{asset('storage')}}";
-        var admin = $(this).data("admin");
+        var link = "{{asset('storage')}}";        
         var nome = $(this).data("nomeapp");
         var id = $(this).data("id");
-        if(admin){
+        
         $("#editform").trigger('reset');
         $("#EditAppModal").modal('show');    
         $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
@@ -599,29 +575,7 @@
                 }
             }
         });
-    }else{
-        Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:nome,
-                text: "Você não pode alterar este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
     
-    }
     });
     //fim exibe EditAppModal
       //reconfigura o option selected do select html

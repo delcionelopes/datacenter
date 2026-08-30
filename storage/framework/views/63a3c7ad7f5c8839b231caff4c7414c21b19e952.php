@@ -1,8 +1,6 @@
-@extends('adminlte::page')
+<?php $__env->startSection('title', 'PRODAP - Datacenter'); ?>
 
-@section('title', 'PRODAP - Datacenter')
-
-@section('content')
+<?php $__env->startSection('content'); ?>
 
 <style>
     .tooltip-inner {
@@ -17,7 +15,7 @@
 
     <section class="border p-4 mb-4 d-flex align-items-left">
     
-    <form action="{{route('admin.entidades.index',['color'=>$color])}}" class="form-search" method="GET">
+    <form action="<?php echo e(route('admin.entidades.index',['color'=>$color])); ?>" class="form-search" method="GET">
         <div class="col-sm-12">
             <div class="input-group rounded">
             <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -26,8 +24,8 @@
             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                 <i class="fas fa-search"></i>
             </button>        
-            <a href="{{route('admin.entidades.create',['color'=>$color])}}" type="button" class="AddEntidade_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></a>
-            <button data-color="{{$color}}" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></button>
+            <a href="<?php echo e(route('admin.entidades.create',['color'=>$color])); ?>" type="button" class="AddEntidade_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro"><i class="fas fa-plus"></i></a>
+            <button data-color="<?php echo e($color); ?>" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></button>
             </nav>
             </div>            
             </div>        
@@ -40,7 +38,7 @@
                 <div class="col-12">
             
                     <table class="table table-hover">
-                        <thead class="bg-{{$color}}" style="color: white">
+                        <thead class="bg-<?php echo e($color); ?>" style="color: white">
                             <tr>                                
                                 <th scope="col">ENTIDADE</th>                                
                                 <th scope="col">SIGLA</th>                                
@@ -49,26 +47,27 @@
                         </thead>
                         <tbody id="lista_artigos">
                         <tr id="novo" style="display:none;"></tr>
-                        @forelse($entidades as $entidade)   
-                            <tr id="entidade{{$entidade->id}}">                                
-                                <th scope="row">{{$entidade->nome}}</th>                                
-                                <td>{{$entidade->sigla}}</td>
+                        <?php $__empty_1 = true; $__currentLoopData = $entidades; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $entidade): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>   
+                            <tr id="entidade<?php echo e($entidade->id); ?>">                                
+                                <th scope="row"><?php echo e($entidade->nome); ?></th>                                
+                                <td><?php echo e($entidade->sigla); ?></td>
                                 <td>                                    
                                         <div class="btn-group">                                           
-                                            <a href="{{route('admin.entidades.edit',['id'=>$entidade->id,'color'=>$color])}}" type="button" data-id="{{$entidade->id}}" class="edit_entidade fas fa-edit" style="background:transparent;border:none; color:black; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></a>
-                                            <button type="button" data-id="{{$entidade->id}}" data-sigla="{{$entidade->sigla}}" class="delete_entidade_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
+                                            <a href="<?php echo e(route('admin.entidades.edit',['id'=>$entidade->id,'color'=>$color])); ?>" type="button" data-id="<?php echo e($entidade->id); ?>" class="edit_entidade fas fa-edit" style="background:transparent;border:none; color:black; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></a>
+                                            <button type="button" data-id="<?php echo e($entidade->id); ?>" data-sigla="<?php echo e($entidade->sigla); ?>" class="delete_entidade_btn fas fa-trash" style="background:transparent;border:none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                                         </div>                                    
                                 </td>
                             </tr>  
-                            @empty
+                            <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); if ($__empty_1): ?>
                             <tr id="nadaencontrado">
                                 <td colspan="4">Nada Encontrado!</td>
                             </tr>                      
-                            @endforelse                                                    
+                            <?php endif; ?>                                                    
                         </tbody>
                     </table> 
                     <div class="d-flex hover justify-content-center">
-                    {{$entidades->links()}}
+                    <?php echo e($entidades->links()); ?>
+
                     </div>  
    
        </div>
@@ -79,14 +78,14 @@
 </div>
 
 
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
     <!--<link rel="stylesheet" href="/css/admin_custom.css">  -->
-    <link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
-@stop
+    <link href="<?php echo e(asset('css/styles.css')); ?>" rel="stylesheet"/>
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
 <script type="text/javascript">
 
@@ -96,7 +95,7 @@ $(document).ready(function(){
             e.preventDefault();           
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');   
             var id = $(this).data("id");    
-            var linklogo = "{{asset('storage')}}";        
+            var linklogo = "<?php echo e(asset('storage')); ?>";        
             var sigla = $(this).data("sigla");
             
             Swal.fire({
@@ -166,4 +165,5 @@ $(document).ready(function(){
     }); ///Fim do escopo do script
     
     </script>
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('adminlte::page', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\php\datacenter\resources\views/datacenter/entidade/index.blade.php ENDPATH**/ ?>
