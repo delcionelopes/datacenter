@@ -9,8 +9,11 @@ class Orgao extends Model
 {      
     protected $table = 'orgao';   
     protected $fillable = [
+        'id',
         'nome',
-        'telefone',     
+        'telefone',
+        'created_at',
+        'updated_at',
     ];
 
     public function virtualmachine()
@@ -27,6 +30,14 @@ class Orgao extends Model
     public function users()
     {
         return $this->hasMany(User::class);
+    }
+
+    public function setorvinc(){
+        return $this->hasMany(Setor_Vinc::class);
+    }
+
+    public function equipamento(){
+        return $this->hasMany(EquipamentoRede::class);
     }
 
 

@@ -21,15 +21,55 @@
             <div class="modal-body form-horizontal">
                 <form id="addform" name="addform" class="form-horizontal" role="form">
                     <input type="hidden" id="add_rede_id">
-                    <ul id="saveform_errList"></ul>                    
-                    <div class="form-group mb-3">
-                        <label for="">IP</label>
-                        <input type="text" class="ip form-control" data-mask="099.099.099.099">
+                    <ul id="saveform_errList"></ul>
+                    <div class="row">
+                        <div class="col-md-6">
+                            <div class="form-group">
+                                <label for="addorgao">Órgão</label>
+                                <select name="addorgao" id="addorgao" class="custom-select">
+                                    <?php $__currentLoopData = $orgaos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $orgao): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                    <option value="<?php echo e($orgao->id); ?>"><?php echo e($orgao->nome); ?></option>
+                                    <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
+                                </select>
+                            </div>
+                        </div>
+                        <div class="col-md-6">
+                            <label for="addsetor">Setores</label>
+                            <select name="addsetor" id="addsetor" class="custom-select">
+                                <option value=""></option>                                
+                            </select>
+                        </div>
                     </div>
-                    <div class="form-group mb-3">
-                        <label for="">Status</label>
-                        <label for="" style="color: green;"> LIVRE</label>
-                    </div>                    
+                    <div class="row">
+                    <div class="col-md-8">
+                    <div class="form-group">
+                        <label for="addip">IP</label>
+                        <input type="text" id="addip" class="ip form-control" data-mask="099.099.099.099">
+                    </div>
+                    </div>
+                    <div class="col-md-4">
+                    <div class="form-group">
+                        <label for="addstatus">Status</label><br>
+                        <label for="" id="addstatus" style="color: green;"> LIVRE</label>
+                    </div>                
+                    </div>    
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="addmac">Mac</label>
+                                <input type="text" id="addmac" class="mac form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-md-12">
+                            <div class="form-group">
+                                <label for="adddescricao">Descrição</label>
+                                <textarea name="descricao" id="adddescricao" class="form-control" cols="30" rows="10"></textarea>
+                            </div>
+                        </div>
+                    </div>
                 </form>
             </div>
             <div class="modal-footer">
@@ -160,10 +200,9 @@ $(document).ready(function(){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
-            var link = "<?php echo e(asset('storage')); ?>";
-            var admin = $(this).data("admin");
+            var link = "<?php echo e(asset('storage')); ?>";            
             var enderecoip = $(this).data("enderecoip");
-            if(admin){
+            
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -204,28 +243,7 @@ $(document).ready(function(){
             }                                       
         
         });                        
-    }else{
-        Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para excluir este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }
+   
         }); 
         //fim delete ip
         //Inicio Exibe EditIPModal
@@ -238,8 +256,7 @@ $(document).ready(function(){
     
             var id = $(this).data("id");
             var link = "<?php echo e(asset('storage')); ?>";
-            var admin = $(this).data("admin");
-            if(admin){
+          
             $("#editform").trigger('reset');
             $("#EditIPModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');   
@@ -269,28 +286,7 @@ $(document).ready(function(){
                     }
                 }
             });
-        }else{
-            Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para alterar este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-        }
+      
         });
         //Fim Exibe EditIPModal
         //inicio da atualização do ip
@@ -499,6 +495,36 @@ $(document).ready(function(){
         $(".voltar_btn").tooltip();
     });
     ///fim tooltip
+
+    $(document).on('click','#addorgao',function(e){
+        e.preventDefault();
+
+        console.log("Cheguei!");
+        
+        var orgaoid = $(this).val();
+         $.ajaxSetup({
+                headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'GET',
+                dataType:'json',
+                url:'/datacenteradmin/ip/carregasetores/'+orgaoid,
+                success:function(response){
+                    if(response.status==200){
+                        const meuSelect = document.getElementById("addsetor");
+                              meuSelect.options.length = 0;
+                        if(response.setores!=null){                        
+                        $.each(response.setores,function(key,setor){
+                            $('#addsetor').append('<option value="'+setor.id+'">'+setor.sigla+'</option>');
+                        });
+                        }
+                    }
+                }
+            });
+
+    });
 
 
     });

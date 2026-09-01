@@ -4,16 +4,21 @@ namespace App\Http\Controllers\Datacenter;
 
 use App\Models\Cadastro_ip;
 use App\Http\Controllers\Controller;
+use App\Models\Orgao;
 use App\Models\Rede;
+use App\Models\Setor_Vinc;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
 class CadastroIpController extends Controller
 {    
     private $cadastroIp;
-
-    public function __construct(Cadastro_ip $cadastroIp){  
+    private $orgao;
+    private $setorvinc;
+    public function __construct(Cadastro_ip $cadastroIp, Orgao $orgao, Setor_Vinc $setorvinc){  
         $this->cadastroIp = $cadastroIp;
+        $this->orgao = $orgao;
+        $this->setorvinc = $setorvinc;
     }
 
     /**
@@ -33,12 +38,22 @@ class CadastroIpController extends Controller
             $cadastroIps = $query->orderByDesc('id')
                                  ->paginate(6);
         }      
-        $vlan_id = Rede::find($id)->vlan_id;    
+        $vlan_id = Rede::find($id)->vlan_id;
+        $orgaos = $this->orgao->orderBy('id')->get();
         return view('datacenter.ip.index',[
             'cadastroIps' => $cadastroIps,
             'id' => $id,
             'vlan_id' => $vlan_id,
-            'color' => $color
+            'color' => $color,
+            'orgaos' => $orgaos,
+        ]);
+    }
+
+    public function carregaSetores(int $id){
+        $setores = $this->setorvinc->whereOrgao_id($id)->orderBy('id')->get();
+        return response()->json([
+            'status' => 200,
+            'setores' => $setores,
         ]);
     }
  

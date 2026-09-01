@@ -21,6 +21,15 @@ class EquipamentoRede extends Model
         'updated_at',
         'criador_id',
         'alterador_id',
+        'orgao_vinc_id',
+        'setor_vinc_id',
+        'modelo',
+        'ip',
+        'localizacao',
+        'serie',
+        'patrimonio',
+        'equipamento_grupo_id',
+        'inativo',
     ];
 
     public function users():BelongsToMany{
@@ -43,4 +52,17 @@ class EquipamentoRede extends Model
     public function alterador(){
         return $this->belongsTo(User::class,'alterador_id');
     }
+
+    public function orgaovinc(){
+        return $this->belongsTo(Orgao::class,'orgao_vinc_id');        
+    }
+
+    public function setorvinc(){
+        return $this->belongsTo(Setor_Vinc::class,'setor_vinc_id');
+    }
+
+    public function grupo(){
+        return $this->belongsTo(Equipamento_Grupo::class,'equipamento_grupo_id');
+    }
+
 }

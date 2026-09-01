@@ -222,9 +222,8 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var id = $(this).data("id");
             var link = "<?php echo e(asset('storage')); ?>";
-            var admin = $(this).data("admin");            
             var nomerede = $(this).data("nomerede");
-            if(admin){
+            
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -269,28 +268,7 @@ $(document).ready(function(){
             }                                       
         
         });                        
-    }else{
-         Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para excluir este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }
+    
         
         });
         //fim delete rede
@@ -305,8 +283,7 @@ $(document).ready(function(){
             var link = "<?php echo e(asset('storage')); ?>";
     
             var id = $(this).data("id");      
-            var admin = $(this).data("admin");
-            if(admin){
+            
             $("#editform").trigger('reset');
             $("#EditRedeModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
@@ -333,29 +310,6 @@ $(document).ready(function(){
                     }
                 }
             });
-
-        }else{
-            Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para alterar este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-        }
     
         });
         //Fim Exibe EditRedeModal
@@ -421,34 +375,11 @@ $(document).ready(function(){
         $(document).on('click','.AddRedeModal_btn',function(e){
             e.preventDefault();
             var link = "<?php echo e(asset('storage')); ?>";
-            var admin = $(this).data("admin");
-            if(admin){
             $("#addform").trigger('reset');
             $("#AddRedeModal").modal('show');
             $("#add_vlan_id").val($(this).data("id"));
             $("#saveform_errList").replaceWith('<ul id="saveform_errList"></ul>');
-            }else{
-                 Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para registrar uma rede. Pois, o seu usuário não pertence ao setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+   
         });
         //fim exibe form de adição da rede
         //inicio da adição da rede

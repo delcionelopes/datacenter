@@ -387,9 +387,8 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var id = $(this).data("id");
             var link = "<?php echo e(asset('storage')); ?>";
-            var admin = $(this).data("admin");            
             var nomecluster = $(this).data("nomecluster");
-            if(admin){
+            
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -434,30 +433,10 @@ $(document).ready(function(){
             }                                       
         
         });                    
-    }else{
-        Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para excluir este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }    
+
         
         });  ///fim delete cluster
+
         $('#EditClusterModal').on('shown.bs.modal',function(){
             $("#edit_nome_cluster").focus();
         });
@@ -466,8 +445,7 @@ $(document).ready(function(){
             
             var id = $(this).data("id");  
             var link = "<?php echo e(asset('storage')); ?>";
-            var admin = $(this).data("admin");
-            if(admin){
+            
             $("#editmyform").trigger('reset');
             $("#EditClusterModal").modal('show');    
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');             
@@ -495,28 +473,7 @@ $(document).ready(function(){
                     }      
                 }
             });
-        }else{
-             Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para alterar este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-        }
+       
     
         }); //fim da da exibição do form EditClusterModal
     
