@@ -57,8 +57,14 @@ class CadastroIpController extends Controller
         ]);
     }
  
-    public function create()
+    public function create(int $id, $color)
     {        
+        $orgaos = $this->orgao->orderBy('id')->get();
+        return view('datacenter.ip.create',[
+            'orgaos' => $orgaos,
+            'id' => $id,
+            'color' => $color,
+        ]);
     }
     
     /**
@@ -67,23 +73,29 @@ class CadastroIpController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[           
-           'ip'      => 'required|max:15',           
-        ],[            
-            'ip.required'       => 'O campo IP é obrigatório!',
-            'ip.max'            => 'O IP deve conter no máximo :max caracteres!',                       
+           'ip'      => ['required','max:15'],
+           'orgao'   => ['required'],
+           'rede'    => ['required'],
+           'setor'   => ['required'],
+           'descricao' => ['max:255'],
+           'mac' => ['max:30'],
         ]);
         if($validator->fails()){
             return response()->json([
                 'status' => 400,
                 'errors' => $validator->errors()->getMessages(),
             ]);
-        }else{                
-            $data = [
-                'rede_id' => $request->input('rede_id'),
-                'ip' => $request->input('ip'),
-                'status' => strtoupper($request->input('status')),
-                'created_at' => now(),               
-            ];
+        }else{
+
+            $data['rede_id'] = $request->input('rede');
+            $data['id'] = $request->input('ip');
+            $data['status'] = strtoupper($request->input('status'));
+            $data['orgao_vinc_id'] = $request->input('orgao');
+            $data['setor_vinc_id'] = $request->input('setor');
+            $data['mac'] = $request->input('mac');
+            $data['descricao'] = $request->input('descricao');
+            $data['created_at'] = now();                
+            
             $cadastroIp = $this->cadastroIp->create($data);                      
             $rede = $cadastroIp->rede;
             $user = auth()->user();
@@ -122,11 +134,13 @@ class CadastroIpController extends Controller
     public function update(Request $request, int $id)
     {
         $validator = Validator::make($request->all(),[            
-            'ip'      => 'required|max:15',            
-         ],[             
-             'ip.required'       => 'O campo IP é obrigatório!',
-             'ip.max'            => 'O IP deve conter no máximo :max caracteres!',             
-         ]);
+           'ip'      => ['required','max:15'],
+           'rede'    => ['required'],
+           'orgao'   => ['required'],
+           'setor'   => ['required'],
+           'descricao' => ['max:255'],
+           'mac' => ['max:30'],
+           ]);
          if($validator->fails()){
              return response()->json([
                  'status' => 400,
@@ -135,11 +149,14 @@ class CadastroIpController extends Controller
          }else{                     
              $cadastroIp = $this->cadastroIp->find($id);
              if($cadastroIp){
-                $data = [
-                    'rede_id' => $request->input('rede_id'),
-                    'ip' => $request->input('ip'),
-                    'updated_at' => now(),                                          
-                ];
+                $data['rede_id'] = $request->input('rede');
+                $data['id'] = $request->input('ip');
+                $data['status'] = strtoupper($request->input('status'));
+                $data['orgao_vinc_id'] = $request->input('orgao');
+                $data['setor_vinc_id'] = $request->input('setor');
+                $data['mac'] = $request->input('mac');
+                $data['descricao'] = $request->input('descricao');
+                $data['updated_at'] = now();
                 $cadastroIp->update($data);               
                 $c = Cadastro_ip::find($id);
                 $rede = $c->rede;

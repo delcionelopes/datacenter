@@ -297,6 +297,7 @@ Route::group(['middleware'=> ['auth']],function(){
           Route::prefix('ip')->name('ip.')->group(function(){
           Route::get('index-ip/{id}/{color}',[CadastroIpController::class,'index'])->name('ip.index');
           Route::delete('delete-ip/{id}',[CadastroIpController::class,'destroy']);
+          Route::get('create-ip/{id}/{color}',[CadastroIpController::class,'create'])->name('create');
           Route::get('edit-ip/{id}',[CadastroIpController::class,'edit']);
           Route::put('update-ip/{id}',[CadastroIpController::class,'update']);
           Route::put('adiciona-ip',[CadastroIpController::class,'store']);
@@ -307,7 +308,7 @@ Route::group(['middleware'=> ['auth']],function(){
            //Rotas para a view index de VirtualMachine
           Route::prefix('vm')->name('vm.')->group(function(){
           Route::get('index-vm/{id}/{color}',[VirtualMachineController::class,'index'])->name('vm.index');
-          Route::delete('delete-vm/{id}',[VirtualMachineController::class,'destroy']);
+          Route::delete('delete-vm/{id}',[VirtualMachineController::class,'destroy']);          
           Route::get('edit-vm/{id}',[VirtualMachineController::class,'edit']);
           Route::put('update-vm/{id}',[VirtualMachineController::class,'update']);
           Route::put('adiciona-vm',[VirtualMachineController::class,'store']);

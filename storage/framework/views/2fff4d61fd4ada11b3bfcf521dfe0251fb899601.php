@@ -145,7 +145,7 @@
                             <button type="button" data-id="<?php echo e($id); ?>" class="AddRedeModal_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
                                <i class="fas fa-plus"></i>
                             </button>
-                            <button data-color="<?php echo e($color); ?>" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;" onclick="history.back()"><i class="fas fa-door-open"></i></button>
+                            <a href="<?php echo e(route('datacenteradmin.vlan.vlan.index',['color'=>$color])); ?>" data-color="<?php echo e($color); ?>" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></a>
                         </nav>
                         </div>
                     </div>
