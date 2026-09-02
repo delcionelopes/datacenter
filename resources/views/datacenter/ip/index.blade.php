@@ -41,6 +41,7 @@
                     <tr>                        
                         <th scope="col">IP</th>
                         <th scope="col">REDE</th>
+                        <th scope="col">LOCALIZAÇÃO</th>
                         <th scope="col">STATUS</th>                    
                         <th scope="col">AÇÕES</th>                       
                     </tr>                    
@@ -51,6 +52,11 @@
                     <tr id="ip{{$ip->id}}">                        
                         <th scope="row">{{$ip->ip}}</th>
                         <td><a href="{{route('datacenteradmin.rede.rede.index',['id' => $vlan_id,'color'=>$color])}}">{{$ip->rede->nome_rede}}</a></td>
+                        @if($ip->orgaovinc)
+                        <td>{{$ip->orgaovinc->nome}}/{{$ip->setorvinc->sigla}}</td>
+                        @else
+                        <td></td>
+                        @endif
                         @if($ip->status=="OCUPADO")
                         <td id="stipid{{$ip->id}}"><button type="button" data-id="{{$ip->id}}" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="OCUPADO"></button></td>
                         @else

@@ -28,6 +28,7 @@ use App\Http\Controllers\Datacenter\HostController;
 use App\Http\Controllers\Datacenter\institucionalController;
 use App\Http\Controllers\Datacenter\RedeController;
 use App\Http\Controllers\Datacenter\SenhaController;
+use App\Http\Controllers\Datacenter\setorVincController;
 use App\Http\Controllers\Datacenter\VirtualMachineController;
 use App\Http\Controllers\Datacenter\vlanController;
 use App\Http\Controllers\HomeController;
@@ -372,6 +373,16 @@ Route::group(['middleware'=> ['auth']],function(){
            Route::patch('updatesenhaequipamento/{id}',[EquipamentoController::class,'updatesenhaEquipamento']);
            Route::patch('updatesenhaindividual/{id}',[EquipamentoController::class,'updatesenhaIndividual']);
            });
+
+           //setores vinculados             
+           Route::prefix('setorvinc')->name('setorvinc.')->group(function(){
+           Route::get('index-setorvinc/{color}',[setorVincController::class,'index'])->name('index');
+           Route::delete('delete-setorvinc/{id}',[setorVincController::class,'destroy']);
+           Route::get('edit-setorvinc/{id}',[setorVincController::class,'edit']);
+           Route::put('update-setorvinc/{id}',[setorVincController::class,'update']);
+           Route::put('adiciona-setorvinc',[setorVincController::class,'store']);    
+           });
+
 
            //Relatórios
            Route::prefix('relatorios')->name('relatorios.')->group(function(){            

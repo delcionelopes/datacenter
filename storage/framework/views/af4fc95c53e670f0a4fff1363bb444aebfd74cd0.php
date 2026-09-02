@@ -39,6 +39,7 @@
                     <tr>                        
                         <th scope="col">IP</th>
                         <th scope="col">REDE</th>
+                        <th scope="col">LOCALIZAÇÃO</th>
                         <th scope="col">STATUS</th>                    
                         <th scope="col">AÇÕES</th>                       
                     </tr>                    
@@ -49,6 +50,11 @@
                     <tr id="ip<?php echo e($ip->id); ?>">                        
                         <th scope="row"><?php echo e($ip->ip); ?></th>
                         <td><a href="<?php echo e(route('datacenteradmin.rede.rede.index',['id' => $vlan_id,'color'=>$color])); ?>"><?php echo e($ip->rede->nome_rede); ?></a></td>
+                        <?php if($ip->orgaovinc): ?>
+                        <td><?php echo e($ip->orgaovinc->nome); ?>/<?php echo e($ip->setorvinc->sigla); ?></td>
+                        <?php else: ?>
+                        <td></td>
+                        <?php endif; ?>
                         <?php if($ip->status=="OCUPADO"): ?>
                         <td id="stipid<?php echo e($ip->id); ?>"><button type="button" data-id="<?php echo e($ip->id); ?>" data-status="LIVRE" class="status_btn fas fa-lock" style="background: transparent; color: red; border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="OCUPADO"></button></td>
                         <?php else: ?>

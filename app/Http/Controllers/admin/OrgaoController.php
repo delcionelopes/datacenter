@@ -148,58 +148,14 @@ class OrgaoController extends Controller
     public function destroy(int $id)
     {
         $orgao = $this->orgao->find($id);
-
-        $vms = $orgao->virtualmachine;
-        $apps = $orgao->apps;
-        $users = $orgao->users;
         if(($orgao->virtualmachine()->count())||($orgao->apps()->count())||($orgao->users()->count())){
-            if((auth()->user()->moderador)&&(!(auth()->user()->inativo))){
-                if($orgao->virtualmachine()->count()){
-                    foreach ($vms as $vm) {
-                        $v = VirtualMachine::find($vm->id);
-                        $bases = $v->bases;
-                        foreach ($bases as $base) {
-                            $b = Base::find($base->id);
-                            $apps = $b->apps;
-                            foreach ($apps as $app) {
-                                $a = App::find($app->id);
-                                $a->delete();
-                            }
-                            $b->delete();
-                        }
-                        $vmXvlans = $v->vlans;
-                        if($v->vlans()->count()){
-                        $v->vlans()->detach($vmXvlans);
-                        $v->delete();
-                        }
-                    }                    
-                }
-                if($orgao->apps()->count()){
-                    foreach ($apps as $app) {
-                        $a = App::find($app->id);
-                        $a->delete();
-                    }                    
-                }
-                if($orgao->users()->count()){
-                    $users = $orgao->users;
-                    foreach ($users as $user) {
-                        $u = User::find($user->id);
-                        $u->delete();
-                    }                    
-                }                
+             $status = 400;
+             $message = $orgao->nome.' não pode ser excluído. Pois há outros registros que dependem dele!';        
+            }else{                                 
                 $status = 200;
                 $message = $orgao->nome.' excluído com sucesso!';
                 $orgao->delete();
-            }else{
-                $status = 400;
-                $message = $orgao->nome.' não pode ser excluído. Pois há outros registros que dependem dele! Procure um administrador!';
             }
-        }else{
-            $status = 200;
-            $message = $orgao->nome.' excluído com sucesso!';
-            $orgao->delete();
-        }
-
         return response()->json([
             'status'  =>  $status,
             'message' => $message,

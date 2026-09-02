@@ -57,10 +57,10 @@ class setorVincController extends Controller
             ]);
         }else{            
             $data['descricao'] = strtoupper($request->input('descricao'));
-            $data['orgao'] = $request->input('orgao');
+            $data['orgao_id'] = $request->input('orgao');
             $data['sigla'] = strtoupper($request->input('sigla'));
             $data['created_at'] = now();
-            $data['updated_at'] = null;            
+            $data['updated_at'] = null;
             $setor = $this->setorVinc->create($data);
             return response()->json([
                 'status' => 200,
@@ -119,10 +119,10 @@ class setorVincController extends Controller
             $setor = $this->setorVinc->find($id);
             if($setor){
             $data['descricao'] = strtoupper($request->input('descricao'));
-            $data['orgao'] = $request->input('orgao');
+            $data['orgao_id'] = $request->input('orgao');
             $data['sigla'] = strtoupper($request->input('sigla'));            
             $data['updated_at'] = now();            
-            $setor = $this->setorVinc->create($data);
+            $setor->update($data);
             $s = Setor_Vinc::find($id);
             return response()->json([
                 'status' => 200,

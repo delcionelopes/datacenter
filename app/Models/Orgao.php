@@ -40,5 +40,9 @@ class Orgao extends Model
         return $this->hasMany(EquipamentoRede::class);
     }
 
+    public function ip(){
+        return $this->hasMany(Cadastro_ip::class);
+    }
+
 
 }

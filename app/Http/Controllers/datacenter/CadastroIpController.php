@@ -37,7 +37,7 @@ class CadastroIpController extends Controller
                                       ->where('ip','LIKE',$request->pesquisa);
             $cadastroIps = $query->orderByDesc('id')
                                  ->paginate(6);
-        }      
+        }
         $vlan_id = Rede::find($id)->vlan_id;
         $orgaos = $this->orgao->orderBy('id')->get();
         return view('datacenter.ip.index',[
@@ -88,7 +88,7 @@ class CadastroIpController extends Controller
         }else{
 
             $data['rede_id'] = $request->input('rede');
-            $data['id'] = $request->input('ip');
+            $data['ip'] = $request->input('ip');
             $data['status'] = strtoupper($request->input('status'));
             $data['orgao_vinc_id'] = $request->input('orgao');
             $data['setor_vinc_id'] = $request->input('setor');
@@ -117,14 +117,15 @@ class CadastroIpController extends Controller
     /**
      * Método para a edição de registro
      */
-    public function edit(int $id)
+    public function edit(int $id, int $redeid, $color)
     {
         $cadastroIp = $this->cadastroIp->find($id);        
-        $user = auth()->user();
-        return response()->json([            
-            'cadastroIp' => $cadastroIp,
-            'user' => $user,
-            'status' => 200,
+        $orgaos = $this->orgao->orderBy('id')->get();
+        return view('datacenter.ip.edit',[            
+            'ip' => $cadastroIp,
+            'id' => $redeid,
+            'orgaos' => $orgaos,            
+            'color' => $color,
         ]);
     }
 
@@ -150,7 +151,7 @@ class CadastroIpController extends Controller
              $cadastroIp = $this->cadastroIp->find($id);
              if($cadastroIp){
                 $data['rede_id'] = $request->input('rede');
-                $data['id'] = $request->input('ip');
+                $data['ip'] = $request->input('ip');
                 $data['status'] = strtoupper($request->input('status'));
                 $data['orgao_vinc_id'] = $request->input('orgao');
                 $data['setor_vinc_id'] = $request->input('setor');

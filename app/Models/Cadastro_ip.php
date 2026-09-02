@@ -22,12 +22,12 @@ class Cadastro_ip extends Model
         return $this->belongsTo(Rede::class,'rede_id','id');
     }
 
-    public function setor(){
-        return $this->belongsTo(Setor_Vinc::class,'setor_vinc_id');
+    public function setorvinc(){
+        return $this->belongsTo(Setor_Vinc::class,'setor_vinc_id','id');
     }
 
     public function orgaovinc(){
-        return $this->belongsTo(Orgao::class,'orgao_vinc_id');
+        return $this->belongsTo(Orgao::class,'orgao_vinc_id','id');
     }
 
 }
