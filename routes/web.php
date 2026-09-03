@@ -304,6 +304,7 @@ Route::group(['middleware'=> ['auth']],function(){
           Route::put('adiciona-ip',[CadastroIpController::class,'store']);
           Route::put('status-ip/{id}',[CadastroIpController::class,'status']);
           Route::get('carregasetores/{id}',[CadastroIpController::class,'carregaSetores']);
+          Route::get('carregasetores2/{id}/{ipid}',[CadastroIpController::class,'carregaSetores2']);
           });
   
            //Rotas para a view index de VirtualMachine

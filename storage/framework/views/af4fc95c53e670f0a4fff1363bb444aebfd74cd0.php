@@ -17,7 +17,7 @@
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                         <nav class="navbar navbar-expand-md navbar-light bg-light">
-                            <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Busca IP" aria-label="Search" aria-describedby="search-addon">
+                            <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="000.000.000.000" aria-label="Search" aria-describedby="search-addon" data-mask="099.099.099.099">
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                <i class="fas fa-search"></i>
                             </button>
@@ -38,6 +38,7 @@
             <thead class="bg-<?php echo e($color); ?>" style="color: white">
                     <tr>                        
                         <th scope="col">IP</th>
+                        <th scope="col">MAC ADDRESS</th>
                         <th scope="col">REDE</th>
                         <th scope="col">LOCALIZAÇÃO</th>
                         <th scope="col">STATUS</th>                    
@@ -49,9 +50,10 @@
                     <?php $__empty_1 = true; $__currentLoopData = $cadastroIps; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $ip): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <tr id="ip<?php echo e($ip->id); ?>">                        
                         <th scope="row"><?php echo e($ip->ip); ?></th>
+                        <td><?php echo e($ip->mac); ?></td>
                         <td><a href="<?php echo e(route('datacenteradmin.rede.rede.index',['id' => $vlan_id,'color'=>$color])); ?>"><?php echo e($ip->rede->nome_rede); ?></a></td>
                         <?php if($ip->orgaovinc): ?>
-                        <td><?php echo e($ip->orgaovinc->nome); ?>/<?php echo e($ip->setorvinc->sigla); ?></td>
+                        <td class="localizacao" style="cursor: pointer; white-space: nowrap" data-html="true" data-placement="top" data-toggle="popover" title="<?php echo e($ip->descricao); ?>"><?php echo e($ip->orgaovinc->nome); ?>/<?php echo e($ip->setorvinc->sigla); ?></td>
                         <?php else: ?>
                         <td></td>
                         <?php endif; ?>
@@ -62,7 +64,7 @@
                         <?php endif; ?>                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="<?php echo e($ip->id); ?>" data-admin="<?php echo e(auth()->user()->admin); ?>" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar IP"></button>
+                                <a href="<?php echo e(route('datacenteradmin.ip.edit',['id' => $ip->id, 'redeid' => $id, 'color' => $color])); ?>" type="button" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar IP"></a>
                                 <button type="button" data-id="<?php echo e($ip->id); ?>" data-admin="<?php echo e(auth()->user()->admin); ?>" data-enderecoip="<?php echo e($ip->ip); ?>" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir IP"></button>
                             </div>
                         </td>
@@ -191,6 +193,7 @@ $(document).ready(function(){
         $(".delete_ip_btn").tooltip();
         $(".edit_ip_btn").tooltip();
         $(".voltar_btn").tooltip();
+        $(".localizacao").tooltip();
     });
     ///fim tooltip
 

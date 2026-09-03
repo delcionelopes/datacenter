@@ -1,6 +1,6 @@
 
 
-<?php $__env->startSection('title', 'Cadastro de IP'); ?>
+<?php $__env->startSection('title', 'Edição de IP'); ?>
 
 <?php $__env->startSection('content'); ?>
 
@@ -178,13 +178,14 @@
     <?php echo csrf_field(); ?>
     <?php echo method_field('PUT'); ?>
     <ul id="saveform_errList"></ul>
-    <input type="hidden" id="add_rede_id" value="<?php echo e($id); ?>"> 
+    <input type="hidden" id="add_rede_id" value="<?php echo e($redeid); ?>"> 
+    <input type="hidden" id="add_ip_id" value="<?php echo e($ip->id); ?>"> 
     <header class="masthead" style="background-image: url('/assets/img/home-bg.jpg')">
          <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="post-heading">
-                            <h1>Cadastro de IPs</h1>                            
+                            <h1>Edição de IPs</h1>                            
                         </div>
                     </div>
                 </div>
@@ -203,7 +204,7 @@
                             <select name="adorgao" id="adorgao" class="custom-select">
                                 <option id="optnovoorgao" style="display: none;"></option>
                                 <?php $__currentLoopData = $orgaos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $orgao): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
-                                <option class="optorgao" id="optorgao<?php echo e($orgao->id); ?>" data-id="<?php echo e($orgao->id); ?>" data-nome="<?php echo e($orgao->nome); ?>" value="<?php echo e($orgao->id); ?>"><?php echo e($orgao->nome); ?></option>
+                                <option class="optorgao" id="optorgao<?php echo e($orgao->id); ?>" data-id="<?php echo e($orgao->id); ?>" data-nome="<?php echo e($orgao->nome); ?>" value="<?php echo e($orgao->id); ?>" <?php echo e(old('orgao_vinc_id', $ip->orgao_vinc_id ?? '') === $orgao->id ? 'selected' : ''); ?>><?php echo e($orgao->nome); ?></option>
                                 <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                                 <button type="button" class="addorgao" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo<br>Órgão"><i class="fas fa-plus"></i></button>
@@ -219,8 +220,10 @@
                             <label for="adsetor">Setor</label>
                             <div class="form-group d-flex">
                             <select name="adsetor" id="adsetor" class="custom-select">
-                                <option id="optnovosetor" style="display: none;"></option>
-                                <option value=""></option>
+                                <option id="optnovosetor" style="display: none;"></option>                                
+                                <?php $__currentLoopData = $setores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option class="optsetor" id="optsetor<?php echo e($setor->id); ?>" data-id="<?php echo e($setor->id); ?>" data-descricao="<?php echo e($setor->descricao); ?>" value="<?php echo e($setor->id); ?>" <?php echo e(old('setor_vinc_id', $ip->setor_vinc_id ?? '') === $setor->id ? 'selected' : ''); ?>><?php echo e($setor->descricao); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                                 <button type="button" class="addsetor" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo<br>Setor"><i class="fas fa-plus"></i></button>
                                 <button type="button" class="remsetor" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Excluir<br>Setor"><i class="fas fa-minus"></i></button>
@@ -236,13 +239,17 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="addip">IP</label>
-                                <input type="text" id="addip" class="form-control" placeholder="000.000.000.000" data-mask="099.099.099.099">
+                                <input type="text" id="addip" class="form-control" placeholder="000.000.000.000" data-mask="099.099.099.099" value="<?php echo e($ip->ip); ?>">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="addstatus">Status</label><br>
-                                <label for="" id="addstatus" style="color: green;"> LIVRE</label>
+                                <?php if($ip->status=='LIVRE'): ?>
+                                <label for="" id="addstatus" style="color: green;"> <?php echo e($ip->status); ?></label>
+                                <?php else: ?>
+                                <label for="" id="addstatus" style="color: red;"> <?php echo e($ip->status); ?></label>
+                                <?php endif; ?>
                             </div>
                         </div>
                     </div>
@@ -250,7 +257,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="addmac">MAC</label>
-                                <input type="text" id="addmac" placeholder="00:00:00:00:00:00" class="form-control">
+                                <input type="text" id="addmac" class="form-control" placeholder="00:00:00:00:00:00" value="<?php echo e($ip->mac); ?>">
                             </div>
                         </div>
                     </div>
@@ -258,7 +265,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="adddescricao">Descrição</label>
-                                <textarea name="descricao" id="adddescricao" class="form-control" cols="30" rows="10"></textarea>
+                                <textarea name="descricao" id="adddescricao" class="form-control" cols="30" rows="10"><?php echo e($ip->descricao); ?></textarea>
                             </div>
                         </div>
                     </div>
@@ -295,13 +302,14 @@ $(document).ready(function(){
         e.preventDefault();
         var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
         var id = $('#add_rede_id').val();
+        var ipid = $('#add_ip_id').val();
         var loading = $('#imgadd');
             loading.show();
         var color = $(this).data("color");
             
         var data = new FormData();         
-                data.append('orgao',$('#addorgao').val());
-                data.append('setor',$('#addsetor').val());
+                data.append('orgao',$('#adorgao').val());
+                data.append('setor',$('#adsetor').val());
                 data.append('rede',id);
                 data.append('ip',$('#addip').val());
                 data.append('status','LIVRE');
@@ -311,7 +319,7 @@ $(document).ready(function(){
                 data.append('_token',CSRF_TOKEN);            
 
         $.ajax({
-            url: '/datacenteradmin/ip/adiciona-ip',
+            url: '/datacenteradmin/ip/update-ip/'+ipid,
             type: 'POST',
             dataType: 'json',
             data: data,
@@ -338,9 +346,45 @@ $(document).ready(function(){
 
     });
 
+    window.onload = function(){
+        var id = $('#add_ip_id').val();
+        const selectorgao = document.getElementById("adorgao");
+        var orgaoid = selectorgao.value;
+                      $("#add_orgao_setor_id").val(orgaoid);
+                      $("#edit_orgao_setor_id").val(orgaoid);
+         $.ajaxSetup({
+                headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'GET',
+                dataType:'json',
+                url:'/datacenteradmin/ip/carregasetores2/'+orgaoid+'/'+id,
+                success:function(response){
+                    if(response.status==200){
+                        var ipsetor = response.ipsetor;
+                        const meuSelect = document.getElementById("adsetor");
+                              meuSelect.options.length = 0;
+                        $('#adsetor').append('<option class="optsetor" id="optnovosetor" style="display: none;"></option>');
+                        if(response.setores!=null){                        
+                        $.each(response.setores,function(key,setor){
+                            if(ipsetor==setor.id){
+                                $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'" selected>'+setor.descricao+'</option>');
+                            }else{
+                                $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'">'+setor.descricao+'</option>');
+                            }
+                        });
+                        }
+                    }
+                }
+            });
+    };
+
     
     $(document).on('change','#adorgao',function(e){
-        e.preventDefault();        
+        e.preventDefault();
+        var id = $('#add_ip_id').val();
         var orgaoid = $(this).val();
                       $("#add_orgao_setor_id").val(orgaoid);
                       $("#edit_orgao_setor_id").val(orgaoid);
@@ -352,15 +396,20 @@ $(document).ready(function(){
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url:'/datacenteradmin/ip/carregasetores/'+orgaoid,
+                url:'/datacenteradmin/ip/carregasetores2/'+orgaoid+'/'+id,
                 success:function(response){
                     if(response.status==200){
+                        var ipsetor = response.ipsetor;
                         const meuSelect = document.getElementById("adsetor");
                               meuSelect.options.length = 0;
                         if(response.setores!=null){
                         $('#adsetor').append('<option class="optsetor" id="optnovosetor" style="display: none;"></option>');
                         $.each(response.setores,function(key,setor){
-                            $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'">'+setor.descricao+'</option>');
+                            if(ipsetor==setor.id){
+                                $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'" selected>'+setor.descricao+'</option>');
+                            }else{
+                                $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'">'+setor.descricao+'</option>');
+                            }
                         });
                         }
                     }
@@ -385,36 +434,7 @@ $(document).ready(function(){
         $(".remsetor").tooltip();        
         $(".editsetor").tooltip();        
     });
-    ///fim tooltip
-
-    /*window.onload = function(){
-        const selectorgao = document.getElementById("adorgao");
-        var orgaoid = selectorgao.value;
-                      $("#add_orgao_setor_id").val(orgaoid);
-                      $("#edit_orgao_setor_id").val(orgaoid);
-         $.ajaxSetup({
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type:'GET',
-                dataType:'json',
-                url:'/datacenteradmin/ip/carregasetores/'+orgaoid,
-                success:function(response){
-                    if(response.status==200){
-                        const meuSelect = document.getElementById("adsetor");
-                              meuSelect.options.length = 0;
-                        $('#adsetor').append('<option class="optsetor" id="optnovosetor" style="display: none;"></option>');
-                        if(response.setores!=null){                        
-                        $.each(response.setores,function(key,setor){
-                            $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'">'+setor.descricao+'</option>');
-                        });
-                        }
-                    }
-                }
-            });
-    }; */
+    ///fim tooltip    
 
     $(document).on('click','.remorgao',function(e){   ///inicio delete orgao
             e.preventDefault();           
@@ -945,4 +965,4 @@ $(document).ready(function(){
 </script>
 
 <?php $__env->stopSection(); ?>
-<?php echo $__env->make('adminlte::page', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\php\datacenter\resources\views/datacenter/ip/create.blade.php ENDPATH**/ ?>
+<?php echo $__env->make('adminlte::page', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\php\datacenter\resources\views/datacenter/ip/edit.blade.php ENDPATH**/ ?>

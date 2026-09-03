@@ -49,15 +49,26 @@ class CadastroIpController extends Controller
         ]);
     }
 
-    public function carregaSetores(int $id){
+    public function carregaSetores(int $id){        
         $setores = $this->setorvinc->whereOrgao_id($id)->orderBy('id')->get();
         return response()->json([
             'status' => 200,
             'setores' => $setores,
         ]);
     }
+
+    public function carregaSetores2(int $id, int $ipid){
+        $ip = $this->cadastroIp->find($ipid);
+        $ipsetor = $ip->setor_vinc_id;
+        $setores = $this->setorvinc->whereOrgao_id($id)->orderBy('id')->get();
+        return response()->json([
+            'status' => 200,
+            'setores' => $setores,
+            'ipsetor' => $ipsetor,
+        ]);
+    }
  
-    public function create(int $id, int $redeid, $color)
+    public function create(int $id, $color)
     {        
         $orgaos = $this->orgao->orderBy('id')->get();
         return view('datacenter.ip.create',[

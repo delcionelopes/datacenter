@@ -239,13 +239,17 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="addip">IP</label>
-                                <input type="text" id="addip" class="form-control" data-mask="099.099.099.099" value="{{$ip->ip}}">
+                                <input type="text" id="addip" class="form-control" placeholder="000.000.000.000" data-mask="099.099.099.099" value="{{$ip->ip}}">
                             </div>
                         </div>
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="addstatus">Status</label><br>
+                                @if($ip->status=='LIVRE')
                                 <label for="" id="addstatus" style="color: green;"> {{$ip->status}}</label>
+                                @else
+                                <label for="" id="addstatus" style="color: red;"> {{$ip->status}}</label>
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -253,7 +257,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="addmac">MAC</label>
-                                <input type="text" id="addmac" class="form-control" value="{{$ip->mac}}">
+                                <input type="text" id="addmac" class="form-control" placeholder="00:00:00:00:00:00" value="{{$ip->mac}}">
                             </div>
                         </div>
                     </div>
@@ -304,8 +308,8 @@ $(document).ready(function(){
         var color = $(this).data("color");
             
         var data = new FormData();         
-                data.append('orgao',$('#addorgao').val());
-                data.append('setor',$('#addsetor').val());
+                data.append('orgao',$('#adorgao').val());
+                data.append('setor',$('#adsetor').val());
                 data.append('rede',id);
                 data.append('ip',$('#addip').val());
                 data.append('status','LIVRE');
@@ -342,9 +346,45 @@ $(document).ready(function(){
 
     });
 
+    window.onload = function(){
+        var id = $('#add_ip_id').val();
+        const selectorgao = document.getElementById("adorgao");
+        var orgaoid = selectorgao.value;
+                      $("#add_orgao_setor_id").val(orgaoid);
+                      $("#edit_orgao_setor_id").val(orgaoid);
+         $.ajaxSetup({
+                headers:{
+                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                }
+            });
+            $.ajax({
+                type:'GET',
+                dataType:'json',
+                url:'/datacenteradmin/ip/carregasetores2/'+orgaoid+'/'+id,
+                success:function(response){
+                    if(response.status==200){
+                        var ipsetor = response.ipsetor;
+                        const meuSelect = document.getElementById("adsetor");
+                              meuSelect.options.length = 0;
+                        $('#adsetor').append('<option class="optsetor" id="optnovosetor" style="display: none;"></option>');
+                        if(response.setores!=null){                        
+                        $.each(response.setores,function(key,setor){
+                            if(ipsetor==setor.id){
+                                $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'" selected>'+setor.descricao+'</option>');
+                            }else{
+                                $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'">'+setor.descricao+'</option>');
+                            }
+                        });
+                        }
+                    }
+                }
+            });
+    };
+
     
     $(document).on('change','#adorgao',function(e){
-        e.preventDefault();        
+        e.preventDefault();
+        var id = $('#add_ip_id').val();
         var orgaoid = $(this).val();
                       $("#add_orgao_setor_id").val(orgaoid);
                       $("#edit_orgao_setor_id").val(orgaoid);
@@ -356,15 +396,20 @@ $(document).ready(function(){
             $.ajax({
                 type:'GET',
                 dataType:'json',
-                url:'/datacenteradmin/ip/carregasetores/'+orgaoid,
+                url:'/datacenteradmin/ip/carregasetores2/'+orgaoid+'/'+id,
                 success:function(response){
                     if(response.status==200){
+                        var ipsetor = response.ipsetor;
                         const meuSelect = document.getElementById("adsetor");
                               meuSelect.options.length = 0;
                         if(response.setores!=null){
                         $('#adsetor').append('<option class="optsetor" id="optnovosetor" style="display: none;"></option>');
                         $.each(response.setores,function(key,setor){
-                            $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'">'+setor.descricao+'</option>');
+                            if(ipsetor==setor.id){
+                                $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'" selected>'+setor.descricao+'</option>');
+                            }else{
+                                $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'">'+setor.descricao+'</option>');
+                            }
                         });
                         }
                     }
@@ -389,36 +434,7 @@ $(document).ready(function(){
         $(".remsetor").tooltip();        
         $(".editsetor").tooltip();        
     });
-    ///fim tooltip
-
-    /*window.onload = function(){
-        const selectorgao = document.getElementById("adorgao");
-        var orgaoid = selectorgao.value;
-                      $("#add_orgao_setor_id").val(orgaoid);
-                      $("#edit_orgao_setor_id").val(orgaoid);
-         $.ajaxSetup({
-                headers:{
-                'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
-                }
-            });
-            $.ajax({
-                type:'GET',
-                dataType:'json',
-                url:'/datacenteradmin/ip/carregasetores/'+orgaoid,
-                success:function(response){
-                    if(response.status==200){
-                        const meuSelect = document.getElementById("adsetor");
-                              meuSelect.options.length = 0;
-                        $('#adsetor').append('<option class="optsetor" id="optnovosetor" style="display: none;"></option>');
-                        if(response.setores!=null){                        
-                        $.each(response.setores,function(key,setor){
-                            $('#adsetor').append('<option class="optsetor" id="optsetor'+setor.id+'" data-id="'+setor.id+'" data-descricao="'+setor.descricao+'" value="'+setor.id+'">'+setor.descricao+'</option>');
-                        });
-                        }
-                    }
-                }
-            });
-    }; */
+    ///fim tooltip    
 
     $(document).on('click','.remorgao',function(e){   ///inicio delete orgao
             e.preventDefault();           
@@ -922,6 +938,26 @@ $(document).ready(function(){
         
     
         }); //fim da atualização do registro do setor vinculado
+
+        ///formata mac address
+   
+        const input = document.getElementById('addmac');
+
+        input.addEventListener('input', (e) => {
+        let value = e.target.value.replace(/[^0-9a-fA-F]/g, '').toUpperCase();
+        let formatted = '';
+  
+        for (let i = 0; i < value.length && i < 12; i++) {
+           if (i > 0 && i % 2 === 0) {
+               formatted += ':';
+           }
+        formatted += value[i];
+        }
+  
+        e.target.value = formatted;
+        });
+
+        //fim formata mac address
     
 
 });
