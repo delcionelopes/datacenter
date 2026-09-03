@@ -242,7 +242,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="addstatus">Status</label><br>
-                                <label for="" id="addstratus" style="color: green;"> LIVRE</label>
+                                <label for="" id="addstatus" style="color: green;"> LIVRE</label>
                             </div>
                         </div>
                     </div>
@@ -339,7 +339,7 @@ $(document).ready(function(){
     });
 
     
-    $(document).on('click','#adorgao',function(e){
+    $(document).on('change','#adorgao',function(e){
         e.preventDefault();        
         var orgaoid = $(this).val();
                       $("#add_orgao_setor_id").val(orgaoid);
@@ -387,7 +387,7 @@ $(document).ready(function(){
     });
     ///fim tooltip
 
-    window.onload = function(){
+    /*window.onload = function(){
         const selectorgao = document.getElementById("adorgao");
         var orgaoid = selectorgao.value;
                       $("#add_orgao_setor_id").val(orgaoid);
@@ -414,7 +414,7 @@ $(document).ready(function(){
                     }
                 }
             });
-    };
+    }; */
 
     $(document).on('click','.remorgao',function(e){   ///inicio delete orgao
             e.preventDefault();           

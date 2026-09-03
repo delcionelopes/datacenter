@@ -64,7 +64,7 @@
                         @endif                       
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-id="{{$ip->id}}" data-admin="{{auth()->user()->admin}}" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar IP"></button>
+                                <a href="{{ route('datacenteradmin.ip.edit',['id' => $ip->id, 'redeid' => $id, 'color' => $color}}" type="button" class="edit_ip_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar IP"></a>
                                 <button type="button" data-id="{{$ip->id}}" data-admin="{{auth()->user()->admin}}" data-enderecoip="{{$ip->ip}}" class="delete_ip_btn fas fa-trash" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir IP"></button>
                             </div>
                         </td>

@@ -33,7 +33,7 @@ class Orgao extends Model
     }
 
     public function setorvinc(){
-        return $this->hasMany(Setor_Vinc::class);
+        return $this->hasMany(Setor_Vinc::class,'id','orgao_id');
     }
 
     public function equipamento(){

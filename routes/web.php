@@ -299,7 +299,7 @@ Route::group(['middleware'=> ['auth']],function(){
           Route::get('index-ip/{id}/{color}',[CadastroIpController::class,'index'])->name('ip.index');
           Route::delete('delete-ip/{id}',[CadastroIpController::class,'destroy']);
           Route::get('create-ip/{id}/{color}',[CadastroIpController::class,'create'])->name('create');
-          Route::get('edit-ip/{id}',[CadastroIpController::class,'edit']);
+          Route::get('edit-ip/{id}/{redeid}/{color}',[CadastroIpController::class,'edit'])->name('edit');
           Route::put('update-ip/{id}',[CadastroIpController::class,'update']);
           Route::put('adiciona-ip',[CadastroIpController::class,'store']);
           Route::put('status-ip/{id}',[CadastroIpController::class,'status']);

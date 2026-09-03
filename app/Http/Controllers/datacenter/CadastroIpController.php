@@ -57,13 +57,13 @@ class CadastroIpController extends Controller
         ]);
     }
  
-    public function create(int $id, $color)
+    public function create(int $id, int $redeid, $color)
     {        
         $orgaos = $this->orgao->orderBy('id')->get();
         return view('datacenter.ip.create',[
-            'orgaos' => $orgaos,
-            'id' => $id,
+            'orgaos' => $orgaos,            
             'color' => $color,
+            'id' => $id, //$id da rede
         ]);
     }
     
@@ -121,10 +121,13 @@ class CadastroIpController extends Controller
     {
         $cadastroIp = $this->cadastroIp->find($id);        
         $orgaos = $this->orgao->orderBy('id')->get();
+        $orgao = $this->orgao->find($cadastroIp->orgao_vinc_id);
+        $setores = $orgao->setorvinc;
         return view('datacenter.ip.edit',[            
             'ip' => $cadastroIp,
-            'id' => $redeid,
-            'orgaos' => $orgaos,            
+            'redeid' => $redeid,
+            'orgaos' => $orgaos,
+            'setores' => $setores,            
             'color' => $color,
         ]);
     }
