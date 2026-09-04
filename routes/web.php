@@ -24,6 +24,7 @@ use App\Http\Controllers\Datacenter\CadastroIpController;
 use App\Http\Controllers\Datacenter\ClusterController;
 use App\Http\Controllers\Datacenter\entidadeController;
 use App\Http\Controllers\Datacenter\EquipamentoController;
+use App\Http\Controllers\Datacenter\equipamentoGrupoController;
 use App\Http\Controllers\Datacenter\HostController;
 use App\Http\Controllers\Datacenter\institucionalController;
 use App\Http\Controllers\Datacenter\RedeController;
@@ -382,6 +383,16 @@ Route::group(['middleware'=> ['auth']],function(){
            Route::get('edit-setorvinc/{id}',[setorVincController::class,'edit']);
            Route::put('update-setorvinc/{id}',[setorVincController::class,'update']);
            Route::put('adiciona-setorvinc',[setorVincController::class,'store']);    
+           });
+
+           //grupos de equipamentos
+           Route::prefix('grupo')->name('grupo.')->group(function(){
+           Route::get('index/{color}',[equipamentoGrupoController::class,'index'])->name('index');
+           Route::delete('delete/{id}',[equipamentoGrupoController::class,'destroy']);
+           Route::get('create',[equipamentoGrupoController::class,'create']);
+           Route::get('edit/{id}',[equipamentoGrupoController::class,'edit']);
+           Route::put('update/{id}',[equipamentoGrupoController::class,'update']);
+           Route::put('store',[equipamentoGrupoController::class,'store']);    
            });
 
 

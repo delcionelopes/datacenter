@@ -25,6 +25,7 @@ class EquipamentoRede extends Model
         'setor_vinc_id',
         'modelo',
         'ip',
+        'mac',
         'localizacao',
         'serie',
         'patrimonio',

@@ -105,7 +105,7 @@ $(document).ready(function(){
             cache: false,
             processData: false,
             contentType: false,
-            async:true,
+            async: true,
             success: function(response){
                 if(response.status==400){
                       $('#saveform_errList').replaceWith('<ul id="saveform_errList"></ul>');

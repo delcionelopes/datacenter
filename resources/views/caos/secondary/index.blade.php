@@ -171,7 +171,7 @@ $(document).ready(function(){
       break;
       case 11: location.replace('/datacenteradmin/senhas/index-senhas/'+color); ///Gestão de senhas
       break;
-      case 12: location.replace('/datacenteradmin/equipamento/index-equipamento/'+color); ///Gestão de senhas
+      case 12: location.replace('/datacenteradmin/grupo/index/'+color); ///Gestão de equipamentos
       break;
       case 13: window.open('/datacenteradmin/relatorios/relatorio-ambientes', '_blank');  ///Relatorio de ambientes
       break;

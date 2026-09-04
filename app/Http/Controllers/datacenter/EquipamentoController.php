@@ -64,8 +64,10 @@ class EquipamentoController extends Controller
     public function store(Request $request)
     {
         $validator = Validator::make($request->all(),[
-            'nome' => ['required','max:200'],
-            'descricao' => 'required',            
+            'nome' => ['required','max:50'],
+            'descricao' => ['required','max:100'],
+            'orgao' => ['required'],
+            'setor' => ['required'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -75,14 +77,26 @@ class EquipamentoController extends Controller
         }else{
             $user = auth()->user();
             $setorid = $user->setor_id;
-            $data = [
-                'idequipamento_rede' => $this->maxid(),
-                'nome' => strtoupper($request->input('nome')),
-                'descricao' => strtoupper($request->input('descricao')),               
-                'setor_idsetor' => $setorid,
-                'criador_id' => $user->id,
-                'created_at' => now(),
-            ];
+
+            $data['idequipamento_rede'] = $this->maxid();
+            $data['nome'] = strtoupper($request->input('nome'));
+            $data['descricao'] = strtoupper($request->input('descricao'));
+            $data['setor_idsetor'] = $setorid;
+            $data['criador_id'] = $user->id;
+            $data['created_at'] = now();
+            $data['updated_at'] = null;
+            $data['alterador_id'] = null;
+            $data['orgao_vinc_id'] = $request->input('orgao');
+            $data['setor_vinc_id'] = $request->input('setor');
+            $data['modelo'] = $request->input('modelo');
+            $data['ip'] = $request->input('ip');
+            $data['localizacao'] = $request->input('localizacao');
+            $data['serie'] = $request->input('serie');
+            $data['patrimonio'] = $request->input('patrimonio');
+            $data['equipamento_grupo_id'] = $request->input('grupo');
+            $data['inativo'] = $request->input('inativo');
+            $data['mac'] = $request->input('mac');
+            
             $equipamento = $this->equipamento->create($data);     
             $user = auth()->user();
             $users = $equipamento->users;
@@ -144,9 +158,10 @@ class EquipamentoController extends Controller
     public function update(Request $request, int $id)
     {
          $validator = Validator::make($request->all(),[
-            'nome' => ['required','max:200'],
-            'descricao' => 'required',
-            'senhaadmin' => 'required',
+            'nome' => ['required','max:50'],
+            'descricao' => ['required','max:100'],
+            'orgao' => ['required'],
+            'setor' => ['required'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -158,14 +173,25 @@ class EquipamentoController extends Controller
             if($equipamento){
             $user = auth()->user();
             $setorid = $user->setor_id;
-            $data = [                
-                'nome' => strtoupper($request->input('nome')),
-                'descricao' => strtoupper($request->input('descricao')),                
-                'setor_idsetor' => $setorid,
-                'pass_admin' => Crypt::encrypt($request->input('senhaadmin')),
-                'alterador_id' => $user->id,
-                'updated_at' => now(),
-            ];
+
+            $data['nome'] = strtoupper($request->input('nome'));
+            $data['descricao'] = strtoupper($request->input('descricao'));
+            $data['setor_idsetor'] = $setorid;
+            $data['criador_id'] = $user->id;
+            $data['created_at'] = now();
+            $data['updated_at'] = null;
+            $data['alterador_id'] = null;
+            $data['orgao_vinc_id'] = $request->input('orgao');
+            $data['setor_vinc_id'] = $request->input('setor');
+            $data['modelo'] = $request->input('modelo');
+            $data['ip'] = $request->input('ip');
+            $data['localizacao'] = $request->input('localizacao');
+            $data['serie'] = $request->input('serie');
+            $data['patrimonio'] = $request->input('patrimonio');
+            $data['equipamento_grupo_id'] = $request->input('grupo');
+            $data['inativo'] = $request->input('inativo');
+            $data['mac'] = $request->input('mac');
+
             $equipamento->update($data);  
             $eq = EquipamentoRede::find($id);
             $user = auth()->user();
