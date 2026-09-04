@@ -23,6 +23,11 @@
     div.halfOpacity{
         opacity: 0.6 !important;
     }
+
+    .tooltip-inner {
+    text-align: left;
+    }
+    
 </style>
 
 <!--inicio AddGrupoModal -->
@@ -37,7 +42,6 @@
             </div>
             <div class="modal-body form-horizontal">
                 <form id="addform" name="addform" class="form-horizontal" role="form">
-                    <input type="hidden" id="add_vlan_id">
                     <ul id="saveform_errList"></ul>
                     <div class="row">
                     <div class="col-md-4">
@@ -119,7 +123,7 @@
                             <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
                                <i class="fas fa-search"></i>
                             </button>
-                            <button type="button" class="AddGrupo_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo registro">
+                            <button type="button" class="AddGrupo_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo GRUPO">
                                <i class="fas fa-plus"></i>
                             </button>
                             <button data-color="<?php echo e($color); ?>" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></button>
@@ -133,11 +137,11 @@
 <div class="row">
 <?php if($grupos->count()): ?>
   <?php $__currentLoopData = $grupos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $grupo): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>  
-  <div class="p-2 mt-2">   
+  <div class="p-2 mt-2" id="grupo<?php echo e($grupo->id); ?>">   
   <div class="card card-hover mb-3">
   <div class="row no-gutters">
     <div class="col-md-4">
-      <a href="">
+      <a href="<?php echo e(route('datacenteradmin.equipamento.equipamento.index',['id' => $grupo->id, 'color'=>$color])); ?>">
       <img src="<?php echo e(asset('storage/'.$grupo->ico)); ?>" class="card-img">
       </a>
     </div>
@@ -145,16 +149,16 @@
       <div class="card-body text-right">
         <div class="d-flex justify-content-between align-items-center mb-3">
         <h5 class="card-title mb-0"><?php echo e($grupo->sigla); ?></h5>
-        <div class="dropdown">
+        <div class="dropleft">
         <button type="button" class="btn btn_primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></button>
          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li><a class="dropdown-item" href="" data-color="<?php echo e($color); ?>"> Editar</a></li>
-            <li><a class="dropdown-item" href="" data-color="<?php echo e($color); ?>"> Excluir</a></li>
-         </ul>   
+            <li data-id="<?php echo e($grupo->id); ?>" class="edit_grupo_menu dropdown-item" data-color="<?php echo e($color); ?>" style="cursor: pointer;"><i class="fas fa-edit"></i> Editar</li>
+            <li data-id="<?php echo e($grupo->id); ?>" data-sigla="<?php echo e($grupo->sigla); ?>" class="delete_grupo_menu dropdown-item" data-color="<?php echo e($color); ?>" style="cursor: pointer;"><i class="fas fa-trash"></i> Excluir</li>
+        </ul>   
         </div>
         </div>
         <p class="card-text"><?php echo e($grupo->descricao); ?></p>        
-        <a href="" class="btn btn-<?php echo e($color); ?>">Executar</a>
+        <a href="<?php echo e(route('datacenteradmin.equipamento.equipamento.index',['id' => $grupo->id, 'color'=>$color])); ?>" class="btn btn-<?php echo e($color); ?>">Executar</a>
       </div>
     </div>
   </div>
@@ -197,6 +201,62 @@
 <script type="text/javascript">
 
 $(document).ready(function(){
+
+//inicio delete grupo
+        $(document).on('click','.delete_grupo_menu',function(e){
+            e.preventDefault();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var link = "<?php echo e(asset('storage')); ?>";
+            var id = $(this).data("id");
+            var sigla = $(this).data("sigla");
+            
+            Swal.fire({
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                },
+                title:sigla,
+                text: "Deseja excluir?",
+                imageUrl: link+'/logoprodap.jpg',
+                imageWidth: 400,
+                imageHeight: 200,
+                imageAlt: 'imagem do prodap',
+                showCancelButton: true,
+                confirmButtonText: 'Sim, prossiga!',                
+                cancelButtonText: 'Não, cancelar!',                                 
+             }).then((result)=>{
+             if(result.isConfirmed){                 
+                    $.ajax({
+                        url: '/datacenteradmin/grupo/delete/'+id,
+                        type: 'POST',
+                        dataType: 'json',
+                        data:{
+                            'id':id,
+                            '_method':'DELETE',
+                            '_token':CSRF_TOKEN,
+                        },
+                        success:function(response){
+                            if(response.status==200){
+                                //remove a linha da table html
+                                $("#grupo"+id).remove();
+                                $("#success_message").replaceWith('<div id="success_message"></div>');
+                                $("#success_message").addClass('alert alert-success');
+                                $("#success_message").text(response.message);
+                            }else{      
+                                $("#success_message").html('<div id="success_message"></div>');                          
+                                $("#success_message").addClass('alert alert-danger');
+                                $("#success_message").text(response.message);
+                            }
+                    } 
+                });
+            }                                       
+        
+        });                
+        
+        });
+        //fim delete base
 
   //inicio exibição do form AddGrupoModal
         $('#AddGrupoModal').on('shown.bs.modal',function(){
@@ -262,12 +322,118 @@ $(document).ready(function(){
         });
         //fim do envio do novo registro
 
+        //início da exibição do form EditGrupoModal
+        $('#EditGrupooModal').on('shown.bs.modal',function(){
+            $('#editsigla').focus();
+        });
+        $(document).on('click','.edit_grupo_menu',function(e){  
+            e.preventDefault();            
+            var id = $(this).data('id');
+                $('#edit_grupo_id').val(id);            
+            
+            $('#editform').trigger('reset');
+            $('#EditGrupoModal').modal('show');          
+            $('#updateform_errList').replaceWith('<ul id="updateform_errList"></ul>');
+    
+            $.ajaxSetup({
+                    headers:{
+                        'X-CSRF-TOKEN':$('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+    
+    
+            $.ajax({ 
+                type: 'GET',             
+                dataType: 'json',                                    
+                url: '/datacenteradmin/grupo/edit/'+id,                                
+                success: function(response){           
+                    if(response.status==200){
+                        $('.sigla').val(response.grupo.sigla);
+                        $('.descricao').val(response.grupo.descricao);
+                        $('#edit_grupo_id').val(response.grupo.id);
+                    }      
+                }
+            });
+
+        
+    
+        }); //fim da da exibição do form
+    
+        $(document).on('click','.update_grupo',function(e){ //inicio da atualização de registro
+            e.preventDefault();
+            var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+            
+            var loading = $('#imgedit');
+                loading.show();
+    
+            var id = $('#edit_grupo_id').val();
+            var strcolor = $(this).data("color");        
+    
+            var data = new FormData();                
+                data.append('sigla', $('#editsigla').val());
+                data.append('descricao', $('#editdescricao').val());
+                data.append('_method','PUT');
+                data.append('_token',CSRF_TOKEN);
+            
+            
+            $.ajax({     
+                type: 'POST',                          
+                data: data,
+                dataType: 'json',    
+                url: '/datacenteradmin/grupo/update/'+id,       
+                cache: false,
+                processData: false,
+                contentType: false,      
+                success: function(response){                                                    
+                    if(response.status==400){
+                        //erros
+                        $('#updateform_errList').replaceWith('<ul id="updateform_errList"></ul>');
+                        $('#updateform_errList').addClass('alert alert-danger');
+                        $.each(response.errors,function(key,err_values){
+                            $('#updateform_errList').append('<li>'+err_values+'</li>');
+                        });    
+                       loading.hide();
+    
+                    } else if(response.status==404){
+                        $('#updateform_errList').replaceWith('<ul id="updateform_errList"></ul>');    
+                        $('#success_message').replaceWith('<div id="success_message"></div>');             
+                        $('#success_message').addClass('alert alert-warning');
+                        $('#success_message').text(response.message);
+                        loading.hide();
+                    } else {
+                        $('#updateform_errList').replaceWith('<ul id="updateform_errList"></ul>');      
+                        $('#success_message').replaceWith('<div id="success_message"></div>');                 
+                        $('#success_message').addClass("alert alert-success");
+                        $('#success_message').text(response.message);                             
+                        
+                        loading.hide();
+                        $('#editform').trigger('reset');
+                        $('#EditGrupoModal').modal('hide');
+                        location.replace('/datacenteradmin/grupo/index/'+strcolor);
+    
+                    }
+                }
+            });    
+    
+        
+    
+        }); //fim da atualização do registro do orgão 
+
 
         $(document).on('click','.voltarmenu_btn',function(e){
         e.preventDefault();  
         var color = $(this).data("color");
         location.replace('/datacenteradmin/principal/operacoes/3/'+color);
         });
+
+
+    ///tooltip
+    $(function(){             
+        $(".AddGrupo_btn").tooltip();
+        $(".pesquisa_btn").tooltip();
+    });
+    ///fim tooltip    
+
 
 
 

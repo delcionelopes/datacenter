@@ -20,6 +20,6 @@ class Equipamento_Grupo extends Model
     ];
 
     public function equipamento(){
-        return $this->hasMany(EquipamentoRede::class);
+        return $this->hasMany(EquipamentoRede::class,'id','equipamento_grupo_id');
     }
 }

@@ -365,15 +365,18 @@ Route::group(['middleware'=> ['auth']],function(){
   
            //Rotas para a view index de Equipamentos
            Route::prefix('equipamento')->name('equipamento.')->group(function(){
-           Route::get('index-equipamento/{color}',[EquipamentoController::class,'index'])->name('equipamento.index');
+           Route::get('index-equipamento/{id}/{color}',[EquipamentoController::class,'index'])->name('equipamento.index');
            Route::delete('delete-equipamento/{id}',[EquipamentoController::class,'destroy']);
-           Route::get('edit-equipamento/{id}',[EquipamentoController::class,'edit']);
+           Route::get('create-equipamento/{id}/{color}',[EquipamentoController::class,'create'])->name('create');
+           Route::get('edit-equipamento/{id}/{grupoid}/{color}',[EquipamentoController::class,'edit']);
            Route::put('update-equipamento/{id}',[EquipamentoController::class,'update']);
            Route::put('adiciona-equipamento',[EquipamentoController::class,'store']);                           
            Route::get('editsenhaequipamento/{id}',[EquipamentoController::class,'editsenhaEquipamento']);
            Route::get('editsenhaindividual/{id}',[EquipamentoController::class,'editsenhaIndividual']);
            Route::patch('updatesenhaequipamento/{id}',[EquipamentoController::class,'updatesenhaEquipamento']);
            Route::patch('updatesenhaindividual/{id}',[EquipamentoController::class,'updatesenhaIndividual']);
+           Route::get('carregasetores/{id}',[EquipamentoController::class,'carregaSetores']);
+           Route::get('carregasetores2/{id}/{equipamentoid}',[EquipamentoController::class,'carregaSetores2']);
            });
 
            //setores vinculados             

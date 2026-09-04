@@ -23,11 +23,11 @@ class equipamentoGrupoController extends Controller
     public function index(Request $request, $color)
     {
         if(is_null($request->pesquisa)){
-            $grupos = $this->grupo->orderBy('id','DESC')->get();
+            $grupos = $this->grupo->orderBy('id')->get();
         }else{
             $query = $this->grupo->query()
-                                 ->where('descricao','LIKE','%'.$request->pesquisa.'%');
-            $grupos = $query->orderBy('id','DESC')->get();
+                                 ->where('sigla','LIKE','%'.strtoupper($request->pesquisa).'%');
+            $grupos = $query->orderBy('id')->get();
         }
         return view('datacenter.equipamentogrupo.index',[
             'grupos' => $grupos,
@@ -56,7 +56,6 @@ class equipamentoGrupoController extends Controller
          $validator = Validator::make($request->all(),[
             'descricao' => ['required','max:50'],         
             'sigla' => ['required','max:20'],
-            'ico' => ['required','max:200'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -116,7 +115,6 @@ class equipamentoGrupoController extends Controller
          $validator = Validator::make($request->all(),[
             'descricao' => ['required','max:50'],            
             'sigla' => ['required','max:20'],
-            'ico' => ['required','max:200'],
         ]);
         if($validator->fails()){
             return response()->json([
@@ -127,10 +125,9 @@ class equipamentoGrupoController extends Controller
             $grupo = $this->grupo->find($id);
             if($grupo){
             $data['descricao'] = strtoupper($request->input('descricao'));            
-            $data['sigla'] = strtoupper($request->input('sigla'));
-            $data['ico'] = $request->input('ico');
+            $data['sigla'] = strtoupper($request->input('sigla'));            
             $data['updated_at'] = now();            
-            $grupo = $this->grupo->create($data);
+            $grupo->update($data);
             $g = Equipamento_Grupo::find($id);
             return response()->json([
                 'status' => 200,

@@ -148,7 +148,7 @@ class OrgaoController extends Controller
     public function destroy(int $id)
     {
         $orgao = $this->orgao->find($id);
-        if(($orgao->virtualmachine()->count())||($orgao->apps()->count())||($orgao->users()->count())){
+        if(($orgao->virtualmachine()->count())||($orgao->apps()->count())||($orgao->users()->count()) || ($orgao->equipamento()->count()) || ($orgao->ip()->count())){
              $status = 400;
              $message = $orgao->nome.' não pode ser excluído. Pois há outros registros que dependem dele!';        
             }else{                                 

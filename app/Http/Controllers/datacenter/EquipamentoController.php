@@ -3,7 +3,10 @@
 namespace App\Http\Controllers\Datacenter;
 
 use App\Http\Controllers\Controller;
+use App\Models\Equipamento_Grupo;
 use App\Models\EquipamentoRede;
+use App\Models\Orgao;
+use App\Models\Setor_Vinc;
 use App\Models\User;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Http\Request;
@@ -15,33 +18,63 @@ class EquipamentoController extends Controller
 {
     private $equipamento;
     private $user;
+    private $grupo;
+    private $orgao;
+    private $setorvinc;
 
-    public function __construct(EquipamentoRede $equipamento, User $user)
+    public function __construct(EquipamentoRede $equipamento, User $user, Equipamento_Grupo $grupo, 
+                                Orgao $orgao, Setor_Vinc $setorvinc)
     {
         $this->equipamento = $equipamento;
         $this->user = $user;
+        $this->grupo = $grupo;
+        $this->orgao = $orgao;
+        $this->setorvinc = $setorvinc;
     }
     /**
      * Display a listing of the resource.
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request, $color)
+    public function index(Request $request, int $id, $color)
     {
         $useradmin = auth()->user();
         if(is_null($request->pesquisa)){
-            $equipamentos = $this->equipamento->query()->where('setor_idsetor','=',$useradmin->setor_id)->orderByDesc('idequipamento_rede')->paginate(10);
+            $equipamentos = $this->equipamento->query()
+                                   ->where('equipamento_grupo_id','=',$id)
+                                   ->orderByDesc('idequipamento_rede')->paginate(10);
         }else{
             $query = $this->equipamento->query()
-                          ->where('setor_idsetor','=',$useradmin->setor_id)
+                          ->where('equipamento_grupo_id','=',$id)
                           ->where('nome','LIKE','%'.strtoupper($request->pesquisa).'%');
             $equipamentos = $query->orderByDesc('idequipamento_rede')->paginate(10);
         }        
         $users = $this->user->where('setor_id','=',$useradmin->setor_id)->get();
+        $grupo = $this->grupo->find($id);
         return view('datacenter.equipamento.index',[
             'equipamentos' => $equipamentos,
             'users' => $users,
-            'color' => $color
+            'color' => $color,
+            'grupo' => $grupo,
+        ]);
+    }
+
+    public function carregaSetores(int $id){        
+        $setores = $this->setorvinc->whereOrgao_id($id)->orderBy('id')->get();
+        return response()->json([
+            'status' => 200,
+            'setores' => $setores,
+        ]);
+    }
+
+    public function carregaSetores2(int $id, int $equipamentoid){
+        $equipamento = $this->equipamento->find($equipamentoid);
+        $equipamentosetor = $equipamento->setor_vinc_id;
+        $setores = $this->setorvinc->whereOrgao_id($id)->orderBy('id')->get();
+        return response()->json([
+            'status' => 200,
+            'setores' => $setores,
+            'equipamentosetor' => $equipamentosetor,
         ]);
     }
 
@@ -50,9 +83,15 @@ class EquipamentoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(int $id, $color)
     {
-        //
+        $grupo = $this->grupo->find($id);
+        $orgaos = $this->orgao->orderBy('id')->get();
+        return view('datacenter.equipamento.create',[
+            'grupo' => $grupo,
+            'orgaos' => $orgaos,
+            'color' => $color,
+        ]);
     }
 
     /**
@@ -129,9 +168,13 @@ class EquipamentoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(int $id)
+    public function edit(int $id, int $grupoid, $color)
     {
         $equipamento = $this->equipamento->find($id);
+        $grupo = $this->grupo->find($grupoid);
+        $orgaos = $this->orgao->orderBy('id')->get();
+        $orgao = $this->orgao->find($equipamento->orgao_vinc_id);
+        $setores = $orgao->setorvinc;
         $user = auth()->user();
         if($equipamento->pass_admin){
             $senhaadmin = Crypt::decrypt($equipamento->pass_admin);
@@ -139,12 +182,16 @@ class EquipamentoController extends Controller
             $senhaadmin = "";
         }       
         $setor = $equipamento->setor;
-        return response()->json([
+        return view('datacenter.equipamento.edit',[
             'status' => 200,
             'equipamento' => $equipamento,
             'setor' => $setor,
             'user' => $user,
             'senhaadmin' => $senhaadmin,
+            'setoresvinc' => $setores,
+            'orgaos' => $orgaos,
+            'grupo' => $grupo,
+            'color' => $color,
         ]);
     }
 
