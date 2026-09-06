@@ -148,15 +148,14 @@ class setorVincController extends Controller
     {
         $setor = $this->setorVinc->find($id);
         $ips = $setor->ips;
-        $equipamentos = $setor->equipamentos;
-        dd($equipamentos);
-        if($ips->count()){
+        $equipamentos = $setor->equipamentos;        
+        if($ips){
             return response()->json([
                 'status' => 400,
                 'message' => 'Este registro não pode ser excluído! Pois, há ips que dependem dele.',
             ]);
         }
-        if($equipamentos->count()){
+        if($equipamentos){
             return response()->json([
                 'status' => 400,
                 'message' => 'Este registro não pode ser excluído! Pois, há equipamentos que dependem dele.',

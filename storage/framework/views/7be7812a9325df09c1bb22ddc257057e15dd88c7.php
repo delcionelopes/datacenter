@@ -176,8 +176,7 @@
 
 <form role="form" enctype="multipart/form-data" method="POST">
     <?php echo csrf_field(); ?>
-    <?php echo method_field('PUT'); ?>
-    <ul id="saveform_errList"></ul>
+    <?php echo method_field('PUT'); ?>    
     <input type="hidden" id="add_rede_id" value="<?php echo e($redeid); ?>"> 
     <input type="hidden" id="add_ip_id" value="<?php echo e($ip->id); ?>"> 
     <header class="masthead" style="background-image: url('/assets/img/home-bg.jpg')">
@@ -191,7 +190,9 @@
                 </div>
             </div>
     </header>              
-    <div class="container-fluid py-5">                
+    <div class="container-fluid py-5">
+        <ul id="saveform_errList"></ul>
+        <div id="success_message"></div>
         <div class="card">
         <div class="card-body">                          
                 <fieldset>

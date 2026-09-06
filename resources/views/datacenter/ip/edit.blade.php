@@ -176,8 +176,7 @@
 
 <form role="form" enctype="multipart/form-data" method="POST">
     @csrf
-    @method('PUT')
-    <ul id="saveform_errList"></ul>
+    @method('PUT')    
     <input type="hidden" id="add_rede_id" value="{{$redeid}}"> 
     <input type="hidden" id="add_ip_id" value="{{$ip->id}}"> 
     <header class="masthead" style="background-image: url('/assets/img/home-bg.jpg')">
@@ -191,7 +190,9 @@
                 </div>
             </div>
     </header>              
-    <div class="container-fluid py-5">                
+    <div class="container-fluid py-5">
+        <ul id="saveform_errList"></ul>
+        <div id="success_message"></div>
         <div class="card">
         <div class="card-body">                          
                 <fieldset>
