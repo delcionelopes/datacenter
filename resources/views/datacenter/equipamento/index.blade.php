@@ -10,6 +10,40 @@
 }
 </style>
 
+<!--inicio EditEquipamentoModal -->
+<div class="modal fade animate__animated animate__bounce animate__faster" id="EditEquipamentoModal" tabindex="-1" role="dialog" aria-labelledby="edittitleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered" role="document">
+        <div class="modal-content">
+            <div class="modal-header navbar-dark bg-{{$color}}">
+                <h5 class="modal-title" id="edittitleModalLabel" style="color: white;">Senha Admin</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="close">
+                    <span aria-hidden="true" style="color: white;">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body form-horizontal">
+                <form id="editform" name="editform" class="form-horizontal" role="form">                   
+                    <input type="hidden" id="edit_equipamento_id">
+                    <ul id="updateform_errList"></ul>
+                    <div class="row">
+                    <div class="col-md-6">    
+                    <div class="form-group">
+                        <label for="edit_pass_admin">Senha Admin</label>
+                        <input type="text" id="edit_pass_admin" class="pass_admin form-control">
+                    </div>           
+                    </div>
+                    </div>         
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
+                <button type="button" data-color="{{$color}}" class="btn btn-{{$color}} update_equipamento_btn"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- fim EditEquipamentoModal -->
+
 <!-- início AddSenhaEquipAdmin -->
    <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaEquipAdmin" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
@@ -157,16 +191,19 @@
             <thead class="bg-{{$color}}" style="color: white">
                     <tr>                        
                         <th scope="col">EQUIPAMENTO(s) DE {{$grupo->sigla}}</th>
+                        <th scope="col">IP</th>
                         <th scope="col"><i class="fas fa-key"></i> PASS</th>
-                        <th scope="col">SETOR AMINISTRADOR</th>
+                        <th scope="col">SETOR ADMIN</th>
+                        <th scope="col">LOCALIZAÇÃO</th>
                         <th scope="col">AÇÕES</th>                       
                     </tr>                    
                 </thead>
                 <tbody id="lista_equipamentos">
                     <tr id="novo" style="display:none;"></tr>
                     @forelse($equipamentos as $equipamento)
-                    <tr id="equipamento{{$equipamento->idequipamento_rede}}" data-toggle="tooltip" title="{{$equipamento->descricao}}">
+                    <tr id="equipamento{{$equipamento->idequipamento_rede}}">
                         <th scope="row">{{$equipamento->nome}}</th>
+                        <td data-toggle="tooltip" title="MAC ADDRESS: {{$equipamento->mac}}" style="cursor: pointer;">{{$equipamento->ip}}</td>
                         <td id="senha{{$equipamento->idequipamento_rede}}">
                             @if(!$equipamento->pass_admin)
                             <button id="botaosenha{{$equipamento->idequipamento_rede}}" type="button" data-id="{{$equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>
@@ -188,9 +225,10 @@
                             @endif                                                                                   
                         </td>
                         <td>{{$equipamento->setor->sigla}}</td>
+                        <td data-toggle="tooltip" title="{{$equipamento->descricao}}" style="cursor: pointer;">{{$equipamento->orgaovinc->nome}}/{{$equipamento->setorvinc->sigla}}</td>
                         <td>
                             <div class="btn-group">
-                                <button type="button" data-grupo="{{$grupo->id}}" data-id="{{$equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
+                                <button type="button" data-color="{{$color}}" data-grupo="{{$grupo->id}}" data-id="{{$equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
                                 <button type="button" data-id="{{$equipamento->idequipamento_rede}}" data-nome="{{$equipamento->nome}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="delete_equipamento_btn fas fa-trash" style="background: transparent;border: none;white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Excluir"></button>
                             </div>
                         </td>
@@ -332,7 +370,7 @@ $(document).ready(function(){
                     $.ajax({
                         type: 'GET',
                         dataType: 'json',
-                        url: '/datacenteradmin/equipamento/edit-equipamento/'+id,
+                        url: '/datacenteradmin/equipamento/edit-senhaadmin/'+id,
                         success:function(response){
                             if(response.status==200){                       
                                 $("#editform").trigger('reset');
@@ -341,9 +379,7 @@ $(document).ready(function(){
                                 if(!(response.senhaadmin==null)){
                                     senhaadmin = response.senhaadmin;
                                 }
-                                $(".pass_admin").val(senhaadmin);                        
-                                $(".nome").val(response.equipamento.nome);
-                                $(".descricao").val(response.equipamento.descricao);
+                                $(".pass_admin").val(senhaadmin);                               
                                 $("#edit_equipamento_id").val(response.equipamento.idequipamento_rede);
                                 
                                 $("#EditEquipamentoModal").modal('show');
@@ -688,6 +724,61 @@ $(document).ready(function(){
         });
 
     });
+
+    //inicio da atualização do registro
+        $(document).on('click','.update_equipamento_btn',function(e){
+            e.preventDefault();
+            var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
+            var loading = $("#imgedit");
+                loading.show();
+            var color = $(this).data("color");
+            
+            var id = $("#edit_equipamento_id").val();
+            var data = {
+                'senhaAdmin': $("#edit_pass_admin").val(),                
+                '_method':'PUT',
+                '_token':CSRF_TOKEN,
+            }            
+    
+            $.ajax({
+                type: 'POST',
+                data: data,
+                dataType: 'json',
+                url: '/datacenteradmin/equipamento/update-senhaadmin/'+id,
+                success:function(response){
+                    if(response.status==400){
+                        //erros                  
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#updateform_errList").addClass('alert alert-danger');
+                        $.each(response.errors,function(key,err_values){
+                            $("#updateform_errList").append('<li>'+err_values+'</li>');
+                        });
+                        loading.hide();
+                    }else if(response.status==404){                    
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
+                        $("#success_message").replaceWith('<div id="success_message"></div>');                      
+                        $("#success_message").addClass('alert alert-warning');
+                        $("#success_message").text(response.message);
+                        loading.hide();
+                    }else{                    
+                        $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
+                        $("#success_message").replaceWith('<div id="success_message"></div>');
+                        $("#success_message").addClass('alert alert-success');
+                        $("#success_message").text(response.message);
+                        loading.hide();
+    
+                        $("#editform").trigger('reset');
+                        $("#EditEquipamentoModal").modal('hide');
+                        var grupoid = response.equipamento.equipamento_grupo_id; 
+                        location.replace('/datacenteradmin/equipamento/index-equipamento/'+grupoid+'/'+color);
+    
+                   }
+                }
+            });
+    
+        });
+        //fim da atualização do registro
+
     
     </script>
 @stop

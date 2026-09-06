@@ -78,6 +78,57 @@ class EquipamentoController extends Controller
         ]);
     }
 
+    public function editSenhaAdmin(int $id){
+        $equipamento = $this->equipamento->find($id);
+        $user = auth()->user();
+        if($equipamento->pass_admin){
+            $senhaadmin = Crypt::decrypt($equipamento->pass_admin);
+        }else{
+            $senhaadmin = "";
+        }       
+        $setor = $equipamento->setor;
+        return response()->json([
+            'status' => 200,
+            'equipamento' => $equipamento,
+            'setor' => $setor,
+            'user' => $user,
+            'senhaadmin' => $senhaadmin,
+        ]);
+    }
+
+    public function updateSenhaAdmin(Request $request, int $id){
+        $validator = Validator::make($request->all(),[
+            'senhaAdmin' => ['required'],
+        ]);
+        if($validator->fails()){
+            return response()->json([
+                'status' => 400,
+                'errors' => $validator->errors()->getMessages(),
+            ]);
+        }else{
+            $equipamento = $this->equipamento->find($id);
+            if($equipamento){
+            $user = auth()->user();
+            $data['updated_at'] = now();
+            $data['alterador_id'] = $user->id;
+            $data['pass_admin'] = Crypt::encrypt($request->input('senhaAdmin'));
+            $equipamento->update($data);
+            $e = EquipamentoRede::find($id);
+            return response()->json([
+                'status' => 200,
+                'equipamento' => $e,
+                'message' => 'Registro atualizado com sucesso!',
+            ]);
+        }else{
+            return response()->json([
+                'status' => 404,
+                'message' => 'Registro não localizado!',
+            ]);
+        }
+
+        };
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -170,7 +221,7 @@ class EquipamentoController extends Controller
      */
     public function edit(int $id, int $grupoid, $color)
     {
-        $equipamento = $this->equipamento->find($id);
+        $equipamento = $this->equipamento->find($id);        
         $grupo = $this->grupo->find($grupoid);
         $orgaos = $this->orgao->orderBy('id')->get();
         $orgao = $this->orgao->find($equipamento->orgao_vinc_id);
@@ -188,7 +239,7 @@ class EquipamentoController extends Controller
             'setor' => $setor,
             'user' => $user,
             'senhaadmin' => $senhaadmin,
-            'setoresvinc' => $setores,
+            'setores' => $setores,
             'orgaos' => $orgaos,
             'grupo' => $grupo,
             'color' => $color,
@@ -224,10 +275,8 @@ class EquipamentoController extends Controller
             $data['nome'] = strtoupper($request->input('nome'));
             $data['descricao'] = strtoupper($request->input('descricao'));
             $data['setor_idsetor'] = $setorid;
-            $data['criador_id'] = $user->id;
-            $data['created_at'] = now();
-            $data['updated_at'] = null;
-            $data['alterador_id'] = null;
+            $data['updated_at'] = $user->id;
+            $data['alterador_id'] = now();
             $data['orgao_vinc_id'] = $request->input('orgao');
             $data['setor_vinc_id'] = $request->input('setor');
             $data['modelo'] = $request->input('modelo');

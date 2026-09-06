@@ -377,6 +377,8 @@ Route::group(['middleware'=> ['auth']],function(){
            Route::patch('updatesenhaindividual/{id}',[EquipamentoController::class,'updatesenhaIndividual']);
            Route::get('carregasetores/{id}',[EquipamentoController::class,'carregaSetores']);
            Route::get('carregasetores2/{id}/{equipamentoid}',[EquipamentoController::class,'carregaSetores2']);
+           Route::get('edit-senhaadmin/{id}',[EquipamentoController::class,'editSenhaAdmin']);
+           Route::put('update-senhaadmin/{id}',[EquipamentoController::class,'updateSenhaAdmin']);
            });
 
            //setores vinculados             

@@ -1,8 +1,8 @@
-@extends('adminlte::page')
 
-@section('title', 'Edição de Equipamento')
 
-@section('content')
+<?php $__env->startSection('title', 'Edição de Equipamento'); ?>
+
+<?php $__env->startSection('content'); ?>
 
 <style>
     .tooltip-inner {
@@ -15,7 +15,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddOrgaoModal" tabindex="-1" role="dialog" aria-labelledby="addtitleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-{{$color}}">
+            <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="addtitleModalLabel" style="color: white;">Adicionar Órgão</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                 <span aria-hidden="true" style="color: white;">&times;</span>
@@ -42,7 +42,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-{{$color}} add_orgao"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" class="btn btn-<?php echo e($color); ?> add_orgao"><img id="imgadd" src="<?php echo e(asset('storage/ajax-loader.gif')); ?>" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -55,7 +55,7 @@
 <div class="modal fade animate__animated animate__bounce" id="EditOrgaoModal" tabindex="-1" role="dialog" aria-labelledby="edittitleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-{{$color}}">
+            <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="edittitleModalLabel" style="color: white;">Editar e atualizar Órgão</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -83,7 +83,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-{{$color}} update_orgao"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" class="btn btn-<?php echo e($color); ?> update_orgao"><img id="imgedit" src="<?php echo e(asset('storage/ajax-loader.gif')); ?>" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -96,7 +96,7 @@
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSetorModal" tabindex="-1" role="dialog" aria-labelledby="addsetortitleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-{{$color}}">
+            <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="addsetortitleModalLabel" style="color: white;">Adicionar Setor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                 <span aria-hidden="true" style="color: white;">&times;</span>
@@ -124,7 +124,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-{{$color}} add_setor"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                <button type="button" class="btn btn-<?php echo e($color); ?> add_setor"><img id="imgadd" src="<?php echo e(asset('storage/ajax-loader.gif')); ?>" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
             </div>
         </div>
     </div>
@@ -137,7 +137,7 @@
 <div class="modal fade animate__animated animate__bounce" id="EditSetorModal" tabindex="-1" role="dialog" aria-labelledby="editsetortitleModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-dialog-centered" role="document">
         <div class="modal-content">
-            <div class="modal-header navbar-dark bg-{{$color}}">
+            <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="editsetortitleModalLabel" style="color: white;">Editar e atualizar Setor</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="close">
                     <span aria-hidden="true" style="color: white;">&times;</span>
@@ -166,7 +166,7 @@
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal">Fechar</button>
-                <button type="button" class="btn btn-{{$color}} update_setor"><img id="imgedit" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
+                <button type="button" class="btn btn-<?php echo e($color); ?> update_setor"><img id="imgedit" src="<?php echo e(asset('storage/ajax-loader.gif')); ?>" style="display: none;" class="rounded-circle" width="20"> Atualizar</button>
             </div>
         </div>
     </div>
@@ -175,17 +175,17 @@
 <!--End EditOrgaoModal -->
 
 <form role="form" enctype="multipart/form-data" method="POST">
-    @csrf
-    @method('PUT')
+    <?php echo csrf_field(); ?>
+    <?php echo method_field('PUT'); ?>
     <ul id="saveform_errList"></ul>
-    <input type="hidden" id="add_grupo_id" value="{{$grupo->id}}">
-    <input type="hidden" id="add_equipamento_id" value="{{$equipamento->idequipamento_rede}}"> 
+    <input type="hidden" id="add_grupo_id" value="<?php echo e($grupo->id); ?>">
+    <input type="hidden" id="add_equipamento_id" value="<?php echo e($equipamento->idequipamento_rede); ?>"> 
     <header class="masthead" style="background-image: url('/assets/img/home-bg.jpg')">
          <div class="container position-relative px-4 px-lg-5">
                 <div class="row gx-4 gx-lg-5 justify-content-center">
                     <div class="col-md-10 col-lg-8 col-xl-7">
                         <div class="post-heading">
-                            <h1>Edição de Equipamentos de {{$grupo->sigla}}</h1>                            
+                            <h1>Edição de Equipamentos de <?php echo e($grupo->sigla); ?></h1>                            
                         </div>
                     </div>
                 </div>
@@ -203,9 +203,9 @@
                             <div class="form-group d-flex">
                             <select name="adorgao" id="adorgao" class="custom-select">
                                 <option id="optnovoorgao" style="display: none;"></option>
-                                @foreach($orgaos as $orgao)
-                                <option class="optorgao" id="optorgao{{$orgao->id}}" data-id="{{$orgao->id}}" data-nome="{{$orgao->nome}}" value="{{$orgao->id}}" {{ old('orgao_vinc_id', $equipamento->orgao_vinc_id ?? '') === $orgao->id ? 'selected' : '' }}>{{$orgao->nome}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $orgaos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $orgao): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option class="optorgao" id="optorgao<?php echo e($orgao->id); ?>" data-id="<?php echo e($orgao->id); ?>" data-nome="<?php echo e($orgao->nome); ?>" value="<?php echo e($orgao->id); ?>" <?php echo e(old('orgao_vinc_id', $equipamento->orgao_vinc_id ?? '') === $orgao->id ? 'selected' : ''); ?>><?php echo e($orgao->nome); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                                 <button type="button" class="addorgao" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo<br>Órgão"><i class="fas fa-plus"></i></button>
                                 <button type="button" class="remorgao" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Excluir<br>Órgão"><i class="fas fa-minus"></i></button>
@@ -221,9 +221,9 @@
                             <div class="form-group d-flex">
                             <select name="adsetor" id="adsetor" class="custom-select">
                                 <option id="optnovosetor" style="display: none;"></option>
-                                @foreach($setores as $setor)
-                                <option class="optsetor" id="optsetor{{$setor->id}}" data-id="{{$setor->id}}" data-descricao="{{$setor->descricao}}" value="{{$setor->id}}" {{ old('setor_vinc_id', $equipamento->setor_vinc_id ?? '') === $setor->id ? 'selected' : '' }}>{{$setor->descricao}}</option>
-                                @endforeach
+                                <?php $__currentLoopData = $setores; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $setor): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>
+                                <option class="optsetor" id="optsetor<?php echo e($setor->id); ?>" data-id="<?php echo e($setor->id); ?>" data-descricao="<?php echo e($setor->descricao); ?>" value="<?php echo e($setor->id); ?>" <?php echo e(old('setor_vinc_id', $equipamento->setor_vinc_id ?? '') === $setor->id ? 'selected' : ''); ?>><?php echo e($setor->descricao); ?></option>
+                                <?php endforeach; $__env->popLoop(); $loop = $__env->getLastLoop(); ?>
                             </select>
                                 <button type="button" class="addsetor" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo<br>Setor"><i class="fas fa-plus"></i></button>
                                 <button type="button" class="remsetor" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Excluir<br>Setor"><i class="fas fa-minus"></i></button>
@@ -239,7 +239,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="addip">IP</label>
-                                <input type="text" id="addip" class="ip form-control" placeholder="000.000.000.000" data-mask="099.099.099.099" value="{{$equipamento->ip}}">
+                                <input type="text" id="addip" class="ip form-control" placeholder="000.000.000.000" data-mask="099.099.099.099" value="<?php echo e($equipamento->ip); ?>">
                             </div>
                         </div>                        
                     </div>
@@ -247,7 +247,7 @@
                         <div class="col-md-6">
                             <div class="form-group">
                                 <label for="addmac">MAC ADDRESS</label>
-                                <input type="text" id="addmac" placeholder="00:00:00:00:00:00" class="mac form-control" value="{{$equipamento->mac}}">
+                                <input type="text" id="addmac" placeholder="00:00:00:00:00:00" class="mac form-control" value="<?php echo e($equipamento->mac); ?>">
                             </div>
                         </div>
                     </div>
@@ -255,13 +255,13 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="addnome">Nome</label>
-                                <input name="addnome" id="addnome" class="nome form-control" value="{{$equipamento->nome}}">
+                                <input name="addnome" id="addnome" class="nome form-control" value="<?php echo e($equipamento->nome); ?>">
                             </div>
                         </div>
                         <div class="col-md-8">
                             <div class="form-group">
                                 <label for="adddescricao">Descrição</label>
-                                <input name="descricao" id="adddescricao" class="descricao form-control" value="{{$equipamento->descricao}}">
+                                <input name="descricao" id="adddescricao" class="descricao form-control" value="<?php echo e($equipamento->descricao); ?>">
                             </div>
                         </div>
                     </div>
@@ -269,7 +269,7 @@
                         <div class="col-md-12">
                             <div class="form-group">
                                 <label for="addlocalizacao">Localizacao</label>
-                                <input type="text" id="addlocalizacao" class="localizacao form-control" value="{{$equipamento->localizacao}}">
+                                <input type="text" id="addlocalizacao" class="localizacao form-control" value="<?php echo e($equipamento->localizacao); ?>">
                             </div>
                         </div>
                     </div>
@@ -277,19 +277,19 @@
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="addmodelo">Modelo</label>
-                                <input type="text" id="addmodelo" class="modelo form-control" value="{{$equipamento->modelo}}">
+                                <input type="text" id="addmodelo" class="modelo form-control" value="<?php echo e($equipamento->modelo); ?>">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="addserie">Série</label>
-                                <input type="text" id="addserie" class="serie form-control" value="{{$equipamento->serie}}">
+                                <input type="text" id="addserie" class="serie form-control" value="<?php echo e($equipamento->serie); ?>">
                             </div>
                         </div>
                         <div class="col-md-4">
                             <div class="form-group">
                                 <label for="addpatrimonio">Patrimônio</label>
-                                <input type="text" id="addpatrimonio" class="patrimonio form-control" value="{{$equipamento->patrimonio}}">
+                                <input type="text" id="addpatrimonio" class="patrimonio form-control" value="<?php echo e($equipamento->patrimonio); ?>">
                             </div>
                         </div>
                     </div>
@@ -298,8 +298,8 @@
                 <div class="row">
                     <div class="col-md-12">
                         <div class="modal-footer">
-                            <button data-color="{{$color}}" type="button" class="cancelar_btn btn btn-default">Cancelar</button>
-                            <button data-color="{{$color}}" class="salvar_btn btn btn-{{$color}}" type="button"><img id="imgadd" src="{{asset('storage/ajax-loader.gif')}}" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
+                            <button data-color="<?php echo e($color); ?>" type="button" class="cancelar_btn btn btn-default">Cancelar</button>
+                            <button data-color="<?php echo e($color); ?>" class="salvar_btn btn btn-<?php echo e($color); ?>" type="button"><img id="imgadd" src="<?php echo e(asset('storage/ajax-loader.gif')); ?>" style="display: none;" class="rounded-circle" width="20"> Salvar</button>
                         </div>
                     </div>
                 </div>
@@ -308,15 +308,15 @@
         </div> <!-- card -->
     </div> <!-- card-fluid -->
 </form>
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('css')
+<?php $__env->startSection('css'); ?>
 
-<link href="{{asset('css/styles.css')}}" rel="stylesheet"/>
+<link href="<?php echo e(asset('css/styles.css')); ?>" rel="stylesheet"/>
     
-@stop
+<?php $__env->stopSection(); ?>
 
-@section('js')
+<?php $__env->startSection('js'); ?>
 
 <script type="text/javascript">
 
@@ -470,7 +470,7 @@ $(document).ready(function(){
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var selectorgao = document.getElementById('adorgao');            
             var id = selectorgao.options[selectorgao.selectedIndex].value;
-            var linklogo = "{{asset('storage')}}";
+            var linklogo = "<?php echo e(asset('storage')); ?>";
             var titulo = $('#optorgao'+id).data("nome");
 
             if(id==null || id==0){
@@ -709,7 +709,7 @@ $(document).ready(function(){
             var CSRF_TOKEN  = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var selectsetor = document.getElementById('adsetor');            
             var id = selectsetor.options[selectsetor.selectedIndex].value;
-            var linklogo = "{{asset('storage')}}";
+            var linklogo = "<?php echo e(asset('storage')); ?>";
             var titulo = $('#optsetor'+id).data("descricao");
 
             if(id==null || id==0){
@@ -993,4 +993,5 @@ $(document).ready(function(){
 
 </script>
 
-@stop
+<?php $__env->stopSection(); ?>
+<?php echo $__env->make('adminlte::page', \Illuminate\Support\Arr::except(get_defined_vars(), ['__data', '__path']))->render(); ?><?php /**PATH C:\xampp\php\datacenter\resources\views/datacenter/equipamento/edit.blade.php ENDPATH**/ ?>

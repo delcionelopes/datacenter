@@ -24,11 +24,11 @@ class Setor_Vinc extends Model
     }
 
     public function ips(){
-        return $this->hasMany(Cadastro_ip::class,'id','setor_vinc_id');
+        return $this->hasMany(Cadastro_ip::class,'setor_vinc_id');
     }
 
     public function equipamentos(){
-        return $this->hasMany(EquipamentoRede::class,'id','setor_vinc_id');
+        return $this->hasMany(EquipamentoRede::class,'setor_vinc_id');
     }
 
 

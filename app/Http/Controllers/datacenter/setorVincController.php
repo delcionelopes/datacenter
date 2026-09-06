@@ -149,6 +149,7 @@ class setorVincController extends Controller
         $setor = $this->setorVinc->find($id);
         $ips = $setor->ips;
         $equipamentos = $setor->equipamentos;
+        dd($equipamentos);
         if($ips->count()){
             return response()->json([
                 'status' => 400,
