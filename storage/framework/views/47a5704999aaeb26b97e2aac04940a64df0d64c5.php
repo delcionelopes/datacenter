@@ -202,7 +202,7 @@
                     <?php $__empty_1 = true; $__currentLoopData = $equipamentos; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $equipamento): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); $__empty_1 = false; ?>
                     <tr id="equipamento<?php echo e($equipamento->idequipamento_rede); ?>">
                         <th scope="row"><?php echo e($equipamento->nome); ?></th>
-                        <td data-toggle="tooltip" title="MAC ADDRESS: <?php echo e($equipamento->mac); ?>" style="cursor: pointer;"><?php echo e($equipamento->ip); ?></td>
+                        <td class="tdequipamento_ip" data-toggle="tooltip" title="MAC ADDRESS: <?php echo e($equipamento->mac); ?>" style="cursor: pointer;"><?php echo e($equipamento->ip); ?></td>
                         <td id="senha<?php echo e($equipamento->idequipamento_rede); ?>">
                             <?php if(!$equipamento->pass_admin): ?>
                             <button id="botaosenha<?php echo e($equipamento->idequipamento_rede); ?>" type="button" data-id="<?php echo e($equipamento->idequipamento_rede); ?>" data-admin="<?php echo e(auth()->user()->admin); ?>" data-useridsetor="<?php echo e(auth()->user()->setor_id); ?>" data-idsetor="<?php echo e($equipamento->setor_idsetor); ?>" data-setor="<?php echo e($equipamento->setor->sigla); ?>" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>
@@ -224,7 +224,7 @@
                             <?php endif; ?>                                                                                   
                         </td>
                         <td><?php echo e($equipamento->setor->sigla); ?></td>
-                        <td data-toggle="tooltip" title="<?php echo e($equipamento->descricao); ?>" style="cursor: pointer;"><?php echo e($equipamento->orgaovinc->nome); ?>/<?php echo e($equipamento->setorvinc->sigla); ?></td>
+                        <td class="tddescricao_equipamento" data-toggle="tooltip" title="<?php echo e($equipamento->descricao); ?>" style="cursor: pointer;"><?php echo e($equipamento->orgaovinc->nome); ?>/<?php echo e($equipamento->setorvinc->sigla); ?></td>
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-color="<?php echo e($color); ?>" data-grupo="<?php echo e($grupo->id); ?>" data-id="<?php echo e($equipamento->idequipamento_rede); ?>" data-admin="<?php echo e(auth()->user()->admin); ?>" data-useridsetor="<?php echo e(auth()->user()->setor_id); ?>" data-idsetor="<?php echo e($equipamento->setor_idsetor); ?>" data-setor="<?php echo e($equipamento->setor->sigla); ?>" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
@@ -706,6 +706,8 @@ $(document).ready(function(){
         $(".pesquisa_btn").tooltip();        
         $(".delete_equipamento_btn").tooltip();
         $(".edit_equipamento_btn").tooltip();        
+        $(".tdequipamento_ip").tooltip();  
+        $(".tddescricao_equipamento").tooltip();
     });
     ///fim tooltip
 

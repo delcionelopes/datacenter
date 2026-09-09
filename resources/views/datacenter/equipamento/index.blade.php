@@ -203,7 +203,7 @@
                     @forelse($equipamentos as $equipamento)
                     <tr id="equipamento{{$equipamento->idequipamento_rede}}">
                         <th scope="row">{{$equipamento->nome}}</th>
-                        <td data-toggle="tooltip" title="MAC ADDRESS: {{$equipamento->mac}}" style="cursor: pointer;">{{$equipamento->ip}}</td>
+                        <td class="tdequipamento_ip" data-toggle="tooltip" title="MAC ADDRESS: {{$equipamento->mac}}" style="cursor: pointer;">{{$equipamento->ip}}</td>
                         <td id="senha{{$equipamento->idequipamento_rede}}">
                             @if(!$equipamento->pass_admin)
                             <button id="botaosenha{{$equipamento->idequipamento_rede}}" type="button" data-id="{{$equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="cadsenha_btn fas fa-folder" style="background: transparent; color: orange; border: none; white-space: nowrap;" data-html="true" data-placement="right" data-toggle="popover" title="Registrar senha de Admin"></button>
@@ -225,7 +225,7 @@
                             @endif                                                                                   
                         </td>
                         <td>{{$equipamento->setor->sigla}}</td>
-                        <td data-toggle="tooltip" title="{{$equipamento->descricao}}" style="cursor: pointer;">{{$equipamento->orgaovinc->nome}}/{{$equipamento->setorvinc->sigla}}</td>
+                        <td class="tddescricao_equipamento" data-toggle="tooltip" title="{{$equipamento->descricao}}" style="cursor: pointer;">{{$equipamento->orgaovinc->nome}}/{{$equipamento->setorvinc->sigla}}</td>
                         <td>
                             <div class="btn-group">
                                 <button type="button" data-color="{{$color}}" data-grupo="{{$grupo->id}}" data-id="{{$equipamento->idequipamento_rede}}" data-admin="{{auth()->user()->admin}}" data-useridsetor="{{auth()->user()->setor_id}}" data-idsetor="{{$equipamento->setor_idsetor}}" data-setor="{{$equipamento->setor->sigla}}" class="edit_equipamento_btn fas fa-edit" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Editar"></button>
@@ -707,6 +707,8 @@ $(document).ready(function(){
         $(".pesquisa_btn").tooltip();        
         $(".delete_equipamento_btn").tooltip();
         $(".edit_equipamento_btn").tooltip();        
+        $(".tdequipamento_ip").tooltip();  
+        $(".tddescricao_equipamento").tooltip();
     });
     ///fim tooltip
 
