@@ -109,7 +109,7 @@
         </div>
       </div>  
 
-  @elseif((auth()->user()->admin) && (auth()->user()->perfil_id==3)) 
+  @elseif(((auth()->user()->admin) && (auth()->user()->perfil_id==3))||((auth()->user()->admin) && (auth()->user()->perfil_id==4))) 
 
         <div class="p-2 mt-2">
         <div class="card" style="width: 10rem;">
