@@ -73,7 +73,7 @@
 <!--Begin ListAuthorizationModal-->
 
 <div class="modal fade animate__animated animate__bounce" id="ListAuthorizationModal" tabindex="-1" role="dialog" aria-labelledby="listtitleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-primary">
                 <h5 class="modal-title" id="listtitleModalLabel" style="color: white;">Perfil: </h5>

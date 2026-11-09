@@ -13,7 +13,7 @@
 
 <!--inicio AddRedeModal -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddRedeModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar REDE</h5>
@@ -59,7 +59,7 @@
 <!--Fim AddRedeModal -->
 <!--Inicio AddIPModal-->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddIPModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar IP</h5>
@@ -87,7 +87,7 @@
 <!--Fim AddIPmodal-->
 <!--Inicio EditRedeModal -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditRedeModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-{{$color}}">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar REDE</h5>
