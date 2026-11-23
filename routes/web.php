@@ -391,7 +391,23 @@ Route::group(['middleware'=> ['auth']],function(){
             Route::get('relatorio-equipamentos',[EquipamentoController::class,'relatorioEquipamentos'])->name('relatorio.equipamentos');
            });
 
-           
+        Route::prefix('sistemadearquivos')->name('sistemadearquivos.')->group(function(){
+           Route::get('/indexalfa/{id}',[Area_ConhecimentoController::class,'indexAlfa'])->name('indexalfa');
+           Route::get('/indexsetores/{color}',[Area_ConhecimentoController::class,'indexSetores'])->name('indexsetores');
+           Route::get('/indexareasrelacionadas/{id}/{color}',[Area_ConhecimentoController::class,'indexAreasRelacionadas'])->name('indexareasrelacionadas');
+           Route::put('/storearea',[Area_ConhecimentoController::class,'storearea']);
+           Route::get('/editarea/{id}',[Area_ConhecimentoController::class,'editarea']);
+           Route::put('/updatearea/{id}',[Area_ConhecimentoController::class,'updatearea']);
+           Route::delete('/deletearea/{id}',[Area_ConhecimentoController::class,'destroyarea']);
+           Route::get('/indexarquivosrelacionados/{setorid}/{grupoid}/{color}',[Area_ConhecimentoController::class,'indexArquivosRelacionados'])->name('indexarquivosrelacionados');
+           Route::put('/vincularareasarquivos/{id}',[Area_ConhecimentoController::class,'vincularAreasArquivosXSetores']);
+           Route::put('/upload-docs/{setorid}/{grupoid}',[Area_ConhecimentoController::class,'uploadDocs']);
+           Route::get('/mostraarquivos/{setorid}/{grupoid}',[Area_ConhecimentoController::class,'mostraarquivos']);
+           Route::get('/abrir-doc/{id}',[Area_ConhecimentoController::class,'abrirDoc']);
+           Route::delete('/excluirarquivo/{id}',[Area_ConhecimentoController::class,'excluirArquivo']);
+           Route::put('/moverarquivo/{id}/{grupoid}',[Area_ConhecimentoController::class,'moverArquivo']);
+           Route::put('/copiararquivo/{id}/{grupoid}',[Area_ConhecimentoController::class,'copiarArquivo']);
+      });
 
         });
                         

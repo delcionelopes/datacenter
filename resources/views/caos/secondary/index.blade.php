@@ -160,6 +160,8 @@ $(document).ready(function(){
       case 5: location.replace('/datacenteradmin/projeto/index-projeto/'+color); ///cadastro de projetos
       break;
       case 6: location.replace('/datacenteradmin/areaconhecimento/index-areaconhecimento/'+color); ///cadastro de areas conhecimento
+      break;
+      case 8: location.replace('/datacenteradmin/sistemadearquivos/indexsetores/'+color); ///cadastro de manuais
       break;      
       case 9: location.replace('/datacenteradmin/cluster/index-cluster/'+color); ///Gestão de Datacenter
       break;
