@@ -95,7 +95,7 @@
 
     <div id="success_message"></div>        
             <section class="border p-4 mb-4 d-flex align-items-left">
-            <form action="{{route('datacenter.sistemadearquivos.indexareasrelacionadas',['id' => $setor->idsetor,'color'=>$color])}}" class="form-search" method="GET">
+            <form action="{{route('datacenteradmin.sistemadearquivos.indexareasrelacionadas',['id' => $setor->idsetor,'color'=>$color])}}" class="form-search" method="GET">
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                         <nav class="navbar navbar-expand-md navbar-light bg-light">
@@ -206,7 +206,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                 
                     $.ajax({
-                        url: '/datacenter/sistemadearquivos/deletearea/'+id,
+                        url: '/datacenteradmin/sistemadearquivos/deletearea/'+id,
                         type: 'POST',
                         dataType: 'json',
                         data:{
@@ -260,7 +260,7 @@ $(document).ready(function(){
             $.ajax({ 
                 type: 'GET',             
                 dataType: 'json',                                    
-                url: '/datacenter/sistemadearquivos/editarea/'+id,                                
+                url: '/datacenteradmin/sistemadearquivos/editarea/'+id,                                
                 success: function(response){           
                     if(response.status==200){                        
                         $('.descricao').val(response.grupo.descricao);
@@ -293,7 +293,7 @@ $(document).ready(function(){
                 type: 'POST',                          
                 data: data,
                 dataType: 'json',    
-                url: '/datacenter/sistemadearquivos/updatearea/'+id,       
+                url: '/datacenteradmin/sistemadearquivos/updatearea/'+id,       
                 cache: false,
                 processData: false,
                 contentType: false,      
@@ -322,7 +322,7 @@ $(document).ready(function(){
                         loading.hide();
                         $('#editform').trigger('reset');
                         $('#EditGrupoModal').modal('hide');
-                        location.replace('/datacenter/sistemadearquivos/indexareasrelacionadas/'+setorid+'/'+strcolor);
+                        location.replace('/datacenteradmin/sistemadearquivos/indexareasrelacionadas/'+setorid+'/'+strcolor);
     
                     }
                 }
@@ -350,7 +350,7 @@ $(document).ready(function(){
             $.ajax({ 
                 type: 'GET',             
                 dataType: 'json',                                    
-                url: '/datacenter/sistemadearquivos/mostraarquivos/'+setorid+'/'+grupoid,                                
+                url: '/datacenteradmin/sistemadearquivos/mostraarquivos/'+setorid+'/'+grupoid,                                
                 success: function(response){           
                     if(response.status==200){
                         if(response.arquivos.length>0){
@@ -454,7 +454,7 @@ $(document).ready(function(){
             $('.arquivo').val(""); ///limpa o input
                                 
             $.ajax({                                             
-                url: '/datacenter/sistemadearquivos/upload-docs/'+setorid+'/'+grupoid,
+                url: '/datacenteradmin/sistemadearquivos/upload-docs/'+setorid+'/'+grupoid,
                 type:'POST',
                 dataType: 'json',        
                 data:formData,
@@ -549,7 +549,7 @@ $(document).ready(function(){
             $.ajax({ 
                 type: 'GET',             
                 dataType: 'json',                                    
-                url: '/datacenter/sistemadearquivos/abrir-doc/'+id,                                
+                url: '/datacenteradmin/sistemadearquivos/abrir-doc/'+id,                                
                 success: function(response){ 
                     if(response.status==200){
                       var link = "{{asset('')}}"+'storage/'+response.arquivo.caminho;
@@ -586,7 +586,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){             
                 $.ajax({
-                    url: '/datacenter/sistemadearquivos/excluirarquivo/'+id,
+                    url: '/datacenteradmin/sistemadearquivos/excluirarquivo/'+id,
                     type: 'POST',
                     dataType: 'json',
                     data:{
@@ -621,7 +621,7 @@ $(document).ready(function(){
         data.append('_method','PUT');
 
          $.ajax({
-                   url: '/datacenter/sistemadearquivos/moverarquivo/'+id+'/'+grupoid,
+                   url: '/datacenteradmin/sistemadearquivos/moverarquivo/'+id+'/'+grupoid,
                    type:'POST',
                    dataType: 'json',        
                    data:data,
@@ -671,7 +671,7 @@ $(document).ready(function(){
         data.append('_method','PUT');
 
          $.ajax({
-                   url: '/datacenter/sistemadearquivos/copiararquivo/'+id+'/'+grupoid,
+                   url: '/datacenteradmin/sistemadearquivos/copiararquivo/'+id+'/'+grupoid,
                    type:'POST',
                    dataType: 'json',        
                    data:data,
@@ -710,7 +710,7 @@ $(document).ready(function(){
         $(document).on('click','.voltarmenu_btn',function(e){
         e.preventDefault();  
         var color = $(this).data("color");
-        location.replace('/datacenter/sistemadearquivos/indexsetores/'+color);
+        location.replace('/datacenteradmin/sistemadearquivos/indexsetores/'+color);
         });
 
 

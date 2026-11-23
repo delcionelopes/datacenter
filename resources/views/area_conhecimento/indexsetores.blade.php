@@ -49,7 +49,7 @@
 
     <section class="border p-4 mb-4 d-flex align-items-left">
 
-        <form action="{{route('work.sistemadearquivos.indexsetores',['color'=>$color])}}" class="form-search" method="GET">
+        <form action="{{route('datacenteradmin.sistemadearquivos.indexsetores',['color'=>$color])}}" class="form-search" method="GET">
             <div class="col-sm-12">
                 <div class="input-group rounded">
                     <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do setor" aria-label="Search"
@@ -85,7 +85,7 @@
                                         <button data-color="{{$color}}" data-id="{{$setor->idsetor}}" type="button" class="criarpastas_btn fas fa-folder" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Criar e gerenciar <br> pastas"></button>
                                     </div>
                                     <div class="btn-group">
-                                        <a href="{{route('work.sistemadearquivos.indexgruposrelacionados',['id'=>$setor->idsetor,'color'=>$color])}}" type="button" data-id="{{$setor->idsetor}}" class="list_setores_grupos fas fa-list" style="background:transparent;border:none; color:black; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Listar pastas <br> relacionadas"></a>
+                                        <a href="{{route('datacenteradmin.sistemadearquivos.indexareasrelacionadas',['id'=>$setor->idsetor,'color'=>$color])}}" type="button" data-id="{{$setor->idsetor}}" class="list_setores_grupos fas fa-list" style="background:transparent;border:none; color:black; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Listar pastas <br> relacionadas"></a>
                                     </div>
                                 </td>
                             </tr>
@@ -133,7 +133,7 @@
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
-                url: '/datacenter/sistemadearquivos/indexalfa/' + id,
+                url: '/datacenteradmin/sistemadearquivos/indexalfa/' + id,
                 success: function(response) {
                     if (response.status == 200) {
                         $('#radiogrupo_add').replaceWith('<fieldset id="radiogrupo_add">\
@@ -170,7 +170,7 @@
 
             $.ajax({
                 type: 'POST',
-                url: '/datacenter/sistemadearquivos/storearea',
+                url: '/datacenteradmin/sistemadearquivos/storearea',
                 data: data,
                 dataType: 'json',
                 cache: false,
@@ -233,7 +233,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '/datacenter/sistemadearquivos/deletearea/' + id,
+                            url: '/datacenteradmin/sistemadearquivos/deletearea/' + id,
                             type: 'POST',
                             dataType: 'json',
                             data: {
@@ -300,7 +300,7 @@
             data.append('_method', 'PUT');
 
             $.ajax({
-                url: '/datacenter/sistemadearquivos/vinculargruposarquivos/' + id,
+                url: '/datacenteradmin/sistemadearquivos/vinculargruposarquivos/' + id,
                 type: 'POST',
                 dataType: 'json',
                 data: data,
@@ -318,7 +318,7 @@
                     } else {
                         $('#saveformGrupo_errList').replaceWith('<ul id="saveformGrupo_errList"></ul>');
                         loading.hide();
-                        location.replace('/datacenter/sistemadearquivos/indexsetores/'+color);
+                        location.replace('/datacenteradmin/sistemadearquivos/indexsetores/'+color);
                     }
                 }
             });

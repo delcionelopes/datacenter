@@ -48,7 +48,7 @@ class Area_ConhecimentoController extends Controller
     public function indexAlfa($id)
     {   
         $grupos = $this->area_conhecimento->orderBy('id','DESC')->get();        
-        $setor = $this->setor->find($id);
+        $setor = $this->setor->whereIdsetor($id)->get();
         $gruposrelacionados = $this->areas_setor->query()
                                            ->select('area_conhecimento_id')
                                            ->where('setor_idsetor','=',$setor->idsetor)
@@ -71,10 +71,10 @@ class Area_ConhecimentoController extends Controller
 
     public function indexAreaPSetor($id){
         $areas = $this->area_conhecimento->orderBy('id','DESC')->get();
-        $setor = $this->setor->find($id);
+        $setor = $this->setor->whereIdsetor($id)->get();
         $areassrelacionadas = $this->areas_setor->query()
                                   ->select('area_conhecimento_id')
-                                  ->where('setor_idsetor','=',$setor->id)
+                                  ->where('setor_idsetor','=',$setor->idsetor)
                                   ->get();
         $array = [];
         foreach ($areassrelacionadas as $area) {
@@ -93,12 +93,12 @@ class Area_ConhecimentoController extends Controller
     public function indexSetores(Request $request,$color){
         $user = auth()->user();
         if(is_null($request->pesquisa)){
-            $setores = $this->setor->whereSetor_id($user->setor_id)->orderBy('id','DESC')->paginate(10);
+            $setores = $this->setor->whereIdsetor($user->setor_id)->orderBy('idsetor','DESC')->paginate(10);
         }else{
             $query = $this->setor->query()
-                                 ->where('setor_id','=',$user->setor_id)  
+                                 ->where('idsetor','=',$user->setor_id)  
                                  ->where('nome','LIKE','%'.strtoupper($request->pesquisa).'%');
-            $setores = $query->orderBy('id','DESC')->paginate(10);
+            $setores = $query->orderBy('idsetor','DESC')->paginate(10);
         }
         return view('area_conhecimento.indexsetores',[
             'setores' => $setores,
@@ -109,10 +109,10 @@ class Area_ConhecimentoController extends Controller
     public function indexAreasRelacionadas($id,$color)
     {       
         $areas = $this->area_conhecimento->orderBy('id','DESC')->get();        
-        $setor = $this->setor->find($id);        
+        $setor = $this->setor->whereIdsetor($id)->get();
         $areasrelacionadas = $this->areas_setor->query()
-                                           ->where('setor_idsetor','=',$setor->id)
-                                           ->get();  
+                                           ->where('setor_idsetor','=',$setor->idsetor)
+                                           ->get();
         
         return view('area_conhecimento.indexgrupo',[
             'setor' => $setor,
