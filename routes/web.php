@@ -219,35 +219,7 @@ Route::group(['middleware'=> ['auth']],function(){
         Route::get('edit-areaconhecimento/{id}',[Area_ConhecimentoController::class,'edit']);
         Route::put('update-areaconhecimento/{id}',[Area_ConhecimentoController::class,'update']);
         Route::put('adiciona-areaconhecimento',[Area_ConhecimentoController::class,'store']);    
-        });
-    
-        //Rotas para a view index de sub_area_conhecimento
-        Route::prefix('subareaconhecimento')->name('subareaconhecimento.')->group(function(){
-        Route::get('index-subareaconhecimento/{color}',[Sub_Area_ConhecimentoController::class,'index'])->name('subareaconhecimento.index');
-        Route::delete('delete-subareaconhecimento/{id}',[Sub_Area_ConhecimentoController::class,'destroy']);
-        Route::get('edit-subareaconhecimento/{id}',[Sub_Area_ConhecimentoController::class,'edit']);
-        Route::put('update-subareaconhecimento/{id}',[Sub_Area_ConhecimentoController::class,'update']);
-        Route::put('adiciona-subareaconhecimento',[Sub_Area_ConhecimentoController::class,'store']);            
-        });
-
-        //Rotas para a view index de manuais
-        Route::prefix('manual')->name('manual.')->group(function(){
-        Route::get('index-manual/{color}',[ManualController::class,'index'])->name('manual.index');
-        Route::delete('delete-manual/{id}',[ManualController::class,'destroy']);
-        Route::get('edit-manual/{id}',[ManualController::class,'edit']);
-        Route::put('update-manual/{id}',[ManualController::class,'update']);
-        Route::put('adiciona-manual',[ManualController::class,'store']);    
-        });
-
-        //Rotas para a uploads
-        Route::prefix('file')->name('file.')->group(function(){
-        Route::get('index-file/{id}',[ManualController::class,'indexFile'])->name('index.file');
-        Route::get('edit-uploadfile/{id}',[ManualController::class,'editFileUpload']);        
-        Route::put('upload-file/{id}',[ManualController::class,'upload']);
-        Route::delete('delete-file/{id}',[ManualController::class,'destroyFile']);
-        Route::get('download-file/{id}',[ManualController::class,'downloadFile'])->name('download.file');            
-        });
-        
+        });       
        
         //Rotas para a view index de clusters
         Route::prefix('cluster')->name('cluster.')->group(function(){  
@@ -418,6 +390,8 @@ Route::group(['middleware'=> ['auth']],function(){
             Route::get('relatorio-permissoes/{id}',[ModuloController::class,'relatorioPermissoes'])->name('relatorio.permissoes');
             Route::get('relatorio-equipamentos',[EquipamentoController::class,'relatorioEquipamentos'])->name('relatorio.equipamentos');
            });
+
+           
 
         });
                         

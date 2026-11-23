@@ -11,7 +11,7 @@
 
 <!--AddManualForm-->
  <div class="modal fade animate__animated animate__bounce animate__faster" id="AddManualForm" tabindex="-1" role="dialog" aria-labelledby="titleModaLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Manual</h5>
@@ -55,7 +55,7 @@
 
 <!--EditManualForm-->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditManualForm" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Manual</h5>
@@ -99,7 +99,7 @@
 
 <!--inicio upload multiplo de arquivos manuais-->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="uploadPDFModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Upload de Manual PDF</h5>

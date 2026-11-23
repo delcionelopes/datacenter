@@ -11,7 +11,7 @@
 <!--AddClusterModal-->
 
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddClusterModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Cluster</h5>
@@ -58,7 +58,7 @@
 
 <!--inicio AddHostModal -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddHostModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Host</h5>
@@ -113,7 +113,7 @@
 
 <!--Inicio AddVirtualMachineModal-->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddVirtualMachineModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Virtual Machine</h5>
@@ -236,7 +236,7 @@
 
 <!--EditClusterModal-->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditClusterModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Cluster</h5>

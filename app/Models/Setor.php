@@ -26,7 +26,9 @@ class Setor extends Model
         return $this->hasMany(User::class,'setor_id','idsetor');
     }
 
-    public function manual(){
-        return $this->hasMany(Manual::class,'setor_id','idsetor');
+    public function areas(){
+        return $this->belongsToMany(Area_Conhecimento::class,'area_conhecimento_has_setor','setor_idsetor','area_conhecimento_id')
+                    ->withPivot('setor_idsetor','area_conhecimento_id')
+                    ->orderBy('area_conhecimento_id');
     }
 }

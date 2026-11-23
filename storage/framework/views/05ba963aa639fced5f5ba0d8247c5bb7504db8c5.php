@@ -10,7 +10,7 @@
 
 <!--inicio AddBaseModal -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddBaseModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Base de dados</h5>
@@ -79,7 +79,7 @@
 
 <!--inicio EditBaseModal -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditBaseModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Base de dados</h5>
@@ -149,7 +149,7 @@
 
 <!-- início AddAppModal -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="AddAppModal" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar APP</h5>
@@ -234,7 +234,7 @@
 
 <!-- início AddSenhaBase -->
    <div class="modal fade animate__animated animate__bounce animate__faster" id="AddSenhaBase" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Adicionar Senha</h5>
@@ -318,7 +318,7 @@
 
 <!-- início EditSenhaBase -->
 <div class="modal fade animate__animated animate__bounce animate__faster" id="EditSenhaBase" tabindex="-1" role="dialog" aria-labelledby="titleModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-dialog modal-dialog-scrollable" role="document">
         <div class="modal-content">
             <div class="modal-header navbar-dark bg-<?php echo e($color); ?>">
                 <h5 class="modal-title" id="titleModalLabel" style="color: white;">Editar e atualizar Senha</h5>
@@ -525,11 +525,10 @@ $(document).ready(function(){
         $(document).on('click','.delete_base_btn',function(e){
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
-            var link = "<?php echo e(asset('storage')); ?>";
-            var admin = $(this).data("admin");
+            var link = "<?php echo e(asset('storage')); ?>";            
             var id = $(this).data("id");
             var nomebase = $(this).data("nomebase");
-            if(admin){
+            
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -573,29 +572,7 @@ $(document).ready(function(){
                 });
             }                                       
         
-        });    
-    }else{
-        Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para excluir este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-    }                    
+        });                
         
         });
         //fim delete base
@@ -609,8 +586,7 @@ $(document).ready(function(){
     
             var id = $(this).data("id");
             var link = "<?php echo e(asset('storage')); ?>";
-            var admin = $(this).data("admin");
-            if(admin){
+            
             $("#editform").trigger('reset');
             $("#EditBaseModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>');
@@ -648,28 +624,7 @@ $(document).ready(function(){
                     }
                 }
             });
-        }else{
-            Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:"ALERTA SETOR DE INFRA!",
-                text: "Você não tem permissão para alterar este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-        }
+        
         });
         //fim exibe EditBaseModal
         //reconfigura o option selected do select html

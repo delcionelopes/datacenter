@@ -5,19 +5,26 @@ namespace App\Http\Controllers\Admin;
 use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use App\Models\Area_Conhecimento;
-use App\Models\Manual;
-use App\Models\Sub_Area_Conhecimento;
-use App\Models\Upload;
+use App\Models\Area_conhecimento_has_setor;
+use App\Models\Arqs;
+use App\Models\Setor;
 use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\Validator;
 
 class Area_ConhecimentoController extends Controller
 {
     private $area_conhecimento;
+    private $setor;
+    private $areas_setor;
+    private $arqs;
 
-    public function __construct(Area_Conhecimento $area_conhecimento)
+    public function __construct(Area_Conhecimento $area_conhecimento, Setor $setor, Area_conhecimento_has_setor $areas_setor,
+                                Arqs $arqs)
     {
         $this->area_conhecimento = $area_conhecimento;
+        $this->setor = $setor;
+        $this->areas_setor = $areas_setor;
+        $this->arqs = $arqs;
     }
     
     /**
@@ -35,6 +42,71 @@ class Area_ConhecimentoController extends Controller
         return view('area_conhecimento.index',[
             'areas_conhecimento' => $areas_conhecimento,
             'color' => $color
+        ]);
+    }
+
+    public function indexAreaPSetor($id){
+        $areas = $this->area_conhecimento->orderBy('id','DESC')->get();
+        $setor = $this->setor->find($id);
+        $areassrelacionadas = $this->areas_setor->query()
+                                  ->select('area_conhecimento_id')
+                                  ->where('setor_idsetor','=',$setor->id)
+                                  ->get();
+        $array = [];
+        foreach ($areassrelacionadas as $area) {
+            $array[] = $area->area_conhecimento_id;
+        }
+        $areasrelacionadas = $array;
+
+        return response()->json([
+            'status' => 200,
+            'areas' => $areas,
+            'areasrelacionadas' => $areasrelacionadas,
+            'setor' => $setor,
+        ]);
+    }
+
+    public function indexSetores(Request $request,$color){
+        if(is_null($request->pesquisa)){
+            $setores = $this->setor->orderBy('id','DESC')->paginate(10);
+        }else{
+            $query = $this->setor->query()
+                                 ->where('nome','LIKE','%'.strtoupper($request->pesquisa).'%');
+            $setores = $query->orderBy('id','DESC')->paginate(10);
+        }
+        return view('area_conhecimento.indexsetores',[
+            'setores' => $setores,
+            'color' => $color,
+        ]);
+    }
+
+    public function indexAreasRelacionadas($id,$color)
+    {       
+        $areas = $this->area_conhecimento->orderBy('id','DESC')->get();        
+        $setor = $this->setor->find($id);        
+        $areasrelacionadas = $this->areas_setor->query()
+                                           ->where('setor_idsetor','=',$setor->id)
+                                           ->get();  
+        
+        return view('area_conhecimento.indexsetor',[
+            'setor' => $setor,
+            'areas' => $areas,
+            'areasrelacionadas' => $areasrelacionadas,
+            'color' => $color,
+        ]);
+    }
+
+    public function indexArquivosRelacionados($setorid,$areaid,$color){
+        $query = $this->arqs->query()
+                     ->where([
+                        ['setor_idsetor',$setorid],
+                        ['area_conhecimento_id',$areaid],
+                     ]);
+        $arqs = $query->orderBy('id','DESC')->paginate(10);
+
+        return view('area_conhecimento.indexarquivos',[
+            'arqs' => $arqs,
+            'color' => $color,
         ]);
     }
 
@@ -63,7 +135,9 @@ class Area_ConhecimentoController extends Controller
             ]);
         }else{               
             $data = [
-                'descricao' => strtoupper($request->input('descricao')),                             
+                'descricao' => strtoupper($request->input('descricao')),
+                'created_at' => now(),
+                'updated_at' => null,
             ];            
             $area_conhecimento = $this->area_conhecimento->create($data);   
             $user = auth()->user();
@@ -117,7 +191,8 @@ class Area_ConhecimentoController extends Controller
         }else{                 
             $area_conhecimento = $this->area_conhecimento->find($id);
             if($area_conhecimento){
-                $area_conhecimento->descricao = strtoupper($request->input('descricao'));               
+                $area_conhecimento->descricao = strtoupper($request->input('descricao'));
+                $area_conhecimento->updated_at = now();
                 $area_conhecimento->update();                
                 $area_C = Area_Conhecimento::find($id);
                 $user = auth()->user();
@@ -143,34 +218,8 @@ class Area_ConhecimentoController extends Controller
     public function destroy(int $id)
     {        
         $area_conhecimento = $this->area_conhecimento->find($id);
-        $sub_areas = $area_conhecimento->sub_area_conhecimento;
-        $manuais = $area_conhecimento->manual;
-        if(($area_conhecimento->sub_area_conhecimento()->count())||($area_conhecimento->manual()->count())){
-            if((auth()->user()->admin)&&(!(auth()->user()->inativo))){                
-                if($area_conhecimento->sub_area_conhecimento()->count()){                                        
-                    foreach ($sub_areas as $sub_area) {
-                        $s = Sub_Area_Conhecimento::find($sub_area->id);
-                        $s->delete();
-                    }
-                }
-                if($area_conhecimento->manual()->count()){
-                    foreach ($manuais as $manual) {
-                        $m = Manual::find($manual->id);
-                        $uploads = $m->uploads;
-                        if($m->uploads()->count()){
-                            foreach ($uploads as $upload) {
-                                $up = Upload::find($upload->id);
-                                $upPath = public_path('storage/'.$up->path_arquivo);
-                                $up->delete();
-                                //deleta o arquivo na pasta do servidor  
-                                if(file_exists($upPath)){
-                                    unlink($upPath);
-                                }                                        
-                            }
-                        }
-                        $m->delete();
-                    }                    
-                }
+        if(($area_conhecimento->setores()->count())){
+            if((auth()->user()->admin)&&(!(auth()->user()->inativo))){                                
                 $status = 200;
                 $message = $area_conhecimento->descricao.' excluído com sucesso!';
                 $area_conhecimento->delete();

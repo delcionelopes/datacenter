@@ -160,11 +160,7 @@ $(document).ready(function(){
       case 5: location.replace('/datacenteradmin/projeto/index-projeto/'+color); ///cadastro de projetos
       break;
       case 6: location.replace('/datacenteradmin/areaconhecimento/index-areaconhecimento/'+color); ///cadastro de areas conhecimento
-      break;
-      case 7: location.replace('/datacenteradmin/subareaconhecimento/index-subareaconhecimento/'+color); ///cadastro de sub-areas conhecimento
-      break;
-      case 8: location.replace('/datacenteradmin/manual/index-manual/'+color); ///cadastro de manuais
-      break;
+      break;      
       case 9: location.replace('/datacenteradmin/cluster/index-cluster/'+color); ///Gestão de Datacenter
       break;
       case 10: location.replace('/datacenteradmin/vlan/index-vlan/'+color); ///Gestão de Redes
