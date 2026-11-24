@@ -47,59 +47,27 @@ class Area_ConhecimentoController extends Controller
 
     public function indexAlfa($id)
     {   
-        $grupos = $this->area_conhecimento->orderBy('id','DESC')->get();        
-        $setor = $this->setor->whereIdsetor($id)->get();
-        $gruposrelacionados = $this->areas_setor->query()
-                                           ->select('area_conhecimento_id')
-                                           ->where('setor_idsetor','=',$setor->idsetor)
-                                           ->get();
-        $array = [];
-        foreach ($gruposrelacionados as $grupo) {
-            $array[] = $grupo->area_conhecimento_id;
-        }
-        $gruposrelacionados = $array;
+        $grupos = $this->area_conhecimento
+                       ->whereDoesntHave('Setores',function($query) use($id){
+                        $query->where('setor_idsetor','=',$id);
+                       })->get();        
+        $setor = $this->setor->find($id);        
         
         return response()->json([
             'status' => 200,
             'setor' => $setor,
             'grupos' => $grupos,
-            'gruposrelacionados' => $gruposrelacionados,            
         ]);
      
   
     }
 
-    public function indexAreaPSetor($id){
-        $areas = $this->area_conhecimento->orderBy('id','DESC')->get();
-        $setor = $this->setor->whereIdsetor($id)->get();
-        $areassrelacionadas = $this->areas_setor->query()
-                                  ->select('area_conhecimento_id')
-                                  ->where('setor_idsetor','=',$setor->idsetor)
-                                  ->get();
-        $array = [];
-        foreach ($areassrelacionadas as $area) {
-            $array[] = $area->area_conhecimento_id;
-        }
-        $areasrelacionadas = $array;
-
-        return response()->json([
-            'status' => 200,
-            'areas' => $areas,
-            'areasrelacionadas' => $areasrelacionadas,
-            'setor' => $setor,
-        ]);
-    }
-
-    public function indexSetores(Request $request,$color){
-        $user = auth()->user();
-        if(is_null($request->pesquisa)){
-            $setores = $this->setor->whereIdsetor($user->setor_id)->orderBy('idsetor','DESC')->paginate(10);
-        }else{
+    public function indexSetores($color){
+        $user = auth()->user();        
             $query = $this->setor->query()
-                                 ->where('idsetor','=',$user->setor_id)  
-                                 ->where('nome','LIKE','%'.strtoupper($request->pesquisa).'%');
-            $setores = $query->orderBy('idsetor','DESC')->paginate(10);
-        }
+                                 ->where('idsetor','=',$user->setor_id);
+            $setores = $query->orderBy('idsetor','DESC')->paginate(2);
+        
         return view('area_conhecimento.indexsetores',[
             'setores' => $setores,
             'color' => $color,
@@ -107,9 +75,9 @@ class Area_ConhecimentoController extends Controller
     }
 
     public function indexAreasRelacionadas($id,$color)
-    {       
+    {   
         $areas = $this->area_conhecimento->orderBy('id','DESC')->get();        
-        $setor = $this->setor->whereIdsetor($id)->get();
+        $setor = $this->setor->find($id);
         $areasrelacionadas = $this->areas_setor->query()
                                            ->where('setor_idsetor','=',$setor->idsetor)
                                            ->get();

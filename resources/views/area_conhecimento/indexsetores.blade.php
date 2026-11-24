@@ -52,11 +52,6 @@
         <form action="{{route('datacenteradmin.sistemadearquivos.indexsetores',['color'=>$color])}}" class="form-search" method="GET">
             <div class="col-sm-12">
                 <div class="input-group rounded">
-                    <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do setor" aria-label="Search"
-                        aria-describedby="search-addon">
-                    <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
-                        <i class="fas fa-search"></i>
-                    </button>
                     <button data-color="{{$color}}" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Sair"><i class="fas fa-door-open"></i></button>
                 </div>
             </div>
@@ -75,7 +70,7 @@
                                 <th scope="col">AÇÕES</th>
                             </tr>
                         </thead>
-                        <tbody id="lista_artigos">
+                        <tbody>
                             <tr id="novo" style="display:none;"></tr>
                             @forelse($setores as $setor)
                             <tr id="setor{{$setor->idsetor}}">
@@ -111,7 +106,6 @@
 @stop
 
 @section('css')
-<!--<link rel="stylesheet" href="/css/admin_custom.css">  -->
 <link href="{{asset('css/styles.css')}}" rel="stylesheet" />
 @stop
 
@@ -149,7 +143,7 @@
                                                                    </fieldset>');
                         
                         $.each(response.grupos, function(key, grupo) {                           
-                           $('#radiogrupo').append('<label class="form-check-label" id="label' + grupo.id + '" for="grupo' + grupo.id + '" data-id="' + grupo.id + '" data-descricao="' + grupo.descricao + '"><input type="checkbox" id="grupo' + grupo.id + '" name="grupos[]" value="' + grupo.id + '" class="form-check-input" data-descricao="' + grupo.descricao + '" '+(response.gruposrelacionados.includes(grupo.id) ? 'checked disabled' : '')+'> ' + grupo.descricao + '</label><br>');
+                           $('#radiogrupo').append('<label class="form-check-label" id="label' + grupo.id + '" for="grupo' + grupo.id + '" data-id="' + grupo.id + '" data-descricao="' + grupo.descricao + '"><input type="checkbox" id="grupo' + grupo.id + '" name="grupos[]" value="' + grupo.id + '" class="form-check-input" data-descricao="' + grupo.descricao + '" '+'> ' + grupo.descricao + '</label><br>');
                         });
                     }
                 }
@@ -300,7 +294,7 @@
             data.append('_method', 'PUT');
 
             $.ajax({
-                url: '/datacenteradmin/sistemadearquivos/vinculargruposarquivos/' + id,
+                url: '/datacenteradmin/sistemadearquivos/vincularareasarquivos/' + id,
                 type: 'POST',
                 dataType: 'json',
                 data: data,

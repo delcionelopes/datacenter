@@ -112,9 +112,9 @@
 
 <section class="border p-4 mb-4 d-flex align-items-left">  
 <div class="row">
-@if($areas->count())
-  @foreach($areas as $area)  
-  <div class="p-2 mt-2" id="grupo{{$grupo->id}}">   
+@if($areasrelacionadas->count())
+  @foreach($areasrelacionadas as $area)  
+  <div class="p-2 mt-2" id="grupo{{$area->id}}">   
   <div class="card card-hover mb-3">
   <div class="row no-gutters">
     <div class="col-md-4">
@@ -130,11 +130,11 @@
         <button type="button" class="btn btn_primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></button>
          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li data-setorid="{{$setor->idsetor}}" data-id="{{$area->id}}" class="edit_grupo_menu dropdown-item" data-color="{{$color}}" style="cursor: pointer;"><i class="fas fa-edit"></i> Editar</li>
-            <li data-id="{{$area->id}}" data-sigla="{{$area->descricao}}" class="delete_grupo_menu dropdown-item" data-color="{{$color}}" style="cursor: pointer;"><i class="fas fa-trash"></i> Excluir</li>
+            <li data-id="{{$area->area_conhecimento_id}}" data-sigla="{{$area->areaconhecimento->descricao}}" class="delete_grupo_menu dropdown-item" data-color="{{$color}}" style="cursor: pointer;"><i class="fas fa-trash"></i> Excluir</li>
         </ul>   
         </div>
         </div>
-        <p class="card-text">{{$area->descricao}}</p>        
+        <p class="card-text">{{$area->areaconhecimento->descricao}}</p>        
         <a href="#" data-setorid="{{$setor->idsetor}}" data-grupoid="{{$area->id}}" data-grupo="{{$area->descricao}}" data-color="{{$color}}" class="btn btn-{{$color}} mostrararquivos_btn">Executar</a>
       </div>
     </div>
@@ -148,7 +148,7 @@
 <div class="card" style="width: 18rem;">
   <div class="row no-gutters">
     <div class="col-md-4">
-      <img src="{{asset('logo.ico')}}" class="card-img" alt="Sistema">
+      <img src="{{asset('logoprodap.jpg')}}" class="card-img" alt="Sistema">
     </div>
     <div class="col-md-8">
       <div class="card-body">
