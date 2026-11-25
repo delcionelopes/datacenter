@@ -99,10 +99,6 @@
                     <div class="col-sm-12">
                         <div class="input-group rounded">
                         <nav class="navbar navbar-expand-md navbar-light bg-light">
-                            <input type="text" name="pesquisa" class="form-control rounded float-left" placeholder="Nome do grupo" aria-label="Search" aria-describedby="search-addon">
-                            <button type="submit" class="pesquisa_btn input-group-text border-0" id="search-addon" style="background:transparent;border: none; white-space: nowrap;" data-html="true" data-placement="bottom" data-toggle="popover" title="Pesquisa<br>Informe e tecle ENTER">
-                               <i class="fas fa-search"></i>
-                            </button>                            
                             <button data-color="<?php echo e($color); ?>" type="button" class="voltarmenu_btn input-group-text border-0 animate__animated animate__bounce" style="background: transparent;border: none;"><i class="fas fa-door-open"></i></button>
                         </nav>
                         </div>
@@ -114,7 +110,7 @@
 <div class="row">
 <?php if($areasrelacionadas->count()): ?>
   <?php $__currentLoopData = $areasrelacionadas; $__env->addLoop($__currentLoopData); foreach($__currentLoopData as $area): $__env->incrementLoopIndices(); $loop = $__env->getLastLoop(); ?>  
-  <div class="p-2 mt-2" id="grupo<?php echo e($area->id); ?>">   
+  <div class="p-2 mt-2" id="grupo<?php echo e($area->area_conhecimento_id); ?>">   
   <div class="card card-hover mb-3">
   <div class="row no-gutters">
     <div class="col-md-4">
@@ -129,13 +125,13 @@
         <div class="dropleft">
         <button type="button" class="btn btn_primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></button>
          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-            <li data-setorid="<?php echo e($setor->idsetor); ?>" data-id="<?php echo e($area->id); ?>" class="edit_grupo_menu dropdown-item" data-color="<?php echo e($color); ?>" style="cursor: pointer;"><i class="fas fa-edit"></i> Editar</li>
+            <li data-setorid="<?php echo e($setor->idsetor); ?>" data-id="<?php echo e($area->area_conhecimento_id); ?>" class="edit_grupo_menu dropdown-item" data-color="<?php echo e($color); ?>" style="cursor: pointer;"><i class="fas fa-edit"></i> Editar</li>
             <li data-id="<?php echo e($area->area_conhecimento_id); ?>" data-sigla="<?php echo e($area->areaconhecimento->descricao); ?>" class="delete_grupo_menu dropdown-item" data-color="<?php echo e($color); ?>" style="cursor: pointer;"><i class="fas fa-trash"></i> Excluir</li>
         </ul>   
         </div>
         </div>
         <p class="card-text"><?php echo e($area->areaconhecimento->descricao); ?></p>        
-        <a href="#" data-setorid="<?php echo e($setor->idsetor); ?>" data-grupoid="<?php echo e($area->id); ?>" data-grupo="<?php echo e($area->descricao); ?>" data-color="<?php echo e($color); ?>" class="btn btn-<?php echo e($color); ?> mostrararquivos_btn">Executar</a>
+        <a href="#" data-setorid="<?php echo e($setor->idsetor); ?>" data-grupoid="<?php echo e($area->area_conhecimento_id); ?>" data-grupo="<?php echo e($area->descricao); ?>" data-color="<?php echo e($color); ?>" class="btn btn-<?php echo e($color); ?> mostrararquivos_btn">Executar</a>
       </div>
     </div>
   </div>
@@ -153,7 +149,7 @@
     <div class="col-md-8">
       <div class="card-body">
         <h5 class="card-title"><b><?php echo e(auth()->user()->name); ?></b>,</h5>
-        <p class="card-text">Não há pastas para este setor!</p>
+        <p class="card-text">Não há pastas(áreas de conhecimento) para este setor!</p>
         <p class="card-text"><small class="text-muted">Crie pastas e adicione arquivos.</small></p>
       </div>
     </div>

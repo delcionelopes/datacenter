@@ -50,7 +50,7 @@ class Area_ConhecimentoController extends Controller
         $grupos = $this->area_conhecimento
                        ->whereDoesntHave('Setores',function($query) use($id){
                         $query->where('setor_idsetor','=',$id);
-                       })->get();        
+                       })->get();
         $setor = $this->setor->find($id);        
         
         return response()->json([
@@ -76,15 +76,13 @@ class Area_ConhecimentoController extends Controller
 
     public function indexAreasRelacionadas($id,$color)
     {   
-        $areas = $this->area_conhecimento->orderBy('id','DESC')->get();        
-        $setor = $this->setor->find($id);
+        $setor = $this->setor->find($id);        
         $areasrelacionadas = $this->areas_setor->query()
                                            ->where('setor_idsetor','=',$setor->idsetor)
                                            ->get();
         
         return view('area_conhecimento.indexgrupo',[
             'setor' => $setor,
-            'areas' => $areas,
             'areasrelacionadas' => $areasrelacionadas,
             'color' => $color,
         ]);
@@ -96,7 +94,7 @@ class Area_ConhecimentoController extends Controller
                         ['setor_idsetor',$setorid],
                         ['area_conhecimento_id',$areaid],
                      ]);
-        $arqs = $query->orderBy('id','DESC')->paginate(10);
+        $arqs = $query->orderBy('id','DESC')->get();
 
         return view('area_conhecimento.indexarquivos',[
             'arqs' => $arqs,
@@ -301,7 +299,7 @@ class Area_ConhecimentoController extends Controller
     public function destroyarea($id)
     {
         $area_conhecimento = $this->area_conhecimento->find($id);
-        $arquivos = $this->areas_setor->query()
+        $arquivos = $this->arqs->query()
                                  ->where([                                    
                                     ['area_conhecimento_id',$area_conhecimento->id],
                                  ])->get();
@@ -311,12 +309,16 @@ class Area_ConhecimentoController extends Controller
                 'status' => 400,
                 'message' => 'Este registro não pode ser excluído. Pois, existem outros que dependem dele!',
             ]);
-        }
-        $area_conhecimento->delete();
+        }else{
+                 $this->areas_setor->query()
+                                     ->where([
+                                        ['area_conhecimento_id',$area_conhecimento->id],
+                                     ])->delete();
         return response()->json([
             'status' => 200,
             'message' => 'Registro excluído com sucesso!',
         ]);
+        }
     }
 
     //relatórios
@@ -415,7 +417,7 @@ class Area_ConhecimentoController extends Controller
         
     }
 
-    public function uploadDocs(Request $request, $setorid, $grupoid){             
+    public function uploadDocs(Request $request, $setorid, $grupoid){
          if ($request->TotalFiles>0) 
          {
            $user = auth()->user();    
