@@ -154,7 +154,7 @@ class Area_ConhecimentoController extends Controller
                 'errors' => $validator->errors()->getMessages(),
             ]);
         }else{            
-            $data['descricao'] = $request->input('descricao');
+            $data['descricao'] = strtoupper($request->input('descricao'));
             $data['created_at'] = now();
             $data['updated_at'] = null;            
             $grupo = $this->area_conhecimento->create($data);
@@ -296,11 +296,12 @@ class Area_ConhecimentoController extends Controller
         ]);
     }
 
-    public function destroyarea($id)
+    public function destroyarea($id,$setor)
     {
         $area_conhecimento = $this->area_conhecimento->find($id);
         $arquivos = $this->arqs->query()
-                                 ->where([                                    
+                                 ->where([
+                                    ['setor_idsetor',$setor],                                    
                                     ['area_conhecimento_id',$area_conhecimento->id],
                                  ])->get();
         
@@ -312,6 +313,7 @@ class Area_ConhecimentoController extends Controller
         }else{
                  $this->areas_setor->query()
                                      ->where([
+                                        ['setor_idsetor',$setor],
                                         ['area_conhecimento_id',$area_conhecimento->id],
                                      ])->delete();
         return response()->json([

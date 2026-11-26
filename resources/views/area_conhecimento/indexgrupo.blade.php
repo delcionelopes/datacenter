@@ -17,15 +17,8 @@
     transform: scale(1.1);
   }
 
-    .tooltip-inner {
-    text-align: left;
-    }
     div.halfOpacity{
         opacity: 0.6 !important;
-    }
-
-    .tooltip-inner {
-    text-align: left;
     }
     
 </style>
@@ -126,7 +119,7 @@
         <button type="button" class="btn btn_primary" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false"><i class="fas fa-bars"></i></button>
          <ul class="dropdown-menu" aria-labelledby="dropdownMenuButton">
             <li data-setorid="{{$setor->idsetor}}" data-id="{{$area->area_conhecimento_id}}" class="edit_grupo_menu dropdown-item" data-color="{{$color}}" style="cursor: pointer;"><i class="fas fa-edit"></i> Editar</li>
-            <li data-id="{{$area->area_conhecimento_id}}" data-sigla="{{$area->areaconhecimento->descricao}}" class="delete_grupo_menu dropdown-item" data-color="{{$color}}" style="cursor: pointer;"><i class="fas fa-trash"></i> Excluir</li>
+            <li data-setor="{{$setor->idsetor}}" data-id="{{$area->area_conhecimento_id}}" data-sigla="{{$area->areaconhecimento->descricao}}" class="delete_grupo_menu dropdown-item" data-color="{{$color}}" style="cursor: pointer;"><i class="fas fa-trash"></i> Excluir</li>
         </ul>   
         </div>
         </div>
@@ -181,6 +174,7 @@ $(document).ready(function(){
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute("content");
             var link = "{{asset('storage')}}";
             var id = $(this).data("id");
+            var setor = $(this).data("setor");
             var sigla = $(this).data("sigla");
             
             Swal.fire({
@@ -202,7 +196,7 @@ $(document).ready(function(){
              }).then((result)=>{
              if(result.isConfirmed){                 
                     $.ajax({
-                        url: '/datacenteradmin/sistemadearquivos/deletearea/'+id,
+                        url: '/datacenteradmin/sistemadearquivos/deletearea/'+id+'/'+setor,
                         type: 'POST',
                         dataType: 'json',
                         data:{
@@ -238,7 +232,7 @@ $(document).ready(function(){
         $(document).on('click','.edit_grupo_menu',function(e){  
             e.preventDefault();            
             var id = $(this).data('id');
-            var empresaid = $(this).data('empresaid');
+            var setorid = $(this).data('setorid');
                 $('#edit_grupo_id').val(id);            
                 $('#edit_setor_id').val(setorid);            
             
@@ -376,6 +370,7 @@ $(document).ready(function(){
                         strlimita3 = '<div class="btn-group">\
                                                         <button type="button" data-id="'+docs.id+'" class="copiararquivo_btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:transparent;border:none;"><i class="fas fa-copy"></i><span class="caret"></span></button>';
                         strlim3a = '<ul class="dropdown-menu">';
+                        strlim3b = '';
                                   $.each(response.setorgrupos, function(key,grupoemp){                                    
                                     strlim3b = strlim3b+'<li data-id="'+docs.id+'" data-grupoid="'+grupoemp.area_conhecimento_id+'" class="copiararquivo_opt dropdown-item" style="cursor:pointer">'+grupoemp.areaconhecimento.descricao+'</li>';
                                   });
@@ -384,6 +379,7 @@ $(document).ready(function(){
                         strlimita4 = '<div class="btn-group">\
                                                         <button type="button" data-id="'+docs.id+'" class="moverarquivo_btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:transparent;border:none;"><i class="fas fa-cut"></i><span class="caret"></span></button>';                                                        
                         strlim4a = '<ul class="dropdown-menu">';
+                        strlim4b = '';
                                   $.each(response.setorgrupos, function(key,grupoemp){                                    
                                     strlim4b = strlim4b+'<li data-id="'+docs.id+'" data-grupoid="'+grupoemp.area_conhecimento_id+'" class="moverarquivo_opt dropdown-item" style="cursor:pointer">'+grupoemp.areaconhecimento.descricao+'</li>';
                                   });
@@ -487,6 +483,7 @@ $(document).ready(function(){
                         strlimita3 = '<div class="btn-group">\
                                                         <button type="button" data-id="'+docs.id+'" class="copiararquivo_btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:transparent;border:none;"><i class="fas fa-copy"></i><span class="caret"></span></button>';
                         strlim3a = '<ul class="dropdown-menu">';
+                        strlim3b = '';
                                   $.each(response.setorgrupos, function(key,grupoemp){                                    
                                     strlim3b = strlim3b+'<li data-id="'+docs.id+'" data-grupoid="'+grupoemp.area_conhecimento_id+'" class="copiararquivo_opt dropdown-item" style="cursor:pointer">'+grupoemp.areaconhecimento.descricao+'</li>';
                                   });
@@ -495,6 +492,7 @@ $(document).ready(function(){
                         strlimita4 = '<div class="btn-group">\
                                                         <button type="button" data-id="'+docs.id+'" class="moverarquivo_btn dropdown-toggle" data-toggle="dropdown" aria-expanded="false" style="background:transparent;border:none;"><i class="fas fa-cut"></i><span class="caret"></span></button>';
                         strlim4a = '<ul class="dropdown-menu">';
+                        strlim4b = '';
                                   $.each(response.setorgrupos, function(key,grupoemp){                                    
                                     strlim4b = strlim4b+'<li data-id="'+docs.id+'" data-grupoid="'+grupoemp.area_conhecimento_id+'" class="moverarquivo_opt dropdown-item" style="cursor:pointer">'+grupoemp.areaconhecimento.descricao+'</li>';
                                   });
@@ -708,15 +706,6 @@ $(document).ready(function(){
         var color = $(this).data("color");
         location.replace('/datacenteradmin/sistemadearquivos/indexsetores/'+color);
         });
-
-
-    ///tooltip
-    $(function(){
-        $(".pesquisa_btn").tooltip();
-    });
-    ///fim tooltip    
-
-
 
 
 });

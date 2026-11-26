@@ -80,7 +80,7 @@
                                         <button data-color="{{$color}}" data-id="{{$setor->idsetor}}" type="button" class="criarpastas_btn fas fa-folder" style="background: transparent;border: none; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Criar e gerenciar <br> pastas"></button>
                                     </div>
                                     <div class="btn-group">
-                                        <a href="{{route('datacenteradmin.sistemadearquivos.indexareasrelacionadas',['id'=>$setor->idsetor,'color'=>$color])}}" type="button" data-id="{{$setor->idsetor}}" class="list_setores_grupos fas fa-list" style="background:transparent;border:none; color:black; white-space: nowrap;" data-html="true" data-placement="left" data-toggle="popover" title="Listar pastas <br> relacionadas"></a>
+                                        <a href="{{route('datacenteradmin.sistemadearquivos.indexareasrelacionadas',['id'=>$setor->idsetor,'color'=>$color])}}" type="button" class="list_setores_grupos fas fa-list" style="background:transparent;border:none; color:black; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Listar pastas <br> relacionadas"></a>
                                     </div>
                                 </td>
                             </tr>
@@ -127,7 +127,7 @@
             $.ajax({
                 type: 'GET',
                 dataType: 'json',
-                url: '/datacenteradmin/sistemadearquivos/indexalfa/' + id,
+                url: '/datacenteradmin/sistemadearquivos/indexalfa/'+id,
                 success: function(response) {
                     if (response.status == 200) {
                         $('#radiogrupo_add').replaceWith('<fieldset id="radiogrupo_add">\
@@ -136,7 +136,7 @@
                                                                    <label for="adddescricaoGrupo">Nome:</label>\
                                                                    <input type="text" id="adddescricaoGrupo" class="descricaoGrupo form-control">\
                                                                    <button type="button" class="addgrupo" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo"><i class="fas fa-plus"></i></button>\
-                                                                   <button type="button" data-id="0" data-descricao="" class="remgrupo" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Excluir"><i class="fas fa-minus"></i></button>\
+                                                                   <button type="button" data-setor="'+id+'" data-id="0" data-descricao="" class="remgrupo" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Excluir"><i class="fas fa-minus"></i></button>\
                                                                    </div>\
                                                                    <div class="form-check" id="radiogrupo">\
                                                                    </div>\
@@ -196,6 +196,10 @@
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var titulo = $(this).data("descricao");
             var id = $(this).data("id");
+            var setor = $(this).data("setor");
+
+            console.log(setor);
+            
 
             var linklogo = "{{asset('storage')}}";
 
@@ -227,7 +231,7 @@
                 }).then((result) => {
                     if (result.isConfirmed) {
                         $.ajax({
-                            url: '/datacenteradmin/sistemadearquivos/deletearea/' + id,
+                            url: '/datacenteradmin/sistemadearquivos/deletearea/'+id+'/'+setor,
                             type: 'POST',
                             dataType: 'json',
                             data: {
@@ -237,7 +241,6 @@
                             },
                             success: function(response) {
                                 if (response.status == 200) {
-                                    //remove linha correspondente da tabela html
                                     $("#grupo" + id).remove();
                                     $("#label" + id).remove();
                                     $('#saveformGrupo_errList').replaceWith('<ul id="saveformGrupo_errList"></ul>');
@@ -259,7 +262,7 @@
         }); ///fim delete grupo
 
         $(document).on('click', '.form-check-label', function() {
-
+            var setor = $('#editsetor_id').val();
             var id = $(this).data("id");
             var descricao = $(this).data("descricao");
 
@@ -267,7 +270,7 @@
                                                                    <label for="adddescricaoGrupo">Nome:</label>\
                                                                    <input type="text" id="adddescricaoGrupo" class="descricaoGrupo form-control">\
                                                                    <button type="button" class="addgrupo" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Novo"><i class="fas fa-plus"></i></button>\
-                                                                   <button type="button" data-id="' + id + '" data-descricao="' + descricao + '" class="remgrupo" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Excluir"><i class="fas fa-minus"></i></button>\
+                                                                   <button type="button" data-setor="'+setor+'" data-id="' + id + '" data-descricao="' + descricao + '" class="remgrupo" style="background-color: white; border: 1; border-color: white; white-space: nowrap;" data-html="true" data-placement="top" data-toggle="popover" title="Excluir"><i class="fas fa-minus"></i></button>\
                                                                    </div>');
 
             $('#adddescricaoGrupo').val(descricao);
@@ -322,13 +325,10 @@
 
 
         ///tooltip
-        $(function() {
-            $(".pesquisa_btn").tooltip();
+        $(function() {     
             $(".list_setores_grupos").tooltip();
             $(".criarpastas_btn").tooltip();
-            $(".voltarmenu_btn").tooltip();
-            $(".addgrupo").tooltip();
-            $(".remgrupo").tooltip();
+            $(".voltarmenu_btn").tooltip();          
         });
         ///fim tooltip
 

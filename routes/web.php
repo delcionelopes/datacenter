@@ -398,7 +398,7 @@ Route::group(['middleware'=> ['auth']],function(){
            Route::put('/storearea',[Area_ConhecimentoController::class,'storearea']);
            Route::get('/editarea/{id}',[Area_ConhecimentoController::class,'editarea']);
            Route::put('/updatearea/{id}',[Area_ConhecimentoController::class,'updatearea']);
-           Route::delete('/deletearea/{id}',[Area_ConhecimentoController::class,'destroyarea']);
+           Route::delete('/deletearea/{id}/{setor}',[Area_ConhecimentoController::class,'destroyarea']);
            Route::get('/indexarquivosrelacionados/{setorid}/{grupoid}/{color}',[Area_ConhecimentoController::class,'indexArquivosRelacionados'])->name('indexarquivosrelacionados');
            Route::put('/vincularareasarquivos/{id}',[Area_ConhecimentoController::class,'vincularGruposArquivosXSetores']);
            Route::put('/upload-docs/{setorid}/{grupoid}',[Area_ConhecimentoController::class,'uploadDocs']);

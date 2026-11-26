@@ -142,10 +142,9 @@
             e.preventDefault();
             var CSRF_TOKEN = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
             var link = "<?php echo e(asset('storage')); ?>";
-            var id = $(this).data("id");
-            var admin = $(this).data("admin");
+            var id = $(this).data("id");            
             var nomeprojeto = $(this).data("nomeprojeto");
-            if(admin){
+            
             Swal.fire({
                 showClass: {
                     popup: 'animate__animated animate__fadeInDown'
@@ -190,29 +189,7 @@
             }                                       
         
         });                   
-    }else{
-        Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:nomeprojeto,
-                text: "Você não pode excluir este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-
-    }     
+    
         
         });//fim delete projeto
     
@@ -224,10 +201,9 @@
         $(document).on('click','.edit_projeto',function(e){
             e.preventDefault();            
             var id = $(this).data("id");             
-            var link = "<?php echo e(asset('storage')); ?>";
-            var admin = $(this).data("admin");
+            var link = "<?php echo e(asset('storage')); ?>";            
             var nome = $(this).data("nomeprojeto");
-            if(admin){
+            
             $("#editform").trigger('reset');
             $("#EditProjetoModal").modal('show');
             $("#updateform_errList").replaceWith('<ul id="updateform_errList"></ul>'); 
@@ -250,28 +226,7 @@
                         }
                     }
                 });
-            }else{
-                Swal.fire({
-                showClass: {
-                    popup: 'animate__animated animate__fadeInDown'
-                },
-                hideClass: {
-                    popup: 'animate__animated animate__fadeOutUp'
-                },
-                title:nome,
-                text: "Você não pode alterar este registro. Procure um administrador do setor INFRA !",
-                imageUrl: link+'/logoprodap.jpg',
-                imageWidth: 400,
-                imageHeight: 200,
-                imageAlt: 'imagem do prodap',
-                showCancelButton: false,
-                confirmButtonText: 'OK!',                
-                cancelButtonText: 'Não, cancelar!',                                 
-             }).then((result)=>{
-             if(result.isConfirmed){  
-             }
-            })
-            }
+          
         });//fim exibição edit projeto
     
         //inicio da atualização do projeto
