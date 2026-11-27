@@ -252,7 +252,7 @@ class Area_ConhecimentoController extends Controller
             if($grupoarquivo){
             $data['descricao'] = strtoupper($request->input('descricao'));            
             $data['updated_at'] = now();
-            $grupoarquivo = $this->area_conhecimento->update($data);
+            $grupoarquivo->update($data);
             $g = Area_Conhecimento::find($id);
 
             return response()->json([
